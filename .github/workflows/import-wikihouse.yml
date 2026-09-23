@@ -1,0 +1,34 @@
+name: Import pinned WikiHouse CAD
+on:
+  push:
+    paths:
+      - '.github/workflows/import-wikihouse.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: wikihouseproject/Skylark
+          ref: 6581cc1de0f4daef81a6b5c5a2eaed3c537d1d8f
+          path: official
+          sparse-checkout: |
+            SKYLARK150/Walls/W-S
+            SKYLARK150/Walls/C-S-1
+            SKYLARK150/Floors/F-S
+            SKYLARK150/Floors/E-S
+            SKYLARK150/Roofs/R-S
+            SKYLARK150/Openings/W-O-S-1
+            SKYLARK150/Other/Ties
+      - uses: actions/upload-artifact@v4
+        with:
+          name: official-skylark150-cad
+          retention-days: 7
+          path: |
+            official/**/*.3dm
+            official/SKYLARK150/Other/Ties/*
+            official/WikiHouse_SKYLARK_assembly_axo.png
+            official/README.md
