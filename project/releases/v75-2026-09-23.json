@@ -1,0 +1,35 @@
+{
+  "version": "v75",
+  "date": "2026-09-23",
+  "package": "OBTP_Project_v75_2026-09-23.zip",
+  "package_bytes": 76174840,
+  "sha256": "ca81e366e45d924bbccbf1f3544eab716b91699c7dfd01817a1214004130f72d",
+  "drive": {
+    "id": "1eT645cM2UBqsQBGe5Mh1aEjbxVZPA1rJ",
+    "url": "https://drive.google.com/file/d/1eT645cM2UBqsQBGe5Mh1aEjbxVZPA1rJ/view?usp=drivesdk",
+    "parent_id": "1ZxBdhtzVpjq1FiWhkwWfWsC1udkv7C-Q",
+    "metadata_size_verified": true
+  },
+  "included_commits": {
+    "obtp-studio": "c70452343bcda8d24fc454f47f868fd8b4fd960b",
+    "obtp-architecture": "5db2450cd2e94d193a77cec3ca5bacf04c5d2b0e",
+    "obtp-system": "d4f52b62b9957c14d053701ec20b0278ec03edfb"
+  },
+  "verification": {
+    "passed": true,
+    "files_verified": 126,
+    "original_cad_files_verified": 7,
+    "v74_files_verified": 196,
+    "checks": [
+      "Exact repository commits",
+      "Permanent bundle SHA256 hashes",
+      "Byte-exact restored v74 ZIP",
+      "All 196 historical file hashes",
+      "Seven original CAD/DXF Git blob hashes",
+      "All snapshot file SHA256 hashes",
+      "ZIP CRC"
+    ],
+    "workflow_run": 35894494636
+  },
+  "note": "This upload receipt is committed after the package was built. It is not inside the snapshot; the included commits above are authoritative. GitHub remains the editable master; Drive stores dated snapshots. Original v74 Drive file retained."
+}
