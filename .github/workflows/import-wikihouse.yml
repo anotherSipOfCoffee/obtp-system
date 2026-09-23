@@ -21,7 +21,15 @@ jobs:
             SKYLARK150/Floors/F-S
             SKYLARK150/Floors/E-S
             SKYLARK150/Roofs/R-S
-            SKYLARK150/Openings/W-O-S-1
+            SKYLARK150/Openings
+            SKYLARK150/Walls/C-S-2
+            SKYLARK150/Walls/G-S-1
+            SKYLARK150/Walls/G-S-2
+            SKYLARK150/Walls/G-S-3
+            SKYLARK150/Walls/G-S-4
+            SKYLARK150/Walls/G-S-5
+            SKYLARK150/Walls/V-S-1
+            SKYLARK150/Walls/V-S-2
             SKYLARK150/Other/Ties
       - uses: actions/upload-artifact@v4
         with:
