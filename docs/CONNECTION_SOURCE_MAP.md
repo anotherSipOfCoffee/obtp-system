@@ -1,6 +1,8 @@
 # Connection source map — research checkpoint 01
 Date: 2026-09-23. Status: candidate selection, not construction specification.
 
+UPDATE: Visual LT080 audit found the published sheet insufficient to reconstruct the finished mating geometry. See [LT080_GEOMETRY_AUDIT.md](LT080_GEOMETRY_AUDIT.md). LT080 modelling is on hold pending the missing machining/profile information; no source geometry has been invented.
+
 ## Accepted direction
 Independent timber frame with non-load-bearing enclosure. Timber interlocking first; screwed and bolted alternatives remain in scope. Rhino 8 / Grasshopper on Windows is available to the owner. Web geometry should be exported from the same master geometry, not redrawn independently.
 
