@@ -25,6 +25,7 @@ def main():
    if len(data)!=entry['bytes']or sha(data)!=entry['sha256']:raise ValueError('v74 content mismatch '+entry['path'])
  cad=stage/'04_SOURCE_CAD';cad.mkdir()
  for bundle in sorted((ROOT/'sources/skylark150').glob('*.zip')):
+  if not zipfile.is_zipfile(bundle):raise ValueError('Invalid source ZIP: '+bundle.name)
   with zipfile.ZipFile(bundle)as z:
    for name in z.namelist():
     rel=Path(name)
