@@ -7,3 +7,6 @@ Each bay reuses assembly(layer) translated by 600 × bay index along X. Full vie
 Full-view quantities for N modules: F-S N, W-S 2N, R-S N, full ties 48N−24; total 52N−24. Layer views omit ties just as the original slice did.
 
 This composes previously sampled local interfaces; no new full-volume fit or strength validation is claimed. Adjacent floor and roof modules are set out on the source pitch, but their seam fastening remains unresolved and is not invented. End closures, corners, openings, foundations and bracing are absent. One source roof Brep remains open. This is an open assembly study, not a complete or construction-ready shell.
+
+## Superseding seam update
+Floor/roof seam ties are now implemented; see SEAM_CONNECTIONS.md. The earlier count formula and statement that these seams are unrepresented are historical. Current full count is 78N−50, including 74N−50 ties. End closures remain unresolved. Openings are on hold under the owner's instruction gate.

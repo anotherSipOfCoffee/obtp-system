@@ -21,3 +21,6 @@ Studio and Architecture stay unchanged. GitHub operations use the GitHub plugin 
 
 ## Repeated assembly extension
 Studio is now explicitly authorized to consume the shared System implementation. See REPEATED_ASSEMBLY.md for the 1–8-module open row and reuse of the wall/wall connection. Floor and roof seam fastening remains unresolved. The original single slice remains the one-module case.
+
+## Latest seam and configuration status
+Floor/floor and roof/roof top-skin seam ties now use source socket locations. See SEAM_CONNECTIONS.md and the 52 accepted samples in EXTENDED_INTERFACE_AUDIT.json. Other candidate samples in that file are rejected. End closure is not complete. Opening configuration is on hold under the owner's precise-instructions requirement; see OPENINGS_AND_ENDWALLS_CHECKPOINT.md.

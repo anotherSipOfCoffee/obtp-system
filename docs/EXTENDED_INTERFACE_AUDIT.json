@@ -1,0 +1,1713 @@
+{
+  "method": "Mesh sections at two tie depths; 2D source polygon rings normalized with buffer(0) to remove numerical self-intersections. CAD/mesh unchanged; not full-volume or fabrication validation.",
+  "samples": [
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        583.453,
+        380
+      ],
+      "overlap": 0.5607039523377741
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        988.547,
+        380
+      ],
+      "overlap": 0.5595396681511194
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        1183.453,
+        380
+      ],
+      "overlap": 0.5594982249117607
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        1588.547,
+        380
+      ],
+      "overlap": 0.5562548520316442
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        1783.453,
+        380
+      ],
+      "overlap": 0.5562579290422186
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        2188.547,
+        380
+      ],
+      "overlap": 0.5633762898419339
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        2383.453,
+        380
+      ],
+      "overlap": 0.5596259015438624
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        2788.547,
+        380
+      ],
+      "overlap": 0.553513808808723
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        2983.453,
+        380
+      ],
+      "overlap": 0.5535465942180785
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        3388.547,
+        380
+      ],
+      "overlap": 0.5585253508561288
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        3583.453,
+        380
+      ],
+      "overlap": 0.5662338611800779
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 4.5,
+      "translation": [
+        600,
+        3988.547,
+        380
+      ],
+      "overlap": 0.5550788959573704
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        583.453,
+        380
+      ],
+      "overlap": 0.6408321618361966
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        988.547,
+        380
+      ],
+      "overlap": 0.6396590105132693
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        1183.453,
+        380
+      ],
+      "overlap": 0.6396590105128125
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        1588.547,
+        380
+      ],
+      "overlap": 0.636399882895704
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        1783.453,
+        380
+      ],
+      "overlap": 0.6364048735867308
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        2188.547,
+        380
+      ],
+      "overlap": 0.6435044993404
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        2383.453,
+        380
+      ],
+      "overlap": 0.6358330586013007
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        2788.547,
+        380
+      ],
+      "overlap": 0.6297555321483017
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        2983.453,
+        380
+      ],
+      "overlap": 0.6297448851544728
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        3388.547,
+        380
+      ],
+      "overlap": 0.6347325079089186
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        3583.453,
+        380
+      ],
+      "overlap": 0.6424657361376372
+    },
+    {
+      "kind": "floor-floor",
+      "depth": 13.5,
+      "translation": [
+        600,
+        3988.547,
+        380
+      ],
+      "overlap": 0.6312860530148087
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        4190.457939994503,
+        2834.2833584676464
+      ],
+      "overlap": 0.555649761591953
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        3981.583915953509,
+        2837.9292681191
+      ],
+      "overlap": 0.5676308787557479
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        3590.4623340077533,
+        2844.7563207267904
+      ],
+      "overlap": 0.5553691148082087
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        3381.5883109577308,
+        2848.4022303609463
+      ],
+      "overlap": 0.5591263127141862
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        2990.462401790549,
+        2855.2293585005677
+      ],
+      "overlap": 0.5557436707687956
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        2781.58813482357,
+        2858.8752723923103
+      ],
+      "overlap": 0.558104415695297
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        2390.4667968122203,
+        2865.70232074211
+      ],
+      "overlap": 0.5579093462841886
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        2181.5925288368207,
+        2869.3482346514543
+      ],
+      "overlap": 0.5578937390780839
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        1790.558105341207,
+        2876.173765902738
+      ],
+      "overlap": 0.5576279946310927
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        1581.6840817913358,
+        2879.8196755456192
+      ],
+      "overlap": 0.5626432488556161
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        1190.4755858384174,
+        2886.6482452429477
+      ],
+      "overlap": 0.559516240622656
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        981.601439825858,
+        2890.294157023423
+      ],
+      "overlap": 0.5542132067468258
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        590.4800412020634,
+        2897.1212064312167
+      ],
+      "overlap": 0.5552145433411486
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 4.5,
+      "translation": [
+        600,
+        381.60583471665655,
+        2900.767119267249
+      ],
+      "overlap": 0.5553265679965976
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        4190.457939994503,
+        2834.2833584676464
+      ],
+      "overlap": 0.6479612648512895
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        3981.583915953509,
+        2837.9292681191
+      ],
+      "overlap": 0.6436103808177163
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        3590.4623340077533,
+        2844.7563207267904
+      ],
+      "overlap": 0.6493813135224721
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        3381.5883109577308,
+        2848.4022303609463
+      ],
+      "overlap": 0.6426834884503037
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        2990.462401790549,
+        2855.2293585005677
+      ],
+      "overlap": 0.6463742794743911
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        2781.58813482357,
+        2858.8752723923103
+      ],
+      "overlap": 0.6348756523236341
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        2390.4667968122203,
+        2865.70232074211
+      ],
+      "overlap": 0.6353970035275888
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        2181.5925288368207,
+        2869.3482346514543
+      ],
+      "overlap": 0.6419227888370919
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        1790.558105341207,
+        2876.173765902738
+      ],
+      "overlap": 0.6365305270434537
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        1581.6840817913358,
+        2879.8196755456192
+      ],
+      "overlap": 0.6409628313948477
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        1190.4755858384174,
+        2886.6482452429477
+      ],
+      "overlap": 0.6353886193567961
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        981.601439825858,
+        2890.294157023423
+      ],
+      "overlap": 0.6328865804963894
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        590.4800412020634,
+        2897.1212064312167
+      ],
+      "overlap": 0.6303895435345599
+    },
+    {
+      "kind": "roof-roof",
+      "depth": 13.5,
+      "translation": [
+        600,
+        381.60583471665655,
+        2900.767119267249
+      ],
+      "overlap": 0.6312600370444023
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        291.1,
+        380
+      ],
+      "overlap": 0.5544205121219118
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        486,
+        380
+      ],
+      "overlap": 0.5521877283342336
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        680.9,
+        380
+      ],
+      "overlap": 0.5532327637093469
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        891.1,
+        380
+      ],
+      "overlap": 0.552578948774742
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1086,
+        380
+      ],
+      "overlap": 0.5549668622860355
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1280.9,
+        380
+      ],
+      "overlap": 0.5542349268892592
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1491.1,
+        380
+      ],
+      "overlap": 0.5534299473029675
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1686,
+        380
+      ],
+      "overlap": 0.5539735060045604
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1880.9,
+        380
+      ],
+      "overlap": 0.5522979087743864
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2091.1,
+        380
+      ],
+      "overlap": 0.5544205120786047
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2286,
+        380
+      ],
+      "overlap": 0.5520861912197655
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2480.9,
+        380
+      ],
+      "overlap": 0.5524896361679921
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2691.1,
+        380
+      ],
+      "overlap": 0.5544113610121837
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2886,
+        380
+      ],
+      "overlap": 0.5521877283341227
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3080.9,
+        380
+      ],
+      "overlap": 0.5524896361679921
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3291.1,
+        380
+      ],
+      "overlap": 0.5533426011928624
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3486,
+        380
+      ],
+      "overlap": 0.5538103953927279
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3680.9,
+        380
+      ],
+      "overlap": 0.5526009511484518
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3891.1,
+        380
+      ],
+      "overlap": 0.5532327643164545
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        4086,
+        380
+      ],
+      "overlap": 0.5540980474505094
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        4280.9,
+        380
+      ],
+      "overlap": 0.5532565778881615
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        575.547
+      ],
+      "overlap": 3750.4596499503805
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        784.453
+      ],
+      "overlap": 3750.4597810395503
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        1175.547
+      ],
+      "overlap": 3750.4596398029457
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        1384.453
+      ],
+      "overlap": 3750.4606362520026
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        1775.547
+      ],
+      "overlap": 3750.4616554007025
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        1984.453
+      ],
+      "overlap": 3750.4616131230528
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        291.1,
+        380
+      ],
+      "overlap": 0.6306276691794913
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        486,
+        380
+      ],
+      "overlap": 0.6283948853918132
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        680.9,
+        380
+      ],
+      "overlap": 0.6294162107109006
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        891.1,
+        380
+      ],
+      "overlap": 0.6287923910828838
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1086,
+        380
+      ],
+      "overlap": 0.6292421065054258
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1280.9,
+        380
+      ],
+      "overlap": 0.6304183738908304
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1491.1,
+        380
+      ],
+      "overlap": 0.6296371043605405
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1686,
+        380
+      ],
+      "overlap": 0.6301806630621335
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        1880.9,
+        380
+      ],
+      "overlap": 0.6284813557759575
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2091.1,
+        380
+      ],
+      "overlap": 0.6306276691362088
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2286,
+        380
+      ],
+      "overlap": 0.6282933482773551
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2480.9,
+        380
+      ],
+      "overlap": 0.6286730831697817
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2691.1,
+        380
+      ],
+      "overlap": 0.6306185180697879
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        2886,
+        380
+      ],
+      "overlap": 0.6283948853917124
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3080.9,
+        380
+      ],
+      "overlap": 0.6286730831697817
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3291.1,
+        380
+      ],
+      "overlap": 0.6295497582504667
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3486,
+        380
+      ],
+      "overlap": 0.628327309913178
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3680.9,
+        380
+      ],
+      "overlap": 0.6284396723431697
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        3891.1,
+        380
+      ],
+      "overlap": 0.6294399213740587
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        4086,
+        380
+      ],
+      "overlap": 0.6303052045080716
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        4280.9,
+        380
+      ],
+      "overlap": 0.6294400248899379
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        575.547
+      ],
+      "overlap": 3041.9773143311427
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        784.453
+      ],
+      "overlap": 3041.9774454203125
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        1175.547
+      ],
+      "overlap": 3041.9773041837093
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        1384.453
+      ],
+      "overlap": 3041.978288777738
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        1775.547
+      ],
+      "overlap": 3041.9793434915227
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": -186,
+      "translation": [
+        -186,
+        186,
+        1984.453
+      ],
+      "overlap": 3041.9792893588447
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        291.1,
+        380
+      ],
+      "overlap": 3.032750859366056
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        486,
+        380
+      ],
+      "overlap": 3.034945023230966
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        680.9,
+        380
+      ],
+      "overlap": 3.030804439212832
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        891.1,
+        380
+      ],
+      "overlap": 3.0326634396809586
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1086,
+        380
+      ],
+      "overlap": 1.794804079094783
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1280.9,
+        380
+      ],
+      "overlap": 0.5707342844499177
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1491.1,
+        380
+      ],
+      "overlap": 0.571046607366621
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1686,
+        380
+      ],
+      "overlap": 0.5706984095524675
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1880.9,
+        380
+      ],
+      "overlap": 0.5709789024736285
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2091.1,
+        380
+      ],
+      "overlap": 0.568667049604603
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2286,
+        380
+      ],
+      "overlap": 0.5708142437335099
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2480.9,
+        380
+      ],
+      "overlap": 0.5709223701791496
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2691.1,
+        380
+      ],
+      "overlap": 0.5710596495991525
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2886,
+        380
+      ],
+      "overlap": 0.570635132330351
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3080.9,
+        380
+      ],
+      "overlap": 0.5734253246882591
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3291.1,
+        380
+      ],
+      "overlap": 0.5703427187864964
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3486,
+        380
+      ],
+      "overlap": 0.5698661323656263
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3680.9,
+        380
+      ],
+      "overlap": 0.5702534135310641
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3891.1,
+        380
+      ],
+      "overlap": 0.5709820442126061
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        4086,
+        380
+      ],
+      "overlap": 0.5707391625277608
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        4280.9,
+        380
+      ],
+      "overlap": 0.5698602981651466
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        575.547
+      ],
+      "overlap": 1104.1401353509318
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        784.453
+      ],
+      "overlap": 1104.1402667082773
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        1175.547
+      ],
+      "overlap": 1104.1401252035023
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        1384.453
+      ],
+      "overlap": 1104.1411443519085
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        1775.547
+      ],
+      "overlap": 1104.1421222336646
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 4.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        1984.453
+      ],
+      "overlap": 1104.1421408012566
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        291.1,
+        380
+      ],
+      "overlap": 3.0708600180111634
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        486,
+        380
+      ],
+      "overlap": 3.0730299818201066
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        680.9,
+        380
+      ],
+      "overlap": 3.0689262178296595
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        891.1,
+        380
+      ],
+      "overlap": 3.0708060064726066
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1086,
+        380
+      ],
+      "overlap": 1.8520445057109765
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1280.9,
+        380
+      ],
+      "overlap": 0.6471858614410854
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1491.1,
+        380
+      ],
+      "overlap": 0.6472758044524917
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1686,
+        380
+      ],
+      "overlap": 0.6469038965823795
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        1880.9,
+        380
+      ],
+      "overlap": 0.6471960845312529
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2091.1,
+        380
+      ],
+      "overlap": 0.6448744416904907
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2286,
+        380
+      ],
+      "overlap": 0.6469980907633534
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2480.9,
+        380
+      ],
+      "overlap": 0.6471397122367614
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2691.1,
+        380
+      ],
+      "overlap": 0.6472672016851104
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        2886,
+        380
+      ],
+      "overlap": 0.6468191393601509
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3080.9,
+        380
+      ],
+      "overlap": 0.6496425817460877
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3291.1,
+        380
+      ],
+      "overlap": 0.6469850829608439
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3486,
+        380
+      ],
+      "overlap": 0.6464817093245948
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3680.9,
+        380
+      ],
+      "overlap": 0.646853811646492
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        3891.1,
+        380
+      ],
+      "overlap": 0.6472134277153352
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        4086,
+        380
+      ],
+      "overlap": 0.6469457495572558
+    },
+    {
+      "kind": "end-floor-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        4280.9,
+        380
+      ],
+      "overlap": 0.646078740222757
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        575.547
+      ],
+      "overlap": 1104.1782389295488
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        784.453
+      ],
+      "overlap": 1104.1783702868943
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        1175.547
+      ],
+      "overlap": 1104.1782287821193
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        1384.453
+      ],
+      "overlap": 1104.1792479305254
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        1775.547
+      ],
+      "overlap": 1104.1802258122816
+    },
+    {
+      "kind": "corner-end-wall",
+      "depth": 13.5,
+      "plane": 0,
+      "translation": [
+        0,
+        186,
+        1984.453
+      ],
+      "overlap": 1104.1802443798736
+    }
+  ]
+}
