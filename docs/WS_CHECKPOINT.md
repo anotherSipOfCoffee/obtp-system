@@ -30,3 +30,6 @@ The source IDs are retained. P01–P07, descriptive names, colours and display e
 1. Recommended: Rhino 8 comparison and browser review; resolve any mismatch before expanding.
 2. Map official CNC labels and drawings to the seven source IDs.
 3. Trace and model an official adjacent-block connection from the same pinned release.
+
+## Pages routing
+Both branch-based Pages and the custom dist/ workflow were observed on this commit. Root index.html and ws/index.html redirect into dist/ for branch publishing. The custom workflow serves dist/ directly. This preserves the same entry links with either deployment; choosing GitHub Actions as the sole Pages source would remove the duplicate deployment jobs.
