@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": [
+    "six types",
+    "three interfaces",
+    "28-instance slice",
+    "explosion",
+    "stages",
+    "mobile overflow",
+    "WebGL status"
+  ],
+  "commit": "af10fefa98e34eac60682bfc2c9f513b854a8279",
+  "workflow_run": 35890259122,
+  "screenshots_inspected": [
+    "02-connection.png",
+    "03-assembly.png",
+    "04-exploded.png",
+    "05-mobile.png"
+  ]
+}

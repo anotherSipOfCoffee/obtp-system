@@ -39,7 +39,7 @@ Brep topology vertex bounds can miss curved extrema; larger bounds deltas in the
 - Tie DXF units flag is unset; the source sheet layer and notes establish the mm stock interpretation. The full/half tie display reconstruction uses source 18 mm thickness and 9 mm pockets, and 0.01 mm curve tessellation.
 
 ## Validation
-Run node tests/catalogue.cjs. GitHub workflow Check System catalogue runs the browser interaction and screenshot checks; retain its result separately. Rhino 8 interactive checks, complete surface deviation, complete collision analysis, construction sequence and project engineering are not completed.
+Run node tests/catalogue.cjs. GitHub workflow Check System catalogue passed on commit af10fefa98e34eac60682bfc2c9f513b854a8279 (run 35890259122). Six type selections, three interfaces, the 28-instance slice, exploded view, stages, mobile overflow and WebGL status passed with no page errors. Desktop assembly, connection, exploded and mobile screenshots were inspected. See BROWSER_CHECK_REPORT.json. Rhino 8 interactive checks, complete surface deviation, complete collision analysis, construction sequence and project engineering are not completed.
 The current assembly is an open slice, not an enclosed or laterally stable building. End walls, corners, foundation interfaces and bracing remain next work. Studio, Architecture and Drive v74 are unchanged.
 
 ## Reproduce
