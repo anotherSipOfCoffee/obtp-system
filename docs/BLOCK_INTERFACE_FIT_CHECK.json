@@ -1,0 +1,530 @@
+[
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 4.5,
+    "x": 105.1,
+    "z": 380,
+    "overlap_mm2": 0.5546691131908171,
+    "material_section_area_mm2": 1339172.212552835
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 4.5,
+    "x": 300,
+    "z": 380,
+    "overlap_mm2": 0.554614684896326,
+    "material_section_area_mm2": 1339172.212552835
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 4.5,
+    "x": 494.9,
+    "z": 380,
+    "overlap_mm2": 0.5538649586827682,
+    "material_section_area_mm2": 1339172.212552835
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 13.5,
+    "x": 105.1,
+    "z": 380,
+    "overlap_mm2": 0.6308881252767002,
+    "material_section_area_mm2": 1354721.5888616124
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 13.5,
+    "x": 300,
+    "z": 380,
+    "overlap_mm2": 0.6308099869262039,
+    "material_section_area_mm2": 1354721.5888616124
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 13.5,
+    "x": 494.9,
+    "z": 380,
+    "overlap_mm2": 0.6300721157403432,
+    "material_section_area_mm2": 1354721.5888616124
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 181.5,
+    "x": 105.1,
+    "z": 380,
+    "overlap_mm2": 0.554236634053716,
+    "material_section_area_mm2": 1347169.63365532
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 181.5,
+    "x": 300,
+    "z": 380,
+    "overlap_mm2": 0.5541659013063958,
+    "material_section_area_mm2": 1347169.63365532
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 181.5,
+    "x": 494.9,
+    "z": 380,
+    "overlap_mm2": 0.553428156778775,
+    "material_section_area_mm2": 1347169.63365532
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 172.5,
+    "x": 105.1,
+    "z": 380,
+    "overlap_mm2": 0.6304437911112952,
+    "material_section_area_mm2": 1362124.5146499295
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 172.5,
+    "x": 300,
+    "z": 380,
+    "overlap_mm2": 0.6303730583639753,
+    "material_section_area_mm2": 1362124.5146499295
+  },
+  {
+    "pair": [
+      "floor",
+      "front"
+    ],
+    "y": 172.5,
+    "x": 494.9,
+    "z": 380,
+    "overlap_mm2": 0.6296116037803466,
+    "material_section_area_mm2": 1362124.5146499295
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 4.5,
+    "x": 105.1,
+    "z": 2480,
+    "overlap_mm2": 0.5557806145953084,
+    "material_section_area_mm2": 1349299.1130839789
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 4.5,
+    "x": 300,
+    "z": 2480,
+    "overlap_mm2": 0.5534780454930777,
+    "material_section_area_mm2": 1349299.1130839789
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 4.5,
+    "x": 494.9,
+    "z": 2480,
+    "overlap_mm2": 0.5547759413987357,
+    "material_section_area_mm2": 1349299.1130839789
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 13.5,
+    "x": 105.1,
+    "z": 2480,
+    "overlap_mm2": 0.6319877716537075,
+    "material_section_area_mm2": 1367453.520888836
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 13.5,
+    "x": 300,
+    "z": 2480,
+    "overlap_mm2": 0.6296852025506834,
+    "material_section_area_mm2": 1367453.520888836
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 13.5,
+    "x": 494.9,
+    "z": 2480,
+    "overlap_mm2": 0.6309830984563414,
+    "material_section_area_mm2": 1367453.520888836
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 181.5,
+    "x": 105.1,
+    "z": 2480,
+    "overlap_mm2": 0.562390270532536,
+    "material_section_area_mm2": 1368916.22661359
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 181.5,
+    "x": 300,
+    "z": 2480,
+    "overlap_mm2": 0.5552107885764275,
+    "material_section_area_mm2": 1368916.22661359
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 181.5,
+    "x": 494.9,
+    "z": 2480,
+    "overlap_mm2": 0.5774262974317708,
+    "material_section_area_mm2": 1368916.22661359
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 172.5,
+    "x": 105.1,
+    "z": 2480,
+    "overlap_mm2": 0.6380780470040534,
+    "material_section_area_mm2": 1383592.3397875642
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 172.5,
+    "x": 300,
+    "z": 2480,
+    "overlap_mm2": 0.6308869730983535,
+    "material_section_area_mm2": 1383592.3397875642
+  },
+  {
+    "pair": [
+      "front",
+      "roof"
+    ],
+    "y": 172.5,
+    "x": 494.9,
+    "z": 2480,
+    "overlap_mm2": 0.6531141674322984,
+    "material_section_area_mm2": 1383592.3397875642
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4567.5,
+    "x": 105.1,
+    "z": 380,
+    "overlap_mm2": 0.5546691131870911,
+    "material_section_area_mm2": 1339172.2125528355
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4567.5,
+    "x": 300,
+    "z": 380,
+    "overlap_mm2": 0.5546146848929231,
+    "material_section_area_mm2": 1339172.2125528355
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4567.5,
+    "x": 494.9,
+    "z": 380,
+    "overlap_mm2": 0.5538649586790607,
+    "material_section_area_mm2": 1339172.2125528355
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4558.5,
+    "x": 105.1,
+    "z": 380,
+    "overlap_mm2": 0.6308762702446703,
+    "material_section_area_mm2": 1354721.5888615968
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4558.5,
+    "x": 300,
+    "z": 380,
+    "overlap_mm2": 0.6308099869222038,
+    "material_section_area_mm2": 1354721.5888615968
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4558.5,
+    "x": 494.9,
+    "z": 380,
+    "overlap_mm2": 0.6300839707681035,
+    "material_section_area_mm2": 1354721.5888615968
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4390.5,
+    "x": 105.1,
+    "z": 380,
+    "overlap_mm2": 0.5542366340575031,
+    "material_section_area_mm2": 1347169.159365985
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4390.5,
+    "x": 300,
+    "z": 380,
+    "overlap_mm2": 0.5541659013099038,
+    "material_section_area_mm2": 1347169.159365985
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4390.5,
+    "x": 494.9,
+    "z": 380,
+    "overlap_mm2": 0.553428156782526,
+    "material_section_area_mm2": 1347169.159365985
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4399.5,
+    "x": 105.1,
+    "z": 380,
+    "overlap_mm2": 0.6304200810553201,
+    "material_section_area_mm2": 1362124.0403605937
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4399.5,
+    "x": 300,
+    "z": 380,
+    "overlap_mm2": 0.6303730583674836,
+    "material_section_area_mm2": 1362124.0403605937
+  },
+  {
+    "pair": [
+      "floor",
+      "back"
+    ],
+    "y": 4399.5,
+    "x": 494.9,
+    "z": 380,
+    "overlap_mm2": 0.629635313840101,
+    "material_section_area_mm2": 1362124.0403605937
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4567.5,
+    "x": 105.1,
+    "z": 2480,
+    "overlap_mm2": 0.5557687595637766,
+    "material_section_area_mm2": 1302171.6565990984
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4567.5,
+    "x": 300,
+    "z": 2480,
+    "overlap_mm2": 0.5534780454893953,
+    "material_section_area_mm2": 1302171.6565990984
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4567.5,
+    "x": 494.9,
+    "z": 2480,
+    "overlap_mm2": 0.5547877964231622,
+    "material_section_area_mm2": 1302171.6565990984
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4558.5,
+    "x": 105.1,
+    "z": 2480,
+    "overlap_mm2": 0.6319759166213812,
+    "material_section_area_mm2": 1320898.4366033762
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4558.5,
+    "x": 300,
+    "z": 2480,
+    "overlap_mm2": 0.629685202547001,
+    "material_section_area_mm2": 1320898.4366033762
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4558.5,
+    "x": 494.9,
+    "z": 2480,
+    "overlap_mm2": 0.6309949534840857,
+    "material_section_area_mm2": 1320898.4366033762
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4390.5,
+    "x": 105.1,
+    "z": 2480,
+    "overlap_mm2": 0.5685679792007182,
+    "material_section_area_mm2": 1330081.6557555841
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4390.5,
+    "x": 300,
+    "z": 2480,
+    "overlap_mm2": 0.5794555297726872,
+    "material_section_area_mm2": 1330081.6557555841
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4390.5,
+    "x": 494.9,
+    "z": 2480,
+    "overlap_mm2": 0.6206976462804781,
+    "material_section_area_mm2": 1330081.6557555841
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4399.5,
+    "x": 105.1,
+    "z": 2480,
+    "overlap_mm2": 0.6435574077420353,
+    "material_section_area_mm2": 1344752.1811249263
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4399.5,
+    "x": 300,
+    "z": 2480,
+    "overlap_mm2": 0.6544370140268215,
+    "material_section_area_mm2": 1344752.1811249263
+  },
+  {
+    "pair": [
+      "back",
+      "roof"
+    ],
+    "y": 4399.5,
+    "x": 494.9,
+    "z": 2480,
+    "overlap_mm2": 0.6957385985876403,
+    "material_section_area_mm2": 1344752.1811249263
+  }
+]

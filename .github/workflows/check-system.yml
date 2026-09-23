@@ -1,0 +1,28 @@
+name: Check System catalogue
+on:
+  push:
+    paths: ['dist/**', 'tests/**', '.github/workflows/check-system.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/catalogue.cjs
+      - run: npm install --no-save playwright@1.55.0
+      - run: npx playwright install --with-deps chromium
+      - name: Browser interaction checks
+        run: |
+          python3 -m http.server 8765 --directory dist > /tmp/system-server.log 2>&1 &
+          node tests/browser.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: system-browser-check
+          path: qa/
+          retention-days: 7

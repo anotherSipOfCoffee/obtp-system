@@ -1,0 +1,14 @@
+{
+  "slices": [
+    {
+      "y": 54.5,
+      "full_overlap_mm2": 0.5522875597458233,
+      "pocketed_overlap_mm2": 0.5522875597458233
+    },
+    {
+      "y": 63.5,
+      "full_overlap_mm2": 1304.2693731031063,
+      "pocketed_overlap_mm2": 0.6284947168034031
+    }
+  ]
+}

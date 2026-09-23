@@ -1,0 +1,5 @@
+rhino3dm==8.35.0
+ezdxf==1.4.4
+shapely==2.1.2
+numpy==2.3.5
+mapbox-earcut==2.1.0
