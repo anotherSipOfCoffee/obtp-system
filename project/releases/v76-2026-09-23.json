@@ -1,0 +1,157 @@
+{
+  "baseline_id": "v76-2026-09-23",
+  "created": "2026-09-23",
+  "policy": "Google Drive authoritative master baseline; GitHub downstream development may be ahead. No automatic two-way synchronization.",
+  "master": {
+    "id": "1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C",
+    "url": "https://drive.google.com/drive/folders/1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C"
+  },
+  "projects": [
+    {
+      "project": "Studio",
+      "file": "OBTP_Studio_v76_2026-09-23.zip",
+      "commit": "6dbffe6bae21a67d7d590cc03bfa623680f7bcc7",
+      "files": 15,
+      "bytes": 25410,
+      "sha256": "2dd9bb4b608528b1297a9764a9a698743ac385efdff16a9aa7c1f414187f013d",
+      "repository": "https://github.com/anotherSipOfCoffee/obtp-studio",
+      "branch": "dev/obtp-independent-v1-20260923",
+      "drive": {
+        "id": "1U4E_xVcNqIiQ3TP70vWXi-bQAimGDZLB",
+        "title": "OBTP_Studio_v76_2026-09-23.zip",
+        "url": "https://drive.google.com/file/d/1U4E_xVcNqIiQ3TP70vWXi-bQAimGDZLB/view?usp=drivesdk",
+        "parent_id": "1jOwBFn24rVDDqjlFh5nI6upSvWtp0VR5"
+      },
+      "master_folder": {
+        "id": "1jOwBFn24rVDDqjlFh5nI6upSvWtp0VR5",
+        "title": "Studio",
+        "url": "https://drive.google.com/drive/folders/1jOwBFn24rVDDqjlFh5nI6upSvWtp0VR5",
+        "parent_id": "1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C"
+      },
+      "readback_sha256_verified": true
+    },
+    {
+      "project": "Architecture",
+      "file": "OBTP_Architecture_v76_2026-09-23.zip",
+      "commit": "28cc4de2bd030bf974d52af27b85e1ce4eda20b7",
+      "files": 12,
+      "bytes": 52356,
+      "sha256": "562cd0e4abeac805fd61d92f54dfaa5cd6a1f0350230e2774dac14e74026655a",
+      "repository": "https://github.com/anotherSipOfCoffee/obtp-architecture",
+      "branch": "dev/obtp-independent-v1-20260923",
+      "drive": {
+        "id": "1CGmpFKYEOqsZPVKRZFLLjKgtt3I06Uwj",
+        "title": "OBTP_Architecture_v76_2026-09-23.zip",
+        "url": "https://drive.google.com/file/d/1CGmpFKYEOqsZPVKRZFLLjKgtt3I06Uwj/view?usp=drivesdk",
+        "parent_id": "1auSySo9qLSr2stBvnzzxneKAHrNO-L2U"
+      },
+      "master_folder": {
+        "id": "1auSySo9qLSr2stBvnzzxneKAHrNO-L2U",
+        "title": "Architecture",
+        "url": "https://drive.google.com/drive/folders/1auSySo9qLSr2stBvnzzxneKAHrNO-L2U",
+        "parent_id": "1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C"
+      },
+      "readback_sha256_verified": true
+    },
+    {
+      "project": "System",
+      "file": "OBTP_System_v76_2026-09-23.zip",
+      "commit": "13d55c3ae6a469448a947b40689070514c6cfb12",
+      "files": 106,
+      "bytes": 21069420,
+      "sha256": "3230b1b47516e2a85c1981d4b40f45bb29035e431493b5db0ff7267b18ad3901",
+      "repository": "https://github.com/anotherSipOfCoffee/obtp-system",
+      "branch": "dev/obtp-independent-v1-20260923",
+      "drive": {
+        "id": "1sqMJ9d5vw4znSaQ0ljiJKJQ739peLMp5",
+        "title": "OBTP_System_v76_2026-09-23.zip",
+        "url": "https://drive.google.com/file/d/1sqMJ9d5vw4znSaQ0ljiJKJQ739peLMp5/view?usp=drivesdk",
+        "parent_id": "1-aNqmBKp6WXOoiTNLwM7WRdOaQ9WpDIw"
+      },
+      "master_folder": {
+        "id": "1-aNqmBKp6WXOoiTNLwM7WRdOaQ9WpDIw",
+        "title": "System",
+        "url": "https://drive.google.com/drive/folders/1-aNqmBKp6WXOoiTNLwM7WRdOaQ9WpDIw",
+        "parent_id": "1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C"
+      },
+      "readback_sha256_verified": true
+    }
+  ],
+  "preview": {
+    "project": "Preview",
+    "file": "OBTP_Studio_v76_LOCAL_PREVIEW.zip",
+    "bytes": 3967302,
+    "sha256": "9f05374543a514c3efc0ec1572ce2c40a47393e8a63f742057e89b724ba6bb69",
+    "system_commit": "13d55c3ae6a469448a947b40689070514c6cfb12",
+    "studio_commit": "6dbffe6bae21a67d7d590cc03bfa623680f7bcc7",
+    "drive": {
+      "id": "1B4ojc9qsSJ0RcH2PEIuMRGav9hB82cz5",
+      "title": "OBTP_Studio_v76_LOCAL_PREVIEW.zip",
+      "url": "https://drive.google.com/file/d/1B4ojc9qsSJ0RcH2PEIuMRGav9hB82cz5/view?usp=drivesdk",
+      "parent_id": "1jOwBFn24rVDDqjlFh5nI6upSvWtp0VR5"
+    },
+    "readback_sha256_verified": true,
+    "instructions": "Download/extract ZIP. OPEN_CASSETTE.html opens directly. Full Studio: python -m http.server 8765 --directory dist, then http://localhost:8765/#v3."
+  },
+  "report": {
+    "id": "1TWBPSlJnwd6eIdWgeioAzHTHxgyv81_A",
+    "title": "OBTP_Cassette01_Research_and_Specification.html",
+    "url": "https://drive.google.com/file/d/1TWBPSlJnwd6eIdWgeioAzHTHxgyv81_A/view?usp=drivesdk",
+    "parent_id": "1-aNqmBKp6WXOoiTNLwM7WRdOaQ9WpDIw"
+  },
+  "validation": {
+    "id": "1JPPdAtTPFLkHfVNCnnPswRF9cFrQoSuu",
+    "title": "VALIDATION.md",
+    "url": "https://drive.google.com/file/d/1JPPdAtTPFLkHfVNCnnPswRF9cFrQoSuu/view?usp=drivesdk",
+    "parent_id": "1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C"
+  },
+  "recovery": {
+    "file": {
+      "id": "15kK5WF--mBCT8tuwKmaysunFdJ-FLuuT",
+      "title": "OBTP_RECOVERY_2026-09-23_HISTORICAL.zip",
+      "url": "https://drive.google.com/file/d/15kK5WF--mBCT8tuwKmaysunFdJ-FLuuT/view?usp=drivesdk",
+      "parent_id": "19h05GdvjJpEeyf7nPka4Y91avA1I3W5b"
+    },
+    "sha256": "fcb72995420e10ba0a0fd433baadf91105f590f013a9c26896ca97a66afb794d",
+    "bytes": 87870088,
+    "readback_sha256_verified": true,
+    "originals_folder": "https://drive.google.com/drive/folders/1wv3-L8saOvV7gpWsXE29D2v8b5X6QgTg",
+    "scope": "Deduplicated baseline/Phase1 repository files and expanded historical Drive package members; original ZIP containers retained outside active folders with their IDs."
+  },
+  "main_branches_unchanged": [
+    {
+      "repo": "obtp-system",
+      "sha": "31fd86e46d11514f19a4e1de07ec622d06238714",
+      "unchanged": true
+    },
+    {
+      "repo": "obtp-studio",
+      "sha": "5bbb1caa6e017b4b702b41747c7b952c4ba1c393",
+      "unchanged": true
+    },
+    {
+      "repo": "obtp-architecture",
+      "sha": "5db2450cd2e94d193a77cec3ca5bacf04c5d2b0e",
+      "unchanged": true
+    }
+  ],
+  "known_differences": [
+    "Drive v76 packages are deliberate exports of the three recorded development commits; they include all newer pre-task GitHub work.",
+    "GitHub main and live Pages remain on pre-task commits; v3 is not deployed.",
+    "System's final receipt/handoff commit follows the packaged source commit; it changes documentation only. Studio continues to pin the packaged System implementation.",
+    "Architecture runtime is unchanged; only coordination documentation changed.",
+    "Studio's prepared System copy and local preview are explicit build deliverables, not editable source duplicates."
+  ],
+  "validation_runs": [
+    35908393392,
+    35908393270,
+    35908494398
+  ],
+  "limitations": [
+    "No structural capacities, fastener schedules, fabrication tolerances or compliance established.",
+    "Openings and weatherproof roof details not completed.",
+    "Lithuanian site/use requirements and envelope analysis remain open.",
+    "Windows Rhino/Grasshopper not executed; closed-Brep file round-trip verified.",
+    "Research review extent and source licences are recorded individually; several full texts were inaccessible."
+  ]
+}
