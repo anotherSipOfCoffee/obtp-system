@@ -1,0 +1,61 @@
+{
+  "schema": "obtp-source-lock/1",
+  "recorded": "2026-09-23",
+  "repository": "wikihouseproject/Skylark",
+  "commit": "6581cc1de0f4daef81a6b5c5a2eaed3c537d1d8f",
+  "release_label": "Skylark v1.0 (README)",
+  "series": "SKYLARK150",
+  "website_status": "beta",
+  "candidate": "W-S",
+  "license": "CC-BY-SA-4.0 (repository README)",
+  "files": [
+    {
+      "path": "SKYLARK150/Walls/W-S/W-S_cnc/W-S-A.dxf",
+      "git_blob_sha": "aef3e601dfd43cc95ccdef83c24bdfc4632c5f96",
+      "bytes": 315801
+    },
+    {
+      "path": "SKYLARK150/Walls/W-S/W-S_cnc/W-S-B.dxf",
+      "git_blob_sha": "623995aa7382d9dfb93f72acf212b59e314e6a9b",
+      "bytes": 183960
+    },
+    {
+      "path": "SKYLARK150/Walls/W-S/W-S_cnc/W-S-C.dxf",
+      "git_blob_sha": "1175eb58ef3fd154fc7cd99ed32e5e9fc56f5625",
+      "bytes": 241435
+    },
+    {
+      "path": "SKYLARK150/Walls/W-S/W-S_cnc/W-S-D.dxf",
+      "git_blob_sha": "e944bedda089ded569bbedf58f0e4c2a5ad347c3",
+      "bytes": 282867
+    },
+    {
+      "path": "SKYLARK150/Walls/W-S/W-S_cnc/W-S_production.csv",
+      "git_blob_sha": "cb2c22745f8092abb6e45248ec8b857565775838",
+      "bytes": 52
+    },
+    {
+      "path": "SKYLARK150/Walls/W-S/W-S_cnc/wikihouse_terms_and_conditions.md",
+      "git_blob_sha": "6b4851fbd83500b556c0f325c8567eda9b20a084",
+      "bytes": 1237
+    },
+    {
+      "path": "SKYLARK150/Walls/W-S/W-S_detailed/W-S.3dm",
+      "git_blob_sha": "932338ca81fdc2acdd345cd0fc9df09d2a9888b2",
+      "bytes": 7373621
+    },
+    {
+      "path": "SKYLARK150/Walls/W-S/W-S_detailed/W-S.dwg",
+      "git_blob_sha": "5ebde20d5bb8376b2491ee01ee738f65313413fe",
+      "bytes": 1016800
+    },
+    {
+      "path": "SKYLARK150/Walls/W-S/W-S_detailed/W-S.skp",
+      "git_blob_sha": "9b0311529e97a1f22ec581da22c3710bcdb8a9c1",
+      "bytes": 4402845
+    }
+  ],
+  "geometry_imported": false,
+  "geometry_validated": false,
+  "cnc_note": "Source folder notes say manufacturing tolerance offsets and dog-bones are pre-applied. Do not add offsets blindly."
+}
