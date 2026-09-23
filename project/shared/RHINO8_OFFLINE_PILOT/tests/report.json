@@ -1,0 +1,7 @@
+{
+  "fixtureAssembly": "passed for both manifests",
+  "rejectionChecks": "units, indices, missing assets, duplicate IDs passed",
+  "rhinoExecution": "not performed",
+  "browserQA": "not performed",
+  "sourceCoordinateReconstruction": "passed for both full house definitions, tolerance 1e-7 m"
+}

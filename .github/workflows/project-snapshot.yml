@@ -1,0 +1,40 @@
+name: Build complete project snapshot
+on:
+  push:
+    paths: ['project/SNAPSHOT_REQUEST.json', '.github/workflows/project-snapshot.yml', 'tools/build_project_snapshot.py']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: repos/obtp-system
+      - name: Read snapshot pins
+        id: pins
+        run: |
+          python - <<'PYCODE'
+          import json, os
+          c=json.load(open('repos/obtp-system/project/SNAPSHOT_REQUEST.json'))['repositories']
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('studio='+c['obtp-studio']+'\narchitecture='+c['obtp-architecture']+'\n')
+          PYCODE
+      - uses: actions/checkout@v4
+        with:
+          repository: anotherSipOfCoffee/obtp-studio
+          ref: ${{ steps.pins.outputs.studio }}
+          path: repos/obtp-studio
+      - uses: actions/checkout@v4
+        with:
+          repository: anotherSipOfCoffee/obtp-architecture
+          ref: ${{ steps.pins.outputs.architecture }}
+          path: repos/obtp-architecture
+      - name: Assemble and verify complete snapshot
+        run: python repos/obtp-system/tools/build_project_snapshot.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: obtp-project-snapshot
+          path: snapshot-output/*
+          retention-days: 7

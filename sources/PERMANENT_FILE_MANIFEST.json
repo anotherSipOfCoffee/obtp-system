@@ -1,0 +1,52 @@
+[
+  {
+    "path": "sources/skylark150/C-S-1-source.zip",
+    "bytes": 1545108,
+    "sha256": "2f5c53dfc2da0bef81481fa45e1fe24783b80c8ef23d252b105b00672e9f918f"
+  },
+  {
+    "path": "sources/skylark150/E-S-source.zip",
+    "bytes": 3236327,
+    "sha256": "4bdfd0f98f2fbe2448cfe25e254271c23b95e8d4619dd096cc645f9c49fc0084"
+  },
+  {
+    "path": "sources/skylark150/F-S-source.zip",
+    "bytes": 2924121,
+    "sha256": "1d902badc47c8106e8e758712096c31599f0b3f35faf2a8864cd68d921deb84d"
+  },
+  {
+    "path": "project/archive/v74/OBTP_Project_System_v74.zip.part001",
+    "bytes": 8388608,
+    "sha256": "a5d94e0aaf0fb36e891081ee17adf6d7150048630bd824ab4b4c31216a192094"
+  },
+  {
+    "path": "project/archive/v74/OBTP_Project_System_v74.zip.part002",
+    "bytes": 8388608,
+    "sha256": "03068bc5d5f11c76fef4c0adfe8522dfba0bca0cadb70b180d08615e3eff6e4c"
+  },
+  {
+    "path": "project/archive/v74/OBTP_Project_System_v74.zip.part003",
+    "bytes": 2491018,
+    "sha256": "b7904ec28952d0d067c002097309f4e24cf1cab8867a4966eafe235bd9293ea7"
+  },
+  {
+    "path": "sources/skylark150/R-S-source.zip",
+    "bytes": 3590021,
+    "sha256": "a42dd0d9f8f8e1c566d92a78be8874f39ef4245d6d8b281503f71db61f999087"
+  },
+  {
+    "path": "sources/skylark150/TIES-and-reference-source.zip",
+    "bytes": 1897913,
+    "sha256": "03560b122b6f801b37449d07f49a5d124e3ff9ca058813f36a4030fa216f8fe4"
+  },
+  {
+    "path": "sources/skylark150/W-O-S-1-source.zip",
+    "bytes": 1497422,
+    "sha256": "08ec85769b8792f9e754b640a4bc031a4ac73c7b631e06b671fdab8033a46baa"
+  },
+  {
+    "path": "sources/skylark150/W-S-source.zip",
+    "bytes": 1551456,
+    "sha256": "6ab60348c590e4c222913639f63315fdd5157af05b033f99e4aa3fd9b356a712"
+  }
+]

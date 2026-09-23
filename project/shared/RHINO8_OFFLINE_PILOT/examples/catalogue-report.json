@@ -1,0 +1,16 @@
+{
+  "assets": 125,
+  "instances": [
+    {
+      "variant": "house-15",
+      "count": 465
+    },
+    {
+      "variant": "house-18",
+      "count": 545
+    }
+  ],
+  "assetsUsedInBoth": 72,
+  "scope": "Exact local shape reuse; translation only; no arbitrary mesh stretching. Dimensions remain provisional.",
+  "rhinoExecuted": false
+}

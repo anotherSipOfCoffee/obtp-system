@@ -1,0 +1,22 @@
+{
+  "original_name": "OBTP_Project_System_v74.zip",
+  "bytes": 19268234,
+  "sha256": "6f2f16f3b798b3bd31335583a963aa1d33d6dda829d648e1d928ca137cb5a1a2",
+  "parts": [
+    {
+      "name": "OBTP_Project_System_v74.zip.part001",
+      "bytes": 8388608,
+      "sha256": "a5d94e0aaf0fb36e891081ee17adf6d7150048630bd824ab4b4c31216a192094"
+    },
+    {
+      "name": "OBTP_Project_System_v74.zip.part002",
+      "bytes": 8388608,
+      "sha256": "03068bc5d5f11c76fef4c0adfe8522dfba0bca0cadb70b180d08615e3eff6e4c"
+    },
+    {
+      "name": "OBTP_Project_System_v74.zip.part003",
+      "bytes": 2491018,
+      "sha256": "b7904ec28952d0d067c002097309f4e24cf1cab8867a4966eafe235bd9293ea7"
+    }
+  ]
+}
