@@ -25,6 +25,20 @@ const joints=[
 {id:'wall-roof',name:'Wall / roof',ids:['W-S','R-S','TIE-FULL'],rule:'R-S bearing datum meets the W-S top at 2,480 mm; three full ties connect each face. Roof slope is retained.',evidence:'Source mesh fit sampled at both depth steps, all three positions and both faces. One roof Brep remains open.',scene:()=>[front(),roof(),...verticalTies(2480,['front'])]}
 ];
 function assembly(layer='all'){const out=[floor()];if(layer==='floor')return out;out.push(front(),back());if(layer==='walls')return out;out.push(roof());if(layer==='all')out.push(...verticalTies(380),...verticalTies(2480));return out;}
+
+/* Reuse the single-slice and wall-pair transforms; no new joint geometry. */
+function multiAssembly(bays=1,layer='all'){
+ if(!Number.isInteger(bays)||bays<1||bays>8)throw Error('Choose 1–8 modules.');
+ if(!['all','floor','walls','roof'].includes(layer))throw Error('Unknown assembly layer.');
+ const out=[];
+ for(let bay=0;bay<bays;bay++)for(const [index,p] of assembly(layer).entries())out.push({...p,translation:p.translation.map((v,k)=>v+(k===0?600*bay:0)),instanceId:`bay-${bay+1}/${p.block}-${index+1}`});
+ if(layer==='all')for(let seam=0;seam<bays-1;seam++)for(const [index,p] of wallPair().filter(p=>p.block==='TIE-FULL').entries()){
+  out.push({...p,translation:[p.translation[0]+600*seam,p.translation[1],p.translation[2]+380],explode:[0,-200,0],instanceId:`seam-${seam+1}/front-tie-${index+1}`});
+  out.push({...p,translation:[1200-p.translation[0]+600*seam,4572-p.translation[1],p.translation[2]+380],rotation:p.rotation.map((v,k)=>k<6?-v:v),explode:[0,200,0],instanceId:`seam-${seam+1}/back-tie-${index+1}`});
+ }
+ return out;
+}
+
 function counts(items){return parts.map(p=>({id:p.id,count:items.filter(i=>i.block===p.id).length})).filter(r=>r.count);}
-g.OBTPCatalogue={pin,parts,joints,assembly,counts,item};if(typeof module!=='undefined')module.exports=g.OBTPCatalogue;
+g.OBTPCatalogue={pin,parts,joints,assembly,multiAssembly,counts,item};if(typeof module!=='undefined')module.exports=g.OBTPCatalogue;
 })(globalThis);

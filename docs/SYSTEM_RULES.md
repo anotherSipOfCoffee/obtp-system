@@ -18,3 +18,6 @@ Rhino 8 Windows remains the target CAD environment; rhino3dm extraction is not R
 ## Scope and archive
 The generic-frame study remains at archive/independent-frame-v02, commit f284e74548bc68d81bc5d2b8995ba153d52ba117. Its UI structure is reused; old dimensions, joints and building arrangement are superseded.
 Studio and Architecture stay unchanged. GitHub operations use the GitHub plugin only. Update Drive only when requested. Preserve CC BY-SA 4.0 geometry attribution and source notices; no WikiHouse endorsement implied.
+
+## Repeated assembly extension
+Studio is now explicitly authorized to consume the shared System implementation. See REPEATED_ASSEMBLY.md for the 1–8-module open row and reuse of the wall/wall connection. Floor and roof seam fastening remains unresolved. The original single slice remains the one-module case.
