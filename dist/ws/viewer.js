@@ -1,10 +1,11 @@
 'use strict';
 // The v74 offline pattern: source meshes + identified instances, no browser modelling.
+const sourceModelUrl = new URL('model.json', document.currentScript.src);
 (async function(){
 const $=id=>document.getElementById(id),canvas=$('view'),status=$('status');
 try {
  const gl=canvas.getContext('webgl',{antialias:true,alpha:true});if(!gl)throw Error('WebGL unavailable. Enable browser hardware acceleration.');
- const response=await fetch('model.json');if(!response.ok)throw Error('Geometry download failed');const model=await response.json();
+ const response=await fetch(sourceModelUrl);if(!response.ok)throw Error('Geometry download failed');const model=await response.json();
  if(model.schema!=='obtp-source-mesh/1'||model.units!=='mm'||model.assets.length!==7)throw Error('Unexpected model contract');
  const vs=`attribute vec3 p;attribute vec3 n;uniform vec3 shift;uniform vec3 right;uniform vec3 up;uniform vec3 toward;uniform vec2 scale;uniform float cut;varying float light;varying float height;void main(){vec3 world=p+shift;vec3 q=world-vec3(0.,143.,1050.);gl_Position=vec4(dot(q,right)*scale.x,dot(q,up)*scale.y,-dot(q,toward)/10000.,1.);light=.62+.38*abs(dot(normalize(n),normalize(vec3(.5,-.7,1.))));height=world.z;}`;
  const fs=`precision highp float;uniform vec3 color;uniform float cut;varying float light;varying float height;void main(){if(height>cut)discard;gl_FragColor=vec4(color*light,1.);}`;
@@ -21,6 +22,7 @@ try {
  model.assets.forEach((a,i)=>{const b=document.createElement('button');b.className='part';b.setAttribute('aria-pressed','false');const label=document.createElement('b');label.textContent=a.label;const name=document.createElement('span');name.textContent=a.description;b.append(label,name);b.onclick=()=>choose(i);$('parts').append(b);});
  $('explode').oninput=()=>{explode=Number($('explode').value)/100;$('amount').textContent=$('explode').value+'%';draw();};$('isolate').onchange=draw;$('all').onclick=()=>{$('isolate').checked=false;choose(-1);};$('section').onchange=()=>{$('height').disabled=!$('section').checked;draw();};$('height').oninput=()=>{$('cut-label').textContent=`${$('height').value} mm · open mesh cut, no cap`;draw();};
  $('home').onclick=()=>{yaw=-.48;elev=.2;zoom=1;draw();};document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{[yaw,elev]=({front:[0,0],side:[Math.PI/2,0],top:[0,Math.PI/2]})[b.dataset.view];draw();});
+ if($('block')) $('block').onclick=()=>{$('all').click();$('explode').value='0';$('explode').oninput();$('section').checked=false;$('section').onchange();$('home').click();};
  let drag=null;canvas.onpointerdown=e=>{drag=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId);};canvas.onpointermove=e=>{if(!drag)return;yaw-=(e.clientX-drag[0])*.008;elev=Math.max(-1.55,Math.min(1.55,elev+(e.clientY-drag[1])*.006));drag=[e.clientX,e.clientY];draw();};canvas.onpointerup=canvas.onpointercancel=()=>drag=null;canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.35,Math.min(6,zoom*Math.exp(-e.deltaY*.001)));draw();},{passive:false});new ResizeObserver(draw).observe(canvas);status.textContent='7 source parts · ready';draw();window.OBTP_WS={model,draw};
 }catch(error){status.textContent=error.message;console.error(error);}
 })();

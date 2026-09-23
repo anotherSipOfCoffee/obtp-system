@@ -1,7 +1,7 @@
 # W-S source geometry checkpoint — 2026-09-23
 
 ## Delivered
-- Independent source-study page: `dist/ws/` (Pages route `/obtp-system/ws/`). Root System links to it; the previous frame remains labelled historical.
+- The user requested full replacement of the active object catalogue. Root System now displays Wall blocks → W-S and its seven selectable parts. `dist/ws/` remains a direct link to the same viewer. The old frame objects and assemblies are removed from the active application and preserved on `archive/independent-frame-v02`.
 - Seven source parts, assembled and exploded viewing, orbit/zoom, standard views, selection, isolation and horizontal uncapped clipping.
 - `dist/ws/model.json`, `WS_GEOMETRY_AUDIT.json`, reproducible `tools/export_ws.py`, and `tools/verify_ws_rhino8.py`.
 - Source attribution and original CNC-folder terms retained in `dist/ws/`.
@@ -33,3 +33,6 @@ The source IDs are retained. P01–P07, descriptive names, colours and display e
 
 ## Pages routing
 Both branch-based Pages and the custom dist/ workflow were observed on this commit. Root index.html and ws/index.html redirect into dist/ for branch publishing. The custom workflow serves dist/ directly. This preserves the same entry links with either deployment; choosing GitHub Actions as the sole Pages source would remove the duplicate deployment jobs.
+
+## Catalogue replacement verification
+User-authorized replacement includes the root page, object list and source viewer. Legacy dist/app.js, dist/kit.js and their two tests are removed from main, with the archive branch retaining them. Source meshes are unchanged. Geometry checks, JS syntax and local asset/link resolution pass. The viewer resolves model.json relative to its script, so both root and /ws/ routes load the same geometry. Browser rendering and Rhino 8 comparison remain pending.

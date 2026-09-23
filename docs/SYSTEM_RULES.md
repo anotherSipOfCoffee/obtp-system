@@ -4,7 +4,7 @@ Decision recorded 2026-09-23 from the owner's explicit choice to adopt the WikiH
 ## Active direction
 Use WikiHouse Skylark components and their documented connections together. The previous independent frame with non-load-bearing panels is superseded. LT080, bespoke research-joint modelling and mixed commercial connector selection are parked. Do not transplant WikiHouse joints into the former post/beam geometry.
 
-Archive: branch `archive/independent-frame-v02`, commit `f284e74548bc68d81bc5d2b8995ba153d52ba117`. It preserves the old model, tests, rules and source research. The main dist/ page retains that historical model and links to the new W-S source study at dist/ws/. The source study is a separate validation preview.
+Archive: branch `archive/independent-frame-v02`, commit `f284e74548bc68d81bc5d2b8995ba153d52ba117`. It preserves the old model, tests, rules and source research. The owner requested replacement of the active catalogue with WikiHouse objects. The main dist/ page now lists W-S as its first imported wall block and exposes its seven source parts. The previous provisional objects and assemblies are absent from the active app; their code and tests remain available in the archive branch. This is a source-geometry catalogue, not a validated building system.
 
 ## Source baseline
 Repository: https://github.com/wikihouseproject/Skylark
@@ -33,6 +33,6 @@ Import the official .3dm in Rhino 8, audit objects and units, export meshes from
 2. Establish source part counts, units, solids/meshes, joinery and per-file notices.
 3. Adapt the existing export/viewer contract while preserving part identity.
 4. Add exploded/section inspection and a documented connection example.
-5. Verify the new asset in Rhino and the browser before replacing the historical app.
+5. Complete Rhino and browser visual verification. The owner explicitly requested catalogue replacement before those remaining checks; do not describe the new catalogue as fabrication-ready.
 
 W-S source render meshes are imported. Read WS_GEOMETRY_AUDIT.json and WS_CHECKPOINT.md for validation limits. Research/testing on another WikiHouse generation does not automatically validate these blocks. Missing source details remain unresolved. Studio and Architecture are unchanged. Drive v74 has not been updated.
