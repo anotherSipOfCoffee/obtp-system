@@ -1,0 +1,7 @@
+const assert=require('node:assert/strict'),kit=require('../dist/kit.js');
+assert.equal(kit.parts.length,8);assert.equal(new Set(kit.parts.map(p=>p.id)).size,8);
+for(const[n,total,posts,short,long]of [[1,24,4,2,2],[2,41,6,3,4]]){const a=kit.assembly(n),c=Object.fromEntries(kit.counts(a).map(r=>[r.id,r.count]));assert.equal(a.length,total);assert.equal(c.post01,posts);assert.equal(c.beam01,short);assert.equal(c.beam02,long);assert.equal(c.floor01,3*n);assert.equal(c.roof01,3*n);assert.equal(c.wall03,1);assert.equal(new Set(a.map(i=>i.id)).size,a.length);const boxes=kit.boxes(a);for(const b of boxes){assert(b.p.every(Number.isFinite));assert(b.d.every(x=>Number.isFinite(x)&&x>0));} // Actual positive-volume overlaps must be absent at nominal fit.
+for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++){const a=boxes[i],b=boxes[j];if(a.instance===b.instance)continue;const penetration=a.p.map((p,k)=>Math.min(p+a.d[k],b.p[k]+b.d[k])-Math.max(p,b.p[k]));assert(!penetration.every(x=>x>1e-7),'Collision '+a.instance+' / '+b.instance);}
+}
+for(const id of ['wall02','wall03']){const b=kit.shape(id),z=id==='wall02'?1.5:1;assert(!b.some(o=>.6>o.p[0]&&.6<o.p[0]+o.d[0]&&z>o.p[2]&&z<o.p[2]+o.d[2]));}
+assert.throws(()=>kit.assembly(3));console.log('PASS: 8 definitions; 24/41 instances; shared frame counts; finite geometry; openings; no positive-volume collisions. Gaps and engineering remain unresolved.');
