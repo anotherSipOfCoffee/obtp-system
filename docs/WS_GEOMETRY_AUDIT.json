@@ -1,0 +1,364 @@
+{
+  "source_blob_sha": "932338ca81fdc2acdd345cd0fc9df09d2a9888b2",
+  "source_units": "mm",
+  "instance_id": "94ced36e-0e02-4197-9c97-5bf5b92c541b",
+  "instance_transform": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      -1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "parts": [
+    {
+      "id": "7c2c7081-2984-4e0a-b272-64d2a7e4e384",
+      "valid": true,
+      "solid": true,
+      "brep_faces": 246,
+      "vertices": 2261,
+      "triangles": 4550,
+      "cad_conservative_bounds_mm": [
+        [
+          281.99999999949654,
+          49.999999999628926,
+          3.771649659256582e-11
+        ],
+        [
+          300.0000000000073,
+          236.00000000029104,
+          2100.00000000239
+        ]
+      ],
+      "cad_vertex_bounds_mm": [
+        [
+          281.99999999949796,
+          49.999999999934516,
+          6.02691230255914e-11
+        ],
+        [
+          299.99999999999636,
+          235.99999999996362,
+          2100.0000000023238
+        ]
+      ],
+      "mesh_bounds_mm": [
+        [
+          282.0,
+          50.0,
+          0.0
+        ],
+        [
+          300.0,
+          236.0,
+          2100.0
+        ]
+      ],
+      "bounds_delta_mm": 2.3237589630298316e-09,
+      "coordinate_rounding_max_mm": 4.999999418942025e-07
+    },
+    {
+      "id": "bf06722e-9894-4145-bb98-8b49187ae42e",
+      "valid": true,
+      "solid": true,
+      "brep_faces": 246,
+      "vertices": 2261,
+      "triangles": 4550,
+      "cad_conservative_bounds_mm": [
+        [
+          -299.99999999998545,
+          49.9999999996071,
+          3.794387026800905e-11
+        ],
+        [
+          -281.9999999994893,
+          236.0000000002765,
+          2100.00000000239
+        ]
+      ],
+      "cad_vertex_bounds_mm": [
+        [
+          -299.9999999999782,
+          49.99999999991269,
+          6.049649670103463e-11
+        ],
+        [
+          -281.9999999994907,
+          235.9999999999418,
+          2100.0000000023238
+        ]
+      ],
+      "mesh_bounds_mm": [
+        [
+          -300.0,
+          50.0,
+          0.0
+        ],
+        [
+          -282.0,
+          236.0,
+          2100.0
+        ]
+      ],
+      "bounds_delta_mm": 2.3237589630298316e-09,
+      "coordinate_rounding_max_mm": 4.999999418942025e-07
+    },
+    {
+      "id": "f2b235a4-e702-40b4-9d59-a67b82599c85",
+      "valid": true,
+      "solid": true,
+      "brep_faces": 38,
+      "vertices": 72,
+      "triangles": 140,
+      "cad_conservative_bounds_mm": [
+        [
+          -300.000427246443,
+          49.999999999663714,
+          1791.0000000019606
+        ],
+        [
+          299.9995727535769,
+          235.99999999968077,
+          1809.0000000020289
+        ]
+      ],
+      "cad_vertex_bounds_mm": [
+        [
+          -300.0004272464321,
+          49.999999999687134,
+          1791.0000000019609
+        ],
+        [
+          299.99957275357156,
+          235.9999999996653,
+          1809.0000000020289
+        ]
+      ],
+      "mesh_bounds_mm": [
+        [
+          -300.000488,
+          50.001099,
+          1791.0
+        ],
+        [
+          299.999512,
+          236.001099,
+          1809.0
+        ]
+      ],
+      "bounds_delta_mm": 0.0010990003347046695,
+      "coordinate_rounding_max_mm": 4.665527342240239e-07
+    },
+    {
+      "id": "7b89b087-8163-486d-b243-7df745a038e7",
+      "valid": true,
+      "solid": true,
+      "brep_faces": 38,
+      "vertices": 72,
+      "triangles": 140,
+      "cad_conservative_bounds_mm": [
+        [
+          -300.000427246443,
+          49.999999999663714,
+          1191.0000000019606
+        ],
+        [
+          299.9995727535769,
+          235.99999999968077,
+          1209.0000000020289
+        ]
+      ],
+      "cad_vertex_bounds_mm": [
+        [
+          -300.0004272464321,
+          49.999999999687134,
+          1191.0000000019609
+        ],
+        [
+          299.99957275357156,
+          235.9999999996653,
+          1209.0000000020289
+        ]
+      ],
+      "mesh_bounds_mm": [
+        [
+          -300.000488,
+          50.001099,
+          1191.0
+        ],
+        [
+          299.999512,
+          236.001099,
+          1209.0
+        ]
+      ],
+      "bounds_delta_mm": 0.0010990003347046695,
+      "coordinate_rounding_max_mm": 4.665527342240239e-07
+    },
+    {
+      "id": "e76ce087-3e8f-48b1-94fc-c0a460167ff1",
+      "valid": true,
+      "solid": true,
+      "brep_faces": 38,
+      "vertices": 72,
+      "triangles": 140,
+      "cad_conservative_bounds_mm": [
+        [
+          -300.000427246443,
+          49.999999999663714,
+          591.0000000019606
+        ],
+        [
+          299.9995727535769,
+          235.99999999968077,
+          609.000000002029
+        ]
+      ],
+      "cad_vertex_bounds_mm": [
+        [
+          -300.0004272464321,
+          49.999999999687134,
+          591.0000000019608
+        ],
+        [
+          299.99957275357156,
+          235.9999999996653,
+          609.0000000020286
+        ]
+      ],
+      "mesh_bounds_mm": [
+        [
+          -300.000488,
+          50.001099,
+          591.0
+        ],
+        [
+          299.999512,
+          236.001099,
+          609.0
+        ]
+      ],
+      "bounds_delta_mm": 0.0010990003347046695,
+      "coordinate_rounding_max_mm": 4.665527342240239e-07
+    },
+    {
+      "id": "03ac88b0-3753-47ad-9859-c1f575bcb30e",
+      "valid": true,
+      "solid": true,
+      "brep_faces": 474,
+      "vertices": 10200,
+      "triangles": 20422,
+      "cad_conservative_bounds_mm": [
+        [
+          -360.00000000064495,
+          49.99999999994907,
+          -15.000000000649134
+        ],
+        [
+          360.0000000002983,
+          68.00000000002183,
+          2114.9999999982956
+        ]
+      ],
+      "cad_vertex_bounds_mm": [
+        [
+          -300.00000000026193,
+          49.999999999970896,
+          1.708855279503041e-12
+        ],
+        [
+          300.00000000012005,
+          68.00000000000728,
+          2099.9999999980037
+        ]
+      ],
+      "mesh_bounds_mm": [
+        [
+          -300.0,
+          50.0,
+          0.0
+        ],
+        [
+          300.0,
+          68.0,
+          2100.0
+        ]
+      ],
+      "bounds_delta_mm": 1.9963408703915775e-09,
+      "coordinate_rounding_max_mm": 5.000000555810402e-07
+    },
+    {
+      "id": "80101b1d-da6d-4982-93b4-ad344f52f0f0",
+      "valid": true,
+      "solid": true,
+      "brep_faces": 398,
+      "vertices": 8544,
+      "triangles": 17096,
+      "cad_conservative_bounds_mm": [
+        [
+          -360.0000000020535,
+          217.99999999995634,
+          -14.999999998173351
+        ],
+        [
+          360.0000000036407,
+          236.00000000013557,
+          2115.0000000023047
+        ]
+      ],
+      "cad_vertex_bounds_mm": [
+        [
+          -299.99999999935244,
+          217.9999999999709,
+          3.95294819099945e-09
+        ],
+        [
+          300.00000000175714,
+          236.0000000000946,
+          2100.0000000007867
+        ]
+      ],
+      "mesh_bounds_mm": [
+        [
+          -300.0,
+          218.0,
+          0.0
+        ],
+        [
+          300.0,
+          236.0,
+          2100.0
+        ]
+      ],
+      "bounds_delta_mm": 3.95294819099945e-09,
+      "coordinate_rounding_max_mm": 5.000000555810402e-07
+    }
+  ],
+  "notes": [
+    "Seven definition Breps instantiated once; definition geometry is not counted twice.",
+    "Saved render meshes extracted, not regenerated. Six decimal places in mm.",
+    "Source reflection applied to coordinates; triangle winding reversed.",
+    "P01\u2013P07 and descriptions are OBTP display labels, not CNC part identification.",
+    "Exploded translations are viewing aids, not a prescribed assembly sequence.",
+    "Brep conservative bounds include untrimmed surface extents; comparison uses topology vertex bounds. This is not a surface deviation test.",
+    "Rhino 8 interactive and engineering checks not performed."
+  ]
+}

@@ -55,7 +55,8 @@
       "bytes": 4402845
     }
   ],
-  "geometry_imported": false,
+  "geometry_imported": true,
   "geometry_validated": false,
-  "cnc_note": "Source folder notes say manufacturing tolerance offsets and dog-bones are pre-applied. Do not add offsets blindly."
+  "cnc_note": "Source folder notes say manufacturing tolerance offsets and dog-bones are pre-applied. Do not add offsets blindly.",
+  "validation_stage": "Hash verified; seven valid solid Breps; cached meshes extracted; topology-vertex bounds within 0.0011 mm. Rhino8 comparison and browser visual QA pending."
 }

@@ -4,7 +4,7 @@ Decision recorded 2026-09-23 from the owner's explicit choice to adopt the WikiH
 ## Active direction
 Use WikiHouse Skylark components and their documented connections together. The previous independent frame with non-load-bearing panels is superseded. LT080, bespoke research-joint modelling and mixed commercial connector selection are parked. Do not transplant WikiHouse joints into the former post/beam geometry.
 
-Archive: branch `archive/independent-frame-v02`, commit `f284e74548bc68d81bc5d2b8995ba153d52ba117`. It preserves the old model, tests, rules and source research. Existing dist/ still shows that historical model; it is not a WikiHouse model. No new geometry has been deployed in this transition checkpoint.
+Archive: branch `archive/independent-frame-v02`, commit `f284e74548bc68d81bc5d2b8995ba153d52ba117`. It preserves the old model, tests, rules and source research. The main dist/ page retains that historical model and links to the new W-S source study at dist/ws/. The source study is a separate validation preview.
 
 ## Source baseline
 Repository: https://github.com/wikihouseproject/Skylark
@@ -15,7 +15,7 @@ The inspected tree contains SKYLARK150 and Test, with 58 .3dm and 517 .dxf files
 https://www.wikihouse.cc/blocks
 
 ## First candidate
-Inspect the existing W-S wall block, rather than inventing a component. See `WIKIHOUSE_SOURCE_LOCK.json` for exact file paths and blob hashes. The .3dm, CNC DXFs and production CSV exist; their internal geometry has not yet been audited. Start with one block and its parts, then a documented adjacent-block connection.
+Inspect the existing W-S wall block, rather than inventing a component. See `WIKIHOUSE_SOURCE_LOCK.json` for exact file paths and blob hashes. The .3dm, CNC DXFs and production CSV exist; the uploaded .3dm has been hash-verified and inspected. Seven valid solid Breps form one instance; all faces have saved render meshes. CNC files have not been geometrically matched to those parts. Start with one block and its parts, then a documented adjacent-block connection.
 
 Preserve original units, source part IDs, shape, materials and connection arrangement. Do not offer arbitrary resize sliders. Keep display mesh simplification separate from authoritative CAD.
 
@@ -35,4 +35,4 @@ Import the official .3dm in Rhino 8, audit objects and units, export meshes from
 4. Add exploded/section inspection and a documented connection example.
 5. Verify the new asset in Rhino and the browser before replacing the historical app.
 
-No source geometry has been imported yet. Research/testing on another WikiHouse generation does not automatically validate these blocks. Missing source details remain unresolved. Studio and Architecture are unchanged. Drive v74 has not been updated.
+W-S source render meshes are imported. Read WS_GEOMETRY_AUDIT.json and WS_CHECKPOINT.md for validation limits. Research/testing on another WikiHouse generation does not automatically validate these blocks. Missing source details remain unresolved. Studio and Architecture are unchanged. Drive v74 has not been updated.
