@@ -1,24 +1,13 @@
-# Current state — consolidation checkpoint
-2026-09-23
+# OBTP current state — v76, 2026-09-23
 
-## Complete before this storage migration
-- Three separate repositories and GitHub Pages sites exist.
-- System's original interface structure is restored with eight source-based objects: W-S, C-S-1, E-S, F-S, W-O-S-1, R-S, full tie and half tie.
-- Wall/wall, floor/wall and wall/roof views, plus a four-block open slice with 24 ties.
-- Source hashes checked. All imported CAD objects valid; one R-S Brep open.
-- 48 floor/wall and wall/roof sampled sections: maximum reported overlap 0.695739 mm². This is not full-volume or engineering validation.
-- Browser workflow run 35890259122 passed at af10fefa98e34eac60682bfc2c9f513b854a8279; desktop/mobile screenshots inspected. See docs/BROWSER_CHECK_REPORT.json.
+Independent Cassette 01 is implemented in System and exposed as Studio v3 through the pinned source relationship. It generates a rectangular frame from 1–8 repeating modules, including end-wall framing, with object/connection inspection, stages, exploded view, quantities and nominal Rhino box export. WikiHouse v2 and Studio v1 remain separately accessible. Architecture application files are unchanged.
 
-## Storage decision
-GitHub is authoritative. Drive v74 is superseded as a current handover, but preserved as historical evidence. All 196 original v74 files survive in its byte-exact archive; project/archive/v74/FILE_INVENTORY.json records their hashes. Shared Rhino pilot files are additionally extracted under project/shared/ for practical use.
-Original selected CAD is stored permanently under sources/skylark150/. The prior seven-day Actions artifact is not the durable source. No Git LFS pointers are used.
-The v74 ZIP is stored as three verified binary parts to satisfy the GitHub plugin request-size limit. tools/restore_v74.py reconstructs the original ZIP byte-for-byte. Drive snapshots contain the restored whole ZIP and extracted CAD, as well as the three repository exports.
+This is a digital research prototype, not a finished construction kit. Timber sections, plywood, fastening schedules, racking, spans, supports, tolerances, roof drainage, envelope details and Lithuanian requirements need engineering. Openings remain disabled. Research and proposed envelope approach are in docs/cassette/; the rendered report is dist/cassette/research.html.
 
-## Next authorized work
-Prepare the full illustrated technical PDF report from current GitHub evidence. Include the corrected user intent, actual component library, source provenance, Rhino-to-web workflow, interface checks, screenshots, assembly scope, source defects and next steps. Do not claim it is already written.
+Phase 1 geometry and both System/Studio browser workflows passed; see docs/cassette/VALIDATION.md. The reference export round-tripped as 166 valid closed Breps in Rhino 8 file format. Windows Rhino/Grasshopper was not run. No bidirectional CAD/web workflow is claimed.
 
-## Remaining technical work
-Rhino 8 Windows comparison; resolve the source roof opening; establish corner/end-floor and opening placements; extend the open slice only with supported source connections. No closed building or engineering approval is claimed.
+Consolidation removes the embedded v74 backup parts, obsolete old snapshot workflow/request/restoration tools, and misleading duplicate/outdated coordination instructions. Required source bundles, the W-S viewer, useful Rhino pilot, licenses, meshes and intentional data are retained. Drive historical packages are outside the active master. See CLEANUP.md and the master manifest for exact state.
 
-## Project boundaries
-Studio and Architecture visual behaviour remain unchanged by this consolidation. System has not been integrated into their model generation. Their app-specific rules remain in their own AGENTS.md files.
+Drive holds the authoritative master baseline. GitHub development branches may be ahead; main/live are intentionally still on the pre-task commits listed in PROJECT_MAP.md. Do not interpret that divergence as a synchronization error. The final Drive receipt is intentionally a later documentation commit than the packaged source if necessary to avoid self-referential commit hashes.
+
+Next useful work: engineering concept review and one physical joint/cassette prototype; Lithuanian envelope/ventilation analysis; reviewed opening details; Windows Rhino 8 inspection. Deployment is a separate decision and was not authorized in this task.

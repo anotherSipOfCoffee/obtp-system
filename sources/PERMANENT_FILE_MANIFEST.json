@@ -15,21 +15,6 @@
     "sha256": "1d902badc47c8106e8e758712096c31599f0b3f35faf2a8864cd68d921deb84d"
   },
   {
-    "path": "project/archive/v74/OBTP_Project_System_v74.zip.part001",
-    "bytes": 8388608,
-    "sha256": "a5d94e0aaf0fb36e891081ee17adf6d7150048630bd824ab4b4c31216a192094"
-  },
-  {
-    "path": "project/archive/v74/OBTP_Project_System_v74.zip.part002",
-    "bytes": 8388608,
-    "sha256": "03068bc5d5f11c76fef4c0adfe8522dfba0bca0cadb70b180d08615e3eff6e4c"
-  },
-  {
-    "path": "project/archive/v74/OBTP_Project_System_v74.zip.part003",
-    "bytes": 2491018,
-    "sha256": "b7904ec28952d0d067c002097309f4e24cf1cab8867a4966eafe235bd9293ea7"
-  },
-  {
     "path": "sources/skylark150/R-S-source.zip",
     "bytes": 3590021,
     "sha256": "a42dd0d9f8f8e1c566d92a78be8874f39ef4245d6d8b281503f71db61f999087"

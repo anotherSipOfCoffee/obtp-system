@@ -2,6 +2,10 @@
 
 23 September 2026 · independent system variation · **research prototype, not a construction release**
 
+![Four-module OBTP cassette frame, browser validation capture](../../dist/cassette/preview.png)
+
+*Actual prototype screenshot. Panels hidden to inspect the frame; not a finished building.*
+
 ## Decision
 
 Implement a timber-framed cassette system with CNC-cut plywood panels, mechanically connected boundary members and explicit interfaces between walls, floors and roofs. This is original OBTP nominal geometry, not renamed WikiHouse. WikiHouse remains a separate, pinned source-CAD variation; Studio v1 remains an unchanged reference inside Studio.
@@ -49,6 +53,8 @@ Traditional housed, lap and mortise-and-tenon principles were considered as mech
 
 **R9 — Lithuanian Ministry of Environment, 27 November 2020 announcement on A++ new buildings.** [Official announcement](https://am.lrv.lt/lt/naujienos/naujai-statomu-namu-energinis-naudingumas-jau-tik-a-klases). Historical official notice reviewed as context, not proof of current applicability. Current building-use classification, size exceptions, permit rules and energy requirements must be checked against consolidated legislation for the actual site. [Residential regulation record](https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.226882/asr) and [SSVA energy-certification guidance](https://www.ssva.lt/cms/dazniausiai-uzduodami-klausimai/pastatu-energinio-naudingumo-sertifikavimas) are starting points. No blanket “under 50 m²” exemption or A++ compliance is claimed.
 
+**R10 — Timberwalls / UAB Gelmeda, Pre-Cut service.** [Official page](https://timberwalls.net/lt/produktai/pre-cut/). Current page reviewed, following the earlier project provider screen. It advertises labelled C24 timber members and assembly drawings. This is supplementary evidence for a Lithuanian pre-cut supply route, not proof of willingness to supply our small cassettes or approval of their dimensions. Manufacturer precision and crane-free claims are not adopted. No supplier contacted and no proprietary geometry copied.
+
 Additional leads were screened but not used to justify dimensions: Swedish Wood's Design of Timber Structures (2022, full PDF too large for retrieval); Sim[PLY] (publisher unavailable); full-scale light-frame modules DOI 10.1016/j.engstruct.2024.117617 (publisher unavailable); and weathered sheathing connections DOI 10.3390/f14040734 (publisher rate-limited). Their titles/snippets are not treated as full reviews.
 
 ## Evidence synthesis and unresolved disagreement
@@ -61,7 +67,7 @@ The new UI therefore exposes geometry and interfaces but intentionally exports n
 
 ## Reuse and ownership
 
-New cassette geometry and text are original OBTP proposals; no additional public reuse licence is assigned by this task. Confirm the owner's preferred licence before public distribution. Third-party papers remain under their own licences. WikiHouse CAD, meshes and notices retain their existing CC BY-SA 4.0 obligations and provenance. The shared browser renderer is OBTP application code; using it does not mix WikiHouse part geometry into Cassette 01. Patent/freedom-to-operate clearance has not been performed. No branded connector is cloned.
+New cassette geometry and text are original OBTP proposals; no additional public reuse licence is assigned by this task. Public repository readability does not grant an additional reuse licence; confirm the owner's preferred licence before wider licensed distribution. Third-party papers remain under their own licences. WikiHouse CAD, meshes and notices retain their existing CC BY-SA 4.0 obligations and provenance. The shared browser renderer is OBTP application code; using it does not mix WikiHouse part geometry into Cassette 01. Patent/freedom-to-operate clearance has not been performed. No branded connector is cloned.
 
 ## Next validation gates
 

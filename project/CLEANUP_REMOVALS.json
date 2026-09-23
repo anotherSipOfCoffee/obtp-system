@@ -1,0 +1,55 @@
+{
+  "removed": [
+    {
+      "path": "project/archive/v74/ARCHIVE_PARTS.json",
+      "bytes": 689,
+      "reason": "Historical backup recovered outside active tree"
+    },
+    {
+      "path": "project/archive/v74/README.md",
+      "bytes": 731,
+      "reason": "Historical backup recovered outside active tree"
+    },
+    {
+      "path": "project/archive/v74/OBTP_Project_System_v74.zip.part002",
+      "bytes": 8388608,
+      "reason": "Historical backup recovered outside active tree"
+    },
+    {
+      "path": "project/archive/v74/FILE_INVENTORY.json",
+      "bytes": 36950,
+      "reason": "Historical backup recovered outside active tree"
+    },
+    {
+      "path": "project/archive/v74/OBTP_Project_System_v74.zip.part003",
+      "bytes": 2491018,
+      "reason": "Historical backup recovered outside active tree"
+    },
+    {
+      "path": "project/archive/v74/OBTP_Project_System_v74.zip.part001",
+      "bytes": 8388608,
+      "reason": "Historical backup recovered outside active tree"
+    },
+    {
+      "path": "tools/restore_v74.py",
+      "bytes": 896,
+      "reason": "Only used by obsolete historical snapshot builder"
+    },
+    {
+      "path": "tools/build_project_snapshot.py",
+      "bytes": 6441,
+      "reason": "Only used by obsolete historical snapshot builder"
+    },
+    {
+      "path": "project/SNAPSHOT_REQUEST.json",
+      "bytes": 472,
+      "reason": "Only used by obsolete historical snapshot builder"
+    },
+    {
+      "path": ".github/workflows/project-snapshot.yml",
+      "bytes": 1410,
+      "reason": "Only used by obsolete historical snapshot builder"
+    }
+  ],
+  "total_bytes": 19315823
+}

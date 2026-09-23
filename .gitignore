@@ -6,3 +6,8 @@ node_modules/
 Thumbs.db
 *.log
 tmp/
+
+__pycache__/
+*.pyc
+qa/
+cassette-validation.json

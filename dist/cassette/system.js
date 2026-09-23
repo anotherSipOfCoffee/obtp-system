@@ -45,7 +45,7 @@
    add('east-'+i,'W600H'+H,[4572,i*600,F],R90,'walls',[350,0,0]);
    add('roof-'+i,'R600',[0,i*600,F+H],I,'roof',[0,0,450]);
    for(const side of ['west','east']){
-    const x=side==='west'?97.5:4474.5;
+    const x=side==='west'?22.5:4549.5;
     join('wall-floor',side+'-'+i,'floor-'+i,[x,i*600+300,F]);
     join('wall-roof',side+'-'+i,'roof-'+i,[x,i*600+300,F+H]);
     if(i)join('wall-seam',side+'-'+(i-1),side+'-'+i,[x,i*600,F+H/2]);
@@ -55,7 +55,7 @@
   for(const end of ['front','back'])for(let j=0;j<7;j++){
    const w=j===6?582:600,id=end+'-'+j;
    add(id,'W'+w+'H'+H,end==='front'?[195+j*600,0,F]:[4377-j*600,L,F],end==='front'?I:R180,'walls',[0,end==='front'?-350:350,0]);
-   const x=end==='front'?195+j*600+w/2:4377-j*600-w/2,y=end==='front'?97.5:L-97.5,k=end==='front'?0:bays-1;
+   const x=end==='front'?195+j*600+w/2:4377-j*600-w/2,y=end==='front'?22.5:L-22.5,k=end==='front'?0:bays-1;
    join('wall-floor',id,'floor-'+k,[x,y,F]);join('wall-roof',id,'roof-'+k,[x,y,F+H]);
    if(j)join('wall-seam',end+'-'+(j-1),id,[end==='front'?195+j*600:4377-j*600,y,F+H/2]);
    if(j===0||j===6){const side=(end==='front')===(j===0)?'west':'east';join('corner',id,side+'-'+k,[side==='west'?195:4377,y,F+H/2]);}

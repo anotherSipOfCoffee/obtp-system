@@ -1,25 +1,13 @@
 # OBTP — start here
-Updated 2026-09-23. GitHub is the authoritative editable project record. Google Drive contains dated, complete snapshots. GitHub Pages is the deployed output, not a separate editable source.
 
-## Repositories
-- Studio: https://github.com/anotherSipOfCoffee/obtp-studio
-- Architecture: https://github.com/anotherSipOfCoffee/obtp-architecture
-- System and shared project coordination: https://github.com/anotherSipOfCoffee/obtp-system
+Current policy: **Drive is the authoritative master baseline; GitHub is downstream development and may be ahead.** Never overwrite a newer branch merely because Drive is master.
 
-Keep the three applications separate. Shared rules, historical evidence, handover records and future cross-project reports live under System's project/ directory. This does not merge the applications into a monorepo.
+Master: https://drive.google.com/drive/folders/1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C
 
-## Read order
-1. This file, project/AGENT_GUIDE.md and project/CURRENT_STATE.md.
-2. The target repository's current main branch AGENTS.md.
-3. Relevant current project docs; for System read docs/SYSTEM_RULES.md and docs/CATALOGUE_CHECKPOINT.md.
-4. Source locks, audits and test results required for the specific change.
+Read the target project's AGENTS.md, then System's project/PROJECT_MAP.md and project/AGENT_GUIDE.md on the development branch. Record the baseline ID, repository SHA and differences before editing.
 
-A Drive snapshot is a point-in-time copy. Read its SNAPSHOT_MANIFEST.json, then fetch current GitHub heads before editing. Never overwrite current main with snapshot files wholesale. Compare and merge only intentional changes. If GitHub is unavailable, label work as an offline draft and reconcile against current heads before publishing.
+Current baseline work: v76, 2026-09-23; development branch dev/obtp-independent-v1-20260923. The branch contains the independent cassette prototype and consolidation; main/live websites remain at the pre-task commits. No deployment was authorized.
 
-## Current scope
-System retains Types → Objects → Connections → Assemblies. Its generic objects have been replaced with six official Skylark150 block models and two source-profile ties. Three interfaces and an open four-block chassis slice are present. It is not a complete engineered building. Studio and Architecture website behaviour is unchanged.
+Studio v1 stays inside Studio. Studio v2 consumes WikiHouse from pinned System. Studio v3 consumes the independent Cassette 01 from the same pinned System distribution. Architecture remains a separate application with its existing behaviour.
 
-## Already-authorized next deliverable
-The owner selected a full illustrated technical PDF report. Storage consolidation was requested before that report. After consolidation, prepare it from current GitHub evidence, including actual screenshots, source provenance, checks, known limitations and next steps. Do not ask the owner to select the report format again.
-
-Historical v74 instructions are preserved under project/archive/v74, not active instructions. In particular: repository creation is complete, GitHub Pages supersedes former Cloudflare plans, and the independent-frame design has been superseded by the WikiHouse direction.
+Historical recovery is outside active projects: https://drive.google.com/drive/folders/19h05GdvjJpEeyf7nPka4Y91avA1I3W5b . Do not load old instructions as current context unless recovery is requested.

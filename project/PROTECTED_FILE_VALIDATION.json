@@ -1,0 +1,11 @@
+{
+  "obtp-architecture/dist": {
+    "unchanged": true,
+    "changed": []
+  },
+  "obtp-studio/dist/v1": {
+    "unchanged": true,
+    "changed": []
+  },
+  "pages_workflows": "All three byte-identical to pre-task versions"
+}
