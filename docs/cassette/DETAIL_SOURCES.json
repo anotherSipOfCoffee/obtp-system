@@ -1,0 +1,29 @@
+{
+  "schema": "obtp-detail-sources/1",
+  "sources": [
+    {
+      "id": "hbs",
+      "url": "https://www.rothoblaas.com/attachments/288905-product-241/hbs-en-technical-data-sheet.pdf",
+      "sha256": "07ffcb2cec5eed0f077b7ed6fb86d7de3d8f10700aa7467dc30e3c53532cf478",
+      "reviewDate": "2026-09-24",
+      "visuallyReviewedPdfPagesOneBased": [
+        3,
+        4,
+        5
+      ],
+      "redistribution": "Source PDF not republished. Original analytical envelopes and citations only.",
+      "fullETAReviewed": false
+    },
+    {
+      "id": "abr",
+      "url": "https://pim.strongtie.eu/api/v1/public/download/gb/en/product/260/ABR.pdf",
+      "sha256": "9b3ecffb0ec7b4b30a94465e5a41a3d3383fee838cee93ff655f5275a2852151",
+      "reviewDate": "2026-09-24",
+      "visuallyReviewedPdfPagesOneBased": [
+        2
+      ],
+      "redistribution": "Source PDF not republished. Original analytical envelopes and citations only.",
+      "fullETAReviewed": false
+    }
+  ]
+}

@@ -11,3 +11,7 @@ Consolidation removes the embedded v74 backup parts, obsolete old snapshot workf
 Drive holds the authoritative master baseline. GitHub development branches may be ahead; main/live are intentionally still on the pre-task commits listed in PROJECT_MAP.md. Do not interpret that divergence as a synchronization error. The final Drive receipt is intentionally a later documentation commit than the packaged source if necessary to avoid self-referential commit hashes.
 
 Next useful work: engineering concept review and one physical joint/cassette prototype; Lithuanian envelope/ventilation analysis; reviewed opening details; Windows Rhino 8 inspection. Deployment is a separate decision and was not authorized in this task.
+
+
+## Website continuation — 24 September 2026
+System v2 reuses the WikiHouse v1 Types → Objects → Connections → Assemblies layout. Version is the first parameter on both pages. The v2 viewer defaults explicitly to revised R90 geometry, while the generator API default stays unchanged. The measured inspector no longer exposes a cut preview and always requests complete cross-sections. Original failed probes and research alternatives remain available. Architecture and Studio source pins are unchanged. This UI release is authorized by the owner's request to update the web; no construction release is implied.

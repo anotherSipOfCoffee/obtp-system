@@ -1,14 +1,14 @@
 'use strict';
 /* Original OBTP concept geometry. No WikiHouse CAD or connection profiles. */
 (function(root){
- const spec=Object.freeze({id:'obtp-cassette-01',revision:1,units:'mm',pitch:600,width:4572,wallDepth:195,stud:45,joistDepth:220,floorSkin:18,wallSkin:12,roofSkin:18,defaultHeight:2100,sheet:[1220,2440],status:'Proposed geometry; structural and envelope design not validated'});
+ const spec=Object.freeze({id:'obtp-cassette-01',revision:3,units:'mm',pitch:600,width:4572,wallDepth:195,stud:45,joistDepth:220,floorSkin:18,wallSkin:12,roofSkin:18,defaultHeight:2100,sheet:[1220,2440],status:'Proposed geometry; structural and envelope design not validated'});
  const connectionTypes=Object.freeze({
-  'panel-frame':{name:'Plywood to timber',principle:'Mechanical sheathing fasteners into supported timber edges',source:'R1 / R3',release:'HOLD: product, spacing, edge distances and racking design'},
-  'wall-seam':{name:'Wall to wall',principle:'Abutting boundary studs, mechanically connected from accessible cavity',source:'R1',release:'HOLD: screw specification, splitting and load transfer'},
-  'corner':{name:'Corner return',principle:'End cassette bears against side-wall stud face; mechanical restraint',source:'R1',release:'HOLD: corner fastening, hold-down and weather wrap'},
-  'wall-floor':{name:'Wall to floor',principle:'Bottom plate bearing over rim/blocking; separate shear and uplift restraint',source:'R1 / R2',release:'HOLD: fastener and anchorage design'},
-  'wall-roof':{name:'Roof to wall',principle:'Joist bearing on top plate; engineered uplift restraint',source:'R1 / R2',release:'HOLD: bearing, uplift and diaphragm transfer'},
-  'slab-seam':{name:'Floor / roof seam',principle:'Adjacent boundary joists mechanically linked; supported plywood edges',source:'R1',release:'HOLD: fastener schedule, diaphragm and differential movement'}
+  'panel-frame':{name:'Plywood to timber',principle:'Mechanical sheathing fasteners into supported timber edges',source:'C1 / C2 — connections.html',release:'HOLD: product, spacing, edge distances and racking design'},
+  'wall-seam':{name:'Wall to wall',principle:'Abutting boundary studs, mechanically connected from accessible cavity',source:'C5 HBS candidate — connections.html',release:'HOLD: screw selection, access, splitting, seam slip and load transfer'},
+  'corner':{name:'Corner return',principle:'End cassette bears against side-wall stud face; mechanical restraint',source:'C1 / C7 — connections.html',release:'HOLD: corner restraint, terminal anchorage and weather wrap; WHT narrow-stud arrangement not verified for 45 mm members'},
+  'wall-floor':{name:'Wall to floor',principle:'Bottom plate bearing over rim/blocking; separate shear and uplift restraint',source:'C6 ABR / C7 WHT candidates — connections.html',release:'HOLD: bearing, shear and independent uplift path to supports; product fit not verified'},
+  'wall-roof':{name:'Roof to wall',principle:'Joist bearing on top plate; engineered uplift restraint',source:'C6 ABR candidate — connections.html',release:'HOLD: bearing, uplift, eccentricity and diaphragm transfer; no connector size selected'},
+  'slab-seam':{name:'Floor / roof seam',principle:'Adjacent boundary joists mechanically linked; supported plywood edges',source:'C5 HBS / C4 — connections.html',release:'HOLD: joist seam fastening, deck seams, chord continuity and differential movement'}
  });
  const faces=[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]];
  function box(id,p,s,material='timber'){
@@ -31,7 +31,8 @@
   for(let j=0;j<2;j++)a.push(box('ply-'+j,[j*w/2,0,220],[w/2,600,18],'plywood'));
   return model(kind,a);
  }
- function generate({bays=4,height=2100,layer='all',skin=true}={}){
+ function generate({bays=4,height=2100,layer='all',skin=true,connectionRevision='baseline'}={}){
+  if(!['baseline','revised'].includes(connectionRevision))throw Error('Unknown connection revision');
   if(!Number.isInteger(bays)||bays<1||bays>8)throw Error('Choose 1–8 modules');
   if(![2100,2700].includes(height))throw Error('Unsupported height');
   if(!['all','floor','walls','roof'].includes(layer))throw Error('Unsupported layer');
@@ -60,9 +61,35 @@
    if(j)join('wall-seam',end+'-'+(j-1),id,[end==='front'?195+j*600:4377-j*600,y,F+H/2]);
    if(j===0||j===6){const side=(end==='front')===(j===0)?'west':'east';join('corner',id,side+'-'+k,[side==='west'?195:4377,y,F+H/2]);}
   }
+  // Revised perimeter members are single solid sections, never two unconnected 45 mm pieces.
+  // Keep the cassette envelope and all internal seam members unchanged.
+  if(connectionRevision==='revised')for(const item of items){
+   const original=models.find(m=>m.id===item.block);let changed=false;
+   const index=Number(item.id.split('-')[1]),side=item.id.split('-')[0];
+   const start=index===0,end=index===bays-1;
+   const assets=original.assets.map(a=>{
+    let lo=a.bounds[0].slice(),size=a.dimensions.slice();
+    if(side==='floor'||side==='roof'){
+     const near=start?90:45,far=end?90:45;
+     if(a.id==='edge-a'&&start)size[1]=90;
+     if(a.id==='edge-b'&&end){lo[1]=510;size[1]=90;}
+     if(a.id.startsWith('blocking-')){lo[1]=near;size[1]=600-near-far;if(a.id==='blocking-0')size[0]=90;else if(a.id==='blocking-4527'){lo[0]=4482;size[0]=90;}}
+    }else if(side==='west'||side==='east'){
+     // West wall local X runs towards the front; east local X runs towards the back.
+     const wideLeft=side==='west'?end:start,wideRight=side==='west'?start:end;
+     if(a.id==='left-stud'&&wideLeft)size[0]=90;
+     if(a.id==='right-stud'&&wideRight){lo[0]=510;size[0]=90;}
+     if(a.id==='sheet-seam-backing'){lo[0]=wideLeft?90:45;size[0]=600-lo[0]-(wideRight?90:45);}
+    }
+    if(lo.some((v,k)=>v!==a.bounds[0][k])||size.some((v,k)=>v!==a.dimensions[k]))changed=true;
+    return box(a.id,lo,size,a.material);
+   });
+   if(changed){const id=original.id+'-R90-'+side+'-'+index;models.push(model(id,assets));item.block=id;}
+  }
   const allItems=items.slice(),stages={floor:0,walls:1,roof:2,all:2},visible=items.filter(i=>stages[i.stage]<=stages[layer]),ids=new Set(visible.map(i=>i.id));
-  const selectedModels=models.map(m=>skin?m:model(m.id,m.assets.filter(a=>a.material!=='plywood')));
-  return {spec,bays,height,length:L,width:4572,clear:[4182,L-390,H],models:selectedModels,items:visible,allItems,joints:joints.filter(j=>ids.has(j.a)&&ids.has(j.b)),allJoints:joints,openings:{enabled:false,reason:'No designed lintel, jamb, sill, fastening or weathering detail'},status:spec.status};
+  const usedModels=connectionRevision==='revised'?models.filter(m=>items.some(i=>i.block===m.id)):models;
+  const selectedModels=usedModels.map(m=>skin?m:model(m.id,m.assets.filter(a=>a.material!=='plywood')));
+  return {spec,connectionRevision,bays,height,length:L,width:4572,clear:[4182,L-390,H],models:selectedModels,items:visible,allItems,joints:joints.filter(j=>ids.has(j.a)&&ids.has(j.b)),allJoints:joints,openings:{enabled:false,reason:'No designed lintel, jamb, sill, fastening or weathering detail'},status:spec.status};
  }
  function transform(item,p){const r=item.rotation;return [0,1,2].map(k=>r[k*3]*p[0]+r[k*3+1]*p[1]+r[k*3+2]*p[2]+item.translation[k]);}
  function worldBounds(item,asset){const p=asset.vertices.map(v=>transform(item,v));return [0,1].map(b=>[0,1,2].map(k=>Math[b?'max':'min'](...p.map(v=>v[k]))));}

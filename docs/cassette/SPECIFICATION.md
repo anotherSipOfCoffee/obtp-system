@@ -57,3 +57,12 @@ Airtightness requires continuous, inspectable joins across cassette seams and se
 ## Rhino 8 / web relationship
 
 System generates the nominal geometry in `dist/cassette/system.js`; Studio consumes that pinned System distribution. “Export geometry for Rhino 8” writes all timber/plywood parts and interface records, independent of the current visibility filter. `tools/rhino8/import_cassette.py` makes closed box Breps in a millimetre Rhino 8 document, preserves part names and stamps research status. It validates all Breps before adding objects. This is System-to-Rhino inspection, **not a newly completed bidirectional Grasshopper round trip**. Rhino edits must be deliberately reconciled back into the System specification; automatic overwriting is prohibited.
+
+
+## Connection-study revision — 24 September 2026
+
+See [CONNECTION_ALTERNATIVES.md](CONNECTION_ALTERNATIVES.md) for seven original, research-linked detail studies, review limits and the physical-validation brief. Generic plate envelopes and fastening zones are now inspectable; capacities, products and fastening schedules remain unassigned. This supersedes only the earlier description of the connection viewer, not the engineering holds.
+
+
+## Optional R90 connection geometry
+See DETAILS.md for the original/revised comparison. `connectionRevision: "revised"` widens perimeter rims and terminal side-wall studs to single 90 mm sections, retaining cassette dimensions. It resolves the measured distance-screen failures only. The default API geometry remains the original; System exposes the revision explicitly.

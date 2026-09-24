@@ -39,7 +39,7 @@ Traditional housed, lap and mortise-and-tenon principles were considered as mech
 
 **R2 — European Commission JRC, Eurocode 5 overview.** [Official scope](https://eurocodes.jrc.ec.europa.eu/EN-Eurocodes/eurocode-5-design-timber-structures). Official overview reviewed, not the complete paid standards. EN 1995 covers timber and wood-based panels with mechanical or adhesive joints, in conjunction with EN 1990, EN 1991 and relevant product assessments. A Lithuanian engineer must establish currently adopted editions, national annexes, actions, service classes and fire requirements. No standard tables or normative text are copied.
 
-**R3 — Miedziałowski et al. (2023), “Stiffness of Experimentally Tested Horizontally Loaded Walls and Timber-Framed Modular Building”, Materials 16(18), 6229.** [DOI 10.3390/ma16186229](https://doi.org/10.3390/ma16186229); [author article in PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC10532801/). Abstract, introduction, system description introduction and licence reviewed; subsequent retrieval was blocked, so detailed methods/results were not fully reviewed. It reports full-size walls and a four-storey building; its system includes OSB, I-studs, staples and adhesive. Useful scale-level evidence that inter-module interaction matters, but materially different from our sawn-timber/plywood proposal. We do not transfer its stiffness values. Article CC BY 4.0; no figures or product geometry copied, and that licence does not establish rights to manufacture a proprietary building system.
+**R3 — Miedziałowski et al. (2023), “Stiffness of Experimentally Tested Horizontally Loaded Walls and Timber-Framed Modular Building”, Materials 16(18), 6229.** [DOI 10.3390/ma16186229](https://doi.org/10.3390/ma16186229); [author article in PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC10532801/). Updated 24 September 2026: full textual methods, results and discussion subsequently retrieved through Europe PMC and reviewed. See [the detailed connection review](CONNECTIONS.md#c2--panel-scale-versus-building-scale-experiments) for the adhesive confound, test end-point, transfer limits and licence. The earlier partial-access limitation no longer applies to this article; no OBTP capacity is inferred.
 
 **R4 — Aranha, C.A., Hudert, M. & Fink, G. (2021), “Interlocking birch plywood structures”, International Journal of Space Structures 36(3), 155–163.** [DOI/full text](https://journals.sagepub.com/doi/10.1177/09560599211022219). Methods, specimen table, FE limitations, fabrication/assembly discussion, conclusions and rights reviewed. Specific birch plywood specimens from an exhibition structure were conditioned; small specimen numbers and selected angles limit generalisation. Tests identify low longitudinal rotational stiffness/capacity; a linear elastic FE comparison does not validate plastic failure or long-term weather exposure. Tight cuts complicated assembly. Article CC BY 4.0; geometry not copied. This is evidence against assuming a precise slot alone gives reliable structural performance, not evidence that all interlocks are unsuitable.
 
@@ -55,7 +55,7 @@ Traditional housed, lap and mortise-and-tenon principles were considered as mech
 
 **R10 — Timberwalls / UAB Gelmeda, Pre-Cut service.** [Official page](https://timberwalls.net/lt/produktai/pre-cut/). Current page reviewed, following the earlier project provider screen. It advertises labelled C24 timber members and assembly drawings. This is supplementary evidence for a Lithuanian pre-cut supply route, not proof of willingness to supply our small cassettes or approval of their dimensions. Manufacturer precision and crane-free claims are not adopted. No supplier contacted and no proprietary geometry copied.
 
-Additional leads were screened but not used to justify dimensions: Swedish Wood's Design of Timber Structures (2022, full PDF too large for retrieval); Sim[PLY] (publisher unavailable); full-scale light-frame modules DOI 10.1016/j.engstruct.2024.117617 (publisher unavailable); and weathered sheathing connections DOI 10.3390/f14040734 (publisher rate-limited). Their titles/snippets are not treated as full reviews.
+Additional leads were screened but not used to justify dimensions: Sim[PLY] (publisher unavailable); full-scale light-frame modules DOI 10.1016/j.engstruct.2024.117617 (publisher unavailable); and weathered sheathing connections DOI 10.3390/f14040734 (publisher rate-limited). Their titles/snippets are not treated as full reviews.
 
 ## Evidence synthesis and unresolved disagreement
 
@@ -77,3 +77,12 @@ New cassette geometry and text are original OBTP proposals; no additional public
 4. Test sheathing joints, racking and floor/roof behaviour under an engineer's protocol; correlate any calculation/FE model with measurements.
 5. Run transient hygrothermal analysis with Lithuanian weather, construction moisture, occupancy and air-leakage sensitivity; calculate repeating/linear thermal bridges and whole-envelope heat loss. Review roof and ground details separately.
 6. Design openings, weather seals, fire linings and ventilation; validate water management and airtightness on the prototype. Only then consider a fabrication release.
+
+
+## Connection research follow-up — 24 September 2026
+See [CONNECTIONS.md](CONNECTIONS.md) for the selected sections now reviewed from Swedish Wood Volume 2, primary product-document candidates, six interface families, the 45 mm hold-down fit issue and narrow-panel height screening. The review updates evidence and design holds without releasing hardware or changing nominal geometry.
+
+
+## Paper-led alternatives follow-up
+
+[CONNECTION_ALTERNATIVES.md](CONNECTION_ALTERNATIVES.md) adds six research sources and seven original mechanism studies. The existing product candidates, measured probes and failed distance checks remain authoritative for those tested geometric positions. Alternative plate envelopes are not assessed hardware or proof of a resolved connection.

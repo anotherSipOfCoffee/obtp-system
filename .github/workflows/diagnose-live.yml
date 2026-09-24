@@ -1,0 +1,29 @@
+name: Diagnose live System
+on:
+  push:
+    branches: [dev/obtp-independent-v1-20260923]
+    paths: ['.github/workflows/diagnose-live.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright@1.55.0
+      - run: npx playwright install --with-deps chromium
+      - name: Inspect live responses and browser errors
+        run: |
+          node <<'JS'
+          const {chromium}=require('playwright');
+          (async()=>{const browser=await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-webgl']});const page=await browser.newPage();page.on('pageerror',e=>console.log('PAGEERROR',e.message));page.on('response',r=>console.log('RESPONSE',r.status(),r.url()));for(const path of ['', 'cassette/', 'cassette/index.html', 'dist/cassette/index.html']){const url='https://anothersipofcoffee.github.io/obtp-system/'+path;await page.goto(url);await page.waitForTimeout(1000);console.log('PAGE',page.url(),(await page.locator('body').innerText()).slice(0,1800));}await browser.close();})();
+          JS
+      - name: Retest published System
+        env:
+          OBTP_BASE_URL: https://anothersipofcoffee.github.io/obtp-system/
+        run: |
+          node tests/browser.cjs
+          node tests/cassette-browser.cjs
