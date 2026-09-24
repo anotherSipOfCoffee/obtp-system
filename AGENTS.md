@@ -16,3 +16,7 @@ Before removal, verify a dated recovery snapshot outside active projects. Do not
 
 ## Independent variation
 Cassette 01 is a separate original OBTP proposal under dist/cassette. The preceding WikiHouse source restrictions apply to WikiHouse, not a prohibition on the separately authorized new variation. Read docs/cassette/RESEARCH.md, SPECIFICATION.md and VALIDATION.md. Do not claim mechanical capacities, tolerances, habitation or compliance from the software checks. Opening controls remain disabled.
+
+
+## Cassette controls and connection research — 2026-09-24
+Studio v3 owns its configuration UI and follows the WikiHouse control pattern: 1–8 modules, layers, exploded view and reset at 2,100 mm wall height. Import the pinned System generator and renderer; do not embed System's inspector as the Studio configurator. System owns modules, interfaces, source references and separate object/connection inspection. Read System docs/cassette/CONNECTIONS.md. Product candidates are not engineered connection releases: preserve capacity:null and fasteners:null. The 2,700 mm study remains System-only; narrow-panel racking and terminal hold-down fit remain open. This development batch is saved for review, without a new live release or Drive baseline update.

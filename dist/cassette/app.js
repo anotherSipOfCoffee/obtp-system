@@ -19,6 +19,7 @@ if(mode==='object'){
  const type=$('joint').value,j=scene.allJoints.find(j=>j.type===type),d=api.connectionTypes[type];items=scene.allItems.filter(i=>[j.a,j.b].includes(i.id)).map(i=>({...i,highlight:i.id===j.b}));
  $('title').textContent=d.name;$('detail').textContent=d.principle+'. '+d.release+'. Source: '+d.source+'. Violet highlights the mating cassette; contact does not prove resistance.';
 }
+if(scene.height===2700)$('detail').textContent+=' Narrow panels at this height are outside the width condition of simplified wall method A in the reviewed guidance; see connection research. No racking resistance is assigned.';
 renderer.setScene(items,{explode:Number($('explode').value)/100});
 $('dimensions').textContent=scene.length.toLocaleString('en')+' × 4,572 mm frame setting-out · '+scene.height.toLocaleString('en')+' mm wall height';
 $('status').textContent=items.length+' cassette instances · geometry ready';$('module-count').textContent=items.length;$('joint-count').textContent=scene.joints.length;

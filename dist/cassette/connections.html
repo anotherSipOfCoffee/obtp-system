@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cassette 01 connection research</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style>body{max-width:1060px;margin:40px auto;padding:0 24px;background:#f5f4ed;color:#24332e;font:16px/1.6 system-ui}a{color:#245440}h1,h2,h3{line-height:1.25}h2{margin-top:2em}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:10px;text-align:left;border:1px solid #cdd4c7}pre{white-space:pre-wrap}nav{margin-bottom:24px}@media(max-width:700px){table{display:block;overflow:auto}}</style>
+</head>
+<body><nav><a href="index.html">← Inspect Cassette 01</a></nav>
+<header id="title-block-header">
+<h1 class="title">Cassette 01 connection research</h1>
+</header>
+<h1
+id="cassette-01-connection-research-and-proposed-development-details">Cassette
+01 — connection research and proposed development details</h1>
+<p>24 September 2026. <strong>Design-development record; no fabrication
+or structural release.</strong></p>
+<h2 id="decision">Decision</h2>
+<p>Continue with sawn-timber boundary members and supported CNC plywood
+skins. Develop mechanically fastened seams, bearing joints and
+separately designed uplift restraints. Do not convert the cassette into
+a plywood friction-fit kit or copy WikiHouse connectors. The selection
+favours accessible assembly, inspectable load transfer and replaceable
+commercial fasteners. Its actual dimensions remain unvalidated.</p>
+<p>Studio owns the familiar WikiHouse-style configuration controls.
+System supplies module geometry, placement rules, interface records and
+detailed inspection. The default Studio comparison stays at 2,100 mm
+wall height; the 2,700 mm System study is not an engineered alternative.
+WikiHouse and Studio v1 remain separate.</p>
+<h2 id="questions-and-method">Questions and method</h2>
+<p>This targeted technical review asks: how do neighbouring cassettes
+transfer shear, uplift and bearing forces; how can DIY builders reach
+fasteners; which documented products fit the framing; and what tests
+distinguish a plausible detail from a validated system?</p>
+<p>Compare alternatives by material applicability, experimental support,
+installation access, reversibility, moisture sensitivity and rights
+clarity. Prioritize measured behaviour over marketing. Review two
+experimental papers, selected handbook/design-book sections and three
+manufacturer documents. This is not a systematic literature review or an
+exhaustive connector-market survey. Publisher access failed for
+additional leads already recorded in RESEARCH.md; their snippets are not
+evidence. No supplier was contacted.</p>
+<p><strong>Labels:</strong> “evidence” describes the reviewed source;
+“proposal” is OBTP’s untested design choice; “hold” identifies missing
+evidence or engineering. Neither this report nor the displayed contact
+graph supplies a fastening schedule.</p>
+<h2 id="evidence-register">Evidence register</h2>
+<h3 id="c1-timber-connection-mechanics">C1 — timber connection
+mechanics</h3>
+<p>Rammer, D.R. (2021), <em>Fastenings</em>, Wood Handbook, FPL–GTR–282,
+Chapter 8. <a
+href="https://research.fs.usda.gov/download/treesearch/62253.pdf">USDA
+full chapter</a>. Selected nail, screw, bolt and moisture-related
+sections reviewed, not every equation. The technical synthesis links
+performance to grain, wood properties, penetration and moisture history.
+It supports mechanical fastening as a principle; US design procedures do
+not establish Lithuanian design resistance. Link and paraphrase only;
+embedded third-party rights were not exhaustively checked.</p>
+<h3 id="c2-panel-scale-versus-building-scale-experiments">C2 —
+panel-scale versus building-scale experiments</h3>
+<p>Miedziałowski et al. (2023), <em>Stiffness of Experimentally Tested
+Horizontally Loaded Walls and Timber-Framed Modular Building</em>,
+Materials 16, 6229. <a
+href="https://doi.org/10.3390/ma16186229">DOI</a>; <a
+href="https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10532801/fullTextXML">full-text
+XML actually reviewed</a>. Full textual methods, results and discussion
+now reviewed, extending the earlier abstract-level review. Wall groups
+used different mechanical fasteners <strong>and adhesive</strong>; the
+four-storey building combined OSB/gypsum sheathing, engineered members
+and intermodule connections. Instrumented wall failures and building
+response provide useful experimental evidence. The whole-building test
+stopped at finish damage, not structural collapse. Its stiffness
+exceeded a sum based on isolated walls, but there was no controlled
+isolation of connector effects; material, restraint and assembly
+differences confound attribution. Do not transfer its screw spacing,
+stiffness or capacity to OBTP. Our inference: test adjoining cassettes
+and a corner/diaphragm assembly, not just isolated screws. Article CC BY
+4.0; no figures or proprietary system geometry copied.</p>
+<h3 id="c3-plywood-interlock-experiments">C3 — plywood interlock
+experiments</h3>
+<p>Aranha, Hudert &amp; Fink (2021), <em>Interlocking birch plywood
+structures</em>, International Journal of Space Structures 36(3),
+155–163. <a
+href="https://journals.sagepub.com/doi/10.1177/09560599211022219">Full
+text</a>. Methods, specimen descriptions, modelling limitations and
+assembly discussion reviewed. Selected short-term tests on
+exhibition-derived birch-plywood joints do not validate a cassette seam.
+Pull-out was not investigated, rotational response was limited, and
+tight fits complicated assembly; linear-elastic modelling does not
+validate failure behaviour. This argues against assuming an untested
+friction fit supplies all required restraint. It does not disprove
+traditional joinery generally. Article CC BY 4.0; no joint drawings
+copied.</p>
+<h3 id="c4-european-design-framework-and-narrow-walls">C4 — European
+design framework and narrow walls</h3>
+<p>Swedish Wood (2022), <em>Design of timber structures</em>, Volume 2,
+third edition. <a
+href="https://www.swedishwood.com/siteassets/5-publikationer/pdfer/sw-design-of-timber-structures-vol2-2022.pdf">Book
+PDF</a>. Selected sections 9.2, 10 and 11 plus preface/copyright
+reviewed. This educational interpretation is not the normative standard.
+Its simplified wall method A requires end tie-downs, uniform perimeter
+fastener spacing and sheet width at least h/4. It excludes panels
+containing openings from that method’s racking contribution. Connection
+slip and combined loading require consideration. National parameters are
+not supplied for Lithuania. Copyright retained by publisher; linked, not
+reproduced.</p>
+<p><strong>OBTP geometric screening, not resistance
+calculation:</strong> h/4 is 525 mm at 2,100 mm and 675 mm at 2,700 mm.
+Nominal 600/582 mm panels pass only that width screen at the lower
+height. At the taller height neither does, and the horizontal sheet
+joint introduces another assessment issue. Do not assume tying two
+cassettes together automatically creates one wide qualifying panel. A
+Lithuanian engineer must check the actual current standards, national
+annexes and complete method conditions.</p>
+<h3 id="c5-real-timber-to-timber-screw-candidate">C5 — real
+timber-to-timber screw candidate</h3>
+<p>Rothoblaas HBS. <a
+href="https://www.rothoblaas.com/products/fastening/screws/screws-carpentry/hbs">Product</a>;
+<a
+href="https://www.rothoblaas.com/attachments/288905-product-241/hbs-en-technical-data-sheet.pdf">Eurocode
+technical sheet</a>. Application, distance and design-principle sections
+reviewed; complete ETA not reviewed. The product covers
+timber/wood-panel applications and protected service classes 1/2. Its
+distances and resistances depend on material, loading and installation
+conditions. This is a shortlist for paired timber seams, <strong>not
+selection of a diameter, length or spacing</strong>. Do not use
+CLT-specific provisions for sawn studs or generic screws in an assessed
+connector pattern. Manufacturer copyright; buy/use an approved product
+after design, do not clone its geometry.</p>
+<h3 id="c6-real-angle-bracket-candidate">C6 — real angle-bracket
+candidate</h3>
+<p>Simpson Strong-Tie ABR. <a
+href="https://www.strongtie.co.uk/en-UK/products/reinforced-angle-bracket-abr">Official
+technical/product page</a>. Application, tabulated fastening conditions
+and installation notes reviewed; complete ETA not retrieved. Tables
+refer to specified CNA nails/CSA connector screws and, for relevant
+cases, paired brackets. Halving a paired value for a single bracket
+requires the stated rotation restraint; eccentricity cannot be ignored.
+Shortlisted for a designed shear/restraint role at bearing interfaces.
+Fit, support and load directions remain unchecked. Manufacturer
+documentation is linked, not copied; no commercial connector model
+reproduced.</p>
+<h3 id="c7-hold-down-candidate-and-a-dimensional-mismatch">C7 —
+hold-down candidate and a dimensional mismatch</h3>
+<p>Rothoblaas WHT, current new version. <a
+href="https://www.rothoblaas.com/products/fastening/brackets-and-plates/angle-brackets-and-plates-for-buildings/wht">Product</a>;
+<a
+href="https://www.rothoblaas.com/attachments/298406-product-1226/07_WHT_EN.pdf">technical
+sheet, marked 07-26</a>. Application, geometry, installation and
+narrow-pattern conditions reviewed, not a complete ETA calculation. The
+sheet cites ETA-23/0813 and describes a narrow pattern for 60 mm studs.
+OBTP has 45 mm members: that documented arrangement is <strong>not
+established as compatible</strong>. Its timber/steel/anchor checks and
+intermediate-layer conditions cannot be replaced by a bolt drawn through
+the floor. A larger terminal member or another assessed product requires
+engineering; adjacent studs are not automatically one solid post. The
+sheet marks the design registered. No copying/manufacturing licence or
+freedom-to-operate clearance inferred; no geometry copied.</p>
+<h2 id="proposed-interface-register">Proposed interface register</h2>
+<p>Each row names a lead source or product family, rather than
+pretending that one paper validates an entire joint. General mechanics
+and whole-assembly tests still apply. All rows remain
+<strong>HOLD</strong>. Fastener number, diameter, length, spacing,
+edge/end distances, capacity and allowable movement remain
+unspecified.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Interface</th>
+<th>Proposed load-transfer arrangement</th>
+<th>Lead evidence / candidate</th>
+<th>Assembly access and release gate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Plywood → timber</td>
+<td>Mechanically attach all required supported sheet edges; design the
+fastener group for panel forces. No assumed glue/composite action.</td>
+<td>C1; C2 informs the test programme</td>
+<td>Factory-accessible frame face. Select structural plywood declaration
+and assessed sheathing fastener; check head pull-through, splitting,
+sheet joints and cyclic slip.</td>
+</tr>
+<tr class="even">
+<td>Wall → wall seam</td>
+<td>Pair boundary studs; develop lateral screw transfer across the seam
+and explicit top/bottom continuity.</td>
+<td>C5 HBS shortlist</td>
+<td>Open cavity before insulation/lining; verify driver clearance and
+receiving timber. Design combined loads and group action; nominal
+contact alone is insufficient.</td>
+</tr>
+<tr class="odd">
+<td>Wall corner</td>
+<td>Bearing of the return cassette against side-wall framing, plus
+designed mechanical restraint into structural timber. Provide a separate
+terminal uplift path.</td>
+<td>C1; C7 for the separate anchorage investigation</td>
+<td>Check screw direction and receiving member; do not rely on plywood
+edge fixing or assume end-grain withdrawal. Prototype the actual handed
+corner and insulation access.</td>
+</tr>
+<tr class="even">
+<td>Wall → floor</td>
+<td>Compression via plate/rim or blocking; design shear restraint
+separately from overturning hold-down and its foundation load path.</td>
+<td>C6 ABR shortlist; C7 for uplift</td>
+<td>Leave access to structural rim/support and anchor. Current
+floor/platform depth is not automatically compatible with the WHT
+intermediate-layer detail. Neither bracket has been selected for this
+model.</td>
+</tr>
+<tr class="odd">
+<td>Wall → roof</td>
+<td>Joist/top-plate bearing for gravity; designed connector for uplift
+and transfer between roof diaphragm and walls.</td>
+<td>C6 ABR shortlist</td>
+<td>Install before closure; assess paired/single orientation, bearing
+and eccentricity. No claim that the provisional flat deck drains or that
+its span is sufficient.</td>
+</tr>
+<tr class="even">
+<td>Floor / roof → adjacent cassette</td>
+<td>Join neighbouring edge joists and design supported deck seams,
+diaphragm shear transfer and perimeter chord/collector continuity.</td>
+<td>C5 HBS shortlist; C4 design framework</td>
+<td>Fasten before access closes. Modelled touching joists do not provide
+a designed diaphragm. Confirm staged installation, differential
+movement, support conditions and service penetrations.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Terminal anchorage is a system-level prerequisite</strong>,
+not an extra decorative connector. A wall can bear on a floor and still
+overturn. The foundation/support type and site loads have not been
+defined. Do not show a solved foundation or infer stability from the
+connected graph.</p>
+<h2 id="conceptual-assembly-and-envelope-sequence">Conceptual assembly
+and envelope sequence</h2>
+<p>The following is an OBTP planning proposal for prototype review, not
+site instructions:</p>
+<ol type="1">
+<li>Design supports, anchorage, lifting/manual handling and temporary
+stability before erecting any cassette. Module mass and safe handling
+have not been established.</li>
+<li>Fabricate open frames with inspectable supported plywood edges. Use
+CNC for repeatable panel cutting and identification; retain accessible
+screw-driving faces. Do not machine structural holes until a reviewed
+schedule exists.</li>
+<li>Trial adjacent floor cassettes and a wall corner, leaving access to
+seams and anchors. Record squareness, stock moisture, driver access,
+repair/reassembly and measured fit. Establish tolerances from stock and
+trials, not invented nominal clearances.</li>
+<li>Add roof cassettes only under a reviewed erection/restraint plan.
+Inspect fastening and bearing before closure; photograph and identify
+each connection.</li>
+<li>Complete insulation and continuous air/weather control only after
+inspection. Separate structural restraint from seals: compressed mineral
+wool is not an airtight joint or a structural spacer.</li>
+</ol>
+<p>For a heated Lithuanian studio, carry forward the
+<strong>proposed</strong>, unvalidated envelope study from RESEARCH.md:
+mineral wool within framing, a continuous interior air/vapour-control
+strategy with a service zone, consideration of exterior continuous
+insulation, and drained/ventilated weather protection. At seams and
+corners reserve reachable membrane laps and tape substrates; at plates
+and anchors detail penetrations rather than assuming a continuous line
+in a section. Double studs, rims and metalwork need thermal-bridge
+assessment. Roof falls, water drainage and ground moisture require their
+own details. Intermittently heated/unconditioned use needs different
+boundary conditions, not a claim that moisture risk disappears. No
+membrane type, insulation thickness, vapour resistance, U-value or
+ventilation rate is released here. The earlier climate sources R5/R6
+remain abstract-level evidence, not a verified recipe.</p>
+<h2 id="alternatives-retained">Alternatives retained</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Why not selected for this first detail-development pass</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bolted, accessible panel seams</td>
+<td>Plausible for demountability; requires tool access, washers/bearing,
+slip and timber-movement assessment. Screwed open-frame seams are
+simpler to prototype, but not proven superior.</td>
+</tr>
+<tr class="even">
+<td>Continuous top/bottom rails spanning multiple cassettes</td>
+<td>Potentially clearer diaphragm/anchorage continuity; adds field
+pieces and changes assembly. Retain as a strong option if
+cassette-by-cassette seams cannot deliver the required stiffness.</td>
+</tr>
+<tr class="odd">
+<td>Traditional housed/lapped registration</td>
+<td>Could locate parts or supply bearing; section loss and tension
+restraint still need design. Do not translate a solid-timber precedent
+directly into a thin-plywood slot.</td>
+</tr>
+<tr class="even">
+<td>All-plywood interlock</td>
+<td>Attractive CNC workflow; C3 does not establish the required uplift,
+racking or moisture-conditioned performance. Keep separate from the
+current system.</td>
+</tr>
+<tr class="odd">
+<td>Bonded stressed-skin cassette</td>
+<td>Needs controlled adhesive application and quality assurance; no
+composite action assumed in this DIY prototype.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="validation-programme-before-a-construction-release">Validation
+programme before a construction release</h2>
+<p><strong>Engineering brief:</strong> fix use/site, supports, timber
+grade, plywood declaration, snow/wind and imposed loads,
+moisture/service class, fire and durability. Check 4,572 mm floor/roof
+spans, vibration, bearing, stability, diaphragms and all load
+combinations. The displayed 45/195/220 mm dimensions are nominal concept
+choices.</p>
+<p><strong>Connection coupons:</strong> an engineer/test laboratory
+should define specimen counts, conditioning and acceptance criteria for
+the chosen materials/products. Measure lateral slip, withdrawal/head
+pull-through, splitting and failure modes as applicable. Include dry and
+relevant moisture-cycled samples; distinguish installation repeatability
+from strength. Do not adopt numerical pass loads without
+calculation.</p>
+<p><strong>Subassemblies:</strong> test at least an adjoining-wall seam
+and a floor–wall–roof corner with the intended hold-down/support
+arrangement; include reversible lateral loading, uplift and
+serviceability measurements as required by the engineer. Separately
+assess sheathing seams, narrow panels and diaphragm edge continuity.
+Isolate changed variables before attributing improvements to a
+connector.</p>
+<p><strong>Envelope prototype:</strong> verify accessible membrane
+continuity, penetrations, water shedding and airtightness; undertake
+transient hygrothermal analysis for actual climate/occupancy and
+thermal-bridge calculation. Test ventilation/condensation assumptions
+before calling the studio habitable.</p>
+<p><strong>Software:</strong> preserve geometry-only tests, explicit
+null capacities/fasteners, unsupported-opening holds and independent
+WikiHouse/v1 regressions. A green software check is not a passed
+physical test. Current CAD shows contact geometry, not screw/bracket
+installation or a complete load path.</p>
+<h2 id="saved-scope">Saved scope</h2>
+<p>This research updates System’s connection descriptions and adds a
+readable report to its browser package. It does not change nominal
+cassette geometry or install guessed hardware. Studio v3 uses its own
+controls and the pinned System API. New work is on development branches
+for review; no live website or Drive baseline is changed in this batch.
+Architecture has no cassette import and is unchanged.</p>
+</body>
+</html>

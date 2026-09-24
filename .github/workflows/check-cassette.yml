@@ -1,7 +1,7 @@
 name: Check independent cassette (no deployment)
 on:
   push:
-    branches: ['dev/obtp-independent-v1-20260923']
+    branches: ['dev/obtp-independent-v1-20260923', 'dev/cassette-connections-studio-controls-20260924']
     paths: ['dist/**', 'tests/**', 'tools/rhino8/**', '.github/workflows/check-cassette.yml']
 permissions:
   contents: read

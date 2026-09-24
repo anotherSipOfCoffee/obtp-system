@@ -3,12 +3,12 @@
 (function(root){
  const spec=Object.freeze({id:'obtp-cassette-01',revision:1,units:'mm',pitch:600,width:4572,wallDepth:195,stud:45,joistDepth:220,floorSkin:18,wallSkin:12,roofSkin:18,defaultHeight:2100,sheet:[1220,2440],status:'Proposed geometry; structural and envelope design not validated'});
  const connectionTypes=Object.freeze({
-  'panel-frame':{name:'Plywood to timber',principle:'Mechanical sheathing fasteners into supported timber edges',source:'R1 / R3',release:'HOLD: product, spacing, edge distances and racking design'},
-  'wall-seam':{name:'Wall to wall',principle:'Abutting boundary studs, mechanically connected from accessible cavity',source:'R1',release:'HOLD: screw specification, splitting and load transfer'},
-  'corner':{name:'Corner return',principle:'End cassette bears against side-wall stud face; mechanical restraint',source:'R1',release:'HOLD: corner fastening, hold-down and weather wrap'},
-  'wall-floor':{name:'Wall to floor',principle:'Bottom plate bearing over rim/blocking; separate shear and uplift restraint',source:'R1 / R2',release:'HOLD: fastener and anchorage design'},
-  'wall-roof':{name:'Roof to wall',principle:'Joist bearing on top plate; engineered uplift restraint',source:'R1 / R2',release:'HOLD: bearing, uplift and diaphragm transfer'},
-  'slab-seam':{name:'Floor / roof seam',principle:'Adjacent boundary joists mechanically linked; supported plywood edges',source:'R1',release:'HOLD: fastener schedule, diaphragm and differential movement'}
+  'panel-frame':{name:'Plywood to timber',principle:'Mechanical sheathing fasteners into supported timber edges',source:'C1 / C2 — connections.html',release:'HOLD: product, spacing, edge distances and racking design'},
+  'wall-seam':{name:'Wall to wall',principle:'Abutting boundary studs, mechanically connected from accessible cavity',source:'C5 HBS candidate — connections.html',release:'HOLD: screw selection, access, splitting, seam slip and load transfer'},
+  'corner':{name:'Corner return',principle:'End cassette bears against side-wall stud face; mechanical restraint',source:'C1 / C7 — connections.html',release:'HOLD: corner restraint, terminal anchorage and weather wrap; WHT narrow-stud arrangement not verified for 45 mm members'},
+  'wall-floor':{name:'Wall to floor',principle:'Bottom plate bearing over rim/blocking; separate shear and uplift restraint',source:'C6 ABR / C7 WHT candidates — connections.html',release:'HOLD: bearing, shear and independent uplift path to supports; product fit not verified'},
+  'wall-roof':{name:'Roof to wall',principle:'Joist bearing on top plate; engineered uplift restraint',source:'C6 ABR candidate — connections.html',release:'HOLD: bearing, uplift, eccentricity and diaphragm transfer; no connector size selected'},
+  'slab-seam':{name:'Floor / roof seam',principle:'Adjacent boundary joists mechanically linked; supported plywood edges',source:'C5 HBS / C4 — connections.html',release:'HOLD: joist seam fastening, deck seams, chord continuity and differential movement'}
  });
  const faces=[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]];
  function box(id,p,s,material='timber'){
