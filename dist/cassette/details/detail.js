@@ -21,9 +21,14 @@
   for(let k=0;k<3;k++)if(d[k]){const a=(bounds[0][k]-p[k])/d[k],b=(bounds[1][k]-p[k])/d[k];lo=Math.max(lo,Math.min(a,b));hi=Math.min(hi,Math.max(a,b));}else if(p[k]<bounds[0][k]||p[k]>bounds[1][k])return null;
   return hi>=lo?[lo===0?0:lo,hi===0?0:hi]:null;
  }
- function probe(key){
-  const c=cases[key];if(!c)throw Error('Unknown connection detail');
-  const scene=api.generate({bays:2,height:2100,skin:true}),product=products[c.product],members=c.members.map(a=>part(scene,...a));
+ function probe(key,{revision='baseline'}={}){
+  let c=cases[key];if(!c)throw Error('Unknown connection detail');
+  if(!['baseline','revised'].includes(revision))throw Error('Unknown detail revision');
+  if(revision==='revised'&&['corner','wall-floor','wall-roof'].includes(key)){
+   c={...c,head:c.head.slice(),reason:key==='corner'?'Revised: single 90 mm receiving terminal stud; screw line moved to 45 mm from the outside edge. Original 45 mm stud remains rejected.':'Revised: single 90 mm perimeter rim; screw line moved to 45 mm from the outside edge. Plate dimensions and screw product are unchanged. Separate uplift/hold-down design remains unresolved.'};
+   c.head[key==='corner'?1:0]=45;
+  }
+  const scene=api.generate({bays:2,height:2100,skin:true,connectionRevision:revision}),product=products[c.product],members=c.members.map(a=>part(scene,...a));
   const driveAxis=c.axis.findIndex(v=>v!==0),threadStart=product.length-product.threadLength;
   const checks=members.map(m=>{
    const hit=interval(m.bounds,c.head,c.axis);if(!hit)throw Error('Fastener misses '+m.id);
@@ -37,7 +42,7 @@
     penetration:Math.max(0,Math.min(hit[1],product.length)-Math.max(hit[0],0)),threadEnvelopeOverlap:Math.max(0,Math.min(hit[1],product.length)-Math.max(hit[0],threadStart))};
   });
   const receiver=checks[1];
-  return {key,...c,product,members,interleafPart:c.interleaf?part(scene,...c.interleaf):null,checks,
+  return {key,revision,...c,product,members,interleafPart:c.interleaf?part(scene,...c.interleaf):null,checks,
    receiverPenetration:receiver.penetration,receiverThreadEnvelopeOverlap:receiver.threadEnvelopeOverlap,tipCover:receiver.interval[1]-product.length,
    screenPass:checks.every(c=>c.screenPass),capacity:null,fasteningSchedule:null,manufacturingRelease:false,source,
    conditions:'Conditional distance screen only: pre-drilled solid softwood with characteristic density ≤420 kg/m³; assumed member grain directions; reversible shear at 0° and 90°. Stock and actual loads are not specified. Axial/group/fire/moisture checks are not included.'};
@@ -49,8 +54,8 @@
   for(const ring of [0,profile.length-1]){const q=p.slice();q[k]+=axis[k]*profile[ring][0];const center=vertices.length;vertices.push(q);for(let j=0;j<n;j++)faces.push([center,ring*n+j,ring*n+(j+1)%n]);}
   const bounds=[0,1].map(b=>[0,1,2].map(k=>Math[b?'max':'min'](...vertices.map(v=>v[k]))));return {id,vertices,faces,bounds,material:'fastener-envelope'};
  }
- function geometry(key,{cutaway=true}={}){
-  const detail=probe(key),p=detail.product,models=[],items=[],crop=[detail.head.map(v=>v-130),detail.head.map(v=>v+130)];
+ function geometry(key,{cutaway=false,revision='baseline'}={}){
+  const detail=probe(key,{revision}),p=detail.product,models=[],items=[],crop=[detail.head.map(v=>v-130),detail.head.map(v=>v+130)];
   const driveAxis=detail.axis.findIndex(v=>v),cutAxis=[0,1,2].find(k=>k!==driveAxis);
   for(const [i,m] of [...detail.members,...(detail.interleafPart?[detail.interleafPart]:[])].entries()){
    const lo=m.bounds[0].map((v,k)=>Math.max(v,crop[0][k])),hi=m.bounds[1].map((v,k)=>Math.min(v,crop[1][k]));

@@ -11,3 +11,16 @@ assert.throws(()=>api.probe('invented'));
 // A shorter screw must reduce overlap; this guards against fixed displayed numbers.
 const p=api.products.HBS580,original=p.length;p.length=70;assert.equal(api.probe('wall-seam').receiverPenetration,25);p.length=original;
 console.log('PASS: six source-member probes, independent penetration expectations, interleaf exclusion, rejected narrow-edge positions, view-invariant checks and finite envelope meshes. No resistance tested.');
+
+for(const key of Object.keys(api.cases)){
+ const d=api.probe(key,{revision:'revised'});assert.equal(d.screenPass,true,key);assert.equal(d.revision,'revised');
+ assert.equal(d.capacity,null);assert.equal(d.fasteningSchedule,null);assert.equal(d.manufacturingRelease,false);
+ if(['corner','wall-floor','wall-roof'].includes(key))assert.deepEqual(d.checks.map(c=>c.edgeDistance),[45,45]);
+ for(const cutaway of [true,false])assert.deepEqual(api.geometry(key,{revision:'revised',cutaway}).detail,d);
+ assert.deepEqual([d.receiverPenetration,d.receiverThreadEnvelopeOverlap,d.tipCover],expected[key].slice(0,3));
+}
+assert.throws(()=>api.probe('corner',{revision:'imaginary'}));
+// At 90 mm the centred line has 10 mm geometric margin each side of the 35 mm screen.
+// Moving it back to the old 22.5 mm position must still fail: no threshold relaxation.
+const base=api.probe('corner');assert.equal(base.checks[1].requiredEdge,35);assert.equal(base.screenPass,false);
+console.log('PASS: revised positions pass the unchanged distance screen; historical failures retained.');

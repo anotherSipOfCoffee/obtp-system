@@ -26,3 +26,25 @@ No structural capacity, fastener resistance, diaphragm/racking resistance, const
 ## Connection-study revision — 24 September 2026
 
 See [CONNECTION_ALTERNATIVES.md](CONNECTION_ALTERNATIVES.md) for seven original, research-linked detail studies, review limits and the physical-validation brief. Generic plate envelopes and fastening zones are now inspectable; capacities, products and fastening schedules remain unassigned. This supersedes only the earlier description of the connection viewer, not the engineering holds.
+
+
+## Revision R90 — geometric failure resolution
+
+The original 45 mm receiving members and failed screw positions remain available as **Original**. The inspector defaults to **Revised** and **Full joint · no cut**. A separate Cutaway view reveals the screw; full view retains the complete cross-section but still crops long members around the joint. Neither view changes the measured source geometry.
+
+The revised generator replaces the side-wall terminal studs with single 90 × 195 mm sections and the slab perimeter rims with single 90 × 220 mm sections. These are original proposed solid sections, not two sistered 45 mm members assumed to act as one. Member grade, availability, moisture and full technical-assessment applicability remain to be specified. Internal cassette seam members remain 45 mm. Adjacent blocking and tall-wall backing are shortened to avoid overlap. Exterior dimensions, plate depth/thickness and cassette pitch are unchanged; local insulation space is reduced.
+
+| Position | Original nearest edge | Revised nearest edge | Screen | Receiver penetration / thread envelope |
+|---|---:|---:|---:|---:|
+| Corner return, HBS580 | 22.5 mm | 45 mm | ≥35 mm | 35 / 35 mm |
+| Wall–floor, HBS5120 | 22.5 mm | 45 mm | ≥35 mm | 57 / 57 mm |
+| Wall–roof, HBS5120 | 22.5 mm | 45 mm | ≥35 mm | 75 / 60 mm |
+
+The screw line moves to the centre of the widened receiver. The manufacturer-based conditional end/edge limits remain 60/35 mm; they have not been weakened to turn a failure into a pass. This yields 10 mm nominal edge-distance margin, not an approved installation tolerance. The 18 mm floor deck remains excluded from timber embedment. No new screw size or unverified longer fastener is introduced.
+
+Verification covers 32 original/revised assemblies (1–8 bays at two heights), positive-volume clash checks, and 800 revised corner/perimeter position checks including all four corners, both side walls and both end walls. These checks resolve the previously identified nominal edge-distance failures. They do not determine connection strength, screw quantity, group spacing, uplift, head pull-through, diaphragm resistance, full assembly sequence, fire, moisture, foundation hold-downs or compliance. A full ETA review, project loads and member/material specifications are needed for those decisions. **Capacity and fastening schedule remain null.**
+
+The generator exposes `connectionRevision: 'revised'`; the System inspector has an explicit geometry selector and exports the chosen revision. API default and Studio's saved source pin remain unchanged to avoid silently changing its assembly. The seven paper-led plate concepts are separate alternatives; they are not the geometry used for these corrected screw studies.
+
+Evidence: Rothoblaas HBS technical sheet, printed pages 32–34 / PDF pages 3–5, rechecked 24 September 2026. The revised sections and positions are OBTP design responses to that screen, not details reproduced from a research paper. Research references and their limits remain in CONNECTION_ALTERNATIVES.md. Next engineering work is load-based connection/anchorage design, followed by local and assembly testing; more green software checks cannot replace it.
+
