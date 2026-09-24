@@ -1,17 +1,11 @@
 # OBTP System
-The original Types → Objects → Connections → Assemblies interface, now populated with official WikiHouse Skylark150 source geometry.
 
-[Open System](https://anothersipofcoffee.github.io/obtp-system/)
+System owns two separately accessible construction variations: WikiHouse source geometry at dist/index.html, and original OBTP Cassette 01 at dist/cassette/index.html. Both feed Studio through its explicit System commit pin.
 
-Six CAD block objects and two source-derived tie objects are available. Three connection examples and a four-block open chassis slice use source sockets and ties. Read [the checkpoint](docs/CATALOGUE_CHECKPOINT.md) and [working rules](docs/SYSTEM_RULES.md) for the evidence and remaining limits. This is not a complete or engineering-validated building.
+Cassette 01 is a timber/plywood geometric research prototype. [Research](docs/cassette/RESEARCH.md), [module specification](docs/cassette/SPECIFICATION.md), [validation](docs/cassette/VALIDATION.md). It is not a habitable or fabrication-ready kit. WikiHouse remains an open chassis study with its documented end-wall and opening holds.
 
-Run `node tests/catalogue.cjs` for geometry/placement checks. `Check System catalogue` runs browser interactions and captures screenshots. `Import pinned WikiHouse CAD` collects exact official source files without changing them. Rhino 8 verification remains a separate step.
+Read [Start here](00_START_HERE.md), [project map](project/PROJECT_MAP.md) and [agent guide](project/AGENT_GUIDE.md). Drive is the master baseline; this GitHub development branch may contain newer work. No automatic synchronization.
 
-GitHub Pages publishes `dist/`. Root routing fallbacks also support the existing branch-based Pages setting. The previous generic-frame study is preserved at `archive/independent-frame-v02`; its UI structure is retained, but its generic members and assumed bay dimensions are superseded.
+Validation: node tests/catalogue.cjs; node tests/ws.cjs; node tests/cassette.cjs. Browser checks use the read-only Check System catalogue and Check independent cassette workflows. Existing Pages workflows are unchanged and must not be run for this task.
 
-WikiHouse team / Open Systems Lab. Source and derived geometry: CC BY-SA 4.0; see [attribution](dist/catalogue/NOTICE.md). OBTP is not endorsed by WikiHouse. Studio and Architecture application behaviour is unchanged. The original Drive v74 package is preserved as historical evidence.
-
-## Authoritative project storage
-GitHub is the editable source of truth. Read [Start here](00_START_HERE.md), [agent guide](project/AGENT_GUIDE.md) and [current state](project/CURRENT_STATE.md). All three applications remain separate repositories; shared coordination and the historical v74 material live under project/ here. [Permanent source CAD](sources/skylark150/README.md) is committed as actual file bundles, not expiring artifact links.
-
-Google Drive receives dated, verified, self-contained snapshots built from three pinned commits. See project/SNAPSHOT_REQUEST.json and the Build complete project snapshot workflow. No two-way sync is configured. Snapshot receipts are recorded under project/releases/ after successful upload. The full illustrated technical report remains the next authorized deliverable.
+Original WikiHouse source CAD bundles stay under sources/skylark150 with provenance and CC BY-SA 4.0 notices. They are source dependencies, not historical backup ZIPs. The direct W-S inspection viewer and earlier Rhino offline pilot are intentional reference tools. Generic historical archive packages have moved out of the active tree into dated Drive recovery; Git history remains intact.

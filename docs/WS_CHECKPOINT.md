@@ -1,3 +1,5 @@
+> Historical research/checkpoint, retained intentionally. Not the current project rulebook. Read ../project/PROJECT_MAP.md and current variation documentation first.
+
 # W-S source geometry checkpoint — 2026-09-23
 
 ## Delivered

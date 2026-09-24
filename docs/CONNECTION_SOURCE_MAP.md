@@ -1,3 +1,5 @@
+> Historical research/checkpoint, retained intentionally. Not the current project rulebook. Read ../project/PROJECT_MAP.md and current variation documentation first.
+
 # Connection source map — research checkpoint 01
 Date: 2026-09-23. Status: candidate selection, not construction specification.
 

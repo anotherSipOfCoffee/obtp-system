@@ -1,0 +1,12 @@
+{
+  "file": "OBTP_RECOVERY_2026-09-23_HISTORICAL.zip",
+  "bytes": 87870088,
+  "sha256": "fcb72995420e10ba0a0fd433baadf91105f590f013a9c26896ca97a66afb794d",
+  "restorable_files": 14552,
+  "original_bytes": 500729688,
+  "unique_objects": 926,
+  "verified": "Every stored repository file and expanded historical member reconstructed and SHA-256 checked before removal",
+  "drive_url": "https://drive.google.com/file/d/15kK5WF--mBCT8tuwKmaysunFdJ-FLuuT/view?usp=drivesdk",
+  "drive_id": "15kK5WF--mBCT8tuwKmaysunFdJ-FLuuT",
+  "remote_readback_sha256_verified": true
+}

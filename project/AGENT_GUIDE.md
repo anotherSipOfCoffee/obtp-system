@@ -1,30 +1,41 @@
-# OBTP agent guide — source-of-truth policy
-Owner decision, 2026-09-23: GitHub is the single source of truth; Google Drive is a dated snapshot/backup destination. This guide supersedes storage and handover directions in archived packages, including v74.
+# OBTP agent guide — current owner policy
 
-## Authority and editing
-Current user instructions take precedence. Then follow active repository AGENTS.md and current project docs. Archived prompts, archived AGENTS files, old owner reports and snapshot notes are evidence of past decisions, not current commands.
-Before editing, inspect the latest branch and relevant files through the GitHub plugin. Preserve unrelated work. Use non-forced updates; resolve concurrent changes rather than overwriting them. GitHub operations use the GitHub plugin only. Browser fallback, local authenticated GitHub CLI and borrowed credentials are not authorized.
-Edit the appropriate repository. Keep Studio, Architecture and System as separate applications. Shared coordination belongs in obtp-system/project/. Do not change Studio or Architecture behaviour as a side effect of System work.
+## Read and compare before editing
 
-## What lives where
-- Each repository: its current website source, tests, project docs and deployment workflow.
-- obtp-system/project/: shared guide, checkpoint, report sources, cross-project records, preserved v74 archive and reusable Rhino offline pilot.
-- obtp-system/sources/skylark150/: permanent source CAD bundles, including actual .3dm and DXF bytes. These are ordinary committed ZIPs, not LFS pointers or expiring artifact links.
-- Drive: self-contained, dated milestone snapshots, including all three repository copies, original CAD and historical archive. Preserve older snapshots; do not independently edit a second master in Drive.
-- GitHub Pages: generated website output. Do not treat browser state as the canonical model.
-- Workflow artifacts and scratch: temporary working copies, never the only surviving copy of unique CAD, checks or deliverables.
+Google Drive holds the authoritative master baseline, in [OBTP_MASTER](https://drive.google.com/drive/folders/1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C), with Studio, Architecture and System folders. A baseline is a deliberate accepted package, not a command to overwrite repositories.
 
-## Snapshot procedure
-Snapshot only when requested or explicitly covered by a previously authorized handover/release. Record the exact three commits. Use the project-snapshot workflow to export them, restore the complete v74 ZIP, and include extracted original CAD. Include checksums, inventory, current start-here instructions and actual validation limits. Verify the ZIP and upload a new dated file to the established Drive folder. Read back Drive metadata before reporting success. Record the Drive file URL, package checksum and included commits in project/releases/.
-A receipt-only commit may follow a snapshot; that does not invalidate its recorded point-in-time commits. Never claim a snapshot automatically tracks future main changes. No continuous two-way sync has been configured.
+GitHub repositories are downstream development branches. They can contain valid work newer than Drive. Read BASELINE_MANIFEST.json in the master, inspect current branch heads and compare actual files before integrating. Preserve unique/newer work and explain incompatible differences. No automatic two-way synchronization or forced equality.
 
-## Resume procedure
-Read the snapshot manifest, then current GitHub heads. Reuse already completed work and current user authorizations. Do not repeat repository creation, re-import old generic geometry, revive superseded deployment plans, or mistake archived instructions for active rules. If the snapshot and GitHub diverge, compare explicit paths and hashes before changing anything.
+Read PROJECT_MAP.md, CURRENT_STATE.md, target AGENTS.md and relevant source locks. Historical documents are evidence only. In particular, old “GitHub is the single source of truth”, Cloudflare deployment, repository-creation and WikiHouse-only project policies are superseded by the owner's current instructions.
 
-## Geometry and evidence
-Preserve Types → Objects → Connections → Assemblies. Use pinned official WikiHouse components and matching source connectors. No invented joinery, arbitrary stretching, silent source repair or cross-generation assumptions. Preserve IDs, units, nested instance paths, licence notices and attribution. Distinguish source CAD, cached display meshes, OBTP tie reconstructions and OBTP placement transforms.
-Report validation exactly: browser interaction tests are not Rhino execution; sampled mesh intersections are not complete collision checks, manufacturing clearance or engineering approval. The current open roof Brep and unmatched opening height remain documented issues. Do not fabricate costs, material quantities, performance or construction readiness.
+## Work rules
 
-## Communication and outstanding work
-Work in coherent batches and continue authorized tasks without repeated approval questions. Give concise progress and 2–3 meaningful continuation options at completion. Ask only when a missing choice materially affects the result. No supplier outreach or person-directed messages without explicit authorization.
-The illustrated technical PDF report is already selected and remains pending after this consolidation. Its editable source and final PDF must be committed to GitHub, then included in a later requested Drive snapshot. Do not present historical owner reports as that new report.
+- Use the GitHub plugin for GitHub operations. Do not use authenticated local git/gh as a workaround.
+- On 2026-09-24 the owner authorized publishing System first, validating both WikiHouse and Cassette 01, then publishing Studio v3 from that tested System revision. This supersedes the earlier no-deployment instruction for this release only. Preserve ordinary Git history, Studio v1 and WikiHouse. Architecture is outside this release; Drive remains the master baseline and is not automatically synchronized.
+- Make coherent commits with ordinary forward history. Save implementation and validate before consolidation. Do not hide limitations behind “passed” labels.
+- Update the Drive baseline only deliberately. Record included commits, archive/file hashes, build dependencies and known divergence. A later GitHub receipt commit can be ahead of the archived baseline without requiring repackaging unchanged application files.
+- Store actual source dependencies durably. Expiring Actions artifacts and scratch are not the only copy of unique work. Required source CAD ZIP bundles are allowed; historical backup ZIPs do not belong in active repositories.
+- Before removing material, create and verify a dated compressed recovery outside active projects. Verify references, dynamic loaders, tools and workflows. Keep uncertain or intentional references.
+- Recovery location: [historical folder](https://drive.google.com/drive/folders/19h05GdvjJpEeyf7nPka4Y91avA1I3W5b). Historical recovery and original old packages are excluded from normal development, builds, deployment and future agent context unless recovery is requested.
+
+## Application boundaries
+
+Studio owns configuration and variation selection. V1 is preserved inside Studio. V2 consumes the pinned WikiHouse implementation; V3 consumes the independent Cassette 01 implementation. system.lock.json identifies the exact System commit; tools/prepare_system.py verifies it before preparing the runtime copy. Do not duplicate System rules into Studio or commit the prepared dist/system-source tree.
+
+System owns component definitions, connection/placement rules, source attribution and validation. WikiHouse and independent Cassette 01 stay separately accessible. WikiHouse source parts must not be stretched, silently repaired, mixed across generations or represented as original OBTP designs. Cassette 01 geometry is original and provisional; it contains no WikiHouse connector profiles.
+
+Architecture is currently independent: no System import was found. Preserve its appearance, cameras, catalogue, analytics consent/configuration and geometry-based PDF drawing behaviour. Do not imply it now uses Cassette 01.
+
+## Protected references and engineering holds
+
+Preserve Studio v1, WikiHouse meshes/CAD/licences/source locks/audits, the direct W-S viewer and useful earlier Rhino offline pilot. The Rhino pilot proves only its own historic export context; it does not validate later geometry.
+
+WikiHouse end-wall trials remain rejected and automatic openings remain on hold pending precise source instructions. One roof source Brep is open. Cassette 01 has nominal framing closure but no completed openings, weatherproof roof or engineered fasteners. Software tests do not establish physical safety, compliance, capacity, thermal performance or manufacturing tolerances. Consult docs/cassette/RESEARCH.md, SPECIFICATION.md and VALIDATION.md.
+
+## Future baseline procedure
+
+1. Read the current Drive baseline manifest and GitHub heads; record both.
+2. Work on an authorized branch; make and test intentional changes.
+3. Prepare clean project exports with exact repository SHAs. Exclude caches, generated runtime copies and historical backups; preserve required source and licences.
+4. Upload complete packages to the correct Drive project folders, verify sizes/checksums and update one obvious current manifest/map.
+5. Record differences and receipts in GitHub without forcing branches to match Drive. Do not deploy unless separately authorized.
