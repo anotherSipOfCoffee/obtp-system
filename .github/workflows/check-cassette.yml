@@ -23,6 +23,25 @@ jobs:
           python3 -m http.server 8765 --directory dist > /tmp/obtp-server.log 2>&1 &
           node tests/cassette-browser.cjs
           node tests/connection-details-browser.cjs
+      - name: Checkout existing Studio controls for compatibility check
+        uses: actions/checkout@v4
+        with:
+          repository: anotherSipOfCoffee/obtp-studio
+          ref: ed485885e5c6649dc3e35d2dd2b20aa22955c456
+          path: qa-studio
+      - name: Test Studio against this System without changing its saved pin
+        run: |
+          ln -s "$GITHUB_WORKSPACE" qa-studio/_system
+          python3 - <<'PYCODE'
+          import json, os, pathlib
+          p=pathlib.Path('qa-studio/system.lock.json')
+          d=json.loads(p.read_text());d['commit']=os.environ['GITHUB_SHA']
+          p.write_text(json.dumps(d))
+          PYCODE
+          python3 qa-studio/tools/prepare_system.py
+          python3 -m http.server 8766 --directory qa-studio/dist > /tmp/studio-compatibility.log 2>&1 &
+          cd qa-studio
+          OBTP_BASE_URL=http://127.0.0.1:8766/ node tests/variations.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -30,4 +49,5 @@ jobs:
           path: |
             qa/
             cassette-validation.json
+            qa-studio/studio-*.png
           retention-days: 30

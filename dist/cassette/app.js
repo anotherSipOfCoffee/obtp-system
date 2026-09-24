@@ -38,7 +38,7 @@ if(mode==='object'){
 }
 if(scene.height===2700)$('detail').textContent+=' Narrow panels at this height are outside the width condition of simplified wall method A in the reviewed guidance; see connection research. No racking resistance is assigned.';
 renderer.setScene(items,{explode:Number($('explode').value)/100});
-$('dimensions').textContent=scene.length.toLocaleString('en')+' × 4,572 mm frame setting-out · '+scene.height.toLocaleString('en')+' mm wall height';
+$('dimensions').textContent=mode==='connection'&&items.some(i=>i.block.startsWith('detail-'))?'Local alternative concept · nominal millimetres · not scaled by assembly controls':scene.length.toLocaleString('en')+' × 4,572 mm frame setting-out · '+scene.height.toLocaleString('en')+' mm wall height';
 $('status').textContent=mode==='connection'&&items.some(i=>i.block.startsWith('detail-'))?items.length+' study envelopes · not construction hardware':items.length+' cassette instances · geometry ready';$('module-count').textContent=mode==='connection'&&($('joint-view').value==='detail'||!scene.allJoints.some(j=>j.type===$('joint').value))?'Local detail':items.length;$('joint-count').textContent=scene.joints.length;
 $('schedule').replaceChildren();for(const r of (mode==='connection'&&items.some(i=>i.block.startsWith('detail-')||i.block.startsWith('TIE-zone-'))?window.OBTPConnectionStudy.parts.map(p=>({id:p.id,count:'Study envelope'})):api.schedule({items}))){const tr=document.createElement('tr');for(const v of [r.id,r.count,'Proposed']){const td=document.createElement('td');td.textContent=v;tr.append(td);}$('schedule').append(tr);}
 window.OBTPCassetteView={scene,items,renderer};
