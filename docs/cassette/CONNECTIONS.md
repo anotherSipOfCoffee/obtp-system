@@ -100,3 +100,8 @@ For a heated Lithuanian studio, carry forward the **proposed**, unvalidated enve
 ## Saved scope
 
 This research updates System's connection descriptions and adds a readable report to its browser package. It does not change nominal cassette geometry or install guessed hardware. Studio v3 uses its own controls and the pinned System API. New work is on development branches for review; no live website or Drive baseline is changed in this batch. Architecture has no cassette import and is unchanged.
+
+
+## Paper-led alternatives follow-up
+
+[CONNECTION_ALTERNATIVES.md](CONNECTION_ALTERNATIVES.md) adds six research sources and seven original mechanism studies. The existing product candidates, measured probes and failed distance checks remain authoritative for those tested geometric positions. Alternative plate envelopes are not assessed hardware or proof of a resolved connection.

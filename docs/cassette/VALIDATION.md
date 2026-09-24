@@ -21,3 +21,8 @@ Studio v1 bytes and all Architecture runtime/deployment files are checked agains
 ## Limits
 
 No structural capacity, fastener resistance, diaphragm/racking resistance, construction tolerance, fire rating, U-value, condensation resistance, ventilation performance, approval or safe erection claim follows from these results. The independent frame has no completed openings or weatherproof roof. WikiHouse's existing end-wall/opening holds and source-Brep warning remain in effect.
+
+
+## Connection-study revision — 24 September 2026
+
+See [CONNECTION_ALTERNATIVES.md](CONNECTION_ALTERNATIVES.md) for seven original, research-linked detail studies, review limits and the physical-validation brief. Generic plate envelopes and fastening zones are now inspectable; capacities, products and fastening schedules remain unassigned. This supersedes only the earlier description of the connection viewer, not the engineering holds.

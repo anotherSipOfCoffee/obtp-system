@@ -81,3 +81,8 @@ New cassette geometry and text are original OBTP proposals; no additional public
 
 ## Connection research follow-up — 24 September 2026
 See [CONNECTIONS.md](CONNECTIONS.md) for the selected sections now reviewed from Swedish Wood Volume 2, primary product-document candidates, six interface families, the 45 mm hold-down fit issue and narrow-panel height screening. The review updates evidence and design holds without releasing hardware or changing nominal geometry.
+
+
+## Paper-led alternatives follow-up
+
+[CONNECTION_ALTERNATIVES.md](CONNECTION_ALTERNATIVES.md) adds six research sources and seven original mechanism studies. The existing product candidates, measured probes and failed distance checks remain authoritative for those tested geometric positions. Alternative plate envelopes are not assessed hardware or proof of a resolved connection.

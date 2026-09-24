@@ -49,3 +49,8 @@ The [Simpson ABR technical sheet](https://pim.strongtie.eu/api/v1/public/downloa
 `tests/connection-details.cjs` checks all six independent penetration expectations, excludes the deck from rim embedment, checks rejected edge positions, validates finite envelope meshes and confirms cutaway does not alter measured data. Its shortened-screw perturbation must reduce computed penetration. Browser checks exercise all six views, cutaway, separation/reset, JSON export and mobile layout. Existing cassette and WikiHouse regressions remain required.
 
 These are **geometry and UI tests only**. No connections have been physically tested by OBTP. Do not advance Studio's source pin or publish this development batch as a construction-ready kit. The next substantive decision is the actual corner/bearing/anchorage redesign, followed by engineering and prototype verification.
+
+
+## Paper-led alternatives follow-up
+
+[CONNECTION_ALTERNATIVES.md](CONNECTION_ALTERNATIVES.md) adds six research sources and seven original mechanism studies. The existing product candidates, measured probes and failed distance checks remain authoritative for those tested geometric positions. Alternative plate envelopes are not assessed hardware or proof of a resolved connection.
