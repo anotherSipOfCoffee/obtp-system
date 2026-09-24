@@ -77,3 +77,8 @@ New cassette geometry and text are original OBTP proposals; no additional public
 4. Test sheathing joints, racking and floor/roof behaviour under an engineer's protocol; correlate any calculation/FE model with measurements.
 5. Run transient hygrothermal analysis with Lithuanian weather, construction moisture, occupancy and air-leakage sensitivity; calculate repeating/linear thermal bridges and whole-envelope heat loss. Review roof and ground details separately.
 6. Design openings, weather seals, fire linings and ventilation; validate water management and airtightness on the prototype. Only then consider a fabrication release.
+
+
+## Connection-study revision — 24 September 2026
+
+See [CONNECTIONS.md](CONNECTIONS.md) for seven original, research-linked detail studies, review limits and the physical-validation brief. Generic plate envelopes and fastening zones are now inspectable; capacities, products and fastening schedules remain unassigned. This supersedes only the earlier description of the connection viewer, not the engineering holds.

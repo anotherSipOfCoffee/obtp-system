@@ -1,7 +1,7 @@
 'use strict';
 /* Original OBTP concept geometry. No WikiHouse CAD or connection profiles. */
 (function(root){
- const spec=Object.freeze({id:'obtp-cassette-01',revision:1,units:'mm',pitch:600,width:4572,wallDepth:195,stud:45,joistDepth:220,floorSkin:18,wallSkin:12,roofSkin:18,defaultHeight:2100,sheet:[1220,2440],status:'Proposed geometry; structural and envelope design not validated'});
+ const spec=Object.freeze({id:'obtp-cassette-01',revision:2,units:'mm',pitch:600,width:4572,wallDepth:195,stud:45,joistDepth:220,floorSkin:18,wallSkin:12,roofSkin:18,defaultHeight:2100,sheet:[1220,2440],status:'Proposed geometry; structural and envelope design not validated'});
  const connectionTypes=Object.freeze({
   'panel-frame':{name:'Plywood to timber',principle:'Mechanical sheathing fasteners into supported timber edges',source:'R1 / R3',release:'HOLD: product, spacing, edge distances and racking design'},
   'wall-seam':{name:'Wall to wall',principle:'Abutting boundary studs, mechanically connected from accessible cavity',source:'R1',release:'HOLD: screw specification, splitting and load transfer'},

@@ -22,3 +22,5 @@ for(const bays of [1,2,3,4,5,6,7,8])for(const height of [2100,2700]){
 for(const bays of [0,9,1.5,NaN])assert.throws(()=>api.generate({bays}));assert.throws(()=>api.generate({height:2200}));assert.throws(()=>api.generate({layer:'unknown'}));
 fs.writeFileSync('cassette-validation.json',JSON.stringify({scope:'Software geometry only. No structural, tolerance, moisture or assembly-access validation.',cases:reports},null,2));
 console.log('PASS: 16 configurations, all stage counts, sheet envelopes, no positive-volume part collisions, continuous end-wall framing and connected interface graphs and interface points touching real parts on both sides.');
+
+require('./connections.cjs');
