@@ -1,7 +1,7 @@
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs');
 (async()=>{const browser=await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-webgl']});try{
  const page=await browser.newPage({viewport:{width:1440,height:1050}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://127.0.0.1:8765/cassette/');await page.locator('#status').filter({hasText:'30 cassette instances · geometry ready'}).waitFor();
+ await page.goto(new URL('cassette/', process.env.OBTP_BASE_URL || 'http://127.0.0.1:8765/').href);await page.locator('#status').filter({hasText:'30 cassette instances · geometry ready'}).waitFor();
  assert.equal(await page.locator('canvas').evaluate(c=>c.getContext('webgl').getError()),0);
  await page.locator('#bays').selectOption('8');await page.locator('#status').filter({hasText:'46 cassette instances'}).waitFor();
  await page.locator('#height').selectOption('2700');await page.locator('#skin').check();assert.equal(await page.evaluate(()=>OBTPCassetteView.scene.height),2700);

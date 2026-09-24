@@ -11,7 +11,7 @@ Read PROJECT_MAP.md, CURRENT_STATE.md, target AGENTS.md and relevant source lock
 ## Work rules
 
 - Use the GitHub plugin for GitHub operations. Do not use authenticated local git/gh as a workaround.
-- Current branch: dev/obtp-independent-v1-20260923 in all three repositories. Main and live websites are protected for this task. No Pages dispatch, live deployment, purchase, third-party contact or history rewrite.
+- On 2026-09-24 the owner authorized publishing System first, validating both WikiHouse and Cassette 01, then publishing Studio v3 from that tested System revision. This supersedes the earlier no-deployment instruction for this release only. Preserve ordinary Git history, Studio v1 and WikiHouse. Architecture is outside this release; Drive remains the master baseline and is not automatically synchronized.
 - Make coherent commits with ordinary forward history. Save implementation and validate before consolidation. Do not hide limitations behind “passed” labels.
 - Update the Drive baseline only deliberately. Record included commits, archive/file hashes, build dependencies and known divergence. A later GitHub receipt commit can be ahead of the archived baseline without requiring repackaging unchanged application files.
 - Store actual source dependencies durably. Expiring Actions artifacts and scratch are not the only copy of unique work. Required source CAD ZIP bundles are allowed; historical backup ZIPs do not belong in active repositories.
