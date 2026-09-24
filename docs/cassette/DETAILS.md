@@ -2,7 +2,7 @@
 
 ## Revision R90 — geometric failure resolution
 
-The original 45 mm receiving members and failed screw positions remain available as **Original**. The inspector defaults to **Revised** and **Full joint · no cut**. A separate Cutaway view reveals the screw; full view retains the complete cross-section but still crops long members around the joint. Neither view changes the measured source geometry.
+The original 45 mm receiving members and failed screw positions remain available as **Original**. The inspector defaults to **Revised** and **Full joint · no cut**. The website shows complete cross-sections only, with separation for inspection; long members remain cropped around the local joint. The owner requested removal of cut preview. Measurements continue to use complete source members.
 
 The revised generator replaces the side-wall terminal studs with single 90 × 195 mm sections and the slab perimeter rims with single 90 × 220 mm sections. These are original proposed solid sections, not two sistered 45 mm members assumed to act as one. Member grade, availability, moisture and full technical-assessment applicability remain to be specified. Internal cassette seam members remain 45 mm. Adjacent blocking and tall-wall backing are shortened to avoid overlap. Exterior dimensions, plate depth/thickness and cassette pitch are unchanged; local insulation space is reduced.
 

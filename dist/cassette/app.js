@@ -42,6 +42,7 @@ $('dimensions').textContent=mode==='connection'&&items.some(i=>i.block.startsWit
 $('status').textContent=mode==='connection'&&items.some(i=>i.block.startsWith('detail-'))?items.length+' study envelopes · not construction hardware':items.length+' cassette instances · geometry ready';$('module-count').textContent=mode==='connection'&&($('joint-view').value==='detail'||!scene.allJoints.some(j=>j.type===$('joint').value))?'Local detail':items.length;$('joint-count').textContent=scene.joints.length;
 $('schedule').replaceChildren();for(const r of (mode==='connection'&&items.some(i=>i.block.startsWith('detail-')||i.block.startsWith('TIE-zone-'))?window.OBTPConnectionStudy.parts.map(p=>({id:p.id,count:'Study envelope'})):api.schedule({items}))){const tr=document.createElement('tr');for(const v of [r.id,r.count,'Proposed']){const td=document.createElement('td');td.textContent=v;tr.append(td);}$('schedule').append(tr);}
 window.OBTPCassetteView={scene,items,renderer};
+document.dispatchEvent(new Event('cassette-render'));
 }catch(e){$('status').textContent=e.message;throw e;}}
 for(const id of ['bays','height','layer','revision','mode','object','joint','joint-view','skin'])$(id).onchange=render;
 $('explode').oninput=()=>{$('amount').textContent=$('explode').value+'%';renderer.explode=Number($('explode').value)/100;renderer.draw();};
