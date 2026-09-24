@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cassette connection detail notes</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style>body{max-width:1060px;margin:40px auto;padding:0 24px;background:#f5f4ed;color:#24332e;font:16px/1.6 system-ui}a{color:#245440}h1,h2,h3{line-height:1.25}h2{margin-top:2em}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:10px;text-align:left;border:1px solid #cdd4c7}pre{white-space:pre-wrap}nav{margin-bottom:24px}@media(max-width:700px){table{display:block;overflow:auto}}</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cassette connection detail notes</h1>
+</header>
+<h1 id="cassette-connection-details-24-september-2026">Cassette
+connection details — 24 September 2026</h1>
+<h2 id="what-is-implemented">What is implemented</h2>
+<p>System now has six inspectable local connection studies at
+<code>dist/cassette/details/index.html</code>. They extract real members
+from the two-bay, 2,100 mm cassette generator. No copied or
+independently redrawn cassette dimensions are used for the measurements.
+Studio is deliberately unchanged until connection development
+advances.</p>
+<p>Each view shows one representative fastener envelope, the two
+receiving timber members and any intervening deck. Cutaway and exploded
+views reveal the penetration. The measured distances always use the
+complete source members, not the cropped display. An inspection JSON
+export includes the source member IDs, product candidate, assumed grain
+directions, measured checks and explicit null resistance/schedule
+fields. It is not a fabrication or Rhino manufacturing export.</p>
+<p><strong>One visible screw is a position probe, not the required screw
+quantity.</strong> No repeated spacing, capacity or tolerance is
+supplied. This advances geometry/detail inspection beyond touching
+cassette boxes, but it is not an engineered connection release.</p>
+<h2 id="source-and-representation">Source and representation</h2>
+<p><a
+href="https://www.rothoblaas.com/attachments/288905-product-241/hbs-en-technical-data-sheet.pdf">Rothoblaas
+HBS technical sheet</a>, printed pp. 32–34 / PDF pp. 3–5, visually
+reviewed 24 September 2026. HBS580: 5 × 80 mm, 40 mm threaded portion.
+HBS5120: 5 × 120 mm, 60 mm threaded portion. Both use the listed 10 mm
+head, 3.1 mm head thickness and 3.65 mm shank. The pre-drilled shear
+tables give the selected 5 mm screw a 60 mm loaded-end distance at 0°
+and 35 mm loaded-edge distance at 90°, under the stated density
+condition. The complete ETA was not reviewed.</p>
+<p>Models are original analytical envelopes based on published
+dimensions, not manufacturer CAD. The head is simplified, threads are
+represented by their outside envelope, and the cutting tip/drive recess
+are omitted. Envelope overlap includes the undetailed tip and
+<strong>must not be used as effective design penetration</strong>. No
+product drawing, logo, proprietary manufacturing geometry or assessed
+capacity is reproduced. Manufacturer rights remain reserved; no licence
+to manufacture the screw is inferred. Source-byte SHA-256 and review
+scope are in <code>DETAIL_SOURCES.json</code>.</p>
+<h2 id="explicit-assumptions-and-limited-screen">Explicit assumptions
+and limited screen</h2>
+<p>The proposal assumes solid softwood, characteristic density no
+greater than 420 kg/m³, pre-drilling, and grain following each member’s
+long axis. Those material and installation choices are not yet
+confirmed. The UI screens both members for the limiting loaded end/edge
+distances at the tabulated 0°/90° shear directions, treating either
+end/edge as potentially loaded under reversal. This is deliberately a
+limited screening case, not a claim about all load angles or the actual
+building forces.</p>
+<p>Passing it does not establish withdrawal, lateral capacity,
+combined-action resistance, group behaviour, splitting resistance,
+minimum member-thickness applicability, fire performance, durability,
+installation access or a complete ETA-compliant design. The floor deck
+interlayer requires separate applicability assessment. No washers, holes
+or gaps are silently added.</p>
+<h2 id="results-from-actual-nominal-members">Results from actual nominal
+members</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Detail</th>
+<th>Candidate</th>
+<th>Receiver penetration / thread-envelope overlap</th>
+<th>Result of selected distance screen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wall seam</td>
+<td>HBS580 across paired studs</td>
+<td>35 / 35 mm</td>
+<td>Conditional pass; no strength or seam schedule established</td>
+</tr>
+<tr class="even">
+<td>Floor seam</td>
+<td>HBS580 across paired edge joists</td>
+<td>35 / 35 mm</td>
+<td>Conditional pass; deck diaphragm transfer remains unresolved</td>
+</tr>
+<tr class="odd">
+<td>Roof seam</td>
+<td>HBS580 across paired edge joists</td>
+<td>35 / 35 mm</td>
+<td>Conditional pass; roof uplift remains unresolved</td>
+</tr>
+<tr class="even">
+<td>Corner</td>
+<td>HBS580 from return stud into side-wall stud</td>
+<td>35 / 35 mm</td>
+<td>Reject: 22.5 mm nearest edge is below 35 mm</td>
+</tr>
+<tr class="odd">
+<td>Wall–floor</td>
+<td>HBS5120 through bottom plate and 18 mm deck into rim</td>
+<td>57 / 57 mm</td>
+<td>Reject: 22.5 mm nearest edge is below 35 mm</td>
+</tr>
+<tr class="even">
+<td>Wall–roof</td>
+<td>HBS5120 upward through top plate into roof rim</td>
+<td>75 / 60 mm</td>
+<td>Reject: 22.5 mm nearest edge is below 35 mm</td>
+</tr>
+</tbody>
+</table>
+<p>The rejection concerns these candidate positions under the stated
+reversible-shear screen. It does <strong>not</strong> prove that every
+screwed connection to a 45 mm member is impossible. Alternative load
+paths, products or assessed installation conditions may change the
+result; they require their own evidence.</p>
+<p>Head locations are OBTP study choices, not positions taken from a
+manufacturer installation design. The floor seam is inspected at midspan
+and the wall seam at midheight; these probes do not establish
+whole-member or diaphragm performance. Cavity driver access has not been
+swept against a real drill/bit envelope. Drawing a centreline into
+timber is insufficient evidence of safe assembly.</p>
+<h2 id="what-must-change-before-advancing-the-rejected-details">What
+must change before advancing the rejected details</h2>
+<ol type="1">
+<li>Establish actions and load directions. If shear reverses across
+grain as screened, the current 45 mm narrow dimension cannot provide 35
+mm to both loaded edges. Merely moving the screw cannot fix it. The
+mathematical 70 mm minimum face width for this screen is
+<strong>not</strong> a recommended member size or a released
+redesign.</li>
+<li>Compare a purpose-designed local blocking/terminal member and a
+separately assessed bracket arrangement. Any widened member must fit
+insulation and adjoining cassettes and have its own force-transfer
+design. Two touching pieces must not be treated automatically as one
+wide solid member.</li>
+<li>Keep uplift/overturning anchorage separate from a convenient plate
+screw. The support/foundation, anchor, terminal post and floor path all
+need definition. The previously shortlisted WHT arrangement still has an
+unresolved dimensional/application fit.</li>
+<li>Prototype the candidate seam with actual stock and tools; verify
+accessible installation, damage, disassembly and moisture-conditioned
+fit. An engineer must establish test loads, specimen count and
+acceptance criteria before physical strength testing.</li>
+</ol>
+<p>The <a
+href="https://pim.strongtie.eu/api/v1/public/download/gb/en/product/260/ABR.pdf">Simpson
+ABR technical sheet</a> was also visually checked. Its published overall
+dimensions do not provide all hole coordinates, the assessment
+applicability or a validated placement in our cassette. No approximate
+hole pattern or installed ABR was invented. Detailed bracket selection
+remains open.</p>
+<h2 id="software-verification-and-limits">Software verification and
+limits</h2>
+<p><code>tests/connection-details.cjs</code> checks all six independent
+penetration expectations, excludes the deck from rim embedment, checks
+rejected edge positions, validates finite envelope meshes and confirms
+cutaway does not alter measured data. Its shortened-screw perturbation
+must reduce computed penetration. Browser checks exercise all six views,
+cutaway, separation/reset, JSON export and mobile layout. Existing
+cassette and WikiHouse regressions remain required.</p>
+<p>These are <strong>geometry and UI tests only</strong>. No connections
+have been physically tested by OBTP. Do not advance Studio’s source pin
+or publish this development batch as a construction-ready kit. The next
+substantive decision is the actual corner/bearing/anchorage redesign,
+followed by engineering and prototype verification.</p>
+</body>
+</html>

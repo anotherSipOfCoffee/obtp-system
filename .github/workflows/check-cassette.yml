@@ -13,6 +13,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - run: node tests/connection-details.cjs
       - run: node tests/cassette.cjs
       - run: node tests/catalogue.cjs
       - run: npm install --no-save playwright@1.55.0
@@ -21,6 +22,7 @@ jobs:
         run: |
           python3 -m http.server 8765 --directory dist > /tmp/obtp-server.log 2>&1 &
           node tests/cassette-browser.cjs
+          node tests/connection-details-browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
