@@ -54,7 +54,8 @@
   const driveAxis=detail.axis.findIndex(v=>v),cutAxis=[0,1,2].find(k=>k!==driveAxis);
   for(const [i,m] of [...detail.members,...(detail.interleafPart?[detail.interleafPart]:[])].entries()){
    const lo=m.bounds[0].map((v,k)=>Math.max(v,crop[0][k])),hi=m.bounds[1].map((v,k)=>Math.min(v,crop[1][k]));
-   if(cutaway)hi[cutAxis]=Math.min(hi[cutAxis],detail.head[cutAxis]);
+   // Retain the far half: the default camera sees the negative X/Y faces.
+   if(cutaway)lo[cutAxis]=Math.max(lo[cutAxis],detail.head[cutAxis]);
    if(hi.some((v,k)=>v<=lo[k]))continue;
    const id='detail-member-'+i;models.push(api.model(id,[api.box(m.id,lo,hi.map((v,k)=>v-lo[k]),m.material)]));items.push({block:id,translation:[0,0,0],explode:detail.axis.map(v=>v*(i===0?-45:45))});
   }
