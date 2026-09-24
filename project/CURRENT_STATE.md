@@ -1,17 +1,23 @@
-# OBTP current state — v76, 2026-09-23
+# OBTP current state — 24 September 2026
 
-Independent Cassette 01 is implemented in System and exposed as Studio v3 through the pinned source relationship. It generates a rectangular frame from 1–8 repeating modules, including end-wall framing, with object/connection inspection, stages, exploded view, quantities and nominal Rhino box export. WikiHouse v2 and Studio v1 remain separately accessible. Architecture application files are unchanged.
+System v2 is the independent Cassette 01 research prototype; System v1 retains the pinned WikiHouse catalogue. System v2 is published through the validated GitHub Pages workflow. Drive v76 remains the authoritative saved baseline and intentionally trails GitHub; no automatic synchronization is implied.
 
-This is a digital research prototype, not a finished construction kit. Timber sections, plywood, fastening schedules, racking, spans, supports, tolerances, roof drainage, envelope details and Lithuanian requirements need engineering. Openings remain disabled. Research and proposed envelope approach are in docs/cassette/; the rendered report is dist/cassette/research.html.
+## Current inspection work
 
-Phase 1 geometry and both System/Studio browser workflows passed; see docs/cassette/VALIDATION.md. The reference export round-tripped as 166 valid closed Breps in Rhino 8 file format. Windows Rhino/Grasshopper was not run. No bidirectional CAD/web workflow is claimed.
+The catalogue follows Types → Objects → Connections → Assemblies. See [INSPECTION.md](../docs/cassette/INSPECTION.md) for constituent timber/panel parts, explosion/isolation, geometry-based object grouping, Connectors, actual internal contacts and unified connection inspection. Version remains the first parameter; no cut-preview option is exposed. R90 is selected explicitly in System; the generator API default remains baseline for compatibility.
 
-Consolidation removes the embedded v74 backup parts, obsolete old snapshot workflow/request/restoration tools, and misleading duplicate/outdated coordination instructions. Required source bundles, the W-S viewer, useful Rhino pilot, licenses, meshes and intentional data are retained. Drive historical packages are outside the active master. See CLEANUP.md and the master manifest for exact state.
+R90 passes the recorded conditional distance screen only. Materials, member sizing, connection capacity, fastening schedules, uplift/foundations, openings, roof/envelope and physical testing remain unresolved. Concept envelopes, dimensioned candidates and undesigned requirements have distinct statuses. No construction release follows from software checks.
 
-Drive holds the authoritative master baseline. GitHub development branches may be ahead; main/live are intentionally still on the pre-task commits listed in PROJECT_MAP.md. Do not interpret that divergence as a synchronization error. The final Drive receipt is intentionally a later documentation commit than the packaged source if necessary to avoid self-referential commit hashes.
+## Project boundaries
 
-Next useful work: engineering concept review and one physical joint/cassette prototype; Lithuanian envelope/ventilation analysis; reviewed opening details; Windows Rhino 8 inspection. Deployment is a separate decision and was not authorized in this task.
+System owns geometry and connection records. Studio consumes a pinned System revision and retains its own configuration controls; System's catalogue is not embedded as the Studio UI. Check Studio's actual system.lock.json for its current pin. Architecture remains outside this change. Preserve WikiHouse source geometry, licences and Studio v1.
 
+## Baseline and history
 
-## Website continuation — 24 September 2026
-System v2 reuses the WikiHouse v1 Types → Objects → Connections → Assemblies layout. Version is the first parameter on both pages. The v2 viewer defaults explicitly to revised R90 geometry, while the generator API default stays unchanged. The measured inspector no longer exposes a cut preview and always requests complete cross-sections. Original failed probes and research alternatives remain available. Architecture and Studio source pins are unchanged. This UI release is authorized by the owner's request to update the web; no construction release is implied.
+Drive baseline v76 / 2026-09-23 and historical validation receipts are documented in PROJECT_MAP.md, FINAL_VALIDATION.md and docs/cassette/VALIDATION.md. Statements in those historical receipts about unpublished work describe that earlier checkpoint, not the current live release. Recovery and cleanup records remain in CLEANUP.md and RECOVERY_RECEIPT.json.
+
+The earlier 166-part nominal box export round-tripped as valid closed Breps in Rhino 8 file format. Windows Rhino/Grasshopper was not executed; no automatic bidirectional workflow is claimed.
+
+## Next engineering work
+
+Develop concrete product/material and support alternatives; coordinate internal and inter-cassette fastening; obtain project engineering and a defined physical prototype/test programme. Purchases and third-party outreach remain separate owner decisions. Routine authorized UI/research work and release validation should continue without repeated permission requests.

@@ -8,7 +8,7 @@ Current master: [OBTP_MASTER](https://drive.google.com/drive/folders/1w4ZBlEJSDo
 | Architecture | [Architecture](https://drive.google.com/drive/folders/1auSySo9qLSr2stBvnzzxneKAHrNO-L2U) | [obtp-architecture](https://github.com/anotherSipOfCoffee/obtp-architecture/tree/dev/obtp-independent-v1-20260923) |
 | System | [System](https://drive.google.com/drive/folders/1-aNqmBKp6WXOoiTNLwM7WRdOaQ9WpDIw) | [obtp-system](https://github.com/anotherSipOfCoffee/obtp-system/tree/dev/obtp-independent-v1-20260923) |
 
-All use branch `dev/obtp-independent-v1-20260923` for this work. Repositories were already public at inspection; visibility was not changed in this task. Drive remains the authoritative baseline, and GitHub may advance independently. Main and live sites are intentionally unchanged.
+Historical v76 development used branch `dev/obtp-independent-v1-20260923`. Current live/development status is in CURRENT_STATE.md. Repositories were already public at inspection; visibility was not changed in this task. Drive remains the authoritative baseline, and GitHub may advance independently. At the v76 checkpoint main/live had not yet been updated; subsequent authorized releases are recorded separately.
 
 | Project | Pre-task main / live source | Phase 1 development checkpoint |
 |---|---|---|
