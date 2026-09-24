@@ -14,7 +14,7 @@
   const center=model.bounds[0].map((v,k)=>(v+model.bounds[1][k])/2);
   return {...model,assets:model.assets.map(a=>{
    let v=[0,0,0];
-   if(a.material==='plywood')v=family(model.id)==='Walls'?[0,-260,0]:[0,0,300];
+   if(a.material==='plywood'){const wall=family(model.id)==='Walls',axis=wall?2:0,mid=(a.bounds[0][axis]+a.bounds[1][axis])/2,split=model.assets.filter(p=>p.material==='plywood').length>1;v=wall?[0,-260,split?(mid<center[2]?-140:140):0]:[split?(mid<center[0]?-160:160):0,0,300];}
    else if(a.id==='left-stud')v=[-200,0,0];else if(a.id==='right-stud')v=[200,0,0];
    else if(a.id==='bottom-plate')v=[0,0,-160];else if(a.id==='top-plate')v=[0,0,160];
    else if(a.id==='sheet-seam-backing')v=[0,140,0];

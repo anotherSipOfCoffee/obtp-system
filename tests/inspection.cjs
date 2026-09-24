@@ -5,7 +5,7 @@ for(const revision of ['baseline','revised'])for(const height of [2100,2700])for
  assert.equal(new Set(entries.flatMap(e=>e.instances)).size,scene.allItems.length);
  for(const e of entries){
   const source=scene.models.find(m=>m.id===e.id);assert.deepEqual(e.model.assets.map(a=>a.vertices),source.assets.map(a=>a.vertices));
-  assert(e.model.assets.every(a=>a.explode.some(v=>v!==0)));assert(new Set(e.model.assets.map(a=>a.explode.join(','))).size>=4);
+  assert(e.model.assets.every(a=>a.explode.some(v=>v!==0)));assert.equal(new Set(e.model.assets.map(a=>a.explode.join(','))).size,e.model.assets.length,'Every constituent part separates distinctly, including adjacent plywood panels');
   const frame=A.contacts(e.model,'frame-frame');assert.equal(frame.length,e.type==='Walls'?(height===2700?6:4):6);
   for(const c of [...frame,...A.contacts(e.model,'panel-frame')]){assert.equal(c.capacity,null);assert.equal(c.fasteners,null);assert.equal(A.contactScene(e.model,c).items.length,2);}
   if(e.type!=='Walls')for(const a of e.model.assets.filter(a=>a.id.startsWith('edge-')))assert.equal(a.dimensions[0],4572,'Long joist stays continuous');
