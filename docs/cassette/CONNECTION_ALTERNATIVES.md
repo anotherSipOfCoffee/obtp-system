@@ -218,7 +218,7 @@ Local detail tests check finite dimensions, no positive-volume overlap between t
 
 ## Baseline and integration
 
-The later branch `dev/cassette-connections-studio-controls-20260924` at 57c332f65e2251e18ba55a40e16e8f5dc1aad898 contains the existing product research and measured screw probes. They are retained in full in CONNECTIONS.md, DETAILS.md and dist/cassette/details. Corner, wall–floor and wall–roof probes remain rejected by that conditional screen. The new alternatives do not validate those positions or silently replace their evidence.
+The later branch `dev/cassette-connections-studio-controls-20260924` at 57c332f65e2251e18ba55a40e16e8f5dc1aad898 contains the existing product research and measured screw probes. They are retained in full in CONNECTIONS.md, DETAILS.md and dist/cassette/details. Original corner, wall–floor and wall–roof probes remain rejected; the subsequent R90 positions pass this conditional screen (DETAILS.md). The new alternatives do not validate those positions or silently replace their evidence.
 
 Starting development head: 94edfa5aa688f2738d315ca1e246a422a861f485. Drive v76 packaged System: 13d55c3ae6a469448a947b40689070514c6cfb12. Main had diverged through e7c6156f0185f6041fc45cccd29a7de77409537e, adding repository navigation and a fix for competing Pages builds. Those main changes are retained; the development-only diagnosis workflow is also retained. No historical files or source CAD are removed.
 
@@ -227,4 +227,8 @@ System connection details remain owned by System. Studio must consume a pinned, 
 
 ## Next concrete design comparison
 
-For each rejected probe compare (1) a single wider receiving member with its own declared material properties and (2) an assessed bracket with a fastening pattern applicable to the actual timber. Do not sum adjacent stud widths. For the base detail, choose the support/anchor arrangement before claiming an uplift path. The generic angle and tie envelopes here only reserve a possible connection route; even their local timber fit is not a verified product fit. Retain the measured rejections until a new product-specific check supersedes them.
+For further development, compare the retained Original failures and the R90 response with (1) a single wider receiving member with its own declared material properties and (2) an assessed bracket with a fastening pattern applicable to the actual timber. Do not sum adjacent stud widths. For the base detail, choose the support/anchor arrangement before claiming an uplift path. The generic angle and tie envelopes here only reserve a possible connection route; even their local timber fit is not a verified product fit. Retain the measured rejections until a new product-specific check supersedes them.
+
+
+## Current inspection status
+These plate/tie studies remain independent alternatives, not selected R90 hardware. INSPECTION.md describes their integration with the measured probes and actual part contacts. The System website is published; historical branch/no-deployment statements describe earlier checkpoints.

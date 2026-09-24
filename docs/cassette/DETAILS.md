@@ -24,7 +24,7 @@ Evidence: Rothoblaas HBS technical sheet, printed pages 32–34 / PDF pages 3–
 
 System now has six inspectable local connection studies at `dist/cassette/details/index.html`. They extract real members from the two-bay, 2,100 mm cassette generator. No copied or independently redrawn cassette dimensions are used for the measurements. Studio is deliberately unchanged until connection development advances.
 
-Each view shows one representative fastener envelope, the two receiving timber members and any intervening deck. Cutaway and exploded views reveal the penetration. The measured distances always use the complete source members, not the cropped display. An inspection JSON export includes the source member IDs, product candidate, assumed grain directions, measured checks and explicit null resistance/schedule fields. It is not a fabrication or Rhino manufacturing export.
+Each view shows one representative fastener envelope, the two receiving timber members and any intervening deck. Member separation aids inspection; the current UI retains full cross-sections. The measured distances always use the complete source members, not the cropped display. An inspection JSON export includes the source member IDs, product candidate, assumed grain directions, measured checks and explicit null resistance/schedule fields. It is not a fabrication or Rhino manufacturing export.
 
 **One visible screw is a position probe, not the required screw quantity.** No repeated spacing, capacity or tolerance is supplied. This advances geometry/detail inspection beyond touching cassette boxes, but it is not an engineered connection release.
 
@@ -66,11 +66,15 @@ The [Simpson ABR technical sheet](https://pim.strongtie.eu/api/v1/public/downloa
 
 ## Software verification and limits
 
-`tests/connection-details.cjs` checks all six independent penetration expectations, excludes the deck from rim embedment, checks rejected edge positions, validates finite envelope meshes and confirms cutaway does not alter measured data. Its shortened-screw perturbation must reduce computed penetration. Browser checks exercise all six views, cutaway, separation/reset, JSON export and mobile layout. Existing cassette and WikiHouse regressions remain required.
+`tests/connection-details.cjs` checks all six independent penetration expectations, excludes the deck from rim embedment, checks rejected edge positions, validates finite envelope meshes and confirms cutaway does not alter measured data. Its shortened-screw perturbation must reduce computed penetration. Browser checks exercise all six views, separation/reset, JSON export and mobile layout. The UI has no cut-preview control. Existing cassette and WikiHouse regressions remain required.
 
-These are **geometry and UI tests only**. No connections have been physically tested by OBTP. Do not advance Studio's source pin or publish this development batch as a construction-ready kit. The next substantive decision is the actual corner/bearing/anchorage redesign, followed by engineering and prototype verification.
+These are **geometry and UI tests only**. No connections have been physically tested by OBTP. Any Studio source-pin update must be deliberate and tested. Never publish this development work as a construction-ready kit. R90 addresses the recorded corner/bearing distance failures; product-specific resistance, fastening and anchorage design still require engineering and prototype verification.
 
 
 ## Paper-led alternatives follow-up
 
 [CONNECTION_ALTERNATIVES.md](CONNECTION_ALTERNATIVES.md) adds six research sources and seven original mechanism studies. The existing product candidates, measured probes and failed distance checks remain authoritative for those tested geometric positions. Alternative plate envelopes are not assessed hardware or proof of a resolved connection.
+
+
+## Unified inspection UI
+See [INSPECTION.md](INSPECTION.md). Measured probes are now available inside Connections alongside actual interfaces and separately labelled research alternatives. Historical Original failures below remain comparison evidence, not unresolved R90 distance failures.
