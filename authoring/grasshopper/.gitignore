@@ -1,0 +1,8 @@
+__pycache__/
+exports/
+rhino-exports/
+*.gh
+setup-*.json
+setup-error.txt
+previews/
+references/
