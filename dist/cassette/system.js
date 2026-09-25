@@ -9,6 +9,7 @@
   'wall-floor':{name:'Wall to floor',principle:'Bottom plate bearing over rim/blocking; separate shear and uplift restraint',source:'C6 ABR / C7 WHT candidates — connections.html',release:'HOLD: bearing, shear and independent uplift path to supports; product fit not verified'},
   'wall-roof':{name:'Roof to wall',principle:'Joist bearing on top plate; engineered uplift restraint',source:'C6 ABR candidate — connections.html',release:'HOLD: bearing, uplift, eccentricity and diaphragm transfer; no connector size selected'},
   'slab-seam':{name:'Floor / roof seam',principle:'Adjacent boundary joists mechanically linked; supported plywood edges',source:'C5 HBS / C4 — connections.html',release:'HOLD: joist seam fastening, deck seams, chord continuity and differential movement'}
+  ,'floor-support':{name:'Floor to continuous support',principle:'Two longitudinal bearing lines below the floor edge members',source:'Foundation geometry study',release:'HOLD: ground investigation, footing sizing, frost protection, drainage and anchored uplift path'}
  });
  const faces=[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]];
  function box(id,p,s,material='timber'){
@@ -31,7 +32,13 @@
   for(let j=0;j<2;j++)a.push(box('ply-'+j,[j*w/2,0,220],[w/2,600,18],'plywood'));
   return model(kind,a);
  }
- function generate({bays=4,height=2100,layer='all',skin=true,connectionRevision='baseline'}={}){
+ function foundation(length){return model('FOUNDATION-STRIP-STUDY-'+length,[box('west-support',[-100,0,-200],[300,length,200],'concrete-study'),box('east-support',[spec.width-200,0,-200],[300,length,200],'concrete-study')]);}
+ function openingStudy(){
+  // Standalone wall-object study. Never inserted into a load-bearing perimeter.
+  const h=spec.defaultHeight,w=1200,a=[box('left-jamb',[0,0,0],[90,195,h]),box('right-jamb',[w-90,0,0],[90,195,h]),box('sill',[90,0,900],[w-180,195,45]),box('header',[90,0,1800],[w-180,195,90]),box('lower-skin',[90,-12,0],[w-180,12,900],'plywood'),box('upper-skin',[90,-12,1890],[w-180,12,h-1890],'plywood')];
+  return {model:model('W1200-WINDOW-STUDY',a),aperture:{width:1020,sill:945,head:1800},status:'Geometry study only; lintel, jamb load path, weathering and fixing are unverified'};
+ }
+ function generate({bays=4,height=2100,layer='all',skin=true,connectionRevision='baseline',includeFoundation=false}={}){
   if(!['baseline','revised'].includes(connectionRevision))throw Error('Unknown connection revision');
   // Repetition extends the same cassette and seam rules; Studio caps the exterior
   // envelope independently. This range is geometric only, not a span approval.
@@ -63,6 +70,7 @@
    if(j)join('wall-seam',end+'-'+(j-1),id,[end==='front'?195+j*600:4377-j*600,y,F+H/2]);
    if(j===0||j===6){const side=(end==='front')===(j===0)?'west':'east';join('corner',id,side+'-'+k,[side==='west'?195:4377,y,F+H/2]);}
   }
+  if(includeFoundation){const support=foundation(L);models.push(support);add('foundation',''+support.id,[0,0,0],I,'foundation',[0,0,-400]);for(let i=0;i<bays;i++)join('floor-support','floor-'+i,'foundation',[spec.width/2,i*600+300,0]);}
   // Revised perimeter members are single solid sections, never two unconnected 45 mm pieces.
   // Keep the cassette envelope and all internal seam members unchanged.
   if(connectionRevision==='revised')for(const item of items){
@@ -88,14 +96,15 @@
    });
    if(changed){const id=original.id+'-R90-'+side+'-'+index;models.push(model(id,assets));item.block=id;}
   }
-  const allItems=items.slice(),stages={floor:0,walls:1,roof:2,all:2},visible=items.filter(i=>stages[i.stage]<=stages[layer]),ids=new Set(visible.map(i=>i.id));
+  const allItems=items.slice(),stages={foundation:-1,floor:0,walls:1,roof:2,all:2},visible=items.filter(i=>stages[i.stage]<=stages[layer]),ids=new Set(visible.map(i=>i.id));
   const usedModels=connectionRevision==='revised'?models.filter(m=>items.some(i=>i.block===m.id)):models;
   const selectedModels=usedModels.map(m=>skin?m:model(m.id,m.assets.filter(a=>a.material!=='plywood')));
-  return {spec,connectionRevision,bays,height,length:L,width:4572,clear:[4182,L-390,H],models:selectedModels,items:visible,allItems,joints:joints.filter(j=>ids.has(j.a)&&ids.has(j.b)),allJoints:joints,openings:{enabled:false,reason:'No designed lintel, jamb, sill, fastening or weathering detail'},status:spec.status};
+  return {spec,connectionRevision,bays,height,length:L,width:4572,clear:[4182,L-390,H],models:selectedModels,items:visible,allItems,joints:joints.filter(j=>ids.has(j.a)&&ids.has(j.b)),allJoints:joints,foundation:includeFoundation?{status:'Geometry study; foundation design requires site ground data and structural verification',bearingLines:[0,spec.width],spacing:spec.width}:null,openings:{enabled:false,study:'W1200-WINDOW-STUDY',reason:'Study aperture is not a designed structural opening; no checked lintel, jamb, fastening or weathering detail'},status:spec.status};
  }
  function transform(item,p){const r=item.rotation;return [0,1,2].map(k=>r[k*3]*p[0]+r[k*3+1]*p[1]+r[k*3+2]*p[2]+item.translation[k]);}
  function worldBounds(item,asset){const p=asset.vertices.map(v=>transform(item,v));return [0,1].map(b=>[0,1,2].map(k=>Math[b?'max':'min'](...p.map(v=>v[k]))));}
  function schedule(scene){const rows=new Map();for(const i of scene.items)rows.set(i.block,(rows.get(i.block)||0)+1);return [...rows].map(([id,count])=>({id,count}));}
- const api={spec,connectionTypes,generate,transform,worldBounds,schedule,box,model};
+ function woodVolume(scene){const byId=new Map(scene.models.map(m=>[m.id,m])),result={timber:0,plywood:0};for(const item of scene.allItems||scene.items){const model=byId.get(item.block);if(!model)throw Error('Missing model for volume '+item.block);for(const a of model.assets)if(Object.hasOwn(result,a.material))result[a.material]+=a.dimensions.reduce((x,v)=>x*v,1)/1e9;}return {...result,total:result.timber+result.plywood,units:'m³',basis:'Modelled solid part volumes; no waste, procurement factors or material declarations'};}
+ const api={spec,connectionTypes,generate,foundation,openingStudy,transform,worldBounds,schedule,woodVolume,box,model};
  if(typeof module!=='undefined')module.exports=api;root.OBTPCassette=api;
 })(typeof window==='undefined'?globalThis:window);
