@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),api=require('../dist/cassette/system.js');
 const reports=[];
-for(const connectionRevision of ['baseline','revised'])for(const bays of [1,2,3,4,5,6,7,8])for(const height of [2100,2700]){
+for(const connectionRevision of ['baseline','revised'])for(const bays of [1,2,3,4,5,6,7,8,18])for(const height of [2100,2700]){
  const s=api.generate({bays,height,connectionRevision}),ids=new Set(s.items.map(i=>i.id)),parts=[];
  assert.equal(s.items.length,4*bays+14);assert.equal(ids.size,s.items.length);assert.equal(s.length,bays*600);assert.deepEqual(s.clear,[4182,bays*600-390,height]);
  for(const i of s.items){const m=s.models.find(m=>m.id===i.block);assert(m);for(const a of m.assets){const b=api.worldBounds(i,a);assert(b.flat().every(Number.isFinite));parts.push({id:i.id+'/'+a.id,b});if(a.material==='plywood'){const d=a.dimensions.filter(v=>v!==12&&v!==18).sort((a,b)=>a-b);assert(d[0]<=1220&&d[1]<=2440);}}}
@@ -19,9 +19,9 @@ for(const connectionRevision of ['baseline','revised'])for(const bays of [1,2,3,
  for(const layer of ['floor','walls','roof','all']){const l=api.generate({bays,height,layer,skin:false,connectionRevision});assert(l.models.every(m=>m.assets.every(a=>a.material==='timber')));assert.equal(l.items.length,layer==='floor'?bays:layer==='walls'?3*bays+14:4*bays+14);}
  reports.push({connectionRevision,bays,height,cassettes:s.items.length,parts:parts.length,interfaces:s.joints.length,positiveVolumeIntersections:maxOverlap,connected:true});
 }
-for(const bays of [0,9,1.5,NaN])assert.throws(()=>api.generate({bays}));assert.throws(()=>api.generate({height:2200}));assert.throws(()=>api.generate({layer:'unknown'}));
+for(const bays of [0,19,1.5,NaN])assert.throws(()=>api.generate({bays}));assert.throws(()=>api.generate({height:2200}));assert.throws(()=>api.generate({layer:'unknown'}));
 fs.writeFileSync('cassette-validation.json',JSON.stringify({scope:'Software geometry only. No structural, tolerance, moisture or assembly-access validation.',cases:reports},null,2));
-console.log('PASS: 32 baseline/revised configurations, all stage counts, sheet envelopes, no positive-volume part collisions, continuous end-wall framing and connected interface graphs and interface points touching real parts on both sides.');
+console.log('PASS: 36 baseline/revised configurations including 18 bays; stage counts, sheet envelopes, no positive-volume collisions, continuous end-wall framing and connected interface graphs.');
 
 require('./connections.cjs');
 

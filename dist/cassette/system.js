@@ -33,7 +33,9 @@
  }
  function generate({bays=4,height=2100,layer='all',skin=true,connectionRevision='baseline'}={}){
   if(!['baseline','revised'].includes(connectionRevision))throw Error('Unknown connection revision');
-  if(!Number.isInteger(bays)||bays<1||bays>8)throw Error('Choose 1–8 modules');
+  // Repetition extends the same cassette and seam rules; Studio caps the exterior
+  // envelope independently. This range is geometric only, not a span approval.
+  if(!Number.isInteger(bays)||bays<1||bays>18)throw Error('Choose 1–18 modules');
   if(![2100,2700].includes(height))throw Error('Unsupported height');
   if(!['all','floor','walls','roof'].includes(layer))throw Error('Unsupported layer');
   const L=bays*600,H=height,F=238,models=[slab('F600'),slab('R600'),wall(600,H),wall(582,H)],items=[],joints=[];
