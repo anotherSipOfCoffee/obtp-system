@@ -26,7 +26,8 @@
   $('detail').textContent='Proposed geometry. Sections, fastening, spans, racking, uplift and foundations remain unverified.';
   $('status').textContent='Geometry ready';$('schedule').replaceChildren();exportDetail=null;let items=[];
   if(mode==='assembly'){
-   const models=scene.models.map(m=>$('skin').checked?m:S.model(m.id,m.assets.filter(a=>a.material!=='plywood')));items=showModels(models,scene.items);
+   const assembly=$('foundation').checked?S.generate({bays:scene.bays,height:scene.height,layer:$('layer').value,skin:true,connectionRevision:scene.connectionRevision,includeFoundation:true}):scene;
+   const models=assembly.models.map(m=>$('skin').checked?m:S.model(m.id,m.assets.filter(a=>a.material!=='plywood')));items=showModels(models,assembly.items);
    $('status').textContent=items.length+' cassette instances · geometry ready';
    for(const r of S.schedule({items})){const tr=document.createElement('tr');[r.id,r.count,'Proposed'].forEach(v=>tr.append(text('td',v)));$('schedule').append(tr);}
   }else if(mode==='object'&&type!=='Connectors'){
@@ -104,8 +105,9 @@
   else if(b.dataset.openJoint){joint=b.dataset.openJoint;mode='connection';kind=A.connections[joint].probe?'measured':'context';resetExplosion();}
   else return;render();
  });
- for(const id of ['bays','height','revision','layer','skin','connection-scope'])$(id).onchange=()=>{part='';occurrence='';render();};
+ for(const id of ['bays','height','revision','layer','skin','foundation','connection-scope'])$(id).onchange=()=>{part='';occurrence='';render();};
  $('part').onchange=()=>{part=$('part').value;render();};$('joint').onchange=()=>{joint=$('joint').value;kind=A.connections[joint].probe?'measured':'context';resetExplosion();render();};$('joint-view').onchange=()=>{kind=$('joint-view').value;occurrence='';render();};$('occurrence').onchange=()=>{occurrence=$('occurrence').value;render();};
+ $('opening-study').onclick=()=>{const s=S.openingStudy(),m=s.model;showModels([m],[{id:'standalone-window-study',block:m.id,translation:[0,0,0]}]);$('diagram').hidden=false;$('empty-view').hidden=true;$('title').textContent='Cassette window wall · detached study';$('dimensions').textContent='1,200 × 195 × 2,100 mm · nominal aperture 1,020 × 855 mm';$('status').textContent='Standalone geometric study · not placed in assembly';$('detail').textContent=s.status;};
  $('explode').oninput=()=>{$('amount').textContent=$('explode').value+'%';renderer.explode=Number($('explode').value)/100;renderer.draw();};$('reset').onclick=()=>{resetExplosion();render();};
  function download(data,name){const u=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}
  $('export').onclick=()=>{const full=S.generate({bays:scene.bays,height:scene.height,connectionRevision:scene.connectionRevision}),parts=[];for(const item of full.items)for(const a of full.models.find(m=>m.id===item.block).assets)parts.push({id:item.id+'/'+a.id,material:a.material,corners:a.vertices.map(v=>S.transform(item,v))});download({schema:'obtp-cassette-boxes/1',units:'mm',system:S.spec.id,revision:S.spec.revision,connectionRevision:scene.connectionRevision,bays:scene.bays,height:scene.height,status:S.spec.status,manufacturingRelease:false,parts,interfaces:full.joints,connectionResearch:C.coverage(full),inspectionRegister:A.register(full)},'OBTP-Cassette-01-'+scene.bays+'-modules.json');};
