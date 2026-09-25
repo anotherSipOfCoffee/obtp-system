@@ -1,5 +1,7 @@
 name: Check independent cassette (no deployment)
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: ['dev/obtp-independent-v1-20260923', 'dev/cassette-connections-studio-controls-20260924', 'dev/cassette-catalogue-parts-20260924']
     paths: ['dist/**', 'tests/**', 'tools/rhino8/**', '.github/workflows/check-cassette.yml']
@@ -16,6 +18,7 @@ jobs:
       - run: node tests/inspection.cjs
       - run: node tests/connection-details.cjs
       - run: node tests/cassette.cjs
+      - run: node tests/foundation.cjs
       - run: node tests/catalogue.cjs
       - run: npm install --no-save playwright@1.55.0
       - run: npx playwright install --with-deps chromium
