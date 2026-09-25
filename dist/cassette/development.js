@@ -35,7 +35,7 @@
     // Both legs are one inspectable connector, not separately manufactured parts.
     const vertices=pieces.flatMap(p=>p.vertices),faces=pieces.flatMap((p,i)=>p.faces.map(f=>f.map(n=>n+i*8)));
     const bounds=[0,1].map(b=>[0,1,2].map(k=>Math[b?'max':'min'](...pieces.map(p=>p.bounds[b][k]))));
-    added.push({id:'joint-study-'+side+'-'+end,label:'Angle study · '+side+' '+end,material:'steel-study',vertices,faces,bounds,dimensions:bounds[1].map((v,k)=>v-bounds[0][k]),explode:[dir*100,220,up*100],...hold});
+    added.push({id:'joint-study-'+side+'-'+end,label:'Angle study · '+side+' '+end,material:'steel-study',vertices,faces,bounds,dimensions:bounds[1].map((v,k)=>v-bounds[0][k]),explode:[-dir*420,220,-up*220],...hold});
    }
   }
   return {...model,assets:[...a,...added]};
