@@ -34,6 +34,17 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
  await page.locator('[data-open-joint="wall-seam"]').click();assert.equal(await page.locator('#joint').inputValue(),'wall-seam');await page.locator('[data-open-connector="HBS580"]').click();assert.equal(await state(()=>OBTPCassetteView.type),'Connectors');
  for(const id of ['ABR','WHT','sheathing-fastener','foundation-anchor']){await page.locator('[data-connector="'+id+'"]').click();assert(await page.locator('#empty-view').isVisible());assert.equal(await state(()=>OBTPCassetteView.items.length),0);}
  await type('Walls');await page.locator('#height').selectOption('2700');assert((await page.locator('#part option[value="sheet-seam-backing"]').count())===1);await page.locator('#skin').check();await page.locator('#explode').fill('60');await page.locator('#explode').dispatchEvent('input');await page.screenshot({path:'qa/wall-constituent-parts-exploded.png',fullPage:true});
+ assert.equal(await state(()=>OBTPCassetteView.renderer.meshes.values().next().value.parts.filter(p=>p.asset.id.startsWith('joint-study')).length),4);
+ await page.locator('details').filter({has:page.locator('#door-study')}).locator('summary').click();
+ for(const [id,label] of [['door-study','Door opening'],['opening-study','Window opening'],['partition-study','Off-axis partition']]){
+  await page.locator('#'+id).click();
+  assert(await page.locator('#development-dialog').isVisible());
+  assert((await page.locator('#development-title').textContent()).startsWith(label));
+  await page.locator('#development-skin').uncheck();
+  await page.screenshot({path:'qa/'+id+'.png',fullPage:true});
+  await page.locator('#development-skin').check();
+  await page.locator('#close-development').click();
+ }
  await type('Roofs');await view('assembly');await page.locator('#bays').selectOption('8');assert.equal(await state(()=>OBTPCassetteView.items.length),47);await page.locator('#layer').selectOption('floor');assert.equal(await state(()=>OBTPCassetteView.items.length),9);await page.locator('#layer').selectOption('all');await page.locator('#bays').selectOption('4');await page.locator('#height').selectOption('2100');
  const download=page.waitForEvent('download');await page.locator('#export').click();const d=await download;const geometry=JSON.parse(fs.readFileSync(await d.path(),'utf8'));assert.equal(geometry.manufacturingRelease,false);assert.equal(geometry.connectionRevision,'revised');assert(geometry.parts.length>100);assert(geometry.inspectionRegister.some(r=>r.id==='foundation'&&r.status==='Undesigned'));assert(geometry.interfaces.every(j=>j.capacity===null&&j.fasteners===null));
  assert(await page.locator('fieldset input').first().isDisabled());

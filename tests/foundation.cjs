@@ -20,3 +20,5 @@ assert.equal(o.aperture.width,1020);
 assert.equal(o.model.assets.length,6);
 assert(!S.generate({}).models.some(m=>m.id===o.model.id));
 console.log('PASS: optional bearing lines, null-capacity support interface, measured wood solids and detached window study');
+
+require('./development.cjs');
