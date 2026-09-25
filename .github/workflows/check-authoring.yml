@@ -1,0 +1,18 @@
+name: Check canonical GH authoring
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  authoring:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install rhino3dm==8.35.0
+      - run: python authoring/grasshopper/tests/test_authoring.py
+      - run: python authoring/grasshopper/tests/test_r02.py
+      - run: python authoring/grasshopper/export_web.py /tmp/sauna-catalogue --revision ${{ github.sha }}
