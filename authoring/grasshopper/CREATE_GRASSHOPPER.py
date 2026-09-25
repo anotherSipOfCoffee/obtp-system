@@ -1,0 +1,122 @@
+#! python 3
+"""Run once in Rhino 8 ScriptEditor (Python 3), with Grasshopper open.
+Creates a native editable .gh beside this script, without touching existing documents.
+Requires the modern Python3Component.Create API; unsupported Rhino builds fail explicitly.
+"""
+from datetime import datetime
+from pathlib import Path
+import json
+import traceback
+import clr
+import Rhino
+import Grasshopper
+from Grasshopper.Kernel import GH_Document, GH_DocumentIO, GH_ParamAccess
+from Grasshopper.Kernel.Special import GH_NumberSlider, GH_BooleanToggle, GH_ValueList, GH_ValueListItem, GH_ValueListMode, GH_Panel, GH_Group
+from Grasshopper.GUI.Base import GH_SliderAccuracy
+from System import Decimal, Double, Boolean, String
+from System.Drawing import PointF, Color, SizeF
+
+ROOT=Path(__file__).resolve().parent
+
+
+def main():
+    if Rhino.RhinoDoc.ActiveDoc is None or Rhino.RhinoDoc.ActiveDoc.ModelUnitSystem != Rhino.UnitSystem.Millimeters:
+        raise ValueError('Open a millimetre Rhino document first; this script never rescales your document.')
+    if Grasshopper.Instances.ActiveCanvas is None:
+        raise RuntimeError('Open Grasshopper first, then run this script again.')
+    # Resolve only the already loaded Rhino script component assembly.
+    from System import AppDomain
+    assemblies=[a for a in AppDomain.CurrentDomain.GetAssemblies() if a.GetName().Name=='RhinoCodePluginGH']
+    if not assemblies:
+        raise RuntimeError('Drop a Python 3 Script component onto a blank GH canvas once to initialize it, then rerun setup.')
+    clr.AddReference(assemblies[0].Location)
+    from RhinoCodePluginGH.Components import Python3Component
+    from RhinoCodePluginGH.Parameters import ScriptVariableParam
+    if not hasattr(Python3Component,'Create'):
+        raise RuntimeError('This Rhino build lacks the script creation API. Install a current Rhino 8 service release. See README fallback.')
+    doc=GH_Document()
+    def place(obj,x,y):
+        obj.CreateAttributes();obj.Attributes.Pivot=PointF(x,y);doc.AddObject(obj,False);return obj
+    def slider(name,value,minimum,maximum,x,y):
+        obj=GH_NumberSlider();obj.CreateAttributes();obj.NickName=name
+        obj.Slider.Type=GH_SliderAccuracy.Integer
+        obj.Slider.Minimum=Decimal(minimum);obj.Slider.Maximum=Decimal(maximum)
+        obj.SetSliderValue(Decimal(value));return place(obj,x,y)
+    def toggle(name,value,x,y):
+        obj=GH_BooleanToggle();obj.NickName=name;obj.Value=value;return place(obj,x,y)
+    def panel(text,x,y,width=350,height=200):
+        obj=GH_Panel();obj.UserText=text;place(obj,x,y)
+        return obj
+    def script(name,file,inputs,outputs,x,y):
+        code=(ROOT/'components'/file).read_text(encoding='utf-8')
+        obj=Python3Component.Create(name,code)
+        obj.UsingStandardOutputParam=False
+        for p in list(obj.Params.Input):obj.Params.UnregisterInputParameter(p)
+        for p in list(obj.Params.Output):obj.Params.UnregisterOutputParameter(p)
+        for n,t in inputs:
+            p=ScriptVariableParam(n);p.PrettyName=n;p.ToolTip=n.replace('_',' ');p.Optional=True;p.Access=GH_ParamAccess.item
+            if t is not None:p.TypeHints.Select(clr.GetClrType(t))
+            p.CreateAttributes();obj.Params.RegisterInputParam(p)
+        for n,access in outputs:
+            p=ScriptVariableParam(n);p.Access=access;p.CreateAttributes();obj.Params.RegisterOutputParam(p)
+        obj.VariableParameterMaintenance();obj.SetSource(code)
+        return place(obj,x,y)
+    def group(name,objects,color):
+        g=GH_Group();g.NickName=name;g.Colour=color;doc.AddObject(g,False)
+        for obj in objects:g.AddObject(obj.InstanceGuid)
+        return g
+    presets=GH_ValueList();presets.NickName='Saved Sauna configuration';presets.ListMode=GH_ValueListMode.DropDown
+    presets.ListItems.Clear()
+    labels=['S / no storage','S / storage','M / no storage','M / storage','L / no storage','L / storage']
+    for i,label in enumerate(labels):
+        item=GH_ValueListItem(label,str(i));item.Selected=(i==2);presets.ListItems.Add(item)
+    place(presets,40,60)
+    controls={'preset_index':presets,'custom':toggle('Use custom parameters',False,40,110)}
+    values=[('room_depth_steps',3,3,8),('sauna_length_steps',4,3,8),('hall_length_steps',3,2,8),
+            ('storage_length_steps',2,2,4),('wall_height',2100,2100,2700),('partition_depth',90,90,120),
+            ('door_width',900,600,1200),('door_height',1900,1600,2100),('sauna_door_offset',150,90,900),
+            ('bench_depth',600,400,800),('bench_height',900,650,1100),('foot_bench_height',450,250,700)]
+    for i,(n,v,lo,hi) in enumerate(values):
+        if n in ['wall_height','partition_depth']:
+            obj=GH_ValueList();obj.NickName=n;obj.ListMode=GH_ValueListMode.DropDown;obj.ListItems.Clear()
+            for choice in ([2100,2700] if n=='wall_height' else [90,120]):
+                entry=GH_ValueListItem(str(choice)+' mm',str(choice));entry.Selected=(choice==v);obj.ListItems.Add(entry)
+            controls[n]=place(obj,40,190+i*45)
+        else:controls[n]=slider(n,v,lo,hi,40,190+i*45)
+    controls['storage']=toggle('Custom storage',False,40,750)
+    controls['include_foundation']=toggle('Foundation study',True,40,795)
+    inputs=[(k,Boolean if k in ['custom','storage','include_foundation'] else Double) for k in controls]
+    model=script('01 · Shared module','model.py',inputs,[('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],420,240)
+    for i,(key,_) in enumerate(inputs):model.Params.Input[i].AddSource(controls[key])
+    panels=toggle('Show panels',True,420,620);cut=toggle('Cut view',True,420,665);explode=slider('Explode display',0,0,100,420,710)
+    preview=script('02 · Rhino preview','preview.py',[(n,t) for n,t in [('scene_json',String),('panels',Boolean),('cut',Boolean),('explode',Double)]],
+                   [('geometry',GH_ParamAccess.list),('part_ids',GH_ParamAccess.list)],800,250)
+    for i,source in enumerate([model.Params.Output[0],panels,cut,explode]):preview.Params.Input[i].AddSource(source)
+    report=panel('',800,80);report.AddSource(model.Params.Output[1])
+    export_toggle=toggle('Export review snapshot',False,800,620)
+    export=script('03 · Checked export','export.py',[('scene_json',String),('run_export',Boolean)],[('receipt',GH_ParamAccess.item)],1120,250)
+    export.Params.Input[0].AddSource(model.Params.Output[0]);export.Params.Input[1].AddSource(export_toggle)
+    receipt=panel('',1400,250);receipt.AddSource(export.Params.Output[0])
+    group('A · Saved presets and custom dimensions / mm / 600 mm steps',list(controls.values()),Color.FromArgb(220,232,221))
+    group('B · Shared Python generator',[model],Color.FromArgb(233,226,207))
+    group('C · Inspection only',[preview,panels,cut,explode],Color.FromArgb(218,228,235))
+    group('D · Manual export / does not publish website',[export,export_toggle,receipt],Color.FromArgb(235,222,218))
+    # Never overwrite a definition the owner may have edited.
+    name='OBTP_Sauna_R01_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    path=ROOT/(name+'.gh')
+    if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
+    doc.FilePath=str(path)
+    Grasshopper.Instances.DocumentServer.AddDocument(doc)
+    Grasshopper.Instances.ActiveCanvas.Document=doc
+    doc.Enabled=True;doc.NewSolution(False)
+    receipt_data=dict(rhino_version=str(Rhino.RhinoApp.Version),definition=path.name,
+                      status='Definition created; inspect GH runtime messages before acceptance')
+    (ROOT/'setup-receipt.json').write_text(json.dumps(receipt_data,indent=2))
+    print('Created and opened '+str(path))
+
+try:main()
+except Exception:
+    error=traceback.format_exc()
+    (ROOT/'setup-error.txt').write_text(error,encoding='utf-8')
+    print(error)
+    raise
