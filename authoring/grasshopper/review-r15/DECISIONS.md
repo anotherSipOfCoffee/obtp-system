@@ -1,11 +1,11 @@
 # R15 review decisions and limits
 
 ## Result
-The requested 75% reduction is not achieved. On the full 216-selection catalogue, provisional non-cladding manufacturing candidates are 459 original, 381 first cells, 361 revised. Sauna union: 296 → 251 → 251. Studio union: 246 → 226 → 228. The combined catalogue is a union, not a sum.
+The 75% target is not achieved. Full-catalogue provisional types are 459 original → 381 first cells → 358 current. Sauna: 296 → 251 → 249 (15.9% from original). Studio: 246 → 226 → 226 (8.1%). Combined reduction: 22.0% from original, 6.0% from first cells.
 
-Original → revised: Sauna 15.2%, Studio 7.3%, combined 21.4%. First cells → revised: Sauna 0.0%, Studio −0.9%, combined 5.2%. At the first cell footprint, revised construction gives 380 combined candidates: only 0.3% improvement from 381. Narrowing Sauna accounts for the remaining reduction to 361 (5.0% from the same-footprint revision). These are not verified manufactured-part reductions; missing manufacturing inputs prevent such a claim.
+At the first-cell footprint, current construction gives 377 combined types (1.0% below 381). Narrowing Sauna gives the further reduction to 358. The opening-only comparison against commit `20e7d87dddab93ef453f0ef2c491078ce9b376c5` holds footprints, openings and counting rules fixed: 361 → 358, or 0.8%.
 
-Default M/no-storage/flat/window1180/timber/closed Studio: Sauna 130 → 118 → 118 types; Studio 144 → 125 → 128. Revised versus original is 9.2% and 11.1%, respectively. Exact pieces, assembly groups, dimensions, areas, wood volumes and cladding-exclusion effects are in the audit. Roof/window/foundation choices remain; the target was not approached by deleting options or layers.
+Default M complete models: Sauna 130 → 118 → 117 types; Studio 144 → 125 → 126. Default current pieces: 954 and 1221. The opening-only change leaves these piece totals unchanged. See manufacturing-comparison.md and OPENINGS.md for the explicit prior-revision comparison and retained exceptions.
 
 ## Selected changes
 - Shared 2400 mm structural width; grid remains X900 × Y1200. Sauna has 2010 mm structural internal depth / 1938 mm after main side finishes. Sauna/hall adjacency, two bench levels and exterior shower remain. External-storage versions retain shower, storage and rear seat; the door now explicitly stays in the narrowed storage room. Heater and clearances still need review.
@@ -20,9 +20,11 @@ Default M/no-storage/flat/window1180/timber/closed Studio: Sauna 130 → 118 →
 Splitting all interior boards into 900 mm lengths with closer batten support reduced the twelve-base-selection catalogue union from 273 to 258 candidates, but increased default Sauna pieces 956 → 1378 and Studio 1217 → 1620. It added finish joints and supporting parts. Reverted: this was not a clean route to the target. No trial geometry is in the production model.
 
 ## Remaining diversity
-Default revised Sauna: timber 34 candidate types, lining/battens 23, object representations 22, plywood 13, retained cladding battens/trim 10, insulation 10, deck 3, plus glass/roof membrane/foundation. Studio: timber 34, object representations 27, lining 21, retained cladding battens/trim 14, plywood 14, insulation 9, deck 4, glass 3, roof membrane and foundation. Opening variants, corner/terminal deductions, sloped roof bearings, lining remainders, insulation cavities and placeholder equipment dominate. The storage variants retain additional legitimate detail types. Sharing widths helps the catalogue more than each individual building.
+The ordinary 2100 mm wall bay already uses five pieces and three types. Across 900/1200 mm widths it uses five types. Ordinary floor and roof strips share three types. Openings, terminals, roof bearings, lining remainders, insulation cavities and product representations cause the remaining variation.
 
-75% would require roughly 115 candidates across the whole catalogue, versus 361 now. Even a single default building has 118–128. Reaching that level needs a coordinated engineered kit of sections, openings, joints and finishes, with verified supplier constituent BOMs; grouping current pieces as cassettes or assuming unknown machining identical would only disguise the problem.
+The new opening recipe reuses matching side plates and a standard 900/1200 top plate where the opening width matches. Direct lintel bearing onto jack studs remains. Terminals are retained after a local-joint trial increased Sauna's six-preset union from 185 to 193 and left Studio at 159. Do not disguise corner machining as interchangeable stock.
+
+75% would require roughly 115 catalogue candidates versus 358 now. Reaching it needs a coordinated engineered kit and verified supplier constituent BOMs; grouping current pieces as cassettes does not achieve it.
 
 ## Assembly and small-crew scope
 Assembly figures are distinct geometric group recipes and groups installed, computed from constituents and relative placement. They do not certify site work packages or factory lifting units. Repeated floor/roof strips and solid wall frames are potential jig-built subassemblies, but no mass or manual-lift limit has been verified. Use loose members/small subassemblies until weights and handling are established. Avoid claiming a complete floor/roof cassette can be lifted by a small crew without equipment.

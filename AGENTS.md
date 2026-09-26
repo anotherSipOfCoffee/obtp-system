@@ -8,6 +8,7 @@ Latest explicit user instructions take precedence. This revision is **review onl
 - Revised Sauna and Studio structural width is 2400 mm. Physical members may span multiple cells. Support rhythm is normally 1800 × 1200, with explicit terminal bays; it is not engineered capacity.
 - Facade remains visible. Only facade finish boards (including raised roof facade) are excluded from primary part counts. Retain their separate schedule. Battens, edge trims, insulation, equipment representations and every other modelled category remain primary.
 - Manufacturing identity includes material, dimensions, shape, machining, handing and connection requirements. Unknowns remain unknown. Report provisional candidate classes and geometric lower bounds, never verified manufacturing savings. Assembly grouping does not reduce constituent diversity.
+- Ordinary wall bays retain two plates, two studs and one panel. Opening side plates match top/bottom; jack studs bear on bottom plates and retain 45 mm lintel bearing. Keep corner/niche terminal exceptions explicit; the local-seam trial increased diversity. See review-r15/OPENINGS.md.
 - Both complete terraces use X-directed boards, max 1800 mm, supported butt joints. Interior lining remains continuous: a 900 mm cut experiment added excessive pieces/joints and was rejected.
 
 ## Reproducibility and checks

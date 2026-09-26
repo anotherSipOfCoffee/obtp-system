@@ -219,16 +219,30 @@ def build(p):
             if length-hi<90:hi=length
             intervals=[(0,lo),(hi,length)]
             head=p['door_height'];group=name+'/opening'
-            for side,u,a in [('left',lo,start-45-lo),('right',start+width+45,hi-start-width-45)]:
-                if cells.enabled(p) and a>=90:
-                    put('infill-bottom-'+side,u,0,0,a,d,45,group=group)
-                    for edge,xx in [('a',u),('b',u+a-45)]:
-                        put('infill-stud-'+side+'-'+edge,xx,0,45,45,d,H-90,group=group)
-                else:put('king-'+side,u,0,0,a,d,H-45,group=group)
-            for side,u in [('left',start-45),('right',start+width)]:
-                put('jack-'+side,u,0,0,45,d,head,group=group)
-            put('lintel',start-45,0,head,width+90,d,H-head-45,group=group)
-            put('opening-top',lo,0,H-45,hi-lo,d,45,group=group)
+            if cells.enabled(p):
+                # Reuse each side panel's full-width plate above and below.
+                # Jack studs bear on the bottom plate; lintel ends retain their
+                # 45 mm jack bearing. Outer studs retain the ordinary bay cut.
+                for side,u,a in [('left',lo,start-lo),('right',start+width,hi-start-width)]:
+                    for edge,z in [('bottom',0),('top',H-45)]:
+                        put('plate-'+edge+'-'+side,u,0,z,a,d,45,group=group)
+                    outer=u if side=='left' else u+a-45
+                    put('stud-'+side,outer,0,45,45,d,H-90,group=group)
+                    jack=start-45 if side=='left' else start+width
+                    put('jack-'+side,jack,0,45,45,d,head-45,group=group)
+                put('opening/plate-top-0',start,0,H-45,width,d,45,group=group)
+                put('lintel',start-45,0,head,width+90,d,H-head-45,group=group)
+            else:
+                for side,u,a in [('left',lo,start-45-lo),('right',start+width+45,hi-start-width-45)]:
+                    if cells.enabled(p) and a>=90:
+                        put('infill-bottom-'+side,u,0,0,a,d,45,group=group)
+                        for edge,xx in [('a',u),('b',u+a-45)]:
+                            put('infill-stud-'+side+'-'+edge,xx,0,45,45,d,H-90,group=group)
+                    else:put('king-'+side,u,0,0,a,d,H-45,group=group)
+                for side,u in [('left',start-45),('right',start+width)]:
+                    put('jack-'+side,u,0,0,45,d,head,group=group)
+                put('lintel',start-45,0,head,width+90,d,H-head-45,group=group)
+                put('opening-top',lo,0,H-45,hi-lo,d,45,group=group)
             for label,u,a,z,c in [('left',lo,start-lo,0,H),('right',start+width,hi-start-width,0,H),('head',start,width,head,H-head)]:
                 put('opening-skin-'+label,u,-skin if side_skin<0 else d,z,a,skin,c,'plywood',group)
             if axis=='x':vo=[base[0]+start,base[1]-skin,F];vs=[width,d+2*skin,head]

@@ -54,7 +54,7 @@ def compile_catalogue(destination,revision,generate_pdfs=False):
         versions=comparisons[comparison_key]
         if versions['revised']['geometry_sha256']!=scene['geometry_sha256']:
             raise ValueError('Comparison is stale; run compare_manufacturing.py --full-catalogue')
-        web['comparison']=dict(previous=versions['original'],first_integrated=versions['cells'],current=versions['revised'],same_footprint=versions['revised_same_footprint'],basis=comparison['counting_rule'])
+        web['comparison']=dict(previous=versions['original'],first_integrated=versions['cells'],before_opening=versions['pre_opening'],current=versions['revised'],same_footprint=versions['revised_same_footprint'],basis=comparison['counting_rule'])
         counts=manufacturing(scene,details=True)
         for field in ['type_keys','assembly_keys']:counts.pop(field)
         schedule_file=key+'-manufacturing.json.gz'

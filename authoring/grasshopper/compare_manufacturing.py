@@ -5,7 +5,7 @@ import argparse, importlib.util, itertools, json, subprocess, sys, tempfile, gzi
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 REPO=ROOT.parents[1]
-PINS={'original':'1ad71826acfcc7d6d5df9a06167c5fcfea20b516','cells':'a11e613ac923fd5de6a3d3f1368e6c6eebc57745'}
+PINS={'original':'1ad71826acfcc7d6d5df9a06167c5fcfea20b516','cells':'a11e613ac923fd5de6a3d3f1368e6c6eebc57745','pre_opening':'20e7d87dddab93ef453f0ef2c491078ce9b376c5'}
 from obtp.manufacturing import analyse
 from obtp.drawings import svg
 
@@ -61,7 +61,7 @@ def run(destination,full=False):
                     (out/(('studio' if program else 'sauna')+'-'+name+'-plan.svg')).write_text(svg(s['drawings']['views']['concept-plan']))
                 (out/(('studio' if program else 'sauna')+'-revised-schedule.json.gz')).write_bytes(gzip.compress(json.dumps(analyse(scenes['revised'],True),separators=(',',':')).encode(),mtime=0))
         catalogue={}
-        for name in ['original','cells','revised_same_footprint','revised']:
+        for name in ['original','cells','pre_opening','revised_same_footprint','revised']:
             catalogue[name]={}
             for program in ['sauna','studio','combined']:
                 subset=[r['versions'][name] for r in rows if program=='combined' or r['program']==program]
@@ -78,7 +78,7 @@ def run(destination,full=False):
            counting_rule='obtp/manufacturing.py applied unchanged to all snapshots; only facade finish boards excluded. All figures are provisional candidate counts, NOT verified manufacturing counts.',
            target_achieved=False,rows=rows,catalogue=catalogue,uncertainty=['Manufacturing grades, machining, grain, handedness and joint definitions are incomplete.','Counts are provisional candidate classes; actual manufactured types and actual site assembly counts cannot be certified.','Purchased-product subparts are geometric representations, not verified supplier BOMs.','Unmodelled fasteners, seals and tapes remain unknown in all versions.'])
         (out/'manufacturing-comparison.json.gz').write_bytes(gzip.compress(json.dumps(result,separators=(',',':')).encode(),mtime=0))
-        lines=['# Three-version manufacturing comparison','','Counts are provisional: manufacturing details are incomplete. The 75% target is not achieved or certified. Facade boards alone are excluded equally in every version; battens, trims, all other materials and object representations remain counted.','','## Per-building default M / no storage','','| Building / version | Candidate types | Pieces excl. cladding | Cladding pieces | Assembly types / installed | Width mm |','|---|---:|---:|---:|---:|---:|']
+        lines=['# Manufacturing comparison','','Counts are provisional: manufacturing details are incomplete. The 75% target is not achieved or certified. Facade boards alone are excluded equally in every version; battens, trims, all other materials and object representations remain counted.','','## Per-building default M / no storage','','| Building / version | Candidate types | Pieces excl. cladding | Cladding pieces | Assembly types / installed | Width mm |','|---|---:|---:|---:|---:|---:|']
         for row in rows:
             if '-m-open-r0-w1180-b0-winter' not in row['key']:continue
             for name,a in row['versions'].items():
@@ -86,7 +86,7 @@ def run(destination,full=False):
         lines+=['','## Catalogue union, not the sum of unique counts','','| Version | Sauna types | Studio types | Combined types |','|---|---:|---:|---:|']
         for name,a in catalogue.items():lines.append(f"| {name} | {a['sauna']['unique_manufactured_part_candidates']} | {a['studio']['unique_manufactured_part_candidates']} | {a['combined']['unique_manufactured_part_candidates']} |")
         lines+=['','## Measured reduction in catalogue diversity','','| Reference | Sauna | Studio | Combined |','|---|---:|---:|---:|']
-        for name in ['original','cells']:
+        for name in ['original','cells','pre_opening']:
             vals=[100*(1-catalogue['revised'][p]['unique_manufactured_part_candidates']/catalogue[name][p]['unique_manufactured_part_candidates']) for p in ['sauna','studio','combined']]
             lines.append('| '+name+' → revised | '+' | '.join(f'{v:.1f}%' for v in vals)+' |')
         lines+=['','Same-footprint isolates revised construction recipes from Sauna narrowing; compare cells → revised_same_footprint, then revised_same_footprint → revised. All JSON rows retain cladding-inclusion effects, material breakdowns, usable area, wood volume and exact geometry hashes. Physical catalogue totals mean building one of every configuration; they are not a typical order quantity.','',*['- '+s for s in analyse(scenes['revised'])['uncertainty']]]

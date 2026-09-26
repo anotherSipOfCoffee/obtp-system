@@ -50,6 +50,29 @@ class ManufacturingTests(unittest.TestCase):
             self.assertEqual(len(packs),3)
             self.assertTrue(all(a['origin'][2]+a['size'][2]==j['origin'][2] for a in packs))
 
+    def test_opening_jacks_retain_direct_bearing_and_repeat_side_plates(self):
+        for program in range(2):
+            for window in (580,880,1180):
+                for preset in (2,3):
+                    scene=build(parameters(preset,program_type=program,window_width=window))
+                    for group in scene['cell_spec']['wall_assemblies']:
+                        parts=[a for a in scene['parts'] if a['assembly']==group['id'] and a['material'] in ('timber','plywood')]
+                        if group['kind'] in ('solid','terminal'):
+                            self.assertEqual(len(parts),5)
+                            self.assertEqual(len({identity(a) for a in parts}),3)
+                            continue
+                        lintel=next(a for a in parts if a['id'].endswith('/lintel'))
+                        for side in ('left','right'):
+                            jack=next(a for a in parts if a['id'].endswith('/jack-'+side))
+                            bottom=next(a for a in parts if a['id'].endswith('/plate-bottom-'+side))
+                            top=next(a for a in parts if a['id'].endswith('/plate-top-'+side))
+                            self.assertEqual(identity(bottom),identity(top))
+                            self.assertEqual(jack['origin'][2],bottom['origin'][2]+bottom['size'][2])
+                            self.assertEqual(jack['origin'][2]+jack['size'][2],lintel['origin'][2])
+                            for axis in (0,1):
+                                self.assertGreaterEqual(jack['origin'][axis],lintel['origin'][axis])
+                                self.assertLessEqual(jack['origin'][axis]+jack['size'][axis],lintel['origin'][axis]+lintel['size'][axis])
+
     def test_lean_storage_opening_remains_in_storage_zone(self):
         for i in [1,3,5]:
             s=build(parameters(i,roof_type=0));p=s['config']
