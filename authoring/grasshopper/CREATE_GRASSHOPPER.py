@@ -19,6 +19,28 @@ from System.Drawing import PointF, Color, SizeF
 ROOT=Path(__file__).resolve().parent
 
 
+def local_module(module):
+    """Resolve this download explicitly, even with an older obtp already cached."""
+    import hashlib
+    import importlib
+    import importlib.util
+    import sys
+    package_root=ROOT/'obtp'
+    target=package_root/(module+'.py')
+    if not target.is_file():
+        raise FileNotFoundError('Missing '+str(target)+'. Extract the complete source ZIP before running setup.')
+    name='_obtp_setup_'+hashlib.sha256(str(package_root.resolve()).encode()).hexdigest()[:16]
+    if name not in sys.modules:
+        spec=importlib.util.spec_from_file_location(name,package_root/'__init__.py',submodule_search_locations=[str(package_root)])
+        package=importlib.util.module_from_spec(spec)
+        sys.modules[name]=package
+        try:spec.loader.exec_module(package)
+        except Exception:
+            del sys.modules[name]
+            raise
+    return importlib.import_module(name+'.'+module)
+
+
 def main():
     if Rhino.RhinoDoc.ActiveDoc is None or Rhino.RhinoDoc.ActiveDoc.ModelUnitSystem != Rhino.UnitSystem.Millimeters:
         raise ValueError('Open a millimetre Rhino document first; this script never rescales your document.')
@@ -112,10 +134,16 @@ def main():
     inputs=[(k,Boolean if k in ['custom','storage','include_foundation','studio_winter_closed'] else Double) for k in controls]
     model=script('01 · Shared module','model.py',inputs,[('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],420,240)
     for i,(key,_) in enumerate(inputs):model.Params.Input[i].AddSource(controls[key])
-    panels=toggle('Show panels',True,420,620);cut=toggle('Cut view',True,420,665);explode=slider('Explode display',0,0,100,420,710)
-    preview=script('02 · Rhino preview','preview.py',[(n,t) for n,t in [('scene_json',String),('panels',Boolean),('cut',Boolean),('explode',Double)]],
+    GROUPS=local_module('preview_filter').GROUPS
+    panels=toggle('Show panels',True,420,620);cut=toggle('Cut view',False,420,665);explode=slider('Explode display',0,0,100,420,710)
+    only=GH_ValueList();only.NickName='Show only';only.ListMode=GH_ValueListMode.DropDown;only.ListItems.Clear()
+    for i,label in enumerate(['All enabled groups']+[label for key,label in GROUPS]):
+        item=GH_ValueListItem(label,str(i));item.Selected=(i==0);only.ListItems.Add(item)
+    place(only,800,1750)
+    part_controls=[toggle(label,True,800+(i//12)*420,1810+(i%12)*45) for i,(key,label) in enumerate(GROUPS)]
+    preview=script('02 · Rhino preview','preview.py',[(n,t) for n,t in [('scene_json',String),('panels',Boolean),('cut',Boolean),('explode',Double),('only',Double)]]+[('show_'+key,Boolean) for key,label in GROUPS],
                    [('geometry',GH_ParamAccess.list),('part_ids',GH_ParamAccess.list)],800,250)
-    for i,source in enumerate([model.Params.Output[0],panels,cut,explode]):preview.Params.Input[i].AddSource(source)
+    for i,source in enumerate([model.Params.Output[0],panels,cut,explode,only]+part_controls):preview.Params.Input[i].AddSource(source)
     report=panel('',800,80);report.AddSource(model.Params.Output[1])
     export_toggle=toggle('Export review snapshot',False,800,620)
     export=script('03 · Checked export','export.py',[('scene_json',String),('run_export',Boolean)],[('receipt',GH_ParamAccess.item)],1120,250)
@@ -124,11 +152,10 @@ def main():
     group('A · Saved presets and custom dimensions / mm / 600 mm steps',list(controls.values()),Color.FromArgb(220,232,221))
     group('B · Shared Python generator',[model],Color.FromArgb(233,226,207))
     group('C · Inspection only',[preview,panels,cut,explode],Color.FromArgb(218,228,235))
+    group('C2 · Part visibility / Show only overrides switches',[only]+part_controls,Color.FromArgb(218,228,235))
     group('D · Manual export / does not publish website',[export,export_toggle,receipt],Color.FromArgb(235,222,218))
     # Analysis preparation shares the detailed scene, not the display/cut geometry.
-    import sys
-    if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
-    from obtp.analysis import inputs as analysis_inputs
+    analysis_inputs=local_module('analysis').inputs
     settings=panel(json.dumps(analysis_inputs(),indent=2),420,1150)
     run_analysis=toggle('Export analysis preparation',False,800,1100)
     analysis=script('04 · Detailed analysis preparation','analysis.py',
@@ -147,7 +174,7 @@ def main():
     group('E5 · Material section diagrams',[diagrams],Color.FromArgb(218,228,235))
     group('E6 · Report export / local only',[run_analysis,analysis_receipt],Color.FromArgb(220,232,221))
     # Never overwrite a definition the owner may have edited.
-    name='OBTP_Sauna_R07_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    name='OBTP_Module_R10_'+datetime.now().strftime('%Y%m%d_%H%M%S')
     path=ROOT/(name+'.gh')
     if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
     doc.FilePath=str(path)
@@ -165,3 +192,4 @@ except Exception:
     (ROOT/'setup-error.txt').write_text(error,encoding='utf-8')
     print(error)
     raise
+

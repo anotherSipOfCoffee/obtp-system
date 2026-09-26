@@ -1,3 +1,6 @@
+# Latest owner release R10
+Owner requests publication of Main/Pagrindinis with supplied gallery images, Studio default/open sliders, simplified fixed controls, recessed firewood niche and all-solid cut view. Preserve R09 GH package-loader/part-visibility fixes. Read System authoring/grasshopper/RELEASE_R10.md. This supersedes earlier Sauna-default and planning-only instructions for this release.
+
 # Heated centre — latest owner decision
 Studio centre is a heated winter room opening through sliding glazing for summer. Read authoring/grasshopper/HEATED_CENTRE_R01.md; this supersedes the unheated-buffer assumption. Supplier glazing fit, heater installation, airtight thresholds and structural cantilever remain unresolved.
 
