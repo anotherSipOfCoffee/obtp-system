@@ -46,12 +46,14 @@ def derive(scene):
         if name=='plan':
             dims=[dimension([0,0],[end,0],-550),dimension([0,0],[0,W],-500),dimension([195,W],[195+p['sauna_length_steps']*600,W],400),dimension([195+p['sauna_length_steps']*600+p['partition_depth'],W],[L-195,W],400)]
             for v in scene['opening_voids']:
-                x,y,z=v['origin'];a,b,h=v['size'];dims.append(dimension([x,y],[x+a,y] if a>b else [x,y+b],-220))
+                x,y,z=v['origin'];a,b,h=v['size'];dims.append(dimension([x,y],[x+a,y] if a>b else [x,y+b],400 if v['id']=='annex-end/opening' else -220))
             dims.append(dimension([end,-104-p['terrace_steps']*600],[end,-104],450))
         else:
             width=W if axis==0 else end
             dims=[dimension([0,0],[width,0],-420),dimension([width,F],[width,F+p['wall_height']],400),dimension([0,0],[0,scene['metrics']['height_mm']],-450)]
         views[name]=dict(axis=axis,level_mm=level,polygons=polygons,dimensions=dims,polylines=[])
+    views['plan']['labels']=[dict(at=[195+p['sauna_length_steps']*600-600,W*.40],text='Pirtis'),dict(at=[195+p['sauna_length_steps']*600+p['partition_depth']+(p['hall_length_steps']*600-p['partition_depth'])/2,W*.75],text='Prieangis')]
+    if p['storage']:views['plan']['labels'].append(dict(at=[L+d['annex_length_mm']/2,195+(W-390)*.58],text='Sandėliukas'))
     # Window schedule is projected from actual joinery parts, never guessed from UI width.
     window=[a for a in scene['parts'] if a['id'].startswith('window/')]
     x0=min(a['origin'][0] for a in window);z0=min(a['origin'][2] for a in window)
@@ -93,6 +95,7 @@ def svg(view):
     out=[f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{lo[0]} {-hi[1]} {hi[0]-lo[0]} {hi[1]-lo[1]}"><rect x="{lo[0]}" y="{-hi[1]}" width="{hi[0]-lo[0]}" height="{hi[1]-lo[1]}" fill="white"/>']
     for a in view['polygons']:out.append('<polygon points="'+' '.join(f'{x},{-y}' for x,y in a['points'])+f'" fill="{a["fill"]}" stroke="#222" stroke-width="6"/>')
     for a in view['polylines']:out.append('<polyline points="'+' '.join(f'{x},{-y}' for x,y in a)+'" fill="none" stroke="#222" stroke-width="8"/>')
+    for a in view.get('labels',[]):out.append(f'<text x="{a["at"][0]}" y="{-a["at"][1]}" font-family="Arial" font-size="90" text-anchor="middle">{escape(a["text"])}</text>')
     for d in view['dimensions']:
         lines,pt,label=dimension_lines(d)
         for a,b in lines:out.append(f'<path d="M{a[0]},{-a[1]} L{b[0]},{-b[1]}" stroke="#555" stroke-width="5"/>')

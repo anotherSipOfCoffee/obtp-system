@@ -36,7 +36,7 @@ try:
         foot_bench_height=foot_bench_height,include_foundation=bool(include_foundation))
     scene=core.build(p);scene_json=json.dumps(scene)
     m=scene['metrics']
-    report='{} | {}\nArea bound {:.2f}/50 m² | Height {:.0f} / 5000 mm | Span {:.0f} / 6000 mm\nModeled wood (structure + finishes, excludes furniture) {:.3f} m³\nREVIEW CANDIDATE; website publication blocked\n{}'.format(
+    report='{} | {}\nArea bound {:.2f}/50 m² | Height {:.0f} / 5000 mm | Span {:.0f} / 6000 mm\nModeled wood (structure + finishes, excludes furniture) {:.3f} m³\nREVIEW CANDIDATE; not construction documentation\n{}'.format(
         p['id'],'custom controls active' if custom else 'saved preset; custom controls ignored',m['building_area_bound_m2'],m['height_mm'],
         m['max_bearing_line_span_mm'],m['total_wood_m3'],'\n'.join(scene['holds']))
 except Exception as error:

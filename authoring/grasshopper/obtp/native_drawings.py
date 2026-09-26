@@ -32,14 +32,14 @@ def bake(scene):
             d=Rhino.Geometry.LinearDimension(plane,uv(a),uv(b),uv(location));d.DimensionStyleId=style_id
             doc.Objects.AddLinearDimension(d,attr())
     page=doc.Views.AddPageView(root+' / A3 plan',420,297)
-    # Paper layout title block uses the same 180 x 54 mm geometry as PDF.
+    # Paper layout title block uses the same 180 x 45 mm geometry as PDF.
     def paper_attr():
         a=Rhino.DocObjects.ObjectAttributes();a.Space=Rhino.DocObjects.ActiveSpace.PageSpace;a.ViewportId=page.MainViewport.Id;return a
     def rectangle(x,y,w,h):
         ps=[Rhino.Geometry.Point3d(a,b,0) for a,b in [(x,y),(x+w,y),(x+w,y+h),(x,y+h),(x,y)]];doc.Objects.AddPolyline(ps,paper_attr())
-    rectangle(20,10,390,277);rectangle(230,10,180,54)
-    for y in [19,28,40,52]:doc.Objects.AddLine(Rhino.Geometry.Point3d(230,y,0),Rhino.Geometry.Point3d(410,y,0),paper_attr())
-    text=Rhino.Geometry.TextEntity();text.Plane=Rhino.Geometry.Plane(Rhino.Geometry.Point3d(233,56,0),Rhino.Geometry.Vector3d.ZAxis);text.PlainText='OBTP / '+scene['config']['id']+' / STUDIJA';text.TextHeight=3;doc.Objects.AddText(text,paper_attr())
+    rectangle(20,10,390,277);rectangle(230,10,180,45)
+    for y in [25,40]:doc.Objects.AddLine(Rhino.Geometry.Point3d(230,y,0),Rhino.Geometry.Point3d(410,y,0),paper_attr())
+    text=Rhino.Geometry.TextEntity();text.Plane=Rhino.Geometry.Plane(Rhino.Geometry.Point3d(233,46,0),Rhino.Geometry.Vector3d.ZAxis);text.PlainText='OBTP / '+scene['config']['id']+' / STUDIJA';text.TextHeight=3;doc.Objects.AddText(text,paper_attr())
     detail=page.AddDetailView('Planas 1:50',Rhino.Geometry.Point2d(25,90),Rhino.Geometry.Point2d(405,260),Rhino.Display.DefinedViewportProjection.Top)
     if detail:
         ox,oy=offsets['plan'];d=scene['dimensions'];target=Rhino.Geometry.Point3d(ox+(d['length_mm']+d['annex_length_mm'])/2,oy+d['width_mm']/2-400,0)

@@ -15,16 +15,33 @@ def pdf(scene,path):
     def line(a,b):c.line(*a,*b)
     def title(n,name,scale):
         c.setLineWidth(.25);c.rect(20,10,390,277);text(25,278,'obtp. / studio',5);text(25,269,name,4)
-        # 180 mm width follows ISO 7200 layout. 54 mm height is OBTP layout choice.
-        x,y,w,h=230,10,180,54;c.rect(x,y,w,h)
-        for dy in [9,18,30,42]:line((x,y+dy),(x+w,y+dy))
-        for xx in [350,380,395]:line((xx,10),(xx,28))
-        text(233,56,'OBTP / Modulinė pirtis '+scene['config']['size'],3)
-        text(233,46,'Projektavimo studija / ne statybai',2.4)
-        text(233,34,name[:62],2.5)
-        text(233,22,'Žymuo: OBTP-'+scene['config']['id'].upper(),2.2)
-        text(353,22,'Laida R04',2);text(382,22,'Lapas',2);text(397,22,'Lapų',2)
-        text(233,13,'Mastelis '+scale+' | A3 | mm',2.3);text(382,13,n,2.5);text(397,13,4,2.5)
+        # 180 x 45 mm construction-drawing arrangement documented by VIKO,
+        # figure 6, LST 1516-based teaching template; professional fields left blank.
+        x,y=230,10;c.rect(x,y,180,45)
+        for yy in [25,40]:line((230,yy),(410,yy))
+        line((320,10),(320,55))
+        for yy in [30,35]:line((230,yy),(320,yy))
+        for xx in [245,265,290,305]:line((xx,25),(xx,40))
+        line((245,10),(245,25));line((230,20),(245,20))
+        line((395,25),(395,40));line((395,35),(410,35))
+        for xx in [380,395]:line((xx,10),(xx,25))
+        line((380,20),(410,20))
+        text(233,48,'obtp. / studio',4)
+        text(233,43,'Projektavimo studija / ne statybai',2.3)
+        text(322,51,'Statinio projekto pavadinimas',1.8)
+        text(322,44,'Modulinė pirtis '+scene['config']['size'],3)
+        for yy,label in [(36.5,'PV'),(31.5,'PDV'),(26.5,'Parengė')]:text(246,yy,label,2)
+        text(231,21,'Kalba',1.8);text(233,13,'LT',2.5)
+        text(248,19,'Užsakovas / vieta: tikslinama',2.2)
+        text(248,13,'Modelio versija R04',2.2)
+        text(322,36.5,'Brėžinio pavadinimas',1.8)
+        text(322,30,name[:45],2 if len(name)>30 else 2.5)
+        text(396,36.5,'Laida',1.8);text(400,29,'0',2.5)
+        text(322,21,'Dokumento žymuo',1.8)
+        text(322,16,'OBTP-'+scene['config']['id'].upper()+'-'+str(n).zfill(2),1.8)
+        text(322,12,'M '+scale+' / A3',2)
+        text(381,21,'Lapas',1.8);text(396,21,'Lapų',1.8)
+        text(386,13,n,2.5);text(400,13,4,2.5)
         text(25,27,'Parengė / tikrino: ____________________',2.5)
         text(25,21,'Užsakovas / vieta: ____________________',2.5)
         text(25,15,'Modelis '+scene['geometry_sha256'][:16]+' | 2026-09-26',2)
@@ -40,6 +57,8 @@ def pdf(scene,path):
         c.setFillColor('#000000');c.setStrokeColor('#111111');c.setLineWidth(.18)
         for a in v['polylines']:
             for p,q in zip(a,a[1:]):line(point(p),point(q))
+        for a in v.get('labels',[]):
+            x,y=point(a['at']);c.setFont('OBTP',2.3);c.drawCentredString(x,y,a['text'])
         for d in v['dimensions']:
             lines,pt,label=dimension_lines(d);c.setLineWidth(.13)
             for a,b in lines:line(point(a),point(b))
@@ -58,7 +77,7 @@ def pdf(scene,path):
     text(250,237,'Pasirinkta konfigūracija',4)
     cfg=scene['config'];roof=['Plokščias','Vienšlaitis','Dvišlaitis'][cfg['roof_type']]
     for i,t in enumerate(['Dydis: '+cfg['size'],'Sandėliukas: '+('taip' if cfg['storage'] else 'ne'),'Stogas: '+roof,'Terasa: '+str(cfg['terrace_steps']*600)+' mm','Langas: '+str(cfg['window_width'])+' × '+str(cfg['door_height'])+' mm','Fasadas: vertikalios dailylentės']):text(250,225-i*8,t,3)
-    text(25,83,'Planas iš modelio pjūvio 1 100 mm virš grindų. Juoda spalva - kertamos sienos.',2.5)
+    text(25,83,'Planas 1 100 mm virš grindų. Juoda - kertamos sienos. Matmenys pagal konstrukcijos paviršius.',2.5)
     text(25,76,'Durų ir lauko suolo simboliai iš užsakovo DXF; pirties suolai projektuojami iš 3D.',2.5)
     page();title(2,'Pjūviai A-A ir B-B','1:50')
     view('section-a',55,130,50);view('section-b',215,130,50)
@@ -75,5 +94,5 @@ def pdf(scene,path):
     for i,label in enumerate(['D1 / Lango mazgas','D2 / Durų mazgas','D3 / Sienų kampas']):
         x=25+i*127;c.setLineWidth(.2);c.rect(x,100,120,150);text(x+4,254,label,3)
     text(25,86,'Detalės nepateiktos. Rėmeliai rezervuoti suderintiems konstrukcijų mazgams.',2.5)
-    text(25,77,'Pagrindinis įrašas: 180 × 54 mm. LST 1516 atitiktis dar nepatvirtinta.',2.5)
+    text(25,77,'Pagrindinis įrašas: 180 × 45 mm, pagal VIKO LST 1516 pagrįstą pavyzdį; projektas nepatvirtintas.',2.5)
     c.save()
