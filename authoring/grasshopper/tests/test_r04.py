@@ -6,12 +6,12 @@ from obtp.export import vertices
 from test_r02 import collide
 class R04(unittest.TestCase):
  def test_catalogue_drawings_and_insulation(self):
-  for i,roof,terrace,window in itertools.product(range(6),range(3),[1,2],[600,900,1200]):
+  for i,roof,terrace,window in itertools.product(range(6),range(3),[2],[580,880,1180]):
    s=build(parameters(i,roof_type=roof,terrace_steps=terrace,window_width=window));d=s['drawings']
    self.assertEqual(d['source_geometry_sha256'],s['geometry_sha256'])
    if roof==2:self.assertAlmostEqual(s['metrics']['height_mm'],4480)
    self.assertEqual(d['views']['window']['dimensions'][0]['value_mm'],window)
-   self.assertEqual(d['views']['window']['dimensions'][1]['value_mm'],s['config']['door_height'])
+   self.assertEqual(d['views']['window']['dimensions'][1]['value_mm'],s['config']['door_height']-20)
    for view in d['views'].values():
     self.assertTrue(view['polygons'])
     for dim in view['dimensions']:

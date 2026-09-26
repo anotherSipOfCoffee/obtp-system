@@ -91,12 +91,12 @@ def main():
         item=GH_ValueListItem(label,str(i));item.Selected=(i==1);roofs.ListItems.Add(item)
     controls['roof_type']=place(roofs,40,850)
     terrace=GH_ValueList();terrace.NickName='Terrace depth / mm';terrace.ListMode=GH_ValueListMode.DropDown;terrace.ListItems.Clear()
-    for depth,steps in [(600,1),(1200,2)]:
+    for depth,steps in [(1200,2)]:
         item=GH_ValueListItem(str(depth),str(steps));item.Selected=(steps==2);terrace.ListItems.Add(item)
     controls['terrace_steps']=place(terrace,40,895)
     win=GH_ValueList();win.NickName='Window width / mm';win.ListMode=GH_ValueListMode.DropDown;win.ListItems.Clear()
-    for w in [600,900,1200]:
-        item=GH_ValueListItem(str(w),str(w));item.Selected=(w==1200);win.ListItems.Add(item)
+    for w in [580,880,1180]:
+        item=GH_ValueListItem(str(w),str(w));item.Selected=(w==1180);win.ListItems.Add(item)
     controls['window_width']=place(win,40,940)
     facade=GH_ValueList();facade.NickName='Facade';facade.ListMode=GH_ValueListMode.DropDown;facade.ListItems.Clear()
     item=GH_ValueListItem('Vertical timber', '0');item.Selected=True;facade.ListItems.Add(item)
@@ -118,7 +118,7 @@ def main():
     group('C · Inspection only',[preview,panels,cut,explode],Color.FromArgb(218,228,235))
     group('D · Manual export / does not publish website',[export,export_toggle,receipt],Color.FromArgb(235,222,218))
     # Never overwrite a definition the owner may have edited.
-    name='OBTP_Sauna_R04_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    name='OBTP_Sauna_R05_'+datetime.now().strftime('%Y%m%d_%H%M%S')
     path=ROOT/(name+'.gh')
     if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
     doc.FilePath=str(path)

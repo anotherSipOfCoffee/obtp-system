@@ -1,10 +1,16 @@
-# R04 source-first workflow
+# R05 current revision
 
-Read CANONICAL_WORKFLOW.md before any geometry edit. Website and GH share this Python core. Facade selector has one option: vertical timber. Read RESEARCH_R04.md for current insulation, roof and drawing decisions; earlier research notes are historical context.
+Terrace is fixed at 1200 mm. Window controls now specify actual frame widths 580 / 880 / 1180 mm (default1180), with a provisional 10 mm fitting gap at each edge; corresponding structural openings remain 600 / 900 / 1200 mm. Frame height1880 sits in a1900 opening aligned with the door opening. Read RESEARCH_R05.md.
 
-# OBTP Grasshopper / Rhino R04
+Website conceptual wall silhouettes and PDF material sections come from the same scene and geometry hash. PDF: five A3 landscape sheets, plan/two individual sections1:25, window1:10, coordination jamb1:2. No embedded PDF web preview. Native Rhino acceptance remains pending.
 
-Local review package. Owner authorized publishing this R04 update. These are construction and layout studies, not an approved construction release.
+# R05 source-first workflow
+
+Read CANONICAL_WORKFLOW.md before any geometry edit. Website and GH share this Python core. Facade selector has one option: vertical timber. Read RESEARCH_R05.md for current insulation, roof and drawing decisions; earlier research notes are historical context.
+
+# OBTP Grasshopper / Rhino R05
+
+Local review package. Owner authorized publishing this R05 update. These are construction and layout studies, not an approved construction release.
 
 ## Start
 1. Extract this entire package to a fresh writable folder.
@@ -17,7 +23,7 @@ Local review package. Owner authorized publishing this R04 update. These are con
 The Rhino/GH host scripts have not been executed here. Portable CPython/rhino3dm geometry checks pass. The earlier TypeHints.Select overload dependency is removed; input conversion failures clear model output.
 
 ## Inspect without running scripts
-- `exports/OBTP_Sauna_All_Six_R04.3dm`: all six saved layouts, default single-slope roof, 1200 mm terrace.
+- `exports/OBTP_Sauna_All_Six_R05.3dm`: all six saved layouts, default single-slope roof, 1200 mm terrace.
 - `exports/sauna-*.3dm`: individual saved layouts.
 - `roof-studies/`: M models with 1200 mm terrace and each roof form.
 - `previews/R02-roofs-and-interior.png`: geometry render, including cut views.
@@ -60,7 +66,7 @@ The narrower shell adaptation and small source-plan offsets remain subject to ow
 ## Checks
 `python tests/test_authoring.py` and `python tests/test_r02.py` (requires rhino3dm). Portable checks cover the six, 108 custom cases, 108 roof/terrace/window cases, actual solid extents, invalid input rejection and valid closed .3dm round trips. `CHECK_RHINO.py` repeats native Rhino geometry/export checks on six default layouts plus three roof/terrace examples. Inspect actual GH runtime messages afterward; a geometry diagnostic PASS is not a GH canvas acceptance.
 
-## R04 drawings and presentation
+## R05 drawings and presentation
 The website includes model-derived plan, A-A and B-B sections, a window schedule and blank detail frames. PDF sheets are A3 landscape with fixed drawing scales and a 180 x 45 mm title block based on the VIKO LST 1516 teaching example. Professional project completeness is not certified. GH export additionally creates measured Rhino LinearDimension objects and a plan layout in the active document; save the Rhino document separately. Native acceptance remains pending.
 
 `obtp/drawings.py` owns intersections, dimensions and DXF symbol placement. `obtp/sheets.py` formats PDFs; install reportlab to run the offline PDF compiler. `obtp/insulation.py` fills cavities around framing and openings, with membrane layers specified separately. No energy class is claimed. The browser white display retains original material data; its ground shadow is an approximation.
