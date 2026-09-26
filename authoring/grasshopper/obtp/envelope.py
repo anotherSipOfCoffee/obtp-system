@@ -4,7 +4,7 @@ Sloped members are affine prisms; slope_y shears Z along Y and preserves volume.
 import math
 
 
-def enrich(p,parts,voids,interfaces,L,W,F,H,annex):
+def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
     wall=195; skin=12; end=L+annex; hot=p['sauna_length_steps']*600; px=wall+hot
     depth=W-390; D=p['terrace_steps']*600; outer=84 # 12 sheathing + 25 + 25 battens + 22 boards
     def add(id,o,s,mat='timber',family='roof',slope=0):
@@ -25,6 +25,13 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex):
             k=0 if axis=='x' else 1;other=1-k
             if v['origin'][other]-1 <= base <= v['origin'][other]+v['size'][other]+1:
                 cuts.append((v['origin'][k],F,v['size'][k],p['door_height']))
+        # Record the filled finish zone from the same surface dimensions, including
+        # ventilated cavities; no repeated cladding strips in a conceptual plan.
+        for u,z,a,h in __import__('functools').reduce(lambda rs,c:[t for rr in rs for t in subtract(rr,c)],cuts,[(u0,F,length,H)]):
+            if z <= F+1100 < z+h:
+                thick=36 if interior else 84
+                v=base if inward>0 else base-thick
+                wall_regions.append(dict(id=name,axis=axis,base=[u,v] if axis=='x' else [v,u],length=a,depth=thick))
         def put(label,u,z,a,h,offset,thick,material):
             for j,(uu,zz,aa,hh) in enumerate(__import__('functools').reduce(lambda rs,c:[t for r in rs for t in subtract(r,c)],cuts,[(u,z,a,h)])):
                 v=base+inward*offset-(thick if inward<0 else 0)
@@ -85,7 +92,8 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex):
                 add('terrace/pad-'+str(j)+'-'+str(i),[x,y-60,-200],[150,150,175],'concrete-study','foundation')
     # Retain main horizontal ceiling cassette. Weather roof is a separate supported study.
     base=F+H+238; cover=D if p['roof_type']!=2 else 0
-    y0=-outer-150-cover; y1=W+outer+150; x0=-outer-150; length=end+2*(outer+150)
+    overhang=0 if p['roof_type']==2 else 150
+    y0=-outer-overhang-cover; y1=W+outer+overhang; x0=-outer-overhang; length=end+2*(outer+overhang)
     slope=1/40 if p['roof_type']==0 else math.tan(math.radians(8))
     if p['roof_type']==2:
         # MyCabin S30 overall height reference: 4480 mm from model datum.

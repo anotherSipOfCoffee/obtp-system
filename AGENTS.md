@@ -32,3 +32,6 @@ The owner explicitly authorized the GH-R03 website update after pausing earlier 
 
 ## R04 authoring and customer presentation
 Model-derived drawings, measured dimension anchors and drawing exports belong to System authoring/grasshopper/obtp/drawings.py and sheets.py. Do not add independent browser geometry. Source DXF symbols carry a source checksum. Cake House-style controls and Koto-inspired neutral gallery/navigation are authorized; reserved photography fields remain empty. White appearance is a display override. Read RESEARCH_R04.md for insulation, 4480 mm gable reference height, legal/title-block and native Rhino acceptance limits.
+
+## R05 customer refinement — 2026-09-26
+Owner requires no embedded PDF preview; download only. Mobile controls toggle over the existing 3D view. Terrace is1200 only; Pihla sauna fixed window candidate uses frame widths580/880/1180 (default1180),170 depth and51 face with provisional10mm installation allowance. Gable roof is flush with finished walls on all sides. Only Sauna remains exposed; navigation label is Module type. Canonical model records wall regions; plan_styles.py merges these into conceptual black wall silhouettes, while drawings.py/sheets.py retain model material intersections for structural PDFs. Never add separate Studio geometry. Read System authoring/grasshopper/RESEARCH_R05.md.

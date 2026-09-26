@@ -12,7 +12,7 @@ name='obtp_'+hashlib.sha1(str(root).encode()).hexdigest()[:12]
 if name not in sys.modules:
     spec=importlib.util.spec_from_file_location(name,root/'obtp'/'__init__.py',submodule_search_locations=[str(root/'obtp')])
     package=importlib.util.module_from_spec(spec);sys.modules[name]=package;spec.loader.exec_module(package)
-for module in ['export','drawings','insulation','envelope']:
+for module in ['export','plan_styles','drawings','insulation','envelope']:
     importlib.reload(importlib.import_module(name+'.'+module))
 core=importlib.reload(importlib.import_module(name+'.model'))
 scene_json=None

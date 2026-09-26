@@ -8,10 +8,14 @@ def bake(scene):
     from .drawings import dimension_lines
     doc=Rhino.RhinoDoc.ActiveDoc
     root='OBTP '+scene['config']['id']+' '+scene['geometry_sha256'][:8]
-    style=Rhino.DocObjects.DimensionStyle();style.Name=root;style.TextHeight=125;style.ArrowLength=60;style.DimensionScale=1
+    style=Rhino.DocObjects.DimensionStyle();style.Name=root;style.TextHeight=62.5;style.ArrowLength=30;style.DimensionScale=1
     sid=doc.DimStyles.Add(style);style_id=doc.DimStyles[sid].Id
+    hp=Rhino.DocObjects.HatchPattern.Defaults.Hatch1
+    found=doc.HatchPatterns.FindName(hp.Name)
+    hatch_index=found.Index if found else doc.HatchPatterns.Add(hp)
     offsets={}
     for i,(name,view) in enumerate(scene['drawings']['views'].items()):
+        if name in ['concept-plan','window-jamb']:continue
         ox=15000;oy=-i*8500;offsets[name]=(ox,oy)
         layer=Rhino.DocObjects.Layer();layer.Name=root+' / '+name;layer.Color=Color.Black;li=doc.Layers.Add(layer)
         def attr():
@@ -20,8 +24,15 @@ def bake(scene):
         for p in view['polygons']:
             if len(p['points'])<3:continue
             curve=Rhino.Geometry.PolylineCurve([pt(q) for q in p['points']+[p['points'][0]]]);doc.Objects.AddCurve(curve,attr())
-            if p['fill']=='#111111':
-                for hatch in Rhino.Geometry.Hatch.Create(curve,0,0,1,doc.ModelAbsoluteTolerance) or []:doc.Objects.AddHatch(hatch,attr())
+            if p.get('cut') and p.get('material') in ['timber','plywood','lining-wood','cladding-wood','deck-wood'] and hatch_index>=0:
+                for hatch in Rhino.Geometry.Hatch.Create(curve,hatch_index,0,12 if p['material']=='plywood' else 30,doc.ModelAbsoluteTolerance) or []:doc.Objects.AddHatch(hatch,attr())
+            if p.get('cut') and p.get('material')=='mineral-wool':
+                import math
+                x0=min(q[0] for q in p['points']);x1=max(q[0] for q in p['points']);y0=min(q[1] for q in p['points']);y1=max(q[1] for q in p['points']);horizontal=x1-x0>=y1-y0
+                lo,hi=(x0,x1) if horizontal else (y0,y1);a,b=(y0,y1) if horizontal else (x0,x1);stride=max(30,min(150,(b-a)*.65));count=max(2,int((hi-lo)/5));wave=[]
+                for j in range(count+1):
+                    t=lo+(hi-lo)*j/count;v=(a+b)/2+(b-a)*.43*math.sin((t-lo)/stride*2*math.pi);wave.append(pt((t,v) if horizontal else (v,t)))
+                doc.Objects.AddPolyline(wave,attr())
         for p in view['polylines']:doc.Objects.AddPolyline([pt(q) for q in p],attr())
         for label in view.get('labels',[]):
             text=Rhino.Geometry.TextEntity();text.Plane=Rhino.Geometry.Plane(pt(label['at']),Rhino.Geometry.Vector3d.ZAxis);text.PlainText=label['text'];text.TextHeight=100;doc.Objects.AddText(text,attr())
@@ -42,9 +53,9 @@ def bake(scene):
     rectangle(20,10,390,277);rectangle(230,10,180,45)
     for y in [25,40]:doc.Objects.AddLine(Rhino.Geometry.Point3d(230,y,0),Rhino.Geometry.Point3d(410,y,0),paper_attr())
     text=Rhino.Geometry.TextEntity();text.Plane=Rhino.Geometry.Plane(Rhino.Geometry.Point3d(233,46,0),Rhino.Geometry.Vector3d.ZAxis);text.PlainText='OBTP / '+scene['config']['id']+' / STUDIJA';text.TextHeight=3;doc.Objects.AddText(text,paper_attr())
-    detail=page.AddDetailView('Planas 1:50',Rhino.Geometry.Point2d(25,90),Rhino.Geometry.Point2d(405,260),Rhino.Display.DefinedViewportProjection.Top)
+    detail=page.AddDetailView('Planas 1:25',Rhino.Geometry.Point2d(25,90),Rhino.Geometry.Point2d(405,260),Rhino.Display.DefinedViewportProjection.Top)
     if detail:
         ox,oy=offsets['plan'];d=scene['dimensions'];target=Rhino.Geometry.Point3d(ox+(d['length_mm']+d['annex_length_mm'])/2,oy+d['width_mm']/2-400,0)
-        detail.Viewport.SetCameraTarget(target,True);detail.DetailGeometry.SetScale(1,doc.ModelUnitSystem,50,doc.PageUnitSystem);detail.DetailGeometry.IsProjectionLocked=True;detail.CommitChanges()
+        detail.Viewport.SetCameraTarget(target,True);detail.DetailGeometry.SetScale(1,doc.ModelUnitSystem,25,doc.PageUnitSystem);detail.DetailGeometry.IsProjectionLocked=True;detail.CommitChanges()
     doc.Views.Redraw()
     return root

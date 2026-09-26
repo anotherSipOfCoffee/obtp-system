@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R04'
+VERSION = 'GH-R05'
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
 PRESETS = [dict(id='sauna-'+size+('-storage' if storage else '-open'),
@@ -21,7 +21,7 @@ DEFAULTS = dict(room_depth_steps=3, sauna_length_steps=4, hall_length_steps=3,
                 partition_depth=90, door_width=900, door_height=1900,
                 sauna_door_offset=150, bench_depth=600, bench_height=900,
                 foot_bench_height=450, include_foundation=True,
-                roof_type=1, terrace_steps=2, window_width=1200, facade_type=0)
+                roof_type=1, terrace_steps=2, window_width=1180, facade_type=0)
 HOLDS = [
  'Owner-plan fit not accepted: 1800 mm structural inside-face depth is a proposal.',
  'Source door offsets are retained in reference drawings; generated doors use explicit candidate parameters.',
@@ -69,8 +69,8 @@ def build(p):
     if not 400 <= p['bench_depth'] <= 800 or not 650 <= p['bench_height'] <= 1100 or not 250 <= p['foot_bench_height'] < p['bench_height']-150:
         raise ValueError('Bench study dimensions are outside supported ranges')
     if p['roof_type'] not in (0,1,2):raise ValueError('Roof type: 0 flat, 1 single slope, 2 gable')
-    if p['terrace_steps'] not in (1,2):raise ValueError('Terrace depth must be 600 or 1200 mm')
-    if p['window_width'] not in (600,900,1200):raise ValueError('Window width must be 600, 900 or 1200 mm')
+    if p['terrace_steps'] != 2:raise ValueError('Terrace depth is fixed at 1200 mm')
+    if p['window_width'] not in (580,880,1180):raise ValueError('Window frame width must be 580, 880 or 1180 mm')
     if p['facade_type'] != 0:raise ValueError('Only vertical timber facade is available')
     wall, skin, pitch = SPEC['wall_depth'], SPEC['wall_skin'], SPEC['pitch']
     depth = p['room_depth_steps'] * pitch
@@ -96,7 +96,7 @@ def build(p):
         raise ValueError('Generated height exceeds 5000 mm')
     if W > 6000:
         raise ValueError('Floor/roof bearing-line span exceeds 6000 mm')
-    parts, interfaces, opening_voids = [], [], []
+    parts, interfaces, opening_voids, wall_regions = [], [], [], []
 
     def add(id, origin, size, material='timber', family='walls', assembly=None):
         if any(not math.isfinite(v) for v in origin+size) or any(v <= 0 for v in size):
@@ -138,6 +138,11 @@ def build(p):
             interfaces.append(dict(id=group+'/bearing',type='slab-bearing',span_mm=W,capacity=None,fasteners=None))
 
     def wall_run(name, base, axis, length, d=wall, door=None, family='walls', side_skin=1):
+        # Full envelope of the actual framed run; conceptual drawings consume this,
+        # detailed drawings intersect individual parts. Openings are subtracted later.
+        region_base=list(base)
+        if side_skin<0:region_base[1 if axis=='x' else 0]-=skin
+        wall_regions.append(dict(id=name,axis=axis,base=region_base,length=length,depth=d+skin))
         """Independent framed cassettes and explicit rough-opening frame; no booleans."""
         def put(label,u,v,z,a,b,c,mat='timber',group=None):
             if mat=='plywood' and c>2440:
@@ -194,15 +199,19 @@ def build(p):
                 panel(x,x+width,n);x+=width;n+=1
 
     entry=hot+p['partition_depth']+(hall_clear-p['door_width'])//2
-    ww=p['window_width'];wx=wall+(hot-ww)//2
+    ww=p['window_width']+20;wx=wall+(hot-ww)//2
     wall_run('front-window',[wall,0],'x',hot,door=((hot-ww)//2,ww),side_skin=-1)
     wall_run('front',[wall+hot,0],'x',inside_length-hot,door=(entry-hot,p['door_width']),side_skin=-1)
     wall_run('back',[wall,W-wall],'x',inside_length)
     wall_run('hot-end',[0,0],'y',W,side_skin=-1)
     parts[:]=[a for a in parts if not a['id'].startswith('front-window/door-')]
-    for label,xx,zz,a,c in [('left',wx,F,35,p['door_height']),('right',wx+ww-35,F,35,p['door_height']),('bottom',wx+35,F,ww-70,35),('top',wx+35,F+p['door_height']-35,ww-70,35)]:
-        add('window/'+label,[xx,80,zz],[a,45,c],'object','walls')
-    add('window/glazing',[wx+35,98,F+35],[ww-70,8,p['door_height']-70],'glass','walls')
+    # Pihla Varma Kiinteä sauna candidate: 51 mm frame, 170 mm depth.
+    # 10 mm installation allowance per edge is an OBTP coordination assumption.
+    fw=p['window_width'];fh=p['door_height']-20;fx=wx+10;fz=F+10;fy=12.5
+    for label,xx,zz,a,c in [('left',fx,fz,51,fh),('right',fx+fw-51,fz,51,fh),('bottom',fx+51,fz,fw-102,51),('top',fx+51,fz+fh-51,fw-102,51)]:
+        add('window/'+label,[xx,fy,zz],[a,170,c],'object','walls')
+    for i,gy in enumerate([50,72,94]):
+        add('window/glazing-'+str(i),[fx+51,gy,fz+51],[fw-102,4,fh-102],'glass','walls')
     wall_run('hall-end',[L-wall,0],'y',W)
     wall_run('sauna-partition',[partition_x,wall],'y',depth,d=p['partition_depth'],
              door=(p['sauna_door_offset'],p['door_width']),family='partitions')
@@ -233,7 +242,7 @@ def build(p):
     if p['include_foundation']:
         for j,y in enumerate([-100,W-200]):add('foundation/strip-'+str(j),[0,y,-200],[L+annex,300,200],'concrete-study','foundation')
     from .envelope import enrich
-    extra=enrich(p,parts,opening_voids,interfaces,L,W,F,H,annex)
+    extra=enrich(p,parts,opening_voids,interfaces,L,W,F,H,annex,wall_regions)
     from .insulation import enrich as insulate
     envelope_spec=insulate(parts,opening_voids,L,W,F,H,annex,partition_x,p)
     area=extra['area'];height=extra['height']
@@ -242,7 +251,7 @@ def build(p):
     wood={mat:sum(a['size'][0]*a['size'][1]*(a['size'][2]+a.get('top_slope_y',0)*a['size'][1]/2)/1e9 for a in parts if a['material']==mat) for mat in ['timber','plywood','lining-wood','cladding-wood','deck-wood']}
     geometry_hash=hashlib.sha256(json.dumps(parts,sort_keys=True,separators=(',',':')).encode()).hexdigest()
     scene=dict(schema='obtp-parametric-release/1',version=VERSION,units='mm',config=p,
-                system_spec=SPEC,envelope_spec=envelope_spec,parts=parts,interfaces=interfaces,opening_voids=opening_voids,
+                system_spec=SPEC,envelope_spec=envelope_spec,wall_regions=wall_regions,window_spec=dict(manufacturer="Pihla",product="Varma Kiinteä / sauna",frame_width_mm=p["window_width"],frame_height_mm=p["door_height"]-20,frame_depth_mm=170,frame_face_mm=51,installation_gap_mm=10,status="coordination candidate; sauna glazing, supply and joint design require confirmation"),parts=parts,interfaces=interfaces,opening_voids=opening_voids,
                 metrics=dict(building_area_bound_m2=area,internal_clear_rectangle_m2=inside_length*depth/1e6,
                              main_clear_floor_less_partition_m2=(inside_length-p['partition_depth'])*depth/1e6,
                              height_mm=height,max_bearing_line_span_mm=max(W,extra['support_span']),

@@ -33,7 +33,7 @@ def pdf(scene,path):
         for yy,label in [(36.5,'PV'),(31.5,'PDV'),(26.5,'Parengė')]:text(246,yy,label,2)
         text(231,21,'Kalba',1.8);text(233,13,'LT',2.5)
         text(248,19,'Užsakovas / vieta: tikslinama',2.2)
-        text(248,13,'Modelio versija R04',2.2)
+        text(248,13,'Modelio versija R05',2.2)
         text(322,36.5,'Brėžinio pavadinimas',1.8)
         text(322,30,name[:45],2 if len(name)>30 else 2.5)
         text(396,36.5,'Laida',1.8);text(400,29,'0',2.5)
@@ -41,58 +41,116 @@ def pdf(scene,path):
         text(322,16,'OBTP-'+scene['config']['id'].upper()+'-'+str(n).zfill(2),1.8)
         text(322,12,'M '+scale+' / A3',2)
         text(381,21,'Lapas',1.8);text(396,21,'Lapų',1.8)
-        text(386,13,n,2.5);text(400,13,4,2.5)
-        text(25,27,'Parengė / tikrino: ____________________',2.5)
-        text(25,21,'Užsakovas / vieta: ____________________',2.5)
+        text(386,13,n,2.5);text(400,13,5,2.5)
         text(25,15,'Modelis '+scene['geometry_sha256'][:16]+' | 2026-09-26',2)
     def page():c.showPage();c.scale(mm,mm)
+    def hatch(points,material):
+        # Paper-space patterns, clipped to the exact model intersection polygon.
+        # Timber / plywood / fibrous insulation / concrete remain distinguishable.
+        if material not in ['timber','plywood','lining-wood','cladding-wood','deck-wood','mineral-wool','concrete-study']:return
+        c.saveState();path=c.beginPath();path.moveTo(*points[0])
+        for q in points[1:]:path.lineTo(*q)
+        path.close();c.clipPath(path,stroke=0,fill=0)
+        x0=min(q[0] for q in points);x1=max(q[0] for q in points);y0=min(q[1] for q in points);y1=max(q[1] for q in points)
+        c.setStrokeColor('#777777');c.setLineWidth(.09)
+        import math
+        if material=='mineral-wool':
+            # Continuous fibrous batt symbol, with loop depth governed by cavity.
+            horizontal=(x1-x0)>=(y1-y0)
+            lo,hi=(x0,x1) if horizontal else (y0,y1);v0,v1=(y0,y1) if horizontal else (x0,x1)
+            stride=min(6,max(2,(v1-v0)*.65));amp=(v1-v0)*.43;mid=(v0+v1)/2
+            pp=c.beginPath()
+            for i in range(int((hi-lo)/.15)+2):
+                t=min(hi,lo+i*.15);v=mid+amp*math.sin((t-lo)/stride*2*math.pi);q=(t,v) if horizontal else (v,t)
+                if i:pp.lineTo(*q)
+                else:pp.moveTo(*q)
+            c.drawPath(pp)
+        elif material=='concrete-study':
+            c.setFillColor('#777777')
+            for i in range(math.floor(x0/2),math.ceil(x1/2)+1):
+                for j in range(math.floor(y0/2),math.ceil(y1/2)+1):c.circle(i*2+(j%2)*.7,j*2,.13,fill=1,stroke=0)
+        else:
+            spacing=1.0 if material=='plywood' else 2.5
+            for i in range(math.floor((x0-y1)/spacing),math.ceil((x1-y0)/spacing)+1):
+                t=i*spacing;line((t+y0,y0),(t+y1,y1))
+        c.restoreState()
     def view(name,ox,oy,scale):
         v=scene['drawings']['views'][name];s=1/scale
         def point(p):return ox+p[0]*s,oy+p[1]*s
+        c.saveState()
+        if v.get('crop'):
+            x,y,X,Y=v['crop'];clip=c.beginPath();clip.rect(*point((x,y)),(X-x)*s,(Y-y)*s);c.clipPath(clip,stroke=0,fill=0)
         for a in v['polygons']:
             if not a['points']:continue
-            pp=c.beginPath();pp.moveTo(*point(a['points'][0]))
-            for p in a['points'][1:]:pp.lineTo(*point(p))
-            pp.close();c.setFillColor(a['fill']);c.setStrokeColor('#333333');c.setLineWidth(.12 if a['fill']!='#111111' else .18);c.drawPath(pp,fill=1,stroke=1)
-        c.setFillColor('#000000');c.setStrokeColor('#111111');c.setLineWidth(.18)
+            pts=[point(q) for q in a['points']];pp=c.beginPath();pp.moveTo(*pts[0])
+            for q in pts[1:]:pp.lineTo(*q)
+            pp.close();cut=a.get('cut');mat=a.get('material','object')
+            c.setFillColor('#f1f1f1' if mat=='glass' else '#ffffff');c.setStrokeColor('#171717' if cut else '#777777');c.setLineWidth(.35 if cut else .13);c.drawPath(pp,fill=1,stroke=1)
+            if cut:hatch(pts,mat)
+        c.restoreState()
+        c.setFillColor('#000000');c.setStrokeColor('#333333');c.setLineWidth(.18)
         for a in v['polylines']:
             for p,q in zip(a,a[1:]):line(point(p),point(q))
+        for a in v.get('guides',[]):
+            c.setDash([3,1]);c.setStrokeColor('#777777');c.setLineWidth(.13);line(point(a['points'][0]),point(a['points'][1]));c.setDash();x,y=point(a['points'][0]);text(x+2,y+2,a['label'],2.3)
         for a in v.get('labels',[]):
-            x,y=point(a['at']);c.setFont('OBTP',2.3);c.drawCentredString(x,y,a['text'])
+            x,y=point(a['at']);c.setFont('OBTP',3);c.drawCentredString(x,y,a['text'])
         for d in v['dimensions']:
             lines,pt,label=dimension_lines(d);c.setLineWidth(.13)
             for a,b in lines:line(point(a),point(b))
             for p in lines[-1]:
                 x,y=point(p);line((x-1,y-1),(x+1,y+1))
-            x,y=point(pt);text(x+1,y+1,label,2.5)
-    title(1,'Planas','1:50');view('plan',65,150,50)
+            x,y=point(pt)
+            c.saveState();c.setFillColor('#ffffff');c.rect(x-1,y+.5,len(label)*1.65+3,3.7,fill=1,stroke=0);c.setFillColor('#111111');text(x+1,y+1,label,2.5);c.restoreState()
+    def legend(x,y):
+        for i,(mat,label) in enumerate([('timber','Mediena'),('plywood','Fanera'),('mineral-wool','Mineralinė vata'),('concrete-study','Betono atramos')]):
+            yy=y-i*8;c.setFillColor('#ffffff');c.setStrokeColor('#333333');c.setLineWidth(.2);c.rect(x,yy,12,5,fill=1,stroke=1);hatch([(x,yy),(x+12,yy),(x+12,yy+5),(x,yy+5)],mat);c.setFillColor('#111111');text(x+16,yy+1,label,2.5)
+    def leader(anchor,elbow,label):
+        c.setLineWidth(.18);c.setStrokeColor('#555555');line(anchor,elbow);line(elbow,(elbow[0]+50,elbow[1]));text(elbow[0]+2,elbow[1]+2,label,2.5)
+    title(1,'Konstrukcinis planas','1:25');view('plan',55,135,25)
     v=scene['drawings'];L=scene['dimensions']['length_mm']+scene['dimensions']['annex_length_mm'];W=scene['dimensions']['width_mm']
     for m in v['cut_markers']:
-        c.setDash(3,1);c.setLineWidth(.2)
+        c.setDash([5,1,1,1]);c.setLineWidth(.25)
         if m['axis']==0:
-            x=65+m['position']/50;line((x,143),(x,150+W/50+7));text(x+2,140,m['name'])
+            x=55+m['position']/25;line((x,129),(x,135+W/25+10));text(x+2,125,m['name'])
         else:
-            y=150+m['position']/50;line((58,y),(65+L/50+7,y));text(45,y+5,m['name'])
+            y=135+m['position']/25;line((44,y),(55+L/25+10,y));text(29,y+3,m['name'])
         c.setDash()
-    text(250,237,'Pasirinkta konfigūracija',4)
     cfg=scene['config'];roof=['Plokščias','Vienšlaitis','Dvišlaitis'][cfg['roof_type']]
-    for i,t in enumerate(['Dydis: '+cfg['size'],'Sandėliukas: '+('taip' if cfg['storage'] else 'ne'),'Stogas: '+roof,'Terasa: '+str(cfg['terrace_steps']*600)+' mm','Langas: '+str(cfg['window_width'])+' × '+str(cfg['door_height'])+' mm','Fasadas: vertikalios dailylentės']):text(250,225-i*8,t,3)
-    text(25,83,'Planas 1 100 mm virš grindų. Juoda - kertamos sienos. Matmenys pagal konstrukcijos paviršius.',2.5)
-    text(25,76,'Durų ir lauko suolo simboliai iš užsakovo DXF; pirties suolai projektuojami iš 3D.',2.5)
-    page();title(2,'Pjūviai A-A ir B-B','1:50')
-    view('section-a',55,130,50);view('section-b',215,130,50)
-    text(50,252,'A-A / skersinis pjūvis',3);text(215,252,'B-B / išilginis pjūvis',3)
-    text(25,85,'Pjūviai ir matmenys iš to paties 3D modelio. Aukščiai nuo modelio ±0,000.',2.5)
-    text(25,77,'Šiltinimo ir stogo mazgai - tikrinamas sprendinys. Krosnelė ir vėdinimas dar neparinkti.',2.5)
-    page();title(3,'L1 / lango žiniaraštis','1:10')
-    view('window',45,76,10);view('window-plan',235,205,10)
-    text(235,223,'L1 / horizontalus pjūvis',3)
-    for i,t in enumerate(['Kiekis: 1 vnt.','Angos plotis: '+str(cfg['window_width'])+' mm','Angos aukštis: '+str(cfg['door_height'])+' mm','Apačia: grindų lygis','Viršus: sutampa su durų viršumi','Rėmas ir stiklas: tikslinami','Varstymas: neparinktas']):text(235,175-i*8,t,3)
-    c.setFillColor('#d71920');c.rect(235,91,32,9,fill=1,stroke=0);c.setFillColor('#ffffff');text(238,93,'VELUX',5);c.setFillColor('#000000')
-    text(272,95,'Nuoroda / reference',2.5);text(235,85,'Gamintojas šiam fasado langui neparinktas.',2.3)
-    page();title(4,'Detalės / vieta būsimiems mazgams','-')
-    for i,label in enumerate(['D1 / Lango mazgas','D2 / Durų mazgas','D3 / Sienų kampas']):
-        x=25+i*127;c.setLineWidth(.2);c.rect(x,100,120,150);text(x+4,254,label,3)
-    text(25,86,'Detalės nepateiktos. Rėmeliai rezervuoti suderintiems konstrukcijų mazgams.',2.5)
-    text(25,77,'Pagrindinis įrašas: 180 × 45 mm, pagal VIKO LST 1516 pagrįstą pavyzdį; projektas nepatvirtintas.',2.5)
+    text(25,73,'Pirtis '+cfg['size']+'  /  '+roof+' stogas  /  terasa 1200 mm  /  '+('su sandėliuku' if cfg['storage'] else 'be sandėliuko'),3)
+    text(25,65,'Kirtimo aukštis: 1100 mm virš grindų. Matmenys mm. Konstrukcijų sluoksniai pagal 3D modelį.',2.5)
+    legend(25,51)
+    page();title(2,'Pjūvis A-A / skersinis','1:25');view('section-a',95,70,25)
+    leader((95+W/50,70+(scene['dimensions']['floor_top_mm']+cfg['wall_height']+110)/25),(230,181),'220 mm šiltinama perdanga')
+    leader((95+W/50,70+(scene['dimensions']['floor_top_mm']+cfg['wall_height']+500)/25),(230,205),'Vėdinama šalta pastogė')
+    text(230,165,'Šiltinimas tarp sijų; ne visas stogo tūris.',2.5)
+    text(230,158,'Vėdinimo ir sandarinimo mazgai tikslinami.',2.5)
+    legend(280,130)
+    text(25,48,'Aukščiai nuo modelio ±0,000. Grindų viršus +0,238. Šildymo ir vėdinimo sprendiniai tikslinami.',2.5)
+    page();title(3,'Pjūvis B-B / išilginis','1:25');view('section-b',55,70,25)
+    text(25,55,'Pjūvio medžiagos iš modelio. Toliau esančios interjero dalys - plona pilka linija.',2.5)
+    legend(25,43)
+    page();title(4,'L1 / lango žiniaraštis','1:10')
+    view('window',45,77,10);view('window-plan',235,193,10)
+    text(235,233,'PIHLA',6);text(235,225,'Varma Kiinteä / pirties lango kandidatas',3)
+    text(235,216,'L1 / horizontalus pjūvis',2.5)
+    rows=['Kiekis: 1 vnt. / nevarstomas','Rėmas: '+str(cfg['window_width'])+' × '+str(cfg['door_height']-20)+' mm','Konstrukcinė anga: '+str(cfg['window_width']+20)+' × '+str(cfg['door_height'])+' mm','Rėmo gylis: 170 mm; plotis: 51 mm','Montavimo tarpas: 10 mm kiekviename krašte','Trigubas stiklo paketas; vidinis stiklas grūdintas','Stiklo storį ir tiekimą patvirtina gamintojas']
+    for i,t in enumerate(rows):text(235,174-i*8,t,2.8)
+    text(235,106,'Montavimo tarpas - OBTP derinimo prielaida.',2.5)
+    text(235,98,'Angos apačia ir viršus sutampa su durų anga.',2.5)
+    text(235,85,'www.pihla.fi/product/saunan-ikkuna/',2.5)
+    c.linkURL('https://www.pihla.fi/product/saunan-ikkuna/',(235,82,400,91),relative=1)
+    page();title(5,'D1 / lango jungtis ir būsimi mazgai','1:2 / -')
+    # Enlarged actual model jamb. Exact product extrusion/fasteners are deliberately
+    # not fabricated; source drawing is linked for manufacturer coordination.
+    crop=v['views']['window-jamb']['crop'];ox=25-crop[0]/2;oy=73-crop[1]/2
+    view('window-jamb',ox,oy,2)
+    text(25,259,'D1 / horizontalus lango ir sienos pjūvis / 1:2',3)
+    text(25,67,'PIHLA: 51 mm rėmas, 170 mm gylis. OBTP jungties derinimo schema.',2.3)
+    text(25,61,'Sandarinimas, tvirtinimas ir palangė dar neparinkti. Ne gamybai.',2.3)
+    text(25,55,'Gamintojo profilis: pg.emmi.fi/l/tZjpVv-cnSLX',2.3)
+    c.linkURL('https://pg.emmi.fi/l/tZjpVv-cnSLX',(25,52,220,59),relative=1)
+    for x,label in [(235,'D2 / Durų mazgas'),(323,'D3 / Sienų kampas')]:
+        c.setLineWidth(.2);c.rect(x,90,80,160);text(x+3,254,label,3)
+    text(235,79,'Rezervuota suderintiems konstrukcijų mazgams.',2.3)
     c.save()

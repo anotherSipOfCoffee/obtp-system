@@ -43,7 +43,7 @@ class R02(unittest.TestCase):
         self.assertTrue(any(p['material']=='glass' for p in s['parts']))
         self.assertFalse(s['website_ready'])
     def test_roofs_terraces_six(self):
-        for i,roof,terrace,window in itertools.product(range(6),range(3),[1,2],[600,900,1200]):
+        for i,roof,terrace,window in itertools.product(range(6),range(3),[2],[580,880,1180]):
             self.check(build(parameters(i,roof_type=roof,terrace_steps=terrace,window_width=window)))
     def test_export(self):
         import rhino3dm
