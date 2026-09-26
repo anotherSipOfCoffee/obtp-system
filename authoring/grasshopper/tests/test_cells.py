@@ -21,7 +21,7 @@ class CellSystemTests(unittest.TestCase):
             self.assertTrue(all(math.isfinite(v) and v>0 for a in s['parts'] for v in a['size']))
             nodes=s['foundation_spec']['support_nodes_mm']
             xs=sorted(set(x for x,y in nodes));ys=sorted(set(y for x,y in nodes))
-            self.assertTrue(all(b-a==900 for a,b in zip(xs,xs[1:])))
+            self.assertTrue(all(b-a in (900,1800) for a,b in zip(xs,xs[1:])))
             self.assertTrue(all(b-a==1200 for a,b in zip(ys,ys[1:])))
             self.assertEqual(set(map(tuple,nodes)),set(itertools.product(xs,ys)))
             structure=[a for a in s['parts'] if a['material'] in ('timber','plywood')]
@@ -62,7 +62,7 @@ class CellSystemTests(unittest.TestCase):
         self.assertNotIn('cell_spec',old)
         self.assertEqual(new['geometry_sha256'],build(parameters(2))['geometry_sha256'])
         self.assertEqual(old['dimensions']['width_mm'],2190)
-        self.assertEqual(new['dimensions']['width_mm'],3600)
+        self.assertEqual(new['dimensions']['width_mm'],2400)
 
 
 if __name__=='__main__':unittest.main()

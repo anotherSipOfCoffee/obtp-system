@@ -108,7 +108,7 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             surface('lining-storage-back','y',L+12,ya,yb-ya,1)
     # Independently supported deck: no implied cantilever or unverified ledger attachment.
     deck_y=-outer-20-D; deck_end=-outer-20
-    if D:
+    if D and p.get('grid_system')!=1:
         for i,x in enumerate(range(0,end,600)):
             add('terrace/joist-'+str(i),[x,deck_y,F-28-145],[45,D,145],'deck-wood','terrace')
         for i,y in enumerate(range(deck_y,deck_end,100)):
@@ -118,7 +118,7 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             for i,x in enumerate(range(0,end,1800)):
                 add('terrace/pad-'+str(j)+'-'+str(i),[x,y-60,-200],[150,150,175],'concrete-study','foundation')
     side_area=0
-    if True:
+    if p.get('grid_system')!=1:
         # Full shower-side return, in 600mm coordination steps; starts at facade edge.
         sx=end+outer+20 if p['program_type']==0 else -600-D; sy=deck_end; run=W+outer+20-sy
         for i,x in enumerate(range(sx,sx+D,100)):

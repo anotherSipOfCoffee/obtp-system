@@ -26,8 +26,8 @@ def resolve(p, wall=195):
     p['resolved_hall_mm']=hall
     p['resolved_partition_x_mm']=wall+hot
     p['resolved_depth_mm']=W-2*wall
-    p['annex_split_a_mm']=Y-wall
-    p['annex_split_b_mm']=2*Y-wall
+    p['annex_split_a_mm']=(650 if W==2400 else Y-wall)
+    p['annex_split_b_mm']=(1650 if W==2400 else 2*Y-wall)
     return W,L,hot,hall,annex
 
 
@@ -61,7 +61,7 @@ def wall_segments(base,axis,length,opening_envelope=None,forced=()):
 
 
 def record(p,L,W,annex,assemblies):
-    return dict(schema='obtp-cell-system/1',id='cell-900x1200-v1',cell_mm=[X,Y],origin_mm=[0,0],
+    return dict(schema='obtp-cell-system/1',id='shared-900x1200-r15',cell_mm=[X,Y],origin_mm=[0,0],
       reference='outer structural frame faces; internal wall near faces; explicit corner deductions',
       building_cells=[round(L/X),round(W/Y)],annex_cells=round(annex/X),
       wall_joint_policy='cell seams; openings replace whole adjoining bays',wall_assemblies=assemblies,

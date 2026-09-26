@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R14-CELLS'
+VERSION = 'GH-R15-SHARED'
 from . import cells
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
@@ -40,7 +40,7 @@ def parameters(preset_index=2, custom=False, **overrides):
     for k in ['grid_system','foundation_type','roof_type','terrace_steps','window_width','facade_type','system_type','program_type','studio_winter_closed']:
         if k in overrides and overrides[k] is not None:p[k]=overrides[k]
     if p['grid_system']==1 and not custom:
-        p.update(room_depth_steps=3,sauna_length_steps=3,hall_length_steps={'s':2,'m':3,'l':4}[p['size'].lower()],storage_length_steps=1)
+        p.update(room_depth_steps=2,sauna_length_steps=3,hall_length_steps={'s':2,'m':3,'l':4}[p['size'].lower()],storage_length_steps=1)
     if custom:
         unknown = set(overrides) - set(DEFAULTS)
         if unknown:
@@ -206,7 +206,11 @@ def build(p):
             lo,hi=start-90,start+width+90
             if cells.enabled(p):
                 coord=base[0 if axis=='x' else 1]
-                cell_opening=cells.opening(coord,coord+length,cells.X if axis=='x' else cells.Y,width,coord+start)
+                if cells.enabled(p) and name=='annex-end':
+                    # Keep the external storage door inside the lean annex's
+                    # storage room; cell-centering would shift it into the seat.
+                    cell_opening=dict(start=start,lo=lo,hi=hi,nominal_bounds_mm=[coord+lo,coord+hi])
+                else:cell_opening=cells.opening(coord,coord+length,cells.X if axis=='x' else cells.Y,width,coord+start)
                 start=cell_opening['start'];lo=cell_opening['lo'];hi=cell_opening['hi']
                 cell_assemblies.append(dict(id=name+'/opening',axis=axis,kind='opening',bounds_mm=cell_opening['nominal_bounds_mm']))
             if lo<0 or hi>length:
@@ -216,7 +220,11 @@ def build(p):
             intervals=[(0,lo),(hi,length)]
             head=p['door_height'];group=name+'/opening'
             for side,u,a in [('left',lo,start-45-lo),('right',start+width+45,hi-start-width-45)]:
-                put('king-'+side,u,0,0,a,d,H-45,group=group)
+                if cells.enabled(p) and a>=90:
+                    put('infill-bottom-'+side,u,0,0,a,d,45,group=group)
+                    for edge,xx in [('a',u),('b',u+a-45)]:
+                        put('infill-stud-'+side+'-'+edge,xx,0,45,45,d,H-90,group=group)
+                else:put('king-'+side,u,0,0,a,d,H-45,group=group)
             for side,u in [('left',start-45),('right',start+width)]:
                 put('jack-'+side,u,0,0,45,d,head,group=group)
             put('lintel',start-45,0,head,width+90,d,H-head-45,group=group)
