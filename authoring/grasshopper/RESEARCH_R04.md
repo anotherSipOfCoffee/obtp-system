@@ -1,0 +1,23 @@
+# R04 customer presentation and drawing research
+
+26 September 2026. Authoring remains in model.py/envelope.py. Studio is a consumer.
+
+## References and decisions
+- Cake House https://cakehouses.cz/indexEN.html#konfigurator : connected choice circles, binary and three-value rows. Reinterpreted for the existing sauna parameters, keyboard operable.
+- Koto Falco https://koto.co.uk/sauna : quiet navigation, neutral palette and large exterior/interior gallery. Empty reserved image areas; no copied photography.
+- MyCabin S30 brochure https://www.mycabin.lt/_files/ugd/472684_a6b22432896547e6a28e42818a9f0222.pdf : page 1 states overall 4.48 m height. R04 targets maximum gable geometry Z=4480 mm from model datum, preserves 2100 mm walls and existing width. Consequently pitch is steeper than the wider reference. Foundation base is -200 mm, not an established site ground level. Photograph supports only visual roof-edge intent, not an engineered eaves or ridge assembly. Ridge-cap geometry is a study; flashing, drainage, ventilation and fasteners remain unverified.
+- Owner image(5).png: window schedule graphic format only. Draw actual fixed model window, not the example's different double casement. VELUX wordmark identifies a reference only; it does not specify or certify a VELUX façade product.
+
+## Sauna envelope
+- Harvia sauna installation guide (manufacturer-authored, hosted by distributor): https://www.welldana.dk/media/wysiwyg/attachments/Manualer/sauna/Manual_EN_Formula_Solar_Exclusive.pdf : insulated walls/ceiling, aluminium foil and taped continuity, lining cavity, supports for benches.
+- Harvia foil https://www.harvia.com/en/products/SAS10001/aluminium-paper-12530-m2 and foil tape https://www.harvia.com/en/products/SAS10002/aluminium-tape-50-mm-x-50-m : sauna-rated vapour/air control and sealed joints.
+- Harvia ventilation https://support.harvia.com/hc/en-gb/articles/21953036825628-Ventilation-in-the-sauna : ventilation depends on heater and mechanical/gravity strategy. Do not select vents from generic spacing alone.
+
+Apply mineral wool within existing 195 mm wall, 220 mm floor/ceiling cavities, subtracting actual framing and voids. These thicknesses follow OBTP structure, not a certified product recommendation. Retain 16 mm lining / 20 mm batten cavity. Record foil and vapour-open exterior wind barrier as zero-thickness specifications rather than inflated wood quantities. Existing exterior plywood requires hygrothermal assessment; do not declare winter performance, energy class, U-value or condensation safety. Intermittent heating is owner-selected. Heater type unanswered; leave heater clearances, supply/extract design and fire detailing unresolved. Outdoor shower must be frost-drainable.
+
+## Drawings and dimensions
+Canonical parts are intersected at FFL+1100 for plan, x at hot-room centre for A-A and y at structural centre for B-B. The convex prism intersections use actual sloped vertices. Dimensions derive from those same model coordinates; no browser measuring or independent layout solving. User DXF Door Lining and Outdoor Bench linework is retained with source SHA; interior bench remains true model projection because no vetted interior block was identified. Symbol fitting is graphical only, not an approved hardware specification.
+
+A3 landscape follows existing Architecture PDF format. New sheets are vector, fixed 1:50 plan/sections and 1:10 window; three detail frames intentionally empty. 180 x 54 mm title block: 180 mm follows ISO 7200 arrangement; 54 mm is OBTP layout choice, NOT asserted Lithuanian mandated height. ISO source https://www.iso.org/standard/35446.html (current, confirmed 2025); public standard preview https://cdn.standards.iteh.ai/samples/35446/d3b0887cb4fa47f49f8718807d3b8903/ISO-7200-2004.pdf . LT drawing rules refer to LST 1516: https://e-seimas.lrs.lt/rs/actualedition/TAIS.224317/QIshlLzhXR/ . Full current LST requirements were not available for verification. Project designation, signatories, site and professional approval remain blank; sheets say design study, not construction documents. No legal compliance claim.
+
+Native Rhino export adds real LinearDimension annotations and a layout using the same coordinates; runtime acceptance in Rhino 8 is still required. Official API references: https://developer.rhino3d.com/en/samples/rhinocommon/add-linear-dimension2/ and https://developer.rhino3d.com/samples/rhinocommon/add-layout/ . Browser white appearance uses flat-shaded meshes, sharp edges and a soft ground-contact approximation, not the Rhino Arctic render engine. Material data remains unchanged.

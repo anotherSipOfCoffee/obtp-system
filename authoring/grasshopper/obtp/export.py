@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 FACES=[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]]
-COLORS={'lining-wood':(211,187,145,255),'cladding-wood':(54,57,57,255),'deck-wood':(112,109,103,255),'glass':(136,178,189,150),'roof-metal':(63,68,73,255),'roof-membrane':(66,67,68,255),'timber':(187,168,135,255),'plywood':(207,188,155,255),'object':(145,149,150,255),'concrete-study':(125,129,130,255)}
+COLORS={'mineral-wool':(210,205,180,255),'lining-wood':(211,187,145,255),'cladding-wood':(54,57,57,255),'deck-wood':(112,109,103,255),'glass':(136,178,189,150),'roof-metal':(63,68,73,255),'roof-membrane':(66,67,68,255),'timber':(187,168,135,255),'plywood':(207,188,155,255),'object':(145,149,150,255),'concrete-study':(125,129,130,255)}
 
 
 def vertices(p):
@@ -69,7 +69,7 @@ def browser_scene(scene):
         models.append(dict(id=id,units='mm',schema='obtp-source-mesh/1',assets=[dict(
             id=id,vertices=vs,faces=FACES,dimensions=p['size'],material='furniture-study' if p['material']=='object' else p['material'],
             bounds=[[min(v[k] for v in vs) for k in range(3)],[max(v[k] for v in vs) for k in range(3)]],explode=[0,0,0])]))
-        direction={'interior':[0,0,0],'facade':[0,200,0],'ceiling':[0,0,250],'terrace':[0,0,0],'canopy':[0,0,0],'floor':[0,0,-250],'roof':[0,0,450],'walls':[0,200,0],'partitions':[200,0,0],
+        direction={'insulation':[0,0,0],'interior':[0,0,0],'facade':[0,200,0],'ceiling':[0,0,250],'terrace':[0,0,0],'canopy':[0,0,0],'floor':[0,0,-250],'roof':[0,0,450],'walls':[0,200,0],'partitions':[200,0,0],
                    'furniture':[0,0,0],'foundation':[0,0,-450]}[p['family']]
         items.append(dict(id=id,block=id,translation=[0,0,0],stage=p['family'],assembly=p['assembly'],explode=direction))
     return dict(models=models,items=items,units='mm',source_geometry_sha256=scene['geometry_sha256'],
@@ -89,4 +89,7 @@ def export_one(scene, directory, api=None):
         for p in scene['parts']:
             a,b,c=p['size'];w.writerow([p['id'],p['assembly'],p['family'],p['material'],*p['origin'],a,b,c,a*b*(c+p.get('top_slope_y',0)*b/2)/1e9])
     outputs.append(path)
+    from .drawings import svg
+    for name,view in scene['drawings']['views'].items():
+        path=directory/(stem+'-'+name+'.svg');path.write_text(svg(view),encoding='utf-8');outputs.append(path)
     return [dict(file=p.name,sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for p in outputs]

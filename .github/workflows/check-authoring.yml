@@ -12,7 +12,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install rhino3dm==8.35.0
+      - run: pip install rhino3dm==8.35.0 reportlab
       - run: python authoring/grasshopper/tests/test_authoring.py
       - run: python authoring/grasshopper/tests/test_r02.py
+      - run: python authoring/grasshopper/tests/test_r04.py
       - run: python authoring/grasshopper/export_web.py /tmp/sauna-catalogue --revision ${{ github.sha }}

@@ -29,8 +29,13 @@ if run_export and not previous:
     audit=adapter.audit(scene)
     destination=root/'rhino-exports'/datetime.now().strftime('%Y%m%d-%H%M%S-%f')
     files=exporter.export_one(scene,destination,adapter.Api)
+    drawings=importlib.reload(importlib.import_module(name+'.native_drawings'))
+    try:
+        layout=drawings.bake(scene)
+    except Exception as error:
+        layout='Native layout not created: '+str(error)
     (destination/'rhino-audit.json').write_text(json.dumps(audit,indent=2))
-    receipt='Saved review snapshot: '+str(destination)+'\n'+audit['status']
+    receipt='Saved review snapshot: '+str(destination)+'\n'+audit['status']+'\n'+layout
     scriptcontext.sticky[key+'-receipt']=receipt
 elif previous and run_export:
     receipt=scriptcontext.sticky.get(key+'-receipt','Export already triggered; reset false to export again.')

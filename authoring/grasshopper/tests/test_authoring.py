@@ -62,7 +62,7 @@ class AuthoringTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             for i in range(6):
                 s=build(parameters(i));files=export_one(s,temp)
-                self.assertEqual(len(files),4)
+                self.assertEqual(len(files),9)
                 model=rhino3dm.File3dm.Read(str(Path(temp)/(PRESETS[i]['id']+'.3dm')))
                 self.assertEqual(model.Settings.ModelUnitSystem,rhino3dm.UnitSystem.Millimeters)
                 self.assertEqual(len(model.Objects),len(s['parts']))
