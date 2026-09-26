@@ -29,6 +29,9 @@ class ManufacturingTests(unittest.TestCase):
             deck=[a for a in s['parts'] if a['family']=='terrace']
             joists=[a for a in deck if a['material']=='timber']
             boards=[a for a in deck if '/board-' in a['id']]
+            front=[a for a in boards if a['id'].startswith('terrace/')]
+            side=[a for a in boards if a['id'].startswith('terrace-side/')]
+            self.assertEqual(min(a['origin'][1] for a in side)-max(a['origin'][1]+a['size'][1] for a in front),5)
             for a in boards:
                 self.assertLessEqual(a['size'][0],1800)
                 self.assertLessEqual(a['size'][1],95)

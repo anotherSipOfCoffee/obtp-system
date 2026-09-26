@@ -22,14 +22,19 @@ def terrace(p,parts,L,W,F,annex):
         supports.sort()
         # Remove a redundant near-end support, retaining every board-joint seat.
         for i,x in enumerate(supports):
-            add(name+'/joist-'+str(i),[x,y0,F-173],[45,(0 if y1==-104 else y1)-y0,145],'timber')
+            # Return joists continue through the front terrace, closing the
+            # corner without overlapping a separate front joist.
+            if name=='terrace-side':
+                parts[:]=[a for a in parts if not (a['id'].startswith('terrace/joist-') and abs(a['origin'][0]-x)<0.01)]
+            frame_start=-Y if name=='terrace-side' else y0
+            add(name+'/joist-'+str(i),[x,frame_start,F-173],[45,(0 if y1==-104 else y1)-frame_start,145],'timber')
         for i,y in enumerate(range(y0,y1,100)):
             for j,(a,b) in enumerate(zip(cuts,cuts[1:])):
                 add(name+'/board-'+str(i)+'-'+str(j),[a,y,F-28],[b-a,min(95,y1-y),28])
         return supports
     strip('terrace',lo,hi,-Y,-104)
-    strip('terrace-side',side0,side1,0,W)
-    return ((hi-lo)*(Y-104)+(side1-side0)*W)/1e6
+    strip('terrace-side',side0,side1,-100,W)
+    return ((hi-lo)*(Y-104)+(side1-side0)*(W+100))/1e6
 
 
 def foundation(p,parts,interfaces,L,W,F,annex):

@@ -1,13 +1,8 @@
 # Validation status
 
-- Existing Python suite: 38 tests passed in 139.6 seconds, including all 216 configurations, structural collision checks, model/drawing identity and PDF-disabled export.
-- Added manufacturing/terrace/GH checks: 6 tests passed. PDF-disabled regression rerun passed.
-- 216 browser-model configurations and 12 native-format Rhino exports generated with local rhino3dm 8.17.0; this is portable validation, not native Rhino acceptance. CI uses the existing pinned rhino3dm 8.35.0.
-- WikiHouse catalogue/seam, Cassette geometry/connections, Matrix and Studio preset/function/subblock regressions passed.
-- Studio cache integrity: 12 tests passed. JavaScript syntax checks passed.
-- Local browser launch blocked by cloud socket restrictions. Non-deploying GitHub Actions passed: System runs 36269551040 and 36269551062; Studio run 36269662595, including desktop/mobile/language/round-trip/WikiHouse/PDF controls and the six-model review. Screenshots are in that run’s studio-visual-check artifact. No local browser pass is claimed.
-- No engineering or native Rhino/GH acceptance claimed.
-
-Final niche-bearing correction adds eight fully counted physical pieces to Studio. Its support test passed; all representative structural collision cases passed (5.1 seconds). Final source-pin CI checks govern the completed review revision.
-
-Final local suite: 44 tests passed in 130.6 seconds. The numeric identity regression also passes with integer and decimal representations of the same manufactured dimensions. Studio run 36270515193 passed the removed-selector UI regression and complete visual comparison after the support correction.
+- Final Python suite: 44 tests passed in 129.2 seconds, including 216 configurations, structural clashes, opening clearance, drawing/source identity, terrace direction and supported joints, continuous terrace corner, niche floor supports, identity normalization and PDF-disabled export.
+- All 216 selections recounted for original, first cells, revised and same-footprint revised using the same identity rules and facade exclusion.
+- Earlier complete web compilation generated 216 browser models and 12 Rhino exports with portable rhino3dm; final pinned compilation is checked by non-deploying Studio CI.
+- Studio cache integrity: 12 tests passed. WikiHouse, Cassette, Matrix, preset, function and subblock regressions passed.
+- Local browser launch is blocked by cloud socket restrictions. Browser verification runs in non-deploying GitHub Actions; run 36270515193 passed before the final terrace-corner change. The final pin's workflow and artifacts are linked from the PR.
+- No engineering or native Rhino/GH acceptance claimed. No merge or deployment performed.
