@@ -291,7 +291,9 @@ def build(p):
     extra=enrich(p,parts,opening_voids,interfaces,L,W,F,H,annex,wall_regions)
     from .insulation import enrich as insulate
     envelope_spec=insulate(parts,opening_voids,L,W,F,H,annex,partition_x,p)
-    if studio:extra['support_span']=max(extra['support_span'],nominal_hall)
+    if studio:
+        extra['support_span']=max(extra['support_span'],nominal_hall)
+        extra['enclosed_area']=((bridge_start+168)+(L-bridge_end+168))*(W+168)/1e6
     area=extra['area'];height=extra['height']
     ids=[a['id'] for a in parts]
     if len(ids)!=len(set(ids)):raise ValueError('Duplicate part identity')
@@ -310,6 +312,7 @@ def build(p):
                 holds=list(HOLDS),geometry_sha256=geometry_hash)
 
     if studio:
+        scene['metrics']['covered_court_clear_area_m2']=(nominal_hall-168)*W/1e6
         scene['holds']=['Creative/hobby workspace and material preparation/storage; no sleeping or residential use.',
           'Covered centre counted in full roof/terrace area bound; classification and site-specific SLD requirements remain unverified.',
           'Open-bay headers, foundations, connections, weatherproofing and roof bracing require engineering review.',

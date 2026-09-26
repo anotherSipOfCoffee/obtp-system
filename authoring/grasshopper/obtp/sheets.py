@@ -24,6 +24,7 @@ def pdf(scene,path):
     studio=scene['config'].get('program_type',0)==1
     product_name='Modulinė studija' if studio else 'Modulinė pirtis'
     def title(n,name,scale):
+        c.setFillColor('#111111');c.setStrokeColor('#111111')
         c.setLineWidth(.25);c.rect(20,10,390,277);text(25,278,'obtp. / studio',5);text(25,269,name,4)
         # 180 x 45 mm construction-drawing arrangement documented by VIKO,
         # figure 6, LST 1516-based teaching template; professional fields left blank.
