@@ -1,3 +1,6 @@
+# Linked object library — latest scoped work
+Owner authorized research and implementation on 2026-09-26, door first. Read authoring/grasshopper/OBJECT_LIBRARY_R01.md. Keep shared 3D/2D parameters and stable instance IDs in the canonical Python library; detailed sections remain model-derived. All current objects are coordination placeholders until supported product adapters are verified. Native GH acceptance remains pending. This scoped work does not authorize unrelated deployment.
+
 # System working rules
 
 ## Latest scoped authorization — Studio preset R07

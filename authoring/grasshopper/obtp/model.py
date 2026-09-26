@@ -199,10 +199,9 @@ def build(p):
             else:vo=[base[0]-skin,base[1]+start,F];vs=[d+2*skin,width,head]
             opening_voids.append(dict(id=group,origin=vo,size=vs))
             # Gray joinery is independent from the structural aperture.
-            put('door-jamb-left',start,d//2,0,30,40,head,'object',group)
-            put('door-jamb-right',start+width-30,d//2,0,30,40,head,'object',group)
-            put('door-head',start+30,d//2,head-30,width-60,40,30,'object',group)
-            put('door-leaf',start+35,d//2+45,5,width-70,35,head-40,'object',group)
+            from .object_library import door_recipe
+            for label,u,v,z,a,b,c in door_recipe(width,head,d):
+                put(label,start+u,v,z,a,b,c,'object',group)
             interfaces.append(dict(id=group,type='opening',capacity=None,fasteners=None))
         n=0
         for begin,end in intervals:
@@ -320,6 +319,8 @@ def build(p):
           'Native Rhino/GH execution acceptance remains pending.']
     from .suppliers import attach
     scene['supplier_spec']=attach(scene)
+    from .object_library import attach as attach_objects
+    scene['object_library']=attach_objects(scene)
     from .drawings import derive
     scene['drawings']=derive(scene)
     return scene

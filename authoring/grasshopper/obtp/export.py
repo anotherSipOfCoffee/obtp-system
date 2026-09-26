@@ -38,6 +38,7 @@ def file3dm(scenes, path, api=None):
     doc=api.File3dm();doc.Settings.ModelUnitSystem=api.UnitSystem.Millimeters
     layers={}
     for i,scene in enumerate(scenes):
+        object_map={pid:item for item in scene.get('object_library',{}).get('instances',[]) for pid in item['part_ids']}
         for p in scene['parts']:
             name=scene['config']['id']+' / '+p['family']+' / '+p['material']
             if name not in layers:
@@ -57,6 +58,11 @@ def file3dm(scenes, path, api=None):
             for k,v in dict(obtp_id=p['id'],assembly=p['assembly'],material=p['material'],family=p['family'],
                             configuration=scene['config']['id'],source_revision=scene['version'],
                             geometry_sha256=scene['geometry_sha256'],status=scene['status']).items():attr.SetUserString(k,str(v))
+            if p['id'] in object_map:
+                item=object_map[p['id']]
+                for k in ('id','definition','revision','status'):
+                    attr.SetUserString('obtp_object_'+k,str(item[k]))
+                attr.SetUserString('obtp_object_library_sha256',scene['object_library']['sha256'])
             doc.Objects.AddBrep(brep(q,api),attr)
     if not doc.Write(str(path),8):raise IOError('Could not save '+str(path))
 
