@@ -3,11 +3,11 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from obtp.model import build,parameters
 class Seasonal(unittest.TestCase):
- def test_studio_states_and_roof_lock(self):
+ def test_studio_states_and_roof_selection(self):
   for i in range(6):
    for state in (False,True):
     s=build(parameters(i,program_type=1,roof_type=2,studio_winter_closed=state))
-    self.assertEqual(s['config']['roof_type'],0)
+    self.assertEqual(s['config']['roof_type'],2)
     self.assertTrue(s['envelope_spec']['heated_centre'])
     self.assertTrue(any(a['id'].startswith('insulation-floor-centre/') for a in s['parts']))
     self.assertTrue(any(a['id'].startswith('insulation-ceiling-centre/') for a in s['parts']))

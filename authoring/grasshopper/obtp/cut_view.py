@@ -11,6 +11,9 @@ def clipped_part(part, level):
     q['size'][2]=level-q['origin'][2]
     return q
 
+def stationary(part):
+    return part['family']!='furniture' or part['id'].startswith(('bench-','outside-seat/','shower/','heater/','studio-heater/','studio-stove/'))
+
 def parts_below(scene):
     level=scene['dimensions']['floor_top_mm']+1100
-    return [q for p in scene['parts'] if (q:=clipped_part(p,level)) is not None]
+    return [q for p in scene['parts'] if stationary(p) and (q:=clipped_part(p,level)) is not None]

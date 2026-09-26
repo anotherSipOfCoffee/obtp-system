@@ -31,9 +31,12 @@ if run_export and not previous:
     files=exporter.export_one(scene,destination,adapter.Api)
     drawings=importlib.reload(importlib.import_module(name+'.native_drawings'))
     try:
-        layout=drawings.bake(scene)
+        docs=importlib.reload(importlib.import_module(name+'.documentation'))
+        receipts=[drawings.bake(scene,destination)]
+        for recipe in docs.documents(scene).values():receipts.append(drawings.bake(scene,destination,recipe))
+        layout=json.dumps(receipts,ensure_ascii=False,indent=2)
     except Exception as error:
-        layout='Native layout not created: '+str(error)
+        layout='SSP export FAILED (no PDF success claimed): '+str(error)
     (destination/'rhino-audit.json').write_text(json.dumps(audit,indent=2))
     receipt='Saved review snapshot: '+str(destination)+'\n'+audit['status']+'\n'+layout
     scriptcontext.sticky[key+'-receipt']=receipt

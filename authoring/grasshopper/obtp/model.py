@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R10'
+VERSION = 'GH-R12'
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
 PRESETS = [dict(id='sauna-'+size+('-storage' if storage else '-open'),
@@ -20,7 +20,7 @@ DEFAULTS = dict(room_depth_steps=3, sauna_length_steps=4, hall_length_steps=3,
                 storage=False, storage_length_steps=2, wall_height=2100,
                 partition_depth=90, door_width=900, door_height=1900,
                 sauna_door_offset=150, bench_depth=600, bench_height=900,
-                foot_bench_height=450, include_foundation=True,
+                foot_bench_height=450, include_foundation=True, foundation_type=0,
                 roof_type=1, terrace_steps=2, window_width=1180, facade_type=0, system_type=0, program_type=0, studio_winter_closed=True)
 HOLDS = [
  'Owner-plan fit not accepted: 1800 mm structural inside-face depth is a proposal.',
@@ -36,7 +36,7 @@ def parameters(preset_index=2, custom=False, **overrides):
         raise ValueError('Preset index must be 0–5')
     p = dict(DEFAULTS)
     p.update(PRESETS[preset_index])
-    for k in ['roof_type','terrace_steps','window_width','facade_type','system_type','program_type','studio_winter_closed']:
+    for k in ['foundation_type','roof_type','terrace_steps','window_width','facade_type','system_type','program_type','studio_winter_closed']:
         if k in overrides and overrides[k] is not None:p[k]=overrides[k]
     if custom:
         unknown = set(overrides) - set(DEFAULTS)
@@ -54,7 +54,7 @@ def parameters(preset_index=2, custom=False, **overrides):
             p[k] = int(p[k])
     if p['program_type'] not in (0,1):raise ValueError('Program: 0 Sauna, 1 Studio')
     if p['program_type']==1:
-        p['roof_type']=0 # Studio roof options locked by owner; GH selector applies to Sauna.
+        if 'roof_type' not in overrides:p['roof_type']=0
         # Program dimensions remain grid steps; assemblies are shared with Sauna.
         size=p['size'].lower();left,centre,right={'s':(4,3,3),'m':(5,3,3),'l':(6,3,3)}[size]
         if not custom:p.update(room_depth_steps=4,sauna_length_steps=left,hall_length_steps=centre,storage_length_steps=right)
@@ -63,8 +63,6 @@ def parameters(preset_index=2, custom=False, **overrides):
 
 
 def build(p):
-    if p["program_type"]==1 and p["roof_type"]!=0:
-        raise ValueError("Studio supports flat roof only")
     p = dict(p)
     from .suppliers import require_system
     require_system(p.get("system_type",0))
@@ -79,6 +77,7 @@ def build(p):
         raise ValueError('Door dimensions do not leave the reserved header zone')
     if not 400 <= p['bench_depth'] <= 800 or not 650 <= p['bench_height'] <= 1100 or not 250 <= p['foot_bench_height'] < p['bench_height']-150:
         raise ValueError('Bench study dimensions are outside supported ranges')
+    if p['foundation_type'] not in (0,1):raise ValueError('Foundation type must be 0 or 1')
     if p['roof_type'] not in (0,1,2):raise ValueError('Roof type: 0 flat, 1 single slope, 2 gable')
     if p['terrace_steps'] != 2:raise ValueError('Terrace depth is fixed at 1200 mm')
     if p['window_width'] not in (580,880,1180):raise ValueError('Window frame width must be 580, 880 or 1180 mm')
@@ -203,7 +202,9 @@ def build(p):
             opening_voids.append(dict(id=group,origin=vo,size=vs))
             # Gray joinery is independent from the structural aperture.
             from .object_library import door_recipe
-            for label,u,v,z,a,b,c in door_recipe(width,head,d):
+            from .opening_products import apply_sauna_door
+            recipe=apply_sauna_door(parts,name,width,head,d) if not studio else None
+            for label,u,v,z,a,b,c in (recipe or door_recipe(width,head,d)):
                 put(label,start+u,v,z,a,b,c,'object',group)
             interfaces.append(dict(id=group,type='opening',capacity=None,fasteners=None))
         n=0
@@ -272,6 +273,9 @@ def build(p):
             wall_run('annex-end',[L+annex-wall,0],'y',W,door=(wall+split_a+p['partition_depth']+skin,600))
             for j,y in enumerate([wall+split_a,wall+split_b]):
                 wall_run('annex-divider-'+str(j),[L+skin,y],'x',annex-wall-skin,d=p['partition_depth'],family='partitions')
+            # Door-height soffits over the two open exterior niches. Not roof columns.
+            for label,y in [('shower',0),('seat',W-wall)]:
+                add('niche-'+label+'/head',[L+12,y,F+p['door_height']],[annex-wall-12,wall,H-p['door_height']],'timber','walls')
             # Review side bay has open shower/seat ends; its whole bounding area is counted.
             add('outside-seat/seat',[L+45,wall+split_b+90,F+420],[annex-wall-90,max(150,depth-split_b-90),35],'object','furniture')
         # Slatted furniture retains the reference's long upper and shorter lower benches.
@@ -289,12 +293,12 @@ def build(p):
         add('shower/riser',[shower_x,shower_y,F],[30,30,2100],'object','furniture')
         add('shower/arm',[shower_x,shower_y,F+2070],[350,30,30],'object','furniture')
         add('shower/head',[shower_x+300,shower_y-40,F+2030],[80,110,40],'object','furniture')
-    if p['include_foundation']:
-        for j,y in enumerate([-100,W-200]):add('foundation/strip-'+str(j),[0,y,-200],[L+annex,300,200],'concrete-study','foundation')
     from .seasonal import enrich as seasonal_enrich
     seasonal_spec=seasonal_enrich(p,parts,L,W,F,H,interfaces)
     from .envelope import enrich
     extra=enrich(p,parts,opening_voids,interfaces,L,W,F,H,annex,wall_regions)
+    from .foundations import enrich as foundations
+    foundation_spec=foundations(p,parts,interfaces,L,W,F,annex)
     from .insulation import enrich as insulate
     envelope_spec=insulate(parts,opening_voids,L,W,F,H,annex,partition_x,p)
     if studio:
@@ -306,7 +310,7 @@ def build(p):
     wood={mat:sum(a['size'][0]*a['size'][1]*(a['size'][2]+a.get('top_slope_y',0)*a['size'][1]/2)/1e9 for a in parts if a['material']==mat) for mat in ['timber','plywood','lining-wood','cladding-wood','deck-wood']}
     geometry_hash=hashlib.sha256(json.dumps(parts,sort_keys=True,separators=(',',':')).encode()).hexdigest()
     scene=dict(schema='obtp-parametric-release/1',version=VERSION,units='mm',config=p,
-                system_spec=SPEC,envelope_spec=envelope_spec,wall_regions=wall_regions,window_spec=dict(manufacturer="Pihla",product="Varma Kiinteä / sauna",frame_width_mm=p["window_width"],frame_height_mm=p["door_height"]-20,frame_depth_mm=170,frame_face_mm=51,installation_gap_mm=10,status="coordination candidate; sauna glazing, supply and joint design require confirmation"),parts=parts,interfaces=interfaces,opening_voids=opening_voids,
+                system_spec=SPEC,foundation_spec=foundation_spec,envelope_spec=envelope_spec,wall_regions=wall_regions,window_spec=dict(manufacturer="Pihla",product="Varma Kiinteä / sauna",frame_width_mm=p["window_width"],frame_height_mm=p["door_height"]-20,frame_depth_mm=170,frame_face_mm=51,installation_gap_mm=10,status="coordination candidate; sauna glazing, supply and joint design require confirmation"),parts=parts,interfaces=interfaces,opening_voids=opening_voids,
                 metrics=dict(building_area_bound_m2=area,internal_clear_rectangle_m2=inside_length*depth/1e6,
                              main_clear_floor_less_partition_m2=((hot-72)*(depth-72)+(right_clear-72)*(depth-72))/1e6 if studio else (inside_length-p['partition_depth'])*depth/1e6,
                              height_mm=height,max_bearing_line_span_mm=max(W,extra['support_span']),

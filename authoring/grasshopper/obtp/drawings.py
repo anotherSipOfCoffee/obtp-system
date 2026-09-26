@@ -35,12 +35,20 @@ def derive(scene):
     for name,axis,level in cuts:
         polygons=[]
         for part in scene['parts']:
+            from .cut_view import stationary
+            if name!='plan' and not stationary(part):continue
             poly=section(part,axis,level)
             cut=bool(poly)
             if name=='plan' and not cut and part['family'] in ['floor','terrace','furniture'] and max(v[2] for v in vertices(part))<level:
                 poly=hull([v[:2] for v in vertices(part)])
             if name!='plan' and not cut and part['family']=='furniture':
                 axes=[k for k in range(3) if k!=axis];poly=hull([[v[k] for k in axes] for v in vertices(part)])
+            if name=='section-b' and not cut and part['id'].startswith('weather-bearing-'):
+                # Explicit projection of the closest real support frame, not a fictitious cut.
+                supports=[q for q in scene['parts'] if q['id'].startswith('weather-bearing-')]
+                nearest=min(abs(q['origin'][axis]-level) for q in supports)
+                if abs(abs(part['origin'][axis]-level)-nearest)<1e-6:
+                    poly=hull([[v[0],v[2]] for v in vertices(part)])
             if not poly:continue
             wall=part['family'] in ['walls','partitions','interior','facade'] or part['id'].startswith('insulation-') and not part['id'].startswith(('insulation-ceiling','insulation-floor'))
             fill='#111111' if cut and wall and part['material'] not in ['object','glass'] else '#eeeeee' if cut else '#ffffff'
@@ -56,6 +64,7 @@ def derive(scene):
             width=W if axis==0 else end
             dims=[dimension([0,0],[width,0],-300),dimension([width,F],[width,F+p['wall_height']],400),dimension([0,0],[0,scene['metrics']['height_mm']],-450)]
         views[name]=dict(axis=axis,level_mm=level,polygons=polygons,dimensions=dims,polylines=[])
+    views['section-b']['labels']=[dict(at=[100,F+p['wall_height']+270],text='Stogo atramų projekcija; jungčių skaičiavimas neatliktas')]
     if p['roof_type']==2:
         ridge=[v for a in scene['parts'] if a['id'].startswith('ridge-cap/') for v in vertices(a)]
         views['section-b']['guides']=[dict(points=[[min(v[0] for v in ridge),max(v[2] for v in ridge)],[max(v[0] for v in ridge),max(v[2] for v in ridge)]],label='Kraigo projekcija')]
@@ -127,7 +136,25 @@ def derive(scene):
         views['plan']['symbol_source_sha256']=symbols['source_sha256']
     from .plan_styles import conceptual
     views['concept-plan']=conceptual(scene,views['plan'])
-    return dict(schema='obtp-drawings/2',source_geometry_sha256=scene['geometry_sha256'],units='mm',views=views,
+    axes_x=[0,end]
+    if p['program_type']==1:axes_x=[0,p['studio_zones']['bridge_start'],p['studio_zones']['bridge_end'],end]
+    else:axes_x=sorted(set([0,195+p['sauna_length_steps']*600,L,end]))
+    def bubble(view,x,y,label):
+        radius=65
+        view['polylines'].append([[x+radius*math.cos(t*math.pi/12),y+radius*math.sin(t*math.pi/12)] for t in range(25)])
+        view.setdefault('labels',[]).append(dict(at=[x-20,y-25],text=label))
+    v=views['plan'];v['guides']=[]
+    for i,x in enumerate(axes_x):
+        v['guides'].append(dict(points=[[x,-850],[x,W+850]]));bubble(v,x,W+850,str(i+1))
+    for i,y in enumerate([0,W]):
+        v['guides'].append(dict(points=[[-850,y],[end+850,y]]));bubble(v,-850,y,chr(65+i))
+    for key,coords in [('section-a',[0,W]),('section-b',axes_x)]:
+        v=views[key];v.setdefault('guides',[])
+        for i,x in enumerate(coords):
+            v['guides'].append(dict(points=[[x,-850],[x,F+p['wall_height']+350]]));bubble(v,x,-850,chr(65+i) if key=='section-a' else str(i+1))
+        for z in [0,F,F+p['wall_height'],scene['metrics']['height_mm']]:
+            v.setdefault('labels',[]).append(dict(at=[-300,z+35],text=f'{z/1000:+.3f}'))
+    return dict(schema='obtp-drawings/2' ,source_geometry_sha256=scene['geometry_sha256'],units='mm',views=views,
       cut_markers=[dict(name='A-A',axis=0,position=cuts[1][2]),dict(name='B-B',axis=1,position=cuts[2][2])])
 
 def dimension_lines(dim):

@@ -70,7 +70,7 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             surface('log-niche-inner-'+side,'x',y,-600,516,1 if side=='front' else -1,False)
         for j,x in enumerate([-600,-129]):
             add('firewood-niche/joist-'+str(j),[x,wall,F-173],[45,W-2*wall,145],'timber','floor')
-            add('firewood-niche/pad-'+str(j),[x,wall,-200],[90,W-2*wall,265],'concrete-study','foundation')
+
         # Heated centre retains continuous structural floor sheathing.
         # Ceiling finish follows the same 16mm lining +20mm service-batten recipe.
         for i,y in enumerate(range(0,W,95)):
@@ -118,9 +118,9 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             for i,x in enumerate(range(0,end,1800)):
                 add('terrace/pad-'+str(j)+'-'+str(i),[x,y-60,-200],[150,150,175],'concrete-study','foundation')
     side_area=0
-    if p['program_type']==0:
+    if True:
         # Full shower-side return, in 600mm coordination steps; starts at facade edge.
-        sx=end+outer+20; sy=deck_end; run=W+outer+20-sy
+        sx=end+outer+20 if p['program_type']==0 else -600-D; sy=deck_end; run=W+outer+20-sy
         for i,x in enumerate(range(sx,sx+D,100)):
             add('terrace-side/board-'+str(i),[x,sy,F-28],[min(95,sx+D-x),run,28],'deck-wood','terrace')
         for i,y in enumerate(range(sy,sy+run,600)):
@@ -131,14 +131,14 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
                 add('terrace-side/pad-'+str(j)+'-'+str(i),[x-30,y,-200],[150,150,175],'concrete-study','foundation')
         # Fill corner connecting front deck and side return, outside both existing strips.
         for i,y in enumerate(range(deck_y,deck_end,100)):
-            add('terrace-corner/board-'+str(i),[end,y,F-28],[outer+20+D,min(95,deck_end-y),28],'deck-wood','terrace')
-        for i,x in enumerate(range(end,sx+D,600)):
+            add('terrace-corner/board-'+str(i),[end if p['program_type']==0 else sx,y,F-28],[outer+20+D if p['program_type']==0 else -sx,min(95,deck_end-y),28],'deck-wood','terrace')
+        for i,x in enumerate(range(end,sx+D,600) if p['program_type']==0 else range(sx,0,600)):
             add('terrace-corner/joist-'+str(i),[x,deck_y,F-173],[45,D,145],'deck-wood','terrace')
         for j,y in enumerate([deck_y,deck_end-90]):
-            add('terrace-corner/bearer-'+str(j),[end,y,F-263],[outer+20+D,90,90],'deck-wood','terrace')
+            add('terrace-corner/bearer-'+str(j),[end if p['program_type']==0 else sx,y,F-263],[outer+20+D if p['program_type']==0 else -sx,90,90],'deck-wood','terrace')
             add('terrace-corner/pad-'+str(j),[sx+D-150,y,-200],[150,150,175],'concrete-study','foundation')
-        side_area=(D*run+(outer+20+D)*D)/1e6
-    # Retain main horizontal ceiling cassette. Weather roof is a separate supported study.
+        side_area=(D*run+(outer+20+D if p['program_type']==0 else -sx)*D)/1e6
+    # Insulated ceiling and weather roof are distinct layers with explicit bearing frames.
     base=F+H+238; cover=D if p['roof_type']!=2 else 0
     overhang=0 if p['roof_type']==2 else 150
     y0=-outer-overhang-cover; y1=W+outer+overhang; x0=-outer-overhang; length=end+2*(outer+overhang)
@@ -148,7 +148,7 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
     if p['roof_type']==2:
         # MyCabin S30 overall height reference: 4480 mm from model datum.
         # Retain System walls and solve rise from actual cover/seam top.
-        slope=(4480-base-100-197)/((y1-y0)/2)
+        slope=(4480-base-100-259.5)/((y1-y0)/2)
         if slope<=0:raise ValueError('Gable height target is below the roof build-up')
     # Metal roof: minimum 7° per Ruukki LT; choose 8° study. Flat: membrane at design 1:40.
     if p['roof_type']==2:
@@ -159,19 +159,36 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
         zfun=lambda y:base+100+slope*(y1-y)
     for k,(a,b,m) in enumerate(planes):
         for i,x in enumerate(range(int(x0),int(x0+length),600)):
-            add('weather-roof-'+str(k)+'/rafter-'+str(i),[x,a,zfun(a)],[45,b-a,145],'timber','roof',m)
+            add('weather-roof-'+str(k)+'/rafter-'+str(i),[x,a+22 if k==0 else a,zfun(a+22 if k==0 else a)],[45,b-a-(22 if k==0 else 0)-(22 if k==len(planes)-1 else 0),145],'timber','roof',m)
         for i,x in enumerate(range(int(x0),int(x0+length),600)):
-            for j,y in enumerate(range(math.ceil(a),math.ceil(b),1200)):
+            for j,y in enumerate([a+j*1200 for j in range(math.ceil((b-a)/1200))]):
                 # Split sheet stock; exact plane start is retained below for noninteger ridge.
                 yy=max(a,y);dy=min(1200,b-yy)
                 if dy>0:add('weather-roof-'+str(k)+'/deck-'+str(i)+'-'+str(j),[x,yy,zfun(yy)+145],[min(600,x0+length-x),dy,18],'plywood','roof',m)
-        add('weather-roof-'+str(k)+'/cover',[x0,a,zfun(a)+163],[length,b-a,2],'roof-membrane' if p['roof_type']==0 else 'roof-metal','roof',m)
+        # Support transverse plywood sheet joints between rafters; no floating sheet edges.
+        for j,yy in enumerate([a+v*1200 for v in range(1,math.ceil((b-a)/1200))]):
+            for i,x in enumerate(range(int(x0),int(x0+length),600)):
+                dx=min(555,x0+length-(x+45))
+                if dx>0:
+                    add('weather-roof-'+str(k)+'/sheet-block-'+str(j)+'-'+str(i),[x+45,yy-22.5,zfun(yy-22.5)],[dx,45,145],'timber','roof',m)
+        # Ruukki Classic LT 2026 details: 32x50 counter battens, 32x100 battens.
+        # Continuous deck retained as a study substrate; membrane compatibility remains a hold.
+        if p['roof_type']!=0:
+            for i,x in enumerate(range(int(x0),int(x0+length),600)):
+                add('weather-roof-'+str(k)+'/counter-'+str(i),[x,a,zfun(a)+163],[min(50,x0+length-x),b-a,32],'timber','roof',m)
+            count=max(1,math.ceil((b-a-100)/250))
+            ys=[a+round(j*(b-a-100)/count,6) for j in range(count+1)]
+            for j,y in enumerate(ys):
+                add('weather-roof-'+str(k)+'/batten-'+str(j),[x0,y,zfun(y)+195],[length,100,32],'timber','roof',m)
+        offset=163 if p['roof_type']==0 else 227
+        thickness=2 if p['roof_type']==0 else .5
+        add('weather-roof-'+str(k)+'/cover',[x0,a,zfun(a)+offset],[length,b-a,thickness],'roof-membrane' if p['roof_type']==0 else 'roof-metal','roof',m)
         if p['roof_type']!=0:
             for i,x in enumerate(range(int(x0),int(x0+length),475)):
-                add('weather-roof-'+str(k)+'/seam-'+str(i),[x,a,zfun(a)+165],[3,b-a,32],'roof-metal','roof',m)
+                add('weather-roof-'+str(k)+'/seam-'+str(i),[x,a,zfun(a)+227.5],[3,b-a,32],'roof-metal','roof',m)
     if p['roof_type']==2:
         for label,a,m in [('front',W/2-100,slope),('back',W/2,-slope)]:
-            add('ridge-cap/'+label,[x0,a,zfun(a)+195],[length,100,2],'roof-metal','roof',m)
+            add('ridge-cap/'+label,[x0,a,zfun(a)+257.5],[length,100,2],'roof-metal','roof',m)
     # Close the weather-roof perimeter above the retained level ceiling cassette.
     # The attic/roof build-up remains a ventilated construction-detail study.
     for side,y in [('front',-outer),('back',W+outer-22)]:
@@ -203,6 +220,11 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
                 for n,x in enumerate(positions):
                     add(group+'/stud-'+str(n),[x,yy,base+45],[45,dy,h-90],'timber','roof')
                     parts[-1]['top_slope_y']=m
+    # Close exposed rafter ends while keeping the lower weather-roof air cavity.
+    for label,y in [('front',y0),('back',y1-22)]:
+        add('weather-edge-'+label+'/fascia',[x0,y,zfun(y)],[length,22,145],'cladding-wood','roof',slope if p['roof_type']==2 and label=='front' else -slope)
+    interfaces.append(dict(id='weather-roof/attachment',type='membrane on plywood, or metal on battens/counter battens on deck; rafters on bearing frames',capacity=None,fasteners=None,status='geometry bearing shown; covering product attachment and uplift fixing require supplier/engineer design'))
+    interfaces.append(dict(id='weather-roof/ventilation',type='air cavity above insulated ceiling',status='vent inlet/outlet and insect mesh sizing require roof-system review',capacity=None,fasteners=None))
     post_spacing=0
     if cover:
         interfaces.append(dict(id='canopy/cantilever',type='post-free roof extension study',projection_mm=cover+outer+overhang,capacity=None,fasteners=None,status='unresolved structural design'))
