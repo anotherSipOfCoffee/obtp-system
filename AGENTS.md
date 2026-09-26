@@ -1,4 +1,29 @@
 # System working rules
+
+## Current owner direction — 2026-09-26: supplier-based autonomous pipeline
+
+Read this section before historical instructions below. It supersedes older conflicting implementation direction; later explicit owner instructions take precedence. Goal: autonomous regeneration with interchangeable, documented supplier parts and compatible systems.
+
+- Use ProdLib web catalogue and original manufacturer documentation as research sources. Desktop exports are not a prerequisite for research. Do not assume every listed file is downloadable or Rhino-compatible.
+- Do not introduce VisualARQ or another paid BIM dependency as part of this pipeline. Retain existing Rhino/Grasshopper authoring; the portable Python core remains shared with offline exports.
+- Separate layout intent, supplier/product/material records, assembly definitions, connection interfaces, resolved configuration and generated geometry. Supplier dimensions and documented rules must drive generation, not merely annotate generic geometry.
+- Interchangeability is conditional on documented interfaces. Preserve source geometry; do not stretch proprietary parts, invent junctions, assign unverified capacities or treat unknown compatibility as a pass.
+- Use supplier models where suitable. If unavailable, reconstruct only from documented dimensions/details; record source, revision, checksum where available, geometry fidelity and omissions. Respect source licences and redistribution restrictions.
+- Model parts retain stable semantic IDs and product/assembly revisions. Derive conceptual previews, detailed plans/sections, quantities and analysis abstractions from the canonical detailed model. Material drawing styles are separate from physical properties. No independent browser construction geometry.
+- Changing a product must resolve dependent openings, framing and junctions, regenerate affected outputs and invalidate stale analysis receipts. Failed resolution must not mix old drawings with a new configuration or relabel old geometry.
+- Pin reviewed source revisions. Never silently adopt a supplier update. Missing engineering inputs remain explicit; numerical results require completed validated solver runs matching input hashes.
+- A supplier BIM object or product declaration does not transfer whole-building design responsibility. Record documented supplier engineering scope separately; no automatic compliance, permit exemption or performance promises.
+- Keep Cassette as the working default/study. Supplier alternatives remain unavailable until their adapters and compatibility requirements are resolved. Do not claim the current annotation catalogue already implements interchangeable systems.
+- Wind and snow analysis remain paused. Preserve existing geometric envelope gates, customer choices and project-specific behaviour.
+- Current phase is infrastructure planning and agent-rule preparation. Do not resume feature changes or website deployment merely from historic release authorizations. Subsequent explicit owner requests can authorize implementation/publication. Documentation-only handover changes are authorized now.
+- Fixed external footprint during system substitution is a PROPOSAL, not an accepted owner decision. Do not silently change the current dimensional policy. No complete alternative supplier package has been selected.
+
+Canonical architecture proposal: https://github.com/anotherSipOfCoffee/obtp-system/blob/main/authoring/grasshopper/PIPELINE_ARCHITECTURE_R01.md
+Read its status and unresolved decisions. Proposed implementation sequence: package existing Cassette constants without geometry change, prove an opening substitution, then integrate a documented complete assembly package. This sequence is a plan, not permission to remove preservation gates.
+
+Project boundary: System owns supplier records, assembly/interface rules, geometry adapters, validation and model-derived outputs. Read authoring/grasshopper/CANONICAL_WORKFLOW.md and PIPELINE_ARCHITECTURE_R01.md before touching the generator.
+
+## Historical and project-specific rules
 Read docs/SYSTEM_RULES.md and docs/CATALOGUE_CHECKPOINT.md. Preserve the existing Types → Objects → Connections → Assemblies interface; the owner's goal is to replace generic geometry with official WikiHouse components, not to replace the interface with a one-object viewer.
 Use the pinned Skylark150 source in docs/CATALOGUE_SOURCE_LOCK.json. Current library has six CAD block objects plus full and half ties reconstructed from source CNC profiles. Do not invent joints, stretch source parts, mix generations, or fill old generic categories with false equivalents. Source IDs and nested instance paths must remain traceable.
 The open chassis slice is a geometric fit study, not a complete building. Check docs/BLOCK_INTERFACE_FIT_CHECK.json and geometry audit. One R-S source Brep is open; no silent repair. E-S and W-O-S-1 source naming/height caveats are documented. Rhino 8 and full-volume/engineering checks remain distinct from browser checks.
