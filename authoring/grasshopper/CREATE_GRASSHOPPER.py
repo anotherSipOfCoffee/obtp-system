@@ -66,7 +66,7 @@ def main():
         g=GH_Group();g.NickName=name;g.Colour=color;doc.AddObject(g,False)
         for obj in objects:g.AddObject(obj.InstanceGuid)
         return g
-    presets=GH_ValueList();presets.NickName='Saved Sauna configuration';presets.ListMode=GH_ValueListMode.DropDown
+    presets=GH_ValueList();presets.NickName='Saved size / storage configuration';presets.ListMode=GH_ValueListMode.DropDown
     presets.ListItems.Clear()
     labels=['S / no storage','S / storage','M / no storage','M / storage','L / no storage','L / storage']
     for i,label in enumerate(labels):
@@ -104,6 +104,10 @@ def main():
     systems=GH_ValueList();systems.NickName='Construction system';systems.ListMode=GH_ValueListMode.DropDown;systems.ListItems.Clear()
     system_item=GH_ValueListItem('OBTP Cassette', '0');system_item.Selected=True;systems.ListItems.Add(system_item)
     controls['system_type']=place(systems,40,1030)
+    programs=GH_ValueList();programs.NickName='Program / Sauna or Studio';programs.ListMode=GH_ValueListMode.DropDown;programs.ListItems.Clear()
+    for i,label in enumerate(['Sauna','Studio']):
+        item=GH_ValueListItem(label,str(i));item.Selected=(i==0);programs.ListItems.Add(item)
+    controls['program_type']=place(programs,40,1075)
     inputs=[(k,Boolean if k in ['custom','storage','include_foundation'] else Double) for k in controls]
     model=script('01 · Shared module','model.py',inputs,[('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],420,240)
     for i,(key,_) in enumerate(inputs):model.Params.Input[i].AddSource(controls[key])
@@ -142,7 +146,7 @@ def main():
     group('E5 · Material section diagrams',[diagrams],Color.FromArgb(218,228,235))
     group('E6 · Report export / local only',[run_analysis,analysis_receipt],Color.FromArgb(220,232,221))
     # Never overwrite a definition the owner may have edited.
-    name='OBTP_Sauna_R06_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    name='OBTP_Sauna_R07_'+datetime.now().strftime('%Y%m%d_%H%M%S')
     path=ROOT/(name+'.gh')
     if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
     doc.FilePath=str(path)

@@ -54,6 +54,13 @@ def attach(scene):
     """Link current parts to reference records without relabelling generic materials."""
     data=catalogue();data['active_system']=require_system(scene['config'].get('system_type',0))
     data['products']=[p for p in data['products'] if scene['config']['roof_type']!=0 or p['id']!='roof-ruukki']
+    if scene['config'].get('program_type',0)==1:
+        data['products']=[p for p in data['products'] if p['id'] in ('window-pihla','roof-ruukki')]
+        for record in data['products']:
+            if record['id']=='window-pihla':
+                record['product']='Varma Kiinteä / fixed window reference'
+                record['scope_lt']='Bendro modelio 170 mm rėmas. Studijai tinkamas įstiklinimas ir montavimo mazgas dar tikslinami.'
+                record['scope_en']='Shared 170 mm frame reference. Studio glazing and installation detail remain unselected.'
     def match(product,p):
         if product=='window-pihla':return p['id'].startswith('window/')
         if product=='heater-harvia':return p['id'].startswith('heater/')

@@ -21,6 +21,8 @@ def pdf(scene,path):
             c.drawImage(im,x,y,width=iw*scale,height=ih*scale,mask='auto')
         else:text(x,y,label,4)
 
+    studio=scene['config'].get('program_type',0)==1
+    product_name='Modulinė studija' if studio else 'Modulinė pirtis'
     def title(n,name,scale):
         c.setLineWidth(.25);c.rect(20,10,390,277);text(25,278,'obtp. / studio',5);text(25,269,name,4)
         # 180 x 45 mm construction-drawing arrangement documented by VIKO,
@@ -37,7 +39,7 @@ def pdf(scene,path):
         text(233,48,'obtp. / studio',4)
         text(233,43,'Gaminio techninė byla / ne statybai',2.3)
         text(322,51,'Gaminio pavadinimas',1.8)
-        text(322,44,'Modulinė pirtis '+scene['config']['size'],3)
+        text(322,44,product_name+' '+scene['config']['size'],3)
         for yy,label in [(36.5,'PV'),(31.5,'PDV'),(26.5,'Parengė')]:text(246,yy,label,2)
         text(231,21,'Kalba',1.8);text(233,13,'LT',2.5)
         text(248,19,'Užsakovas / vieta: tikslinama',2.2)
@@ -125,7 +127,7 @@ def pdf(scene,path):
             y=135+m['position']/25;line((44,y),(55+L/25+10,y));text(29,y+3,m['name'])
         c.setDash()
     cfg=scene['config'];roof=['Plokščias','Vienšlaitis','Dvišlaitis'][cfg['roof_type']]
-    text(25,73,'Pirtis '+cfg['size']+'  /  '+roof+' stogas  /  terasa 1200 mm  /  '+('su sandėliuku' if cfg['storage'] else 'be sandėliuko'),3)
+    text(25,73,('Studija ' if studio else 'Pirtis ')+cfg['size']+'  /  '+roof+' stogas  /  terasa 1200 mm  /  '+(('su lentynomis' if cfg['storage'] else 'be lentynų') if studio else ('su sandėliuku' if cfg['storage'] else 'be sandėliuko')),3)
     text(25,65,'Kirtimo aukštis: 1100 mm virš grindų. Matmenys mm. Konstrukcijų sluoksniai pagal 3D modelį.',2.5)
     legend(25,51)
     page();title(2,'Pjūvis A-A / skersinis','1:25');view('section-a',95,70,25)
@@ -140,7 +142,7 @@ def pdf(scene,path):
     legend(25,43)
     page();title(4,'L1 / lango žiniaraštis','1:10')
     view('window',45,77,10);view('window-section',205,77,10)
-    brand('pihla.png','PIHLA',265,234,40,15);text(265,225,'Varma Kiinteä / pirties lango kandidatas',3)
+    brand('pihla.png','PIHLA',265,234,40,15);text(265,225,'Varma Kiinteä / lango kandidatas' if studio else 'Varma Kiinteä / pirties lango kandidatas',3)
     text(200,269,'L1 / vertikalus pjūvis',2.5)
     rows=['Kiekis: 1 vnt. / nevarstomas','Rėmas: '+str(cfg['window_width'])+' × '+str(cfg['door_height']-20)+' mm','Konstrukcinė anga: '+str(cfg['window_width']+20)+' × '+str(cfg['door_height'])+' mm','Rėmo gylis: 170 mm; plotis: 51 mm','Montavimo tarpas: 10 mm kiekviename krašte','Trigubas stiklo paketas; vidinis stiklas grūdintas','Stiklo storį ir tiekimą patvirtina gamintojas']
     for i,t in enumerate(rows):text(265,204-i*8,t,2.8)
@@ -197,17 +199,26 @@ def pdf(scene,path):
     stages=[('01 / Prieš šildymą',['Krosnelė išjungta.','Reikia pradinės temperatūros,','drėgmės ir lauko sąlygų.']),
             ('02 / Šildymas ir naudojimas',['Kandidatas: Harvia Spirit SP90E.','Vardinė galia 9 kW; faktinį darbą','lemia valdiklis ir naudojimas.']),
             ('03 / Vėsimas ir džiūvimas',['Krosnelė išjungta.','Pradinė būsena iš antro etapo.','Reikia vėdinimo ir drėgmės duomenų.'])]
+    if studio:
+        stages=[('01 / Nenaudojama',['Pradinė temperatūra ir drėgmė','dar nenurodytos.','Šildymo sistema neparinkta.']),('02 / Darbo laikas',['Reikia žmonių, įrangos ir','vėdinimo grafikų.','Šilumos poreikis neskaičiuotas.']),('03 / Po darbo',['Reikia temperatūros režimo','ir vėdinimo duomenų.','Džiūvimas neapskaičiuotas.'])]
     for i,(label,lines) in enumerate(stages):
         x=25+i*128;c.setLineWidth(.25);c.rect(x,177,118,58);text(x+5,224,label,3)
         for j,t in enumerate(lines):text(x+5,211-j*9,t,2.6)
-    for i,t in enumerate([
-      'Stacionarus THERM mazgo skaičiavimas neparodo įšilimo trukmės ar džiūvimo.',
-      'Pereinamajam procesui reikia medžiagų šiluminės talpos, valdymo, vėdinimo ir drėgmės šaltinių.',
-      'Krosnelė yra parinkimo kandidatas. Modelio tūris dar nėra suderintas su jos montavimo instrukcija.',
-      'Krosnelės gabaritai: 385 x 334 x 687 mm. Gamintojo nurodomas patalpos tūris: 8-14 m³.',
-      'Patikrinti įstiklinimo įtaką parinkimui, saugius atstumus, tvirtinimą ir elektros įvadą.',
-      'Šaltinis: harvia.com / HSPE904M. Medžiagų kandidatai ir metodai pateikti analysis/README.md.',
-      'Ši byla aprašo gaminį; ji nepakeičia konkretaus sklypo statinio projekto.']):text(25,153-i*11,t,2.9)
+    if studio:
+        for i,t in enumerate(['Studija skirta kūrybai, pasiruošimui ir medžiagoms laikyti; ne gyvenimui.',
+          'Dengta vidurinė erdvė yra lauko zona ir įtraukiama į konservatyvią ploto ribą.',
+          'Šildymas, vėdinimas, garų kontrolė ir langų charakteristikos dar neparinkti.',
+          'Skaitiniai šilumos nuostoliai, paviršiaus temperatūros ir drėgminė būklė neapskaičiuoti.',
+          'Paskirtį, sklypo sąlygas ir SLD poreikį būtina įvertinti konkrečiam projektui.']):text(25,153-i*11,t,2.9)
+    else:
+        for i,t in enumerate([
+          'Stacionarus THERM mazgo skaičiavimas neparodo įšilimo trukmės ar džiūvimo.',
+          'Pereinamajam procesui reikia medžiagų šiluminės talpos, valdymo, vėdinimo ir drėgmės šaltinių.',
+          'Krosnelė yra parinkimo kandidatas. Modelio tūris dar nėra suderintas su jos montavimo instrukcija.',
+          'Krosnelės gabaritai: 385 x 334 x 687 mm. Gamintojo nurodomas patalpos tūris: 8-14 m³.',
+          'Patikrinti įstiklinimo įtaką parinkimui, saugius atstumus, tvirtinimą ir elektros įvadą.',
+          'Šaltinis: harvia.com / HSPE904M. Medžiagų kandidatai ir metodai pateikti analysis/README.md.',
+          'Ši byla aprašo gaminį; ji nepakeičia konkretaus sklypo statinio projekto.']):text(25,153-i*11,t,2.9)
     page();title(9,'Analizė / konstrukcijos ir vėjas','-')
     text(25,253,'Konstrukcijų analizė nebaigta. Vėjo ir sniego vertinimas pristabdytas.',3.5)
     rows=[
