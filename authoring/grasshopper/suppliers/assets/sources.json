@@ -1,0 +1,26 @@
+[
+  {
+    "file": "pihla.png",
+    "url": "https://www.pihla.fi/app/uploads/sites/2/2026/06/cropped-pihla-50v-vaaka.png",
+    "sha256": "2100c80aaaa85e1493dae9eb1d38c70cef3112bd2f1fd3e19dc0b6cc7f9218c3",
+    "usage": "Supplier identification only; not a partnership or endorsement."
+  },
+  {
+    "file": "harvia.svg",
+    "url": "https://www.harvia.com/img/Harvia_sauna_spa-logo.svg",
+    "sha256": "cd0b1ed53ed5f2404d7181b06663d64d5af5b4881bd818c7f147a8fad1b35f55",
+    "usage": "Supplier identification only; not a partnership or endorsement."
+  },
+  {
+    "file": "hunton.png",
+    "url": "https://www.hunton.no/wp-content/uploads/2022/06/hunton-rgb-logo-black-text-with-green-tree-horizontal-slogan-n.png",
+    "sha256": "49c03a2338778923a1659ecf1ce3cc5da004da2063e418e132f495f98aa22c3e",
+    "usage": "Supplier identification only; not a partnership or endorsement."
+  },
+  {
+    "file": "harvia.png",
+    "derived_from": "harvia.svg",
+    "operation": "SVG rasterization without recolouring or cropping",
+    "sha256": "43ffd9d68292cbf085b973a1a9b5ff40bf33208ecee504fb234d62a04dbd9fe9"
+  }
+]

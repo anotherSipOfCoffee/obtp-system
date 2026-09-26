@@ -101,6 +101,9 @@ def main():
     facade=GH_ValueList();facade.NickName='Facade';facade.ListMode=GH_ValueListMode.DropDown;facade.ListItems.Clear()
     item=GH_ValueListItem('Vertical timber', '0');item.Selected=True;facade.ListItems.Add(item)
     controls['facade_type']=place(facade,40,985)
+    systems=GH_ValueList();systems.NickName='Construction system';systems.ListMode=GH_ValueListMode.DropDown;systems.ListItems.Clear()
+    system_item=GH_ValueListItem('OBTP Cassette', '0');system_item.Selected=True;systems.ListItems.Add(system_item)
+    controls['system_type']=place(systems,40,1030)
     inputs=[(k,Boolean if k in ['custom','storage','include_foundation'] else Double) for k in controls]
     model=script('01 · Shared module','model.py',inputs,[('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],420,240)
     for i,(key,_) in enumerate(inputs):model.Params.Input[i].AddSource(controls[key])
@@ -117,8 +120,29 @@ def main():
     group('B · Shared Python generator',[model],Color.FromArgb(233,226,207))
     group('C · Inspection only',[preview,panels,cut,explode],Color.FromArgb(218,228,235))
     group('D · Manual export / does not publish website',[export,export_toggle,receipt],Color.FromArgb(235,222,218))
+    # Analysis preparation shares the detailed scene, not the display/cut geometry.
+    import sys
+    if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
+    from obtp.analysis import inputs as analysis_inputs
+    settings=panel(json.dumps(analysis_inputs(),indent=2),420,1150)
+    run_analysis=toggle('Export analysis preparation',False,800,1100)
+    analysis=script('04 · Detailed analysis preparation','analysis.py',
+        [('scene_json',String),('inputs_json',String),('run_export',Boolean)],
+        [(n,GH_ParamAccess.item) for n in ['preflight_json','geometry_report','solver_report','results_report','diagrams_report','receipt']],800,1250)
+    for i,source in enumerate([model.Params.Output[0],settings,run_analysis]):analysis.Params.Input[i].AddSource(source)
+    audit=panel('',1120,1100);audit.AddSource(analysis.Params.Output[1])
+    setup=panel('',1520,1100);setup.AddSource(analysis.Params.Output[2])
+    results=panel('',1920,1100);results.AddSource(analysis.Params.Output[3])
+    diagrams=panel('',1120,1500);diagrams.AddSource(analysis.Params.Output[4])
+    analysis_receipt=panel('',1520,1500);analysis_receipt.AddSource(analysis.Params.Output[5])
+    group('E1 · Geometry extraction / detailed model',[analysis,audit],Color.FromArgb(218,228,235))
+    group('E2 · Materials, site and operating inputs / null means required',[settings],Color.FromArgb(233,226,207))
+    group('E3 · Solver setup requirements / not executed',[setup],Color.FromArgb(235,222,218))
+    group('E4 · Results status / no invented values',[results],Color.FromArgb(235,222,218))
+    group('E5 · Material section diagrams',[diagrams],Color.FromArgb(218,228,235))
+    group('E6 · Report export / local only',[run_analysis,analysis_receipt],Color.FromArgb(220,232,221))
     # Never overwrite a definition the owner may have edited.
-    name='OBTP_Sauna_R05_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    name='OBTP_Sauna_R06_'+datetime.now().strftime('%Y%m%d_%H%M%S')
     path=ROOT/(name+'.gh')
     if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
     doc.FilePath=str(path)

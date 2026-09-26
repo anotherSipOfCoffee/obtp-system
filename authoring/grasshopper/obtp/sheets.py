@@ -13,6 +13,14 @@ def pdf(scene,path):
     c=canvas.Canvas(str(path),pagesize=(420*mm,297*mm));c.setTitle('OBTP / '+scene['config']['id']);c.setAuthor('OBTP');c.scale(mm,mm)
     def text(x,y,t,size=2.5):c.setFont('OBTP',size);c.drawString(x,y,str(t))
     def line(a,b):c.line(*a,*b)
+    def brand(file,label,x,y,w=40,h=12):
+        asset=Path(__file__).resolve().parents[1]/'suppliers'/'assets'/file
+        if asset.exists():
+            from reportlab.lib.utils import ImageReader
+            im=ImageReader(str(asset));iw,ih=im.getSize();scale=min(w/iw,h/ih)
+            c.drawImage(im,x,y,width=iw*scale,height=ih*scale,mask='auto')
+        else:text(x,y,label,4)
+
     def title(n,name,scale):
         c.setLineWidth(.25);c.rect(20,10,390,277);text(25,278,'obtp. / studio',5);text(25,269,name,4)
         # 180 x 45 mm construction-drawing arrangement documented by VIKO,
@@ -27,13 +35,13 @@ def pdf(scene,path):
         for xx in [380,395]:line((xx,10),(xx,25))
         line((380,20),(410,20))
         text(233,48,'obtp. / studio',4)
-        text(233,43,'Projektavimo studija / ne statybai',2.3)
-        text(322,51,'Statinio projekto pavadinimas',1.8)
+        text(233,43,'Gaminio techninė byla / ne statybai',2.3)
+        text(322,51,'Gaminio pavadinimas',1.8)
         text(322,44,'Modulinė pirtis '+scene['config']['size'],3)
         for yy,label in [(36.5,'PV'),(31.5,'PDV'),(26.5,'Parengė')]:text(246,yy,label,2)
         text(231,21,'Kalba',1.8);text(233,13,'LT',2.5)
         text(248,19,'Užsakovas / vieta: tikslinama',2.2)
-        text(248,13,'Modelio versija R05',2.2)
+        text(248,13,'Modelio versija '+scene['version'],2.2)
         text(322,36.5,'Brėžinio pavadinimas',1.8)
         text(322,30,name[:45],2 if len(name)>30 else 2.5)
         text(396,36.5,'Laida',1.8);text(400,29,'0',2.5)
@@ -41,7 +49,7 @@ def pdf(scene,path):
         text(322,16,'OBTP-'+scene['config']['id'].upper()+'-'+str(n).zfill(2),1.8)
         text(322,12,'M '+scale+' / A3',2)
         text(381,21,'Lapas',1.8);text(396,21,'Lapų',1.8)
-        text(386,13,n,2.5);text(400,13,5,2.5)
+        text(386,13,n,2.5);text(400,13,9,2.5)
         text(25,15,'Modelis '+scene['geometry_sha256'][:16]+' | 2026-09-26',2)
     def page():c.showPage();c.scale(mm,mm)
     def hatch(points,material):
@@ -131,26 +139,88 @@ def pdf(scene,path):
     text(25,55,'Pjūvio medžiagos iš modelio. Toliau esančios interjero dalys - plona pilka linija.',2.5)
     legend(25,43)
     page();title(4,'L1 / lango žiniaraštis','1:10')
-    view('window',45,77,10);view('window-plan',235,193,10)
-    text(235,233,'PIHLA',6);text(235,225,'Varma Kiinteä / pirties lango kandidatas',3)
-    text(235,216,'L1 / horizontalus pjūvis',2.5)
+    view('window',45,77,10);view('window-section',205,77,10)
+    brand('pihla.png','PIHLA',265,234,40,15);text(265,225,'Varma Kiinteä / pirties lango kandidatas',3)
+    text(200,269,'L1 / vertikalus pjūvis',2.5)
     rows=['Kiekis: 1 vnt. / nevarstomas','Rėmas: '+str(cfg['window_width'])+' × '+str(cfg['door_height']-20)+' mm','Konstrukcinė anga: '+str(cfg['window_width']+20)+' × '+str(cfg['door_height'])+' mm','Rėmo gylis: 170 mm; plotis: 51 mm','Montavimo tarpas: 10 mm kiekviename krašte','Trigubas stiklo paketas; vidinis stiklas grūdintas','Stiklo storį ir tiekimą patvirtina gamintojas']
-    for i,t in enumerate(rows):text(235,174-i*8,t,2.8)
-    text(235,106,'Montavimo tarpas - OBTP derinimo prielaida.',2.5)
-    text(235,98,'Angos apačia ir viršus sutampa su durų anga.',2.5)
-    text(235,85,'www.pihla.fi/product/saunan-ikkuna/',2.5)
-    c.linkURL('https://www.pihla.fi/product/saunan-ikkuna/',(235,82,400,91),relative=1)
-    page();title(5,'D1 / lango jungtis ir būsimi mazgai','1:2 / -')
-    # Enlarged actual model jamb. Exact product extrusion/fasteners are deliberately
-    # not fabricated; source drawing is linked for manufacturer coordination.
-    crop=v['views']['window-jamb']['crop'];ox=25-crop[0]/2;oy=73-crop[1]/2
-    view('window-jamb',ox,oy,2)
-    text(25,259,'D1 / horizontalus lango ir sienos pjūvis / 1:2',3)
-    text(25,67,'PIHLA: 51 mm rėmas, 170 mm gylis. OBTP jungties derinimo schema.',2.3)
-    text(25,61,'Sandarinimas, tvirtinimas ir palangė dar neparinkti. Ne gamybai.',2.3)
+    for i,t in enumerate(rows):text(265,204-i*8,t,2.8)
+    text(265,139,'Montavimo tarpas - OBTP derinimo prielaida.',2.5)
+    text(265,131,'Angos apačia ir viršus sutampa su durų anga.',2.5)
+    text(265,119,'www.pihla.fi/product/saunan-ikkuna/',2.5)
+    c.linkURL('https://www.pihla.fi/product/saunan-ikkuna/',(265,115,400,123),relative=1)
+    page();title(5,'D1 / lango vertikalūs mazgai','1:2 / -')
+    for name,y,label in [('window-head',170,'D1a / viršus'),('window-sill',73,'D1b / apačia')]:
+        crop=v['views'][name]['crop'];view(name,35-crop[0]/2,y-crop[1]/2,2)
+        text(35,y+(crop[3]-crop[1])/2+3,label+' / 1:2',3)
+    text(25,67,'Vertikalūs pjūviai iš 3D modelio. Supaprastintas rėmo profilis.',2.3)
+    text(25,61,'Sandarinimas, skardinimas ir tvirtinimas dar nesuderinti. Ne gamybai.',2.3)
     text(25,55,'Gamintojo profilis: pg.emmi.fi/l/tZjpVv-cnSLX',2.3)
     c.linkURL('https://pg.emmi.fi/l/tZjpVv-cnSLX',(25,52,220,59),relative=1)
     for x,label in [(235,'D2 / Durų mazgas'),(323,'D3 / Sienų kampas')]:
         c.setLineWidth(.2);c.rect(x,90,80,160);text(x+3,254,label,3)
     text(235,79,'Rezervuota suderintiems konstrukcijų mazgams.',2.3)
+    page();title(6,'Gamintojai ir duomenų šaltiniai','-')
+    text(25,252,'Konstrukcinė sistema: OBTP Cassette / numatytasis variantas',3.5)
+    text(25,242,'Gamintojų žymos nurodo gaminio ar dokumentacijos šaltinį, ne patvirtintą viso pastato komplektą.',2.7)
+    from .suppliers import attach
+    suppliers=scene.get('supplier_spec') or attach(scene)
+    for i,record in enumerate(suppliers['products']):
+        y=214-i*28
+        if record.get('logo'):brand(record['logo'].replace('.svg','.png'),record['supplier'],25,y-3,40,12)
+        else:text(25,y,record['supplier'],4)
+        text(78,y+5,record['category_lt']+' / '+record['product'],3)
+        text(78,y-2,record['status_lt'],2.5)
+        text(78,y-9,record['scope_lt'],2.4)
+        c.linkURL(record['url'],(25,y-12,402,y+13),relative=1)
+    text(25,68,'Alternatyvos tyrimas: Hunton. Pirties sluoksniai, jungtys ir tiekimas Lietuvoje dar nesuderinti.',2.5)
+    text(25,60,'Karkaso, izoliacijos, durų ir kitų nepriskirtų gaminių tiekėjai dar nepatvirtinti.',2.5)
+    from .analysis import prepare
+    analysis=prepare(scene)
+    page();title(7,'Analizė / modelis ir šiluminiai mazgai','1:50')
+    text(25,254,'PARUOŠIMAS ATLIKTAS. SKAITINIAI SKAIČIAVIMAI NEATLIKTI.',3.5)
+    view('section-a',95,120,50);legend(280,215)
+    text(220,249,'Pjūvis iš detalaus konstrukcinio modelio',3)
+    notes=[
+      'Medžiagų ribos paimtos iš tų pačių dalių kaip brėžiniuose.',
+      'Šiluminį domeną dar reikia suskaidyti ir patikrinti.',
+      'Tikrinami mazgai: siena-grindys, siena-stogas, kampai,',
+      'angos, kasečių jungtys ir inžinerinių sistemų pravedimai.',
+      'Taškiniai šilumos tilteliai vertinami atskiru 3D modeliu.',
+      'U, psi, chi ir paviršiaus temperatūros dar nenustatytos.',
+      'Šilumos nuostoliai ir kondensacijos rizika neapskaičiuoti.']
+    for i,t in enumerate(notes):text(220,158-i*8,t,2.7)
+    text(25,76,'Duomenų vientisumas: '+str(analysis['audit']['source_parts'])+' dalių; unikalūs ID; teigiami baigtiniai prizmių matmenys.',2.7)
+    text(25,68,'Tai nėra persidengimų, sandarumo, tinklo konvergencijos ar konstrukcinio tinkamumo patikra.',2.5)
+    text(25,60,'Analizės šaltinis: '+analysis['source_sha256'][:32],2.5)
+    page();title(8,'Analizė / šildymo ir džiūvimo etapai','-')
+    text(25,253,'Trys nuoseklūs etapai / temperatūros kreivė dar neapskaičiuota',3.5)
+    stages=[('01 / Prieš šildymą',['Krosnelė išjungta.','Reikia pradinės temperatūros,','drėgmės ir lauko sąlygų.']),
+            ('02 / Šildymas ir naudojimas',['Kandidatas: Harvia Spirit SP90E.','Vardinė galia 9 kW; faktinį darbą','lemia valdiklis ir naudojimas.']),
+            ('03 / Vėsimas ir džiūvimas',['Krosnelė išjungta.','Pradinė būsena iš antro etapo.','Reikia vėdinimo ir drėgmės duomenų.'])]
+    for i,(label,lines) in enumerate(stages):
+        x=25+i*128;c.setLineWidth(.25);c.rect(x,177,118,58);text(x+5,224,label,3)
+        for j,t in enumerate(lines):text(x+5,211-j*9,t,2.6)
+    for i,t in enumerate([
+      'Stacionarus THERM mazgo skaičiavimas neparodo įšilimo trukmės ar džiūvimo.',
+      'Pereinamajam procesui reikia medžiagų šiluminės talpos, valdymo, vėdinimo ir drėgmės šaltinių.',
+      'Krosnelė yra parinkimo kandidatas. Modelio tūris dar nėra suderintas su jos montavimo instrukcija.',
+      'Krosnelės gabaritai: 385 x 334 x 687 mm. Gamintojo nurodomas patalpos tūris: 8-14 m³.',
+      'Patikrinti įstiklinimo įtaką parinkimui, saugius atstumus, tvirtinimą ir elektros įvadą.',
+      'Šaltinis: harvia.com / HSPE904M. Medžiagų kandidatai ir metodai pateikti analysis/README.md.',
+      'Ši byla aprašo gaminį; ji nepakeičia konkretaus sklypo statinio projekto.']):text(25,153-i*11,t,2.9)
+    page();title(9,'Analizė / konstrukcijos ir vėjas','-')
+    text(25,253,'Konstrukcijų analizė nebaigta. Vėjo ir sniego vertinimas pristabdytas.',3.5)
+    rows=[
+      ('Modelio dalys',str(analysis['audit']['structural_candidates'])+' konstrukcinių dalių kandidatų; strypų ir plokštelių schema nepatvirtinta.'),
+      ('Jungtys',str(analysis['audit']['unresolved_interfaces'])+' sąsajų be patvirtintos laikomosios galios; standumas nepriskirtas.'),
+      ('Atramos','Reikia grunto, atramų ir inkarų sprendinių. Modelio betono tūriai yra studija.'),
+      ('Apkrovos','Nuolatinės ir naudojimo apkrovos nepatvirtintos. Vėjas ir sniegas šiuo etapu nevertinami.'),
+      ('Vietovė','Lietuva; numatomas lygus sklypas. Konkretūs vietovės duomenys nepriskirti.'),
+      ('Vėjas ir sniegas','Pristabdyta užsakovo sprendimu. Tai nereiškia nulinių apkrovų.'),
+      ('Rezultatai','Įrąžos, įtempiai, įlinkiai, reakcijos ir jungčių apkrovos dar neapskaičiuoti.'),
+      ('Patikros','Pusiausvyra, reakcijų sumos, mechanizmai ir konvergencija dar nepatikrinti.')]
+    for i,(label,body) in enumerate(rows):
+        y=229-i*18;text(25,y,label,3);text(88,y,body,2.65);c.setStrokeColor('#cccccc');line((25,y-6),(400,y-6));c.setStrokeColor('#111111')
+    text(25,72,'Ne statybai. Tai nėra konstrukcijų patvirtinimas ar STR atitikties deklaracija.',3)
+    text(25,62,'Skaitinių rezultatų diagramos įtraukiamos tik po patikrinto, šiai modelio laidai priskirto skaičiavimo.',2.5)
     c.save()

@@ -1,3 +1,7 @@
+## R06 / supplier research and analysis preparation
+
+Cassette remains default. Hunton is a disabled research candidate, not an implemented alternative. See `suppliers/RESEARCH_A02.md`. Window details are vertical head/sill cuts. Wind and snow are paused. Analysis is preparation only; native GH and numerical solver acceptance remain pending. Run `CREATE_GRASSHOPPER.py` again to create the updated canvas.
+
 # R05 current revision
 
 Terrace is fixed at 1200 mm. Window controls now specify actual frame widths 580 / 880 / 1180 mm (default1180), with a provisional 10 mm fitting gap at each edge; corresponding structural openings remain 600 / 900 / 1200 mm. Frame height1880 sits in a1900 opening aligned with the door opening. Read RESEARCH_R05.md.
