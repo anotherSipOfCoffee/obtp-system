@@ -176,9 +176,9 @@ def pdf(scene,path):
     text(25,60,'Karkaso, izoliacijos, durų ir kitų nepriskirtų gaminių tiekėjai dar nepatvirtinti.',2.5)
     from .analysis import prepare
     analysis=prepare(scene)
-    page();title(7,'Analizė / modelis ir šiluminiai mazgai','1:25')
+    page();title(7,'Analizė / modelis ir šiluminiai mazgai','1:50')
     text(25,254,'PARUOŠIMAS ATLIKTAS. SKAITINIAI SKAIČIAVIMAI NEATLIKTI.',3.5)
-    view('section-a',95,98,25);legend(280,215)
+    view('section-a',95,120,50);legend(280,215)
     text(220,249,'Pjūvis iš detalaus konstrukcinio modelio',3)
     notes=[
       'Medžiagų ribos paimtos iš tų pačių dalių kaip brėžiniuose.',
