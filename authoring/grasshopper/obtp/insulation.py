@@ -20,6 +20,7 @@ def enrich(parts,voids,L,W,F,H,annex,px,p):
         z=p['studio_zones'];zones=[]
         for name,a,b in [('left',0,z['bridge_start']),('right',z['bridge_end'],L)]:
             zones += [(name+'-front',[a+wall,0,F],[b-a-2*wall,wall,H]),(name+'-back',[a+wall,W-wall,F],[b-a-2*wall,wall,H]),(name+'-end-a',[a,0,F],[wall,W,H]),(name+'-end-b',[b-wall,0,F],[wall,W,H]),('ceiling-'+name,[a,0,F+H],[b-a,W,220]),('floor-'+name,[a,0,0],[b-a,W,220])]
+        zones += [('ceiling-centre',[z['bridge_start'],0,F+H],[z['bridge_end']-z['bridge_start'],W,220]),('floor-centre',[z['bridge_start'],0,0],[z['bridge_end']-z['bridge_start'],W,220])]
     original=list(parts)
     for name,o,s in zones:
         boxes=[(o,s)]
@@ -37,7 +38,11 @@ def enrich(parts,voids,L,W,F,H,annex,px,p):
       holds=['Hygrothermal assessment of exterior sheathing and intermittently heated hall remains required.','Heater model, ventilation, fire distances, drying cycle and frost-drainable outdoor shower remain to be specified.','No U-value or energy class is claimed.'])
 
     if p.get('program_type',0)==1:
-        result['use']='non-residential creative/hobby studio; heating and ventilation unselected'
+        result['use']='heated non-residential studio including central room; summer sliding ventilation'
+        result['heated_centre']=True
+        result['floor_layers']=['18mm structural plywood','220mm framed mineral-wool cavity','underside wind/moisture protection: product and detail required']
+        result['ceiling_layers']=['16mm lining','20mm service battens','continuous airtight vapour-control layer: product required','220mm framed mineral-wool cavity','18mm roof cassette sheathing','ventilated weather roof']
+        result['junction_requirements']=['airtight floor-to-slider sill joint','insulated load-bearing sill support: unresolved','external drained sill pan and deck separation','head/jamb air barrier continuity','thermal bridge assessment at all slider interfaces']
         result['inside_to_outside'][2]='vapour-control product and hygrothermal design required; no sauna foil selected'
         result['holds']=['Occupied studio ventilation, heating, material products and moisture design remain unresolved.','No U-value or energy class is claimed.']
     return result

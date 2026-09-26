@@ -297,7 +297,7 @@ def build(p):
     envelope_spec=insulate(parts,opening_voids,L,W,F,H,annex,partition_x,p)
     if studio:
         extra['support_span']=max(extra['support_span'],nominal_hall)
-        extra['enclosed_area']=((bridge_start+168)+(L-bridge_end+168))*(W+168)/1e6
+        extra['enclosed_area']=(L+168)*(W+168)/1e6
     area=extra['area'];height=extra['height']
     ids=[a['id'] for a in parts]
     if len(ids)!=len(set(ids)):raise ValueError('Duplicate part identity')
@@ -316,7 +316,8 @@ def build(p):
                 holds=list(HOLDS),geometry_sha256=geometry_hash)
 
     if studio:
-        scene['metrics']['covered_court_clear_area_m2']=(nominal_hall-168)*W/1e6
+        scene['metrics']['central_room_clear_area_m2']=(nominal_hall-168)*(W-300)/1e6
+        scene['metrics']['main_clear_floor_less_partition_m2']+=scene['metrics']['central_room_clear_area_m2']
         scene['holds']=['Creative/hobby workspace and material preparation/storage; no sleeping or residential use.',
           'Covered centre counted in full roof/terrace area bound; classification and site-specific SLD requirements remain unverified.',
           'Open-bay headers, foundations, connections, weatherproofing and roof bracing require engineering review.',
@@ -325,7 +326,7 @@ def build(p):
     scene['seasonal_spec']=seasonal_spec
     scene['holds'].append('Post-free canopy is an unverified cantilever study: member sizes, backspan anchorage and uplift/load path require engineering; capacities remain unknown.')
     if studio:
-        scene['holds'].extend(['Seasonal sliding enclosure retains open decking: no insulated winter-room or energy-saving claim.', 'Stove is a manufacturer body-envelope placeholder only; hearth, clearances, flue and combustion air are unresolved.'])
+        scene['holds'].extend(['Heated central room: insulated floor/ceiling geometry; glazing, airtightness, sill supports and thermal performance remain unverified.', 'Stove is a manufacturer body-envelope placeholder only; hearth, clearances, flue and combustion air are unresolved.'])
     from .suppliers import attach
     scene['supplier_spec']=attach(scene)
     from .object_library import attach as attach_objects

@@ -63,7 +63,7 @@ def derive(scene):
     if p['storage']:views['plan']['labels'].append(dict(at=[L+d['annex_length_mm']/2,195+(W-390)*.58],text='Sandėliukas'))
     if p.get('program_type',0)==1:
         z=p['studio_zones'];bs=z['bridge_start'];be=z['bridge_end'];rs=z['right_start']
-        views['plan']['labels']=[dict(at=[bs/2,W*.42],text='Kūrybos erdvė'),dict(at=[(bs+be)/2,W*.42],text='Dengta darbo erdvė'),dict(at=[(rs+L-195)/2,W*.42],text='Paruošimas / laikymas')]
+        views['plan']['labels']=[dict(at=[bs/2,W*.42],text='Kūrybos erdvė'),dict(at=[(bs+be)/2,W*.42],text='Centrinė darbo erdvė'),dict(at=[(rs+L-195)/2,W*.42],text='Paruošimas / laikymas')]
         views['plan']['dimensions']=[dimension([0,0],[end,0],-550),dimension([0,0],[0,W],-500),dimension([195,W],[bs-195,W],400),dimension([bs,W],[be,W],400),dimension([rs,W],[L-195,W],400)]
         for v in scene['opening_voids']:
             x,y,_=v['origin'];a,b,_=v['size'];views['plan']['dimensions'].append(dimension([x,y],[x+a,y] if a>b else [x,y+b],-220))

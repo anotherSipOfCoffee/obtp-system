@@ -41,7 +41,8 @@ def prepare(scene,settings=None):
         if settings is None or inherited:
             cfg['heater']=None;cfg['stages']=[]
             cfg['input_notes']=['Inherited Sauna heater/cycle removed for Studio. Supply a Studio-specific heating and occupancy schedule.']
-        cfg['thermal']['usage']='studio occupied/unoccupied schedules required; no sauna cycle'
+        cfg['thermal']['usage']='heated Studio including central room; winter closed / summer open; schedules required'
+        cfg['thermal']['central_room']=dict(design_intent='heated',glazing_state=scene.get('seasonal_spec',{}).get('state'),slider_Uw_W_m2K=None,airtightness=None,threshold_psi_W_mK=None)
     parts=scene['parts']; ids=[p['id'] for p in parts]
     if len(set(ids))!=len(ids):raise ValueError('Duplicate source part IDs')
     if scene['units']!='mm':raise ValueError('Expected canonical millimetre model')

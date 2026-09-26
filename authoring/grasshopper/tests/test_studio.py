@@ -16,7 +16,7 @@ class Studio(unittest.TestCase):
    self.assertEqual(len([v for v in s['opening_voids'] if 'entry' in v['id']]),2)
    self.assertEqual(len([a for a in s['parts'] if a['id'].startswith('studio-storage/')]),5 if p['storage'] else 0)
    for a in s['parts']:
-    if a['id'].startswith('insulation-floor') or a['id'].startswith('insulation-ceiling'):
+    if (a['id'].startswith('insulation-floor') or a['id'].startswith('insulation-ceiling')) and '-centre/' not in a['id']:
      self.assertTrue(a['origin'][0]+a['size'][0]<=bs+1e-6 or a['origin'][0]>=be-1e-6)
    self.assertEqual(s['drawings']['source_geometry_sha256'],s['geometry_sha256'])
    self.assertNotIn('Pirtis',[a['text'] for a in s['drawings']['views']['plan']['labels']])

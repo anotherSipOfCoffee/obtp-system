@@ -1,3 +1,6 @@
+# Heated centre — latest owner decision
+Studio centre is a heated winter room opening through sliding glazing for summer. Read authoring/grasshopper/HEATED_CENTRE_R01.md; this supersedes the unheated-buffer assumption. Supplier glazing fit, heater installation, airtight thresholds and structural cantilever remain unresolved.
+
 # R08 owner changes
 Continue linked-library GH implementation with Studio flat roof only, seasonal sliding court enclosure, open short-end log rack and heater body placeholder; Sauna shower-side terrace return; post-free roof studies. Read authoring/grasshopper/RESEARCH_R08_SEASONAL.md. Do not claim cantilever design or winter thermal performance solved.
 

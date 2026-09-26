@@ -22,7 +22,10 @@ def enrich(p,parts,L,W,F,H,interfaces):
     add('firewood-rack/top',[-784,195,F+1500],[600,W-390,45])
     for j,zz in enumerate([F+300,F+750,F+1200]):add('firewood-rack/back-rail-'+str(j),[-229,195,zz],[45,W-390,45])
     interfaces.append(dict(id='studio-slider/host',type='sliding enclosure threshold/head coordination',capacity=None,fasteners=None))
-    return dict(state='closed' if closed else 'open',thermal_status='unheated seasonal buffer; no energy saving calculated',
+    return dict(state='closed' if closed else 'open',thermal_status='heated winter room design intent; U-values and energy use not calculated',
+        glazing_requirement=dict(type='thermally broken insulated sliding system',candidate='Schuco ASE60 triple-track',status='candidate only; minimum sash size and threshold installation require supplier confirmation',Uw_W_m2K=None,source='https://www.schueco.com/lt/architektams/gaminiai/slankiosios-sistemos/sliding-and-lift-sliding-systems-/ase60'),
+        operating_modes=dict(winter='closed glazing; heated envelope',summer='stacked sliding panels; heating off'),
+        physical_profiles_status='generic coordination placeholders, not manufacturer profiles',
         clear_opening_study_mm=width-panel,
         heater=dict(manufacturer='Morso',model='1442',body_mm=[388,368,715],status='body-envelope-only; not installation-ready',
           source='https://morsoe.com/other/product/indoor/wood-burning-stove/p1442_int',

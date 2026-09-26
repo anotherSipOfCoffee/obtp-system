@@ -64,17 +64,12 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
                 add('ceiling-'+name+'/board-'+str(i),[a+wall+36,y,F+H-36],[b-a-2*wall-72,min(93,W-wall-36-y),16],'lining-wood','ceiling')
             for i,x in enumerate(range(a+wall+36,b-wall-36,400)):
                 add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,b-wall-36-x),depth-72,20],'lining-wood','ceiling')
-        # Open centre stays open; remove exposed floor sheathing there and replace
-        # with deck boards at the same level. Full framing remains shared.
-        from .insulation import subtract
-        original=list(parts);parts[:]=[]
-        for item in original:
-            if item['family']=='floor' and item['material']=='plywood':
-                boxes=subtract((item['origin'],item['size']),([bs,0,0],[be-bs,W,F+1]))
-                for j,(o,size) in enumerate(boxes):parts.append(dict(item,id=item['id']+'/piece-'+str(j),origin=o,size=size))
-            else:parts.append(item)
-        for i,y in enumerate(range(0,W,100)):
-            add('studio-covered-deck/board-'+str(i),[bs,y,F-18],[be-bs,min(95,W-y),18],'deck-wood','floor')
+        # Heated centre retains continuous structural floor sheathing.
+        # Ceiling finish follows the same 16mm lining +20mm service-batten recipe.
+        for i,y in enumerate(range(0,W,95)):
+            add('ceiling-centre/board-'+str(i),[bs,y,F+H-36],[be-bs,min(93,W-y),16],'lining-wood','ceiling')
+        for i,x in enumerate(range(bs,be,400)):
+            add('ceiling-centre/batten-'+str(i),[x,0,F+H-20],[min(45,be-x),W,20],'lining-wood','ceiling')
     else:
         # Interior lining stays within each room, preserving framing geometry.
         partition_hole=[(px-36,F,p['partition_depth']+84,H)]
