@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R07'
+VERSION = 'GH-R08'
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
 PRESETS = [dict(id='sauna-'+size+('-storage' if storage else '-open'),
@@ -21,7 +21,7 @@ DEFAULTS = dict(room_depth_steps=3, sauna_length_steps=4, hall_length_steps=3,
                 partition_depth=90, door_width=900, door_height=1900,
                 sauna_door_offset=150, bench_depth=600, bench_height=900,
                 foot_bench_height=450, include_foundation=True,
-                roof_type=1, terrace_steps=2, window_width=1180, facade_type=0, system_type=0, program_type=0)
+                roof_type=1, terrace_steps=2, window_width=1180, facade_type=0, system_type=0, program_type=0, studio_winter_closed=True)
 HOLDS = [
  'Owner-plan fit not accepted: 1800 mm structural inside-face depth is a proposal.',
  'Source door offsets are retained in reference drawings; generated doors use explicit candidate parameters.',
@@ -36,7 +36,7 @@ def parameters(preset_index=2, custom=False, **overrides):
         raise ValueError('Preset index must be 0–5')
     p = dict(DEFAULTS)
     p.update(PRESETS[preset_index])
-    for k in ['roof_type','terrace_steps','window_width','facade_type','system_type','program_type']:
+    for k in ['roof_type','terrace_steps','window_width','facade_type','system_type','program_type','studio_winter_closed']:
         if k in overrides and overrides[k] is not None:p[k]=overrides[k]
     if custom:
         unknown = set(overrides) - set(DEFAULTS)
@@ -54,6 +54,7 @@ def parameters(preset_index=2, custom=False, **overrides):
             p[k] = int(p[k])
     if p['program_type'] not in (0,1):raise ValueError('Program: 0 Sauna, 1 Studio')
     if p['program_type']==1:
+        p['roof_type']=0 # Studio roof options locked by owner; GH selector applies to Sauna.
         # Program dimensions remain grid steps; assemblies are shared with Sauna.
         size=p['size'].lower();left,centre,right={'s':(4,3,3),'m':(5,3,3),'l':(6,3,3)}[size]
         if not custom:p.update(room_depth_steps=4,sauna_length_steps=left,hall_length_steps=centre,storage_length_steps=right)
@@ -62,6 +63,8 @@ def parameters(preset_index=2, custom=False, **overrides):
 
 
 def build(p):
+    if p["program_type"]==1 and p["roof_type"]!=0:
+        raise ValueError("Studio supports flat roof only")
     p = dict(p)
     from .suppliers import require_system
     require_system(p.get("system_type",0))
@@ -199,10 +202,9 @@ def build(p):
             else:vo=[base[0]-skin,base[1]+start,F];vs=[d+2*skin,width,head]
             opening_voids.append(dict(id=group,origin=vo,size=vs))
             # Gray joinery is independent from the structural aperture.
-            put('door-jamb-left',start,d//2,0,30,40,head,'object',group)
-            put('door-jamb-right',start+width-30,d//2,0,30,40,head,'object',group)
-            put('door-head',start+30,d//2,head-30,width-60,40,30,'object',group)
-            put('door-leaf',start+35,d//2+45,5,width-70,35,head-40,'object',group)
+            from .object_library import door_recipe
+            for label,u,v,z,a,b,c in door_recipe(width,head,d):
+                put(label,start+u,v,z,a,b,c,'object',group)
             interfaces.append(dict(id=group,type='opening',capacity=None,fasteners=None))
         n=0
         for begin,end in intervals:
@@ -287,13 +289,15 @@ def build(p):
         add('shower/head',[shower_x+300,shower_y-40,F+2030],[80,110,40],'object','furniture')
     if p['include_foundation']:
         for j,y in enumerate([-100,W-200]):add('foundation/strip-'+str(j),[0,y,-200],[L+annex,300,200],'concrete-study','foundation')
+    from .seasonal import enrich as seasonal_enrich
+    seasonal_spec=seasonal_enrich(p,parts,L,W,F,H,interfaces)
     from .envelope import enrich
     extra=enrich(p,parts,opening_voids,interfaces,L,W,F,H,annex,wall_regions)
     from .insulation import enrich as insulate
     envelope_spec=insulate(parts,opening_voids,L,W,F,H,annex,partition_x,p)
     if studio:
         extra['support_span']=max(extra['support_span'],nominal_hall)
-        extra['enclosed_area']=((bridge_start+168)+(L-bridge_end+168))*(W+168)/1e6
+        extra['enclosed_area']=(L+168)*(W+168)/1e6
     area=extra['area'];height=extra['height']
     ids=[a['id'] for a in parts]
     if len(ids)!=len(set(ids)):raise ValueError('Duplicate part identity')
@@ -312,14 +316,21 @@ def build(p):
                 holds=list(HOLDS),geometry_sha256=geometry_hash)
 
     if studio:
-        scene['metrics']['covered_court_clear_area_m2']=(nominal_hall-168)*W/1e6
+        scene['metrics']['central_room_clear_area_m2']=(nominal_hall-168)*(W-300)/1e6
+        scene['metrics']['main_clear_floor_less_partition_m2']+=scene['metrics']['central_room_clear_area_m2']
         scene['holds']=['Creative/hobby workspace and material preparation/storage; no sleeping or residential use.',
           'Covered centre counted in full roof/terrace area bound; classification and site-specific SLD requirements remain unverified.',
           'Open-bay headers, foundations, connections, weatherproofing and roof bracing require engineering review.',
           'Window/door products, vapour control, heating and ventilation require project-specific selection.',
           'Native Rhino/GH execution acceptance remains pending.']
+    scene['seasonal_spec']=seasonal_spec
+    scene['holds'].append('Post-free canopy is an unverified cantilever study: member sizes, backspan anchorage and uplift/load path require engineering; capacities remain unknown.')
+    if studio:
+        scene['holds'].extend(['Heated central room: insulated floor/ceiling geometry; glazing, airtightness, sill supports and thermal performance remain unverified.', 'Stove is a manufacturer body-envelope placeholder only; hearth, clearances, flue and combustion air are unresolved.'])
     from .suppliers import attach
     scene['supplier_spec']=attach(scene)
+    from .object_library import attach as attach_objects
+    scene['object_library']=attach_objects(scene)
     from .drawings import derive
     scene['drawings']=derive(scene)
     return scene

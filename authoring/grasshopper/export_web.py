@@ -16,10 +16,12 @@ def compile_catalogue(destination,revision):
     shutil.copytree(ROOT/"suppliers"/"assets",target/"supplier-assets",dirs_exist_ok=True)
     (target/"suppliers.json").write_text(json.dumps(supplier_catalogue(),ensure_ascii=False,indent=2))
     entries=[]
-    for program,i,roof,terrace,window in itertools.product(range(2),range(6),range(3),[2],[580,880,1180]):
-        scene=build(parameters(i,program_type=program,roof_type=roof,terrace_steps=terrace,window_width=window,facade_type=0))
+    for program,i,roof,terrace,window,winter in itertools.product(range(2),range(6),range(3),[2],[580,880,1180],[True,False]):
+        if program==1 and roof!=0:continue
+        if program==0 and not winter:continue
+        scene=build(parameters(i,program_type=program,studio_winter_closed=winter,roof_type=roof,terrace_steps=terrace,window_width=window,facade_type=0))
         if not all(scene['checks'].values()):raise ValueError('Invalid catalogue member')
-        key=scene['config']['id']+f'-r{roof}-t{terrace}-w{window}-f0'
+        key=scene['config']['id']+f'-r{roof}-t{terrace}-w{window}-f0'+('-summer' if program==1 and not winter else '')
         web=browser_scene(scene)
         web.update(config=scene['config'],dimensions=scene['dimensions'],checks=scene['checks'],source_revision=revision,authoring_version=VERSION)
         cut=copy.deepcopy(scene);cut['parts']=[]
@@ -39,6 +41,8 @@ def compile_catalogue(destination,revision):
         web['drawings']=scene['drawings']
         web['envelope_spec']=scene['envelope_spec']
         web['window_spec']=scene['window_spec']
+        web['seasonal_spec']=scene.get('seasonal_spec')
+        web['object_library']=scene['object_library']
         web['supplier_spec']=scene['supplier_spec']
         (target/(key+'-plan.svg')).write_text(svg(scene['drawings']['views']['concept-plan']))
         pdf(scene,target/(key+'.pdf'))
@@ -51,12 +55,12 @@ def compile_catalogue(destination,revision):
     # Offline package contains the same core plus the six default Rhino models/PDFs.
     import tempfile
     with tempfile.TemporaryDirectory() as temp:
-        with zipfile.ZipFile(target/'OBTP_Grasshopper_R07.zip','w',zipfile.ZIP_DEFLATED) as z:
+        with zipfile.ZipFile(target/'OBTP_Grasshopper_R08.zip','w',zipfile.ZIP_DEFLATED) as z:
             with zipfile.ZipFile(target/'OBTP_Grasshopper_Source.zip') as source:
                 for name in source.namelist():z.writestr(name,source.read(name))
             for program,i in itertools.product(range(2),range(6)):
                 scene=build(parameters(i,program_type=program));stem=scene['config']['id'];path=Path(temp)/(stem+'.3dm');file3dm([scene],path);z.write(path,'exports/'+path.name)
-                key=stem+'-r1-t2-w1180-f0';z.write(target/(key+'.pdf'),'exports/'+stem+'.pdf')
+                key=stem+'-r'+str(scene['config']['roof_type'])+'-t2-w1180-f0';z.write(target/(key+'.pdf'),'exports/'+stem+'.pdf')
     print('Compiled',len(entries),'script-authored website configurations')
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('destination');ap.add_argument('--revision',required=True);args=ap.parse_args();compile_catalogue(args.destination,args.revision)

@@ -63,7 +63,7 @@ def derive(scene):
     if p['storage']:views['plan']['labels'].append(dict(at=[L+d['annex_length_mm']/2,195+(W-390)*.58],text='Sandėliukas'))
     if p.get('program_type',0)==1:
         z=p['studio_zones'];bs=z['bridge_start'];be=z['bridge_end'];rs=z['right_start']
-        views['plan']['labels']=[dict(at=[bs/2,W*.42],text='Kūrybos erdvė'),dict(at=[(bs+be)/2,W*.42],text='Dengta darbo erdvė'),dict(at=[(rs+L-195)/2,W*.42],text='Paruošimas / laikymas')]
+        views['plan']['labels']=[dict(at=[bs/2,W*.42],text='Kūrybos erdvė'),dict(at=[(bs+be)/2,W*.42],text='Centrinė darbo erdvė'),dict(at=[(rs+L-195)/2,W*.42],text='Paruošimas / laikymas')]
         views['plan']['dimensions']=[dimension([0,0],[end,0],-550),dimension([0,0],[0,W],-500),dimension([195,W],[bs-195,W],400),dimension([bs,W],[be,W],400),dimension([rs,W],[L-195,W],400)]
         for v in scene['opening_voids']:
             x,y,_=v['origin'];a,b,_=v['size'];views['plan']['dimensions'].append(dimension([x,y],[x+a,y] if a>b else [x,y+b],-220))
@@ -117,13 +117,11 @@ def derive(scene):
             c,s=math.cos(angle),math.sin(angle)
             for line in symbols['blocks'][name]['lines']:
                 views['plan']['polylines'].append([[origin[0]+c*x*sx-s*y*sy,origin[1]+s*x*sx+c*y*sy] for x,y in line])
-        for v in scene['opening_voids']:
-            if 'window' in v['id']:continue
-            x,y,z=v['origin'];a,b,h=v['size'];axis=0 if a>b else 1;size=a if axis==0 else b
-            # Door source X runs -450..450 and opens toward positive Y.
-            origin=[x+a/2,y+b/2];angle=math.pi if axis==0 else -math.pi/2
-            if v['id']=='studio-left-entry/opening':angle=math.pi/2
-            place('Door Lining',origin,size/900,size/900,angle)
+        from .object_library import plan_symbols
+        linked=plan_symbols(scene['object_library'])
+        views['plan']['object_symbols']=linked
+        views['plan']['object_library_sha256']=scene['object_library']['sha256']
+        for item in linked:views['plan']['polylines'].extend(item['polylines'])
         seat=next((a for a in scene['parts'] if a['id']=='outside-seat/seat'),None)
         if seat:place('Outdoor Bench',[seat['origin'][0],seat['origin'][1]+seat['size'][1]],seat['size'][0]/1100,seat['size'][1]/333.776002644)
         views['plan']['symbol_source_sha256']=symbols['source_sha256']

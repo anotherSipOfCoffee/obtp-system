@@ -20,4 +20,6 @@ jobs:
       - run: python authoring/grasshopper/tests/test_analysis.py
       - run: python authoring/grasshopper/tests/test_suppliers.py
       - run: python authoring/grasshopper/tests/test_studio.py
+      - run: python authoring/grasshopper/tests/test_object_library.py
+      - run: python authoring/grasshopper/tests/test_seasonal.py
       - run: python authoring/grasshopper/export_web.py /tmp/sauna-catalogue --revision ${{ github.sha }}
