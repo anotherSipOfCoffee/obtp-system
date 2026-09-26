@@ -2,10 +2,12 @@
 Sloped members are affine prisms; slope_y shears Z along Y and preserves volume.
 """
 import math
+from .repetition import spans as cut_spans, supports as repeated_supports, finish_spans, support_joints
 
 
 def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
-    wall=195; skin=12; end=L+annex; hot=p['sauna_length_steps']*600; px=wall+hot
+    repeated=p.get('grid_system')==1
+    wall=195; skin=12; end=L+annex; hot=p.get('resolved_hot_mm',p['sauna_length_steps']*600); px=wall+hot
     depth=W-390; D=p['terrace_steps']*600; outer=84 # 12 sheathing + 25 + 25 battens + 22 boards
     def add(id,o,s,mat='timber',family='roof',slope=0):
         if min(s)<=0:raise ValueError('Nonpositive envelope part '+id)
@@ -32,51 +34,82 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
                 thick=36 if interior else 84
                 v=base if inward>0 else base-thick
                 wall_regions.append(dict(id=name,axis=axis,base=[u,v] if axis=='x' else [v,u],length=a,depth=thick))
-        def put(label,u,z,a,h,offset,thick,material):
+        finish_joints=set()
+        def put(label,u,z,a,h,offset,thick,material,group=None):
             for j,(uu,zz,aa,hh) in enumerate(__import__('functools').reduce(lambda rs,c:[t for r in rs for t in subtract(r,c)],cuts,[(u,z,a,h)])):
-                v=base+inward*offset-(thick if inward<0 else 0)
-                o=[uu,v,zz] if axis=='x' else [v,uu,zz]
-                size=[aa,thick,hh] if axis=='x' else [thick,aa,hh]
-                add(name+'/'+label+'-'+str(j),o,size,material,'interior' if interior else 'facade')
-        if interior:
-            # 20 x 45 support battens, nominal 400 mm spacing (Thermory).
-            for i,u in enumerate(range(int(u0),int(u0+length),400)):
-                put('batten-'+str(i),u,F+20,min(45,u0+length-u),H-40,0,20,'lining-wood')
+                spans=finish_spans(uu,uu+aa,wall,p['partition_depth']) if repeated and interior and label.startswith('board-') else [(uu,uu+aa)]
+                finish_joints.update(x for x,y in spans[1:])
+                for q,(x,y) in enumerate(spans):
+                    v=base+inward*offset-(thick if inward<0 else 0)
+                    o=[x,v,zz] if axis=='x' else [v,x,zz]
+                    size=[y-x,thick,hh] if axis=='x' else [thick,y-x,hh]
+                    ident=name+'/'+label+'-'+str(j)+('-cut-'+str(q) if len(spans)>1 else '')
+                    add(ident,o,size,material,'interior' if interior else 'facade')
+                    if group:parts[-1]['assembly']=group
+        if interior and repeated:
             for i,z in enumerate(range(F+20,F+H-20,95)):
                 put('board-'+str(i),u0,z,length,min(93,F+H-20-z),20,16,'lining-wood')
-        else:
-            for i,u in enumerate(range(int(u0),int(u0+length),600)):
+            for i,u in enumerate(support_joints(u0,u0+length,finish_joints)):
+                put('batten-'+str(i),u,F+20,min(45,u0+length-u),H-40,0,20,'lining-wood')
+        elif not interior and repeated:
+            for i,u in enumerate(repeated_supports(u0,u0+length,600)):
                 put('counter-'+str(i),u,F,min(45,u0+length-u),H,12,25,'cladding-wood')
             for i,z in enumerate(range(F,F+H,600)):
-                put('batten-'+str(i),u0,z,length,min(45,F+H-z),37,25,'cladding-wood')
+                for j,(a,b) in enumerate(cut_spans(u0,u0+length,1800)):
+                    put('batten-'+str(i)+'-'+str(j),a,z,b-a,min(45,F+H-z),37,25,'cladding-wood')
             for i,u in enumerate(range(int(u0),int(u0+length),80)):
                 put('board-'+str(i),u,F,min(78,u0+length-u),H,62,22,'cladding-wood')
+        else:
+            if interior:
+                # 20 x 45 support battens, nominal 400 mm spacing (Thermory).
+                for i,u in enumerate(range(int(u0),int(u0+length),400)):
+                    put('batten-'+str(i),u,F+20,min(45,u0+length-u),H-40,0,20,'lining-wood')
+                for i,z in enumerate(range(F+20,F+H-20,95)):
+                    put('board-'+str(i),u0,z,length,min(93,F+H-20-z),20,16,'lining-wood')
+            else:
+                for i,u in enumerate(range(int(u0),int(u0+length),600)):
+                    put('counter-'+str(i),u,F,min(45,u0+length-u),H,12,25,'cladding-wood')
+                for i,z in enumerate(range(F,F+H,600)):
+                    put('batten-'+str(i),u0,z,length,min(45,F+H-z),37,25,'cladding-wood')
+                for i,u in enumerate(range(int(u0),int(u0+length),80)):
+                    put('board-'+str(i),u,F,min(78,u0+length-u),H,62,22,'cladding-wood')
+    def ceiling(name,a,b,c,d):
+        spans=finish_spans(a,b,wall,p['partition_depth'])
+        for j,(lo,hi) in enumerate(spans):
+            for i,y in enumerate(range(int(c),int(d),95)):
+                add(name+'/board-'+str(i)+'-cut-'+str(j),[lo,y,F+H-36],[hi-lo,min(93,d-y),16],'lining-wood','ceiling')
+        for i,x in enumerate(support_joints(a,b,[x for x,y in spans[1:]])):
+            add(name+'/batten-'+str(i),[x,c,F+H-20],[min(45,b-x),d-c,20],'lining-wood','ceiling')
     if p.get('program_type',0)==1:
         z=p['studio_zones'];bs=z['bridge_start'];be=z['bridge_end'];rs=z['right_start']
         for name,a,b in [('left',0,bs),('right',be,L)]:
             for label,y,sgn in [('front',wall,1),('back',W-wall,-1)]:surface('lining-'+name+'-'+label,'x',y,a+wall+36,b-a-2*wall-72,sgn)
             surface('lining-'+name+'-end-a','y',a+wall,wall,depth,1)
             surface('lining-'+name+'-end-b','y',b-wall,wall,depth,-1)
-            for label,y,sgn in [('front',0,-1),('back',W,1)]:surface('facade-'+name+'-'+label,'x',y,a-outer,b-a+2*outer,sgn,False)
-            surface('facade-'+name+'-end-a','y',a,0,W,-1,False)
+            for label,y,sgn in [('front',0,-1),('back',W,1)]:surface('facade-'+name+'-'+label,'x',y,a if repeated and name=='left' else a-outer,b-a+outer if repeated and name=='left' else b-a+2*outer,sgn,False)
+            surface('facade-'+name+'-end-a','y',a,0,W,-1,False,holes=[(0,F,wall,H),(W-wall,F,wall,H)] if repeated and name=='left' else ())
             surface('facade-'+name+'-end-b','y',b,0,W,1,False)
-            for i,y in enumerate(range(wall+36,W-wall-36,95)):
-                add('ceiling-'+name+'/board-'+str(i),[a+wall+36,y,F+H-36],[b-a-2*wall-72,min(93,W-wall-36-y),16],'lining-wood','ceiling')
-            for i,x in enumerate(range(a+wall+36,b-wall-36,400)):
-                add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,b-wall-36-x),depth-72,20],'lining-wood','ceiling')
+            if repeated:ceiling('ceiling-'+name,a+wall+36,b-wall-36,wall+36,W-wall-36)
+            else:
+                for i,y in enumerate(range(wall+36,W-wall-36,95)):
+                    add('ceiling-'+name+'/board-'+str(i),[a+wall+36,y,F+H-36],[b-a-2*wall-72,min(93,W-wall-36-y),16],'lining-wood','ceiling')
+                for i,x in enumerate(range(a+wall+36,b-wall-36,400)):
+                    add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,b-wall-36-x),depth-72,20],'lining-wood','ceiling')
         for side,y in [('front',0),('back',W)]:
             surface('log-niche-'+side,'x',y,-600,600,-1 if side=='front' else 1,False)
         for side,y in [('front',wall),('back',W-wall)]:
             surface('log-niche-inner-'+side,'x',y,-600,516,1 if side=='front' else -1,False)
         for j,x in enumerate([-600,-129]):
-            add('firewood-niche/joist-'+str(j),[x,wall,F-173],[45,W-2*wall,145],'timber','floor')
+            add('firewood-niche/joist-'+str(j),[x,0 if p.get('grid_system')==1 else wall,F-173],[45,W if p.get('grid_system')==1 else W-2*wall,145],'timber','floor')
 
         # Heated centre retains continuous structural floor sheathing.
         # Ceiling finish follows the same 16mm lining +20mm service-batten recipe.
-        for i,y in enumerate(range(0,W,95)):
-            add('ceiling-centre/board-'+str(i),[bs,y,F+H-36],[be-bs,min(93,W-y),16],'lining-wood','ceiling')
-        for i,x in enumerate(range(bs,be,400)):
-            add('ceiling-centre/batten-'+str(i),[x,0,F+H-20],[min(45,be-x),W,20],'lining-wood','ceiling')
+        if repeated:ceiling('ceiling-centre',bs+outer,be-outer,150,W-150)
+        else:
+            for i,y in enumerate(range(0,W,95)):
+                add('ceiling-centre/board-'+str(i),[bs,y,F+H-36],[be-bs,min(93,W-y),16],'lining-wood','ceiling')
+            for i,x in enumerate(range(bs,be,400)):
+                add('ceiling-centre/batten-'+str(i),[x,0,F+H-20],[min(45,be-x),W,20],'lining-wood','ceiling')
     else:
         # Interior lining stays within each room, preserving framing geometry.
         partition_hole=[(px-36,F,p['partition_depth']+84,H)]
@@ -88,27 +121,29 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
         surface('lining-partition-hall','y',px+p['partition_depth']+12,wall+36,depth-72,1)
         # Ceiling lining and battens, independent from floor/roof structural skin.
         for name,x0,x1 in [('hot',wall+36,px-36),('hall',px+p['partition_depth']+48,L-wall-36)]:
-            for i,x in enumerate(range(int(x0),int(x1),400)):
-                add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,x1-x),depth-72,20],'lining-wood','ceiling')
-            for i,y in enumerate(range(wall+36,W-wall-36,95)):
-                add('ceiling-'+name+'/board-'+str(i),[x0,y,F+H-36],[x1-x0,min(93,W-wall-36-y),16],'lining-wood','ceiling')
+            if repeated:ceiling('ceiling-'+name,x0,x1,wall+36,W-wall-36)
+            else:
+                for i,x in enumerate(range(int(x0),int(x1),400)):
+                    add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,x1-x),depth-72,20],'lining-wood','ceiling')
+                for i,y in enumerate(range(wall+36,W-wall-36,95)):
+                    add('ceiling-'+name+'/board-'+str(i),[x0,y,F+H-36],[x1-x0,min(93,W-wall-36-y),16],'lining-wood','ceiling')
         for label,y,sgn in [('front',0,-1),('back',W,1)]:surface('facade-'+label,'x',y,-outer,L+2*outer,sgn,False)
         surface('facade-hot-end','y',0,0,W,-1,False)
         if not annex:surface('facade-hall-end','y',L,0,W,1,False)
         else:
             surface('facade-annex-end','y',end,0,W,1,False)
             # Short return walls are open at shower/seat ends; finish their exterior faces.
-            for j,y in enumerate([wall+depth*600//1800,wall+depth*1500//1800]):
+            for j,y in enumerate([wall+p.get('annex_split_a_mm',depth*600//1800),wall+p.get('annex_split_b_mm',depth*1500//1800)]):
                 for side,base,sgn in [('a',y,-1),('b',y+p['partition_depth']+12,1)]:
                     surface('annex-lining-'+str(j)+side,'x',base,L+12,annex-wall-12,sgn,True)
         if annex:
-            ya=wall+depth*600//1800+p['partition_depth']+48
-            yb=wall+depth*1500//1800-36
+            ya=wall+p.get('annex_split_a_mm',depth*600//1800)+p['partition_depth']+48
+            yb=wall+p.get('annex_split_b_mm',depth*1500//1800)-36
             surface('lining-storage-end','y',end-wall,ya,yb-ya,-1)
             surface('lining-storage-back','y',L+12,ya,yb-ya,1)
     # Independently supported deck: no implied cantilever or unverified ledger attachment.
     deck_y=-outer-20-D; deck_end=-outer-20
-    if D:
+    if D and p.get('grid_system')!=1:
         for i,x in enumerate(range(0,end,600)):
             add('terrace/joist-'+str(i),[x,deck_y,F-28-145],[45,D,145],'deck-wood','terrace')
         for i,y in enumerate(range(deck_y,deck_end,100)):
@@ -118,7 +153,7 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             for i,x in enumerate(range(0,end,1800)):
                 add('terrace/pad-'+str(j)+'-'+str(i),[x,y-60,-200],[150,150,175],'concrete-study','foundation')
     side_area=0
-    if True:
+    if p.get('grid_system')!=1:
         # Full shower-side return, in 600mm coordination steps; starts at facade edge.
         sx=end+outer+20 if p['program_type']==0 else -600-D; sy=deck_end; run=W+outer+20-sy
         for i,x in enumerate(range(sx,sx+D,100)):
@@ -138,6 +173,11 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             add('terrace-corner/bearer-'+str(j),[end if p['program_type']==0 else sx,y,F-263],[outer+20+D if p['program_type']==0 else -sx,90,90],'deck-wood','terrace')
             add('terrace-corner/pad-'+str(j),[sx+D-150,y,-200],[150,150,175],'concrete-study','foundation')
         side_area=(D*run+(outer+20+D if p['program_type']==0 else -sx)*D)/1e6
+    cell_terrace_area=None
+    if p.get('grid_system')==1:
+        from .cell_platform import terrace
+        cell_terrace_area=terrace(p,parts,L,W,F,annex)
+        deck_y=-1200
     # Insulated ceiling and weather roof are distinct layers with explicit bearing frames.
     base=F+H+238; cover=D if p['roof_type']!=2 else 0
     overhang=0 if p['roof_type']==2 else 150
@@ -210,16 +250,31 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
         for k,(yy,dy) in enumerate(spans):
             h=zfun(yy)-base;m=(zfun(yy+dy)-zfun(yy))/dy
             group='weather-bearing-'+str(j)+'-'+str(k)
-            if min(h,h+m*dy)<135:
-                add(group+'/packing-study',[-extension,yy,base],[end+extension,dy,h],'timber','roof')
-                parts[-1]['top_slope_y']=m
+            if repeated:
+                cuts=cut_spans(-extension,end,900)
+                for q,(aa,bb) in enumerate(cuts):
+                    if min(h,h+m*dy)<135:
+                        add(group+'/packing-study-cut-'+str(q),[aa,yy,base],[bb-aa,dy,h],'timber','roof')
+                        parts[-1]['top_slope_y']=m
+                    else:
+                        add(group+'/bottom-cut-'+str(q),[aa,yy,base],[bb-aa,dy,45],'timber','roof')
+                        add(group+'/top-cut-'+str(q),[aa,yy,base+h-45],[bb-aa,dy,45],'timber','roof',m)
+                if min(h,h+m*dy)>=135:
+                    positions=sorted(set([-extension,end-45]+[x for x in range(int(x0),int(x0+length),600) if 45-extension<=x<=end-90]+[aa-22.5 for aa,bb in cuts[1:]]))
+                    for n,x in enumerate(positions):
+                        add(group+'/stud-'+str(n),[x,yy,base+45],[45,dy,h-90],'timber','roof')
+                        parts[-1]['top_slope_y']=m
             else:
-                add(group+'/bottom',[-extension,yy,base],[end+extension,dy,45],'timber','roof')
-                add(group+'/top',[-extension,yy,base+h-45],[end+extension,dy,45],'timber','roof',m)
-                positions=sorted(set([-extension,end-45]+[x for x in range(int(x0),int(x0+length),600) if 45-extension<=x<=end-90]))
-                for n,x in enumerate(positions):
-                    add(group+'/stud-'+str(n),[x,yy,base+45],[45,dy,h-90],'timber','roof')
+                if min(h,h+m*dy)<135:
+                    add(group+'/packing-study',[-extension,yy,base],[end+extension,dy,h],'timber','roof')
                     parts[-1]['top_slope_y']=m
+                else:
+                    add(group+'/bottom',[-extension,yy,base],[end+extension,dy,45],'timber','roof')
+                    add(group+'/top',[-extension,yy,base+h-45],[end+extension,dy,45],'timber','roof',m)
+                    positions=sorted(set([-extension,end-45]+[x for x in range(int(x0),int(x0+length),600) if 45-extension<=x<=end-90]))
+                    for n,x in enumerate(positions):
+                        add(group+'/stud-'+str(n),[x,yy,base+45],[45,dy,h-90],'timber','roof')
+                        parts[-1]['top_slope_y']=m
     # Close exposed rafter ends while keeping the lower weather-roof air cavity.
     for label,y in [('front',y0),('back',y1-22)]:
         add('weather-edge-'+label+'/fascia',[x0,y,zfun(y)],[length,22,145],'cladding-wood','roof',slope if p['roof_type']==2 and label=='front' else -slope)
@@ -238,4 +293,4 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
     if height>5000:raise ValueError('Actual roof geometry exceeds 5000 mm height')
     if max(W,support_span)>6000:raise ValueError('Generated support spacing exceeds 6000 mm')
     interfaces.append(dict(id='wall-floor/platform',type='bottom plate -> floor skin -> perimeter blocking/bearing',capacity=None,fasteners=None))
-    return dict(area=area,height=height,support_span=support_span,terrace_area=end*D/1e6+side_area,enclosed_area=(L+2*outer)*(W+2*outer)/1e6)
+    return dict(area=area,height=height,support_span=support_span,terrace_area=cell_terrace_area if cell_terrace_area is not None else end*D/1e6+side_area,enclosed_area=(L+2*outer)*(W+2*outer)/1e6)

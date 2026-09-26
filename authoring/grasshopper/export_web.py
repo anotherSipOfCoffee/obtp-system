@@ -6,10 +6,10 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT))
 from obtp.model import build,parameters,VERSION
+from obtp.manufacturing import analyse as manufacturing
 from obtp.export import browser_scene,COLORS,file3dm
 from obtp.drawings import svg
 from obtp.suppliers import catalogue as supplier_catalogue
-from obtp.optimisation import analyse
 
 def write_pdf_documents(scene, target, key):
     from obtp.ssp_preview import pdf
@@ -27,6 +27,10 @@ def compile_catalogue(destination,revision,generate_pdfs=False):
             stale.unlink()
     shutil.copytree(ROOT/"suppliers"/"assets",target/"supplier-assets",dirs_exist_ok=True)
     (target/"suppliers.json").write_text(json.dumps(supplier_catalogue(),ensure_ascii=False,indent=2))
+    review=ROOT/'review-r15'
+    comparison=json.loads(gzip.decompress((review/'manufacturing-comparison.json.gz').read_bytes()))
+    comparisons={r['key']:r['versions'] for r in comparison['rows']}
+    shutil.copytree(review,target/'review',dirs_exist_ok=True)
     entries=[]
     for program,i,roof,terrace,window,winter,foundation in itertools.product(range(2),range(6),range(2),[2],[580,880,1180],[True,False],range(2)):
         if program==0 and not winter:continue
@@ -44,8 +48,19 @@ def compile_catalogue(destination,revision,generate_pdfs=False):
                 for asset in m['assets']:
                     mat=asset['material'];asset['color']=[v/255 for v in COLORS.get(mat,COLORS['object'])[:3]]
         web['drawings']={'schema':scene['drawings']['schema'],'source_geometry_sha256':scene['geometry_sha256']}
-        web['optimisation']={k:v for k,v in analyse(scene).items() if k not in ('cutting_plan','excluded_ids')}
         web['foundation_spec']=scene['foundation_spec']
+        web['cell_spec']=scene.get('cell_spec')
+        comparison_key=scene['config']['id']+f'-r{roof}-w{window}-b{foundation}-'+('winter' if winter else 'summer')
+        versions=comparisons[comparison_key]
+        if versions['revised']['geometry_sha256']!=scene['geometry_sha256']:
+            raise ValueError('Comparison is stale; run compare_manufacturing.py --full-catalogue')
+        web['comparison']=dict(previous=versions['original'],first_integrated=versions['cells'],before_opening=versions['pre_opening'],before_repairs=versions['pre_kit'],before_kit=versions['pre_kit_corrected'],current=versions['revised'],same_footprint=versions['revised_same_footprint'],basis=comparison['counting_rule'])
+        counts=manufacturing(scene,details=True)
+        for field in ['type_keys','assembly_keys']:counts.pop(field)
+        schedule_file=key+'-manufacturing.json.gz'
+        (target/schedule_file).write_bytes(gzip.compress(json.dumps(counts,separators=(',',':')).encode(),mtime=0))
+        web['manufacturing']={k:v for k,v in counts.items() if not k.endswith('_schedule')}
+        web['manufacturing']['schedule_file']=schedule_file
         web['envelope_spec']=scene['envelope_spec']
         web['window_spec']=scene['window_spec']
         web['seasonal_spec']=scene.get('seasonal_spec')
@@ -59,7 +74,7 @@ def compile_catalogue(destination,revision,generate_pdfs=False):
     (target/'manifest.json').write_text(json.dumps(dict(version=VERSION,source_revision=revision,pdf_enabled=generate_pdfs,defaults=dict(program='studio',foundation=0,size='m',storage=False,roof=0,terrace=2,window=1180,facade=0),entries=entries),indent=2))
     with zipfile.ZipFile(target/'OBTP_Grasshopper_Source.zip','w',zipfile.ZIP_DEFLATED) as z:
         for p in ROOT.rglob('*'):
-            if p.is_file() and p.suffix in ['.py','.md','.json','.png','.svg'] and not any(x in p.parts for x in ['exports','roof-studies','references','previews','__pycache__']):z.write(p,p.relative_to(ROOT))
+            if p.is_file() and p.suffix in ['.py','.md','.json','.png','.svg'] and not any(x in p.parts for x in ['exports','roof-studies','references','previews','review-r15','__pycache__']):z.write(p,p.relative_to(ROOT))
     # Keep Rhino models; include PDF proofs only when explicitly requested.
     import tempfile
     with tempfile.TemporaryDirectory() as temp:

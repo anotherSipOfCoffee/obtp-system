@@ -6,7 +6,7 @@ import importlib.util
 import json
 import sys
 from pathlib import Path
-for _input in ['scene_json', 'panels', 'cut', 'explode']:
+for _input in ['scene_json']:
     _value=globals()[_input]
     if hasattr(_value, 'Value'):globals()[_input]=_value.Value
 root=Path(ghenv.Component.OnPingDocument().FilePath).parent
@@ -15,15 +15,6 @@ if name not in sys.modules:
     spec=importlib.util.spec_from_file_location(name,root/'obtp'/'__init__.py',submodule_search_locations=[str(root/'obtp')])
     package=importlib.util.module_from_spec(spec);sys.modules[name]=package;spec.loader.exec_module(package)
 adapter=importlib.reload(importlib.import_module(name+'.rhino_adapter'))
-filters=importlib.reload(importlib.import_module(name+'.preview_filter'))
-def input_value(key,default):
-    value=globals().get(key,default)
-    if hasattr(value,'Value'):value=value.Value
-    return default if value is None else value
-visibility={key:bool(input_value('show_'+key,True)) for key,label in filters.GROUPS}
-only=int(input_value('only',0))
 geometry=[];part_ids=[]
 if scene_json:
-    geometry,part_ids=adapter.preview(json.loads(scene_json),bool(panels),bool(cut),float(explode),visibility,only)
-
-
+    geometry,part_ids=adapter.preview(json.loads(scene_json),True,False,0)

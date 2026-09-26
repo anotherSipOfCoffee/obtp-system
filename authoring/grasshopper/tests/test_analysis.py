@@ -2,6 +2,7 @@ import copy,sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from obtp.model import build,parameters
+from obtp.model import legacy_parameters as parameters  # Historical geometry contract
 from obtp.analysis import prepare,inputs,validate_result_identity
 class Analysis(unittest.TestCase):
  def test_all_six_preserve_source_identity_and_null_results(self):

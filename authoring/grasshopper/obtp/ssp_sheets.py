@@ -95,7 +95,7 @@ def prepare(scene):
       'Plotis, aukštis ir atrėmimo tarpai savaime nesuteikia teisės statyti be SLD.',116)
     p=sheet('Konstrukcijų ir inžinerinių sistemų aprašas','BD-04')
     y=248
-    blocks=[('Konstrukcijos','Medinių kasečių grindys ir sienos; 600 mm koordinavimo modulis. '
+    blocks=[('Konstrukcijos',('Medinių kasečių grindys ir sienos; 900 × 1200 mm koordinavimo tinklas. ' if scene['config'].get('grid_system')==1 else 'Medinių kasečių grindys ir sienos; 600 mm koordinavimo modulis. ') +
       'Karkasas, apkalos ir šiltinimas vaizduojami pagal detalų modelį. Medienos klasė, jungtys, '
       'standumas, inkarai ir pamatų sprendiniai dar nepatvirtinti.'),
       ('Stogas ir atitvaros','Stogo, grindų ir sienų sluoksniai parodyti modelio pjūviuose. '

@@ -1,83 +1,29 @@
-# R12 release authorised by owner
-Owner explicitly requested all previous R11 fixes plus unified foundation, component optimisation, supplier opening schedules and roof support corrections, including website publication. Preserve previous changes. Shared GH/Python remains canonical; engineering and supplier quote gaps remain explicit.
+# Current OBTP System guidance — R16, 26 September 2026
 
-# Current owner review R11 - publication paused
-Read System authoring/grasshopper/REVIEW_R11.md before edits. Shared Python/GH is canonical. Two foundation studies, all three roofs including drainage-only flat, white model only, model-linked schedules/assembly docs. No push/deploy until resumed by owner. Earlier R10 publication authority does not cover R11.
+Latest explicit user instructions take precedence. This revision is **review only**: continue System PR #20 and Studio PR #37, do not merge or publish. Leave Drive and Architecture unchanged.
 
-# Latest owner release R10
-Owner requests publication of Main/Pagrindinis with supplied gallery images, Studio default/open sliders, simplified fixed controls, recessed firewood niche and all-solid cut view. Preserve R09 GH package-loader/part-visibility fixes. Read System authoring/grasshopper/RELEASE_R10.md. This supersedes earlier Sauna-default and planning-only instructions for this release.
+## Authority and architecture
+- `authoring/grasshopper/obtp` is the canonical Python model shared by Grasshopper, drawings, quantities and web exports. Studio owns UI and consumes a pinned System commit; never duplicate geometry in JavaScript.
+- The user permits grid/layout redesign, with plan preservation preferred. Adopted R16 retains the 900 mm X × 1200 mm Y grid: tested alternative grids increased diversity. Preserve architectural room relationships, Studio’s heated sliding-glass centre and Sauna’s external shower/storage/seat arrangement unless a measured improvement justifies change.
+- Revised Sauna and Studio structural width is 2400 mm. Physical members may span multiple cells. Support rhythm is normally 1800 × 1200, with explicit terminal bays; it is not engineered capacity.
+- Facade remains visible. Only facade finish boards (including raised roof facade) are excluded from primary part counts. Retain their separate schedule. Battens, edge trims, insulation, equipment representations and every other modelled category remain primary.
+- Manufacturing identity includes material, dimensions, shape, machining, handing and connection requirements. Unknowns remain unknown. Report provisional candidate classes and geometric lower bounds, never verified manufacturing savings. Assembly grouping does not reduce constituent diversity.
+- Ordinary wall bays retain two plates, two studs and one panel. Opening side plates match top/bottom; jack studs bear on bottom plates and retain 45 mm lintel bearing. Keep corner/niche terminal exceptions explicit; the local-seam trial increased diversity. See review-r15/OPENINGS.md.
+- Both complete terraces use X-directed boards, max 1800 mm, supported butt joints. Interior lining uses selective 900/1800 extensions with recurring terminals; every new butt joint has a full-width batten seat. Do not split every board into 900 mm pieces: that trial added excessive pieces. Facade battens use supported 1800 cuts; roof bearing rails use supported 900 cuts. See review-r15/SHARED_KIT.md.
 
-# Heated centre — latest owner decision
-Studio centre is a heated winter room opening through sliding glazing for summer. Read authoring/grasshopper/HEATED_CENTRE_R01.md; this supersedes the unheated-buffer assumption. Supplier glazing fit, heater installation, airtight thresholds and structural cantilever remain unresolved.
+## Reproducibility and checks
+- Original baseline: `1ad71826acfcc7d6d5df9a06167c5fcfea20b516`.
+- First integrated cell baseline: `a11e613ac923fd5de6a3d3f1368e6c6eebc57745`.
+- `compare_manufacturing.py` reads these immutable Git snapshots into temporary folders. Do not maintain copies as parallel production pipelines.
+- After geometry changes: `python authoring/grasshopper/compare_manufacturing.py authoring/grasshopper/review-r15 --full-catalogue`; run the Python suite; then `export_web.py DEST --revision COMMIT`. Export refuses stale comparisons.
+- PDF generation stays disabled. Gable is absent from website and new GH controls. GH offers a complete normal preview, without object-type switches. Lithuanian flat-roof label: `Plokščias`.
+- Retain geometry/solid/clash, source-hash, export-cache, native acceptance and important browser behaviour checks. Native Rhino/GH acceptance is separate from portable rhino3dm checks.
+- Customer-facing brand is `studio 9120`; preserve existing UI and Lithuanian default. Main opens first; PDFs remain disabled.
 
-# R08 owner changes
-Continue linked-library GH implementation with Studio flat roof only, seasonal sliding court enclosure, open short-end log rack and heater body placeholder; Sauna shower-side terrace return; post-free roof studies. Read authoring/grasshopper/RESEARCH_R08_SEASONAL.md. Do not claim cantilever design or winter thermal performance solved.
+## Engineering, sources and scope
+- No invented capacities, fastening schedules, supplier compatibility, prices or permit exemption. All connections remain unverified; material grades, machining, wet-area detailing, glazing, heater clearances, roof uplift, soil and bracing require engineering.
+- No certified manual-lift mass: wall/roof cassettes are geometry groups, not approved factory lifting units. Use loose-part/small-subassembly erection until weights and handling are verified.
+- Preserve supplier/source attribution and licences; proprietary parts must not be stretched. Preserve pinned WikiHouse source geometry and CC BY-SA 4.0 obligations, Studio v1 reference and separate legacy product modes.
+- No supplier outreach. Preserve ordinary Git history and existing work. GitHub remote writes use the connector. No Drive synchronization.
 
-# Linked object library — latest scoped work
-Owner authorized research and implementation on 2026-09-26, door first. Read authoring/grasshopper/OBJECT_LIBRARY_R01.md. Keep shared 3D/2D parameters and stable instance IDs in the canonical Python library; detailed sections remain model-derived. All current objects are coordination placeholders until supported product adapters are verified. Native GH acceptance remains pending. This scoped work does not authorize unrelated deployment.
-
-# System working rules
-
-## Latest scoped authorization — Studio preset R07
-On 2026-09-26 the owner authorized implementing and publishing the Studio preset after research and validation, using the same Cassette/Python/GH pipeline as Sauna. Adapt the supplied two-block/open-centre reference for genuine creative workspace and preparation/storage, with no bedrooms or residential program. This supersedes the infrastructure-planning pause only for this release. Keep Sauna as default, Workshop unavailable, and all supplier/compatibility and engineering holds. System first, then pinned Studio; wind/snow remain paused. Read System authoring/grasshopper/RESEARCH_R07_STUDIO.md.
-
-## Current owner direction — 2026-09-26: supplier-based autonomous pipeline
-
-Read this section before historical instructions below. It supersedes older conflicting implementation direction; later explicit owner instructions take precedence. Goal: autonomous regeneration with interchangeable, documented supplier parts and compatible systems.
-
-- Use ProdLib web catalogue and original manufacturer documentation as research sources. Desktop exports are not a prerequisite for research. Do not assume every listed file is downloadable or Rhino-compatible.
-- Do not introduce VisualARQ or another paid BIM dependency as part of this pipeline. Retain existing Rhino/Grasshopper authoring; the portable Python core remains shared with offline exports.
-- Separate layout intent, supplier/product/material records, assembly definitions, connection interfaces, resolved configuration and generated geometry. Supplier dimensions and documented rules must drive generation, not merely annotate generic geometry.
-- Interchangeability is conditional on documented interfaces. Preserve source geometry; do not stretch proprietary parts, invent junctions, assign unverified capacities or treat unknown compatibility as a pass.
-- Use supplier models where suitable. If unavailable, reconstruct only from documented dimensions/details; record source, revision, checksum where available, geometry fidelity and omissions. Respect source licences and redistribution restrictions.
-- Model parts retain stable semantic IDs and product/assembly revisions. Derive conceptual previews, detailed plans/sections, quantities and analysis abstractions from the canonical detailed model. Material drawing styles are separate from physical properties. No independent browser construction geometry.
-- Changing a product must resolve dependent openings, framing and junctions, regenerate affected outputs and invalidate stale analysis receipts. Failed resolution must not mix old drawings with a new configuration or relabel old geometry.
-- Pin reviewed source revisions. Never silently adopt a supplier update. Missing engineering inputs remain explicit; numerical results require completed validated solver runs matching input hashes.
-- A supplier BIM object or product declaration does not transfer whole-building design responsibility. Record documented supplier engineering scope separately; no automatic compliance, permit exemption or performance promises.
-- Keep Cassette as the working default/study. Supplier alternatives remain unavailable until their adapters and compatibility requirements are resolved. Do not claim the current annotation catalogue already implements interchangeable systems.
-- Wind and snow analysis remain paused. Preserve existing geometric envelope gates, customer choices and project-specific behaviour.
-- Current phase is infrastructure planning and agent-rule preparation. Do not resume feature changes or website deployment merely from historic release authorizations. Subsequent explicit owner requests can authorize implementation/publication. Documentation-only handover changes are authorized now.
-- Fixed external footprint during system substitution is a PROPOSAL, not an accepted owner decision. Do not silently change the current dimensional policy. No complete alternative supplier package has been selected.
-
-Canonical architecture proposal: https://github.com/anotherSipOfCoffee/obtp-system/blob/main/authoring/grasshopper/PIPELINE_ARCHITECTURE_R01.md
-Read its status and unresolved decisions. Proposed implementation sequence: package existing Cassette constants without geometry change, prove an opening substitution, then integrate a documented complete assembly package. This sequence is a plan, not permission to remove preservation gates.
-
-Project boundary: System owns supplier records, assembly/interface rules, geometry adapters, validation and model-derived outputs. Read authoring/grasshopper/CANONICAL_WORKFLOW.md and PIPELINE_ARCHITECTURE_R01.md before touching the generator.
-
-## Historical and project-specific rules
-Read docs/SYSTEM_RULES.md and docs/CATALOGUE_CHECKPOINT.md. Preserve the existing Types → Objects → Connections → Assemblies interface; the owner's goal is to replace generic geometry with official WikiHouse components, not to replace the interface with a one-object viewer.
-Use the pinned Skylark150 source in docs/CATALOGUE_SOURCE_LOCK.json. Current library has six CAD block objects plus full and half ties reconstructed from source CNC profiles. Do not invent joints, stretch source parts, mix generations, or fill old generic categories with false equivalents. Source IDs and nested instance paths must remain traceable.
-The open chassis slice is a geometric fit study, not a complete building. Check docs/BLOCK_INTERFACE_FIT_CHECK.json and geometry audit. One R-S source Brep is open; no silent repair. E-S and W-O-S-1 source naming/height caveats are documented. Rhino 8 and full-volume/engineering checks remain distinct from browser checks.
-Retain source geometry attribution under CC BY-SA 4.0. Keep Studio and Architecture integration deliberate. GitHub operations use the GitHub plugin only. No supplier outreach without authorization. Drive updates only when requested. End progress reports with continuation options, but continue routine authorized work without repeated permission requests.
-
-
-## Opening instruction gate and seam checkpoint
-The owner requires precise WikiHouse opening instructions before completing automatic window/door placement. Keep opening configuration on hold; CAD existence and fitted envelopes alone do not satisfy this gate. Read docs/OPENINGS_AND_ENDWALLS_CHECKPOINT.md. End-wall corner trials are rejected, not solved. Floor/roof seam ties are implemented using the separate sampled source-socket checks in docs/SEAM_CONNECTIONS.md.
-
-## Master baseline and development branches — current owner policy
-Google Drive holds the authoritative OBTP master baseline in OBTP_MASTER, organized into Studio, Architecture and System. GitHub repositories are downstream development branches and may contain valid work ahead of Drive. Never overwrite newer or unique branch work from a baseline. Compare exact commits/manifests, integrate deliberately, and record divergence; no automatic two-way synchronization.
-Read the current System project/PROJECT_MAP.md and project/AGENT_GUIDE.md. Their links point to the active Drive master and historical recovery location. GitHub operations use the GitHub plugin only.
-On 2026-09-24 the owner authorized publishing System first, validating both WikiHouse and Cassette 01, then publishing Studio v3 from that tested System revision. This supersedes the earlier no-deployment instruction for this release only. Preserve ordinary Git history, Studio v1 and WikiHouse. Architecture is outside this release; Drive remains the master baseline and is not automatically synchronized.
-Before removal, verify a dated recovery snapshot outside active projects. Do not commit backup ZIPs, caches or nested historical packages. Source CAD bundles, licences, Studio v1, WikiHouse and useful Rhino reference evidence are intentional assets. Historical recovery content is excluded from normal builds and agent context unless recovery is requested.
-
-## Independent variation
-Cassette 01 is a separate original OBTP proposal under dist/cassette. The preceding WikiHouse source restrictions apply to WikiHouse, not a prohibition on the separately authorized new variation. Read docs/cassette/RESEARCH.md, SPECIFICATION.md and VALIDATION.md. Do not claim mechanical capacities, tolerances, habitation or compliance from the software checks. Opening controls remain disabled.
-
-
-## Cassette controls and connection research — 2026-09-24
-Studio v3 owns its configuration UI and follows the WikiHouse control pattern: 1–8 modules, layers, exploded view and reset at 2,100 mm wall height. Import the pinned System generator and renderer; do not embed System's inspector as the Studio configurator. System owns modules, interfaces, source references and separate object/connection inspection. Read System docs/cassette/CONNECTIONS.md. Product candidates are not engineered connection releases: preserve capacity:null and fasteners:null. The 2,700 mm study remains System-only; narrow-panel racking and terminal hold-down fit remain open. The owner subsequently authorized the System web release and its inspection fixes. Drive baseline updates remain separate.
-
-## Connection detail studies
-Read docs/cassette/DETAILS.md and DETAIL_SOURCES.json. The six local studies in dist/cassette/details use one fastener envelope each to inspect a position, never as a fastening schedule. Preserve conditional screens, rejected narrow-member positions and null capacities. Cutaway/crop/explode must never change the measurements. No repeat fastening pattern, hardware manufacturing geometry or structural release is implied. Studio source-pin changes must be deliberate, preserve its own controls and pass compatibility checks. No construction-ready claim is authorized. Run tests/connection-details.cjs and tests/connection-details-browser.cjs along with existing regressions.
-
-## Constituent parts and coordinated inspection
-Read docs/cassette/INSPECTION.md. Keep long joists continuous; the owner's sketch marks member contacts, not approved splice cuts. Use actual source assets for part explosion/isolation and internal-contact inspection. A physical screw/angle remains one connector; display regions are not manufactured subparts. Keep unselected hardware visible without guessed geometry. Run tests/inspection.cjs and tests/cassette-browser.cjs along with existing gates.
-
-## Canonical Sauna authoring — owner decision 2026-09-25
-The owner explicitly authorized the GH-R03 website update after pausing earlier publishing. System `authoring/grasshopper/obtp/model.py` and `envelope.py` are the canonical Sauna geometry source, shared by Rhino/GH and offline web exports. Make geometry changes there first; never reimplement Sauna geometry or dimensional rules in Studio JavaScript. `export_web.py` compiles the finite website catalogue. Studio owns UI only and consumes a pinned System commit through system.lock.json. Keep native Rhino/GH acceptance distinct from portable geometry and browser checks. Six base layouts remain S/M/L × external storage. Current buyer defaults: terrace 1200 (600/1200), window 1200 (600/900/1200), vertical timber only; window on entrance facade within sauna room. Read authoring/grasshopper/CANONICAL_WORKFLOW.md in System.
-
-## R04 authoring and customer presentation
-Model-derived drawings, measured dimension anchors and drawing exports belong to System authoring/grasshopper/obtp/drawings.py and sheets.py. Do not add independent browser geometry. Source DXF symbols carry a source checksum. Cake House-style controls and Koto-inspired neutral gallery/navigation are authorized; reserved photography fields remain empty. White appearance is a display override. Read RESEARCH_R04.md for insulation, 4480 mm gable reference height, legal/title-block and native Rhino acceptance limits.
-
-## R05 customer refinement — 2026-09-26
-Owner requires no embedded PDF preview; download only. Mobile controls toggle over the existing 3D view. Terrace is1200 only; Pihla sauna fixed window candidate uses frame widths580/880/1180 (default1180),170 depth and51 face with provisional10mm installation allowance. Gable roof is flush with finished walls on all sides. Only Sauna remains exposed; navigation label is Module type. Canonical model records wall regions; plan_styles.py merges these into conceptual black wall silhouettes, while drawings.py/sheets.py retain model material intersections for structural PDFs. Never add separate Studio geometry. Read System authoring/grasshopper/RESEARCH_R05.md.
+Historical release/research documents are evidence, not current competing instructions. Read them only for a relevant detail; this file consolidates current decisions.

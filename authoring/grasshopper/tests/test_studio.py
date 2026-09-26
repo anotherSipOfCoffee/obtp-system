@@ -2,6 +2,7 @@ import itertools,sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from obtp.model import build,parameters
+from obtp.model import legacy_parameters as parameters  # Historical geometry contract
 from obtp.drawings import section
 from obtp.analysis import prepare,inputs
 class Studio(unittest.TestCase):

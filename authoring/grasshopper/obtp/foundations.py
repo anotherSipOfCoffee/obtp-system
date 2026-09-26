@@ -4,6 +4,9 @@ Pile depth/section and grillage are explicit provisional coordination envelopes.
 import math
 
 def enrich(p,parts,interfaces,L,W,F,annex):
+    if p.get('grid_system')==1:
+        from .cell_platform import foundation
+        return foundation(p,parts,interfaces,L,W,F,annex)
     # Retire independent strip/pad/bearer systems, preserving floor/terrace joists.
     parts[:]=[a for a in parts if a['family']!='foundation' and not (a['family']=='terrace' and '/bearer-' in a['id'])]
     beams=[a for a in parts if a['family']=='terrace' and '/joist-' in a['id']]

@@ -29,14 +29,7 @@ if run_export and not previous:
     audit=adapter.audit(scene)
     destination=root/'rhino-exports'/datetime.now().strftime('%Y%m%d-%H%M%S-%f')
     files=exporter.export_one(scene,destination,adapter.Api)
-    drawings=importlib.reload(importlib.import_module(name+'.native_drawings'))
-    try:
-        docs=importlib.reload(importlib.import_module(name+'.documentation'))
-        receipts=[drawings.bake(scene,destination)]
-        for recipe in docs.documents(scene).values():receipts.append(drawings.bake(scene,destination,recipe))
-        layout=json.dumps(receipts,ensure_ascii=False,indent=2)
-    except Exception as error:
-        layout='SSP export FAILED (no PDF success claimed): '+str(error)
+    layout='Model and SVG drawings exported. PDF generation is disabled.'
     (destination/'rhino-audit.json').write_text(json.dumps(audit,indent=2))
     receipt='Saved review snapshot: '+str(destination)+'\n'+audit['status']+'\n'+layout
     scriptcontext.sticky[key+'-receipt']=receipt
