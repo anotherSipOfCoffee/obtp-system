@@ -8,18 +8,27 @@ sys.path.insert(0,str(ROOT))
 from obtp.model import build,parameters,VERSION
 from obtp.export import browser_scene,COLORS,file3dm
 from obtp.drawings import svg
-from obtp.ssp_preview import pdf
-from obtp.ssp_sheets import prepare
 from obtp.suppliers import catalogue as supplier_catalogue
-from obtp.documentation import documents
 from obtp.optimisation import analyse
 
-def compile_catalogue(destination,revision):
+def write_pdf_documents(scene, target, key):
+    from obtp.ssp_preview import pdf
+    from obtp.ssp_sheets import prepare
+    from obtp.documentation import documents
+    pdf(prepare(scene), target/(key+'.pdf'))
+    for kind, recipe in documents(scene).items():
+        pdf(recipe, target/(key+'-'+kind+'.pdf'))
+
+
+def compile_catalogue(destination,revision,generate_pdfs=False):
     target=Path(destination);target.mkdir(parents=True,exist_ok=True)
+    if not generate_pdfs:
+        for stale in target.glob('*.pdf'):
+            stale.unlink()
     shutil.copytree(ROOT/"suppliers"/"assets",target/"supplier-assets",dirs_exist_ok=True)
     (target/"suppliers.json").write_text(json.dumps(supplier_catalogue(),ensure_ascii=False,indent=2))
     entries=[]
-    for program,i,roof,terrace,window,winter,foundation in itertools.product(range(2),range(6),range(3),[2],[580,880,1180],[True,False],range(2)):
+    for program,i,roof,terrace,window,winter,foundation in itertools.product(range(2),range(6),range(2),[2],[580,880,1180],[True,False],range(2)):
         if program==0 and not winter:continue
         scene=build(parameters(i,program_type=program,foundation_type=foundation,studio_winter_closed=winter,roof_type=roof,terrace_steps=terrace,window_width=window,facade_type=0))
         if not all(scene['checks'].values()):raise ValueError('Invalid catalogue member')
@@ -43,15 +52,15 @@ def compile_catalogue(destination,revision):
         web['object_library']=scene['object_library']
         web['supplier_spec']=scene['supplier_spec']
         (target/(key+'-plan.svg')).write_text(svg(scene['drawings']['views']['concept-plan']))
-        pdf(prepare(scene),target/(key+'.pdf'))
-        for kind,recipe in documents(scene).items():pdf(recipe,target/(key+'-'+kind+'.pdf'))
+        if generate_pdfs:
+            write_pdf_documents(scene, target, key)
         data=gzip.compress(json.dumps(web,separators=(',',':')).encode(),mtime=0);(target/(key+'.json.gz')).write_bytes(data)
-        entries.append(dict(key=key,file=key+'.json.gz',encoding='gzip',sha256=hashlib.sha256(data).hexdigest(),geometry_sha256=scene['geometry_sha256']))
-    (target/'manifest.json').write_text(json.dumps(dict(version=VERSION,source_revision=revision,defaults=dict(program='studio',foundation=0,size='m',storage=False,roof=0,terrace=2,window=1180,facade=0),entries=entries),indent=2))
+        entries.append(dict(key=key,file=key+'.json.gz',encoding='gzip',sha256=hashlib.sha256(data).hexdigest(),geometry_sha256=scene['geometry_sha256'],pdf=generate_pdfs))
+    (target/'manifest.json').write_text(json.dumps(dict(version=VERSION,source_revision=revision,pdf_enabled=generate_pdfs,defaults=dict(program='studio',foundation=0,size='m',storage=False,roof=0,terrace=2,window=1180,facade=0),entries=entries),indent=2))
     with zipfile.ZipFile(target/'OBTP_Grasshopper_Source.zip','w',zipfile.ZIP_DEFLATED) as z:
         for p in ROOT.rglob('*'):
             if p.is_file() and p.suffix in ['.py','.md','.json','.png','.svg'] and not any(x in p.parts for x in ['exports','roof-studies','references','previews','__pycache__']):z.write(p,p.relative_to(ROOT))
-    # Offline package contains the same core plus the six default Rhino models/PDFs.
+    # Keep Rhino models; include PDF proofs only when explicitly requested.
     import tempfile
     with tempfile.TemporaryDirectory() as temp:
         with zipfile.ZipFile(target/'OBTP_Grasshopper_R12.zip','w',zipfile.ZIP_DEFLATED) as z:
@@ -59,7 +68,8 @@ def compile_catalogue(destination,revision):
                 for name in source.namelist():z.writestr(name,source.read(name))
             for program,i in itertools.product(range(2),range(6)):
                 scene=build(parameters(i,program_type=program));stem=scene['config']['id'];path=Path(temp)/(stem+'.3dm');file3dm([scene],path);z.write(path,'exports/'+path.name)
-                key=stem+'-r'+str(scene['config']['roof_type'])+'-t2-w1180-f0-b0';z.write(target/(key+'.pdf'),'exports/'+stem+'.pdf')
+                if generate_pdfs:
+                    key=stem+'-r'+str(scene['config']['roof_type'])+'-t2-w1180-f0-b0';z.write(target/(key+'.pdf'),'exports/'+stem+'.pdf')
     print('Compiled',len(entries),'script-authored website configurations')
 if __name__=='__main__':
-    ap=argparse.ArgumentParser();ap.add_argument('destination');ap.add_argument('--revision',required=True);args=ap.parse_args();compile_catalogue(args.destination,args.revision)
+    ap=argparse.ArgumentParser();ap.add_argument('destination');ap.add_argument('--revision',required=True);ap.add_argument('--pdf',action='store_true',help='Explicitly enable PDF proofs (disabled by default)');args=ap.parse_args();compile_catalogue(args.destination,args.revision,args.pdf)
