@@ -36,8 +36,11 @@ def inputs():
 
 def prepare(scene,settings=None):
     cfg=copy.deepcopy(inputs() if settings is None else settings)
-    if scene['config'].get('program_type',0)==1 and settings is None:
-        cfg['heater']=None;cfg['stages']=[]
+    if scene['config'].get('program_type',0)==1:
+        inherited=(cfg.get('heater') or {}).get('candidate','').startswith('Harvia Spirit')
+        if settings is None or inherited:
+            cfg['heater']=None;cfg['stages']=[]
+            cfg['input_notes']=['Inherited Sauna heater/cycle removed for Studio. Supply a Studio-specific heating and occupancy schedule.']
         cfg['thermal']['usage']='studio occupied/unoccupied schedules required; no sauna cycle'
     parts=scene['parts']; ids=[p['id'] for p in parts]
     if len(set(ids))!=len(ids):raise ValueError('Duplicate source part IDs')
