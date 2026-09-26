@@ -7,7 +7,7 @@ from obtp.model import build,parameters
 class ManufacturingTests(unittest.TestCase):
     def test_identity_ignores_display_category_but_not_manufacturing_details(self):
         a=dict(id='floor-0/edge-a',family='floor',material='timber',size=[45,2400,220])
-        b=dict(a,id='roof-2/edge-b',family='roof',size=[2400,45,220])
+        b=dict(a,id='roof-2/edge-b',family='roof',size=[2400.0,45.0,220.0])
         self.assertEqual(identity(a),identity(b))
         b['manufacturing']={'handedness':'left','machining':'drilled-4','connection_detail':'A'}
         self.assertNotEqual(identity(a),identity(b))

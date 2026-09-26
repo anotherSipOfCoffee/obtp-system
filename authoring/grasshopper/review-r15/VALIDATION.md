@@ -9,3 +9,5 @@
 - No engineering or native Rhino/GH acceptance claimed.
 
 Final niche-bearing correction adds eight fully counted physical pieces to Studio. Its support test passed; all representative structural collision cases passed (5.1 seconds). Final source-pin CI checks govern the completed review revision.
+
+Final local suite: 44 tests passed in 130.6 seconds. The numeric identity regression also passes with integer and decimal representations of the same manufactured dimensions. Studio run 36270515193 passed the removed-selector UI regression and complete visual comparison after the support correction.

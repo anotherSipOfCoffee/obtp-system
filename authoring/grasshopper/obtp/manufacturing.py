@@ -28,11 +28,11 @@ def role(a):
 
 def identity(a, geometric=False):
     sloped=bool(a.get('slope_y') or a.get('top_slope_y'))
-    dims=tuple(round(x,6) for x in a['size'])
+    dims=tuple(round(float(x),6) for x in a['size'])
     if not sloped:dims=tuple(sorted(dims))
     manufacturing=a.get('manufacturing',{})
     key=dict(material=manufacturing.get('material_spec',a['material']),dimensions_mm=dims,
-             slope_y=round(a.get('slope_y',0),9),top_slope_y=round(a.get('top_slope_y',0),9))
+             slope_y=round(float(a.get('slope_y',0)),9),top_slope_y=round(float(a.get('top_slope_y',0)),9))
     if not geometric:
         key.update(section_and_grain=manufacturing.get('grain_axis','unresolved'),
           machining=manufacturing.get('machining','unresolved'),handedness=manufacturing.get('handedness','unresolved'),
@@ -57,7 +57,7 @@ def analyse(scene, details=False):
     assembly_keys=[]
     for parts in groups.values():
         origin=[min(a['origin'][i] for a in parts) for i in range(3)]
-        assembly_keys.append(json.dumps(sorted((identity(a),tuple(round(a['origin'][i]-origin[i],6) for i in range(3))) for a in parts)))
+        assembly_keys.append(json.dumps(sorted((identity(a),tuple(round(float(a['origin'][i]-origin[i]),6) for i in range(3))) for a in parts)))
     keys={identity(a) for a in primary};allkeys={identity(a) for a in scene['parts']}
     result=dict(schema='obtp-manufacturing-count/1',status='provisional-not-manufacturing-release',
        unique_manufactured_part_candidates=len(keys),geometric_lower_bound=len({identity(a,True) for a in primary}),
