@@ -3,7 +3,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from obtp.model import build,parameters
 from obtp.drawings import section
-from obtp.analysis import prepare
+from obtp.analysis import prepare,inputs
 class Studio(unittest.TestCase):
  def test_catalogue_and_open_centre(self):
   for i,roof,width in itertools.product(range(6),range(3),[580,880,1180]):
@@ -24,6 +24,7 @@ class Studio(unittest.TestCase):
   before=build(parameters());studio=build(parameters(program_type=1));after=build(parameters())
   self.assertEqual(before['geometry_sha256'],after['geometry_sha256'])
   a=prepare(studio);self.assertIsNone(a['inputs']['heater']);self.assertEqual(a['inputs']['stages'],[])
+  gh=prepare(studio,inputs());self.assertIsNone(gh['inputs']['heater']);self.assertEqual(gh['inputs']['stages'],[]);self.assertTrue(gh['inputs']['input_notes'])
   self.assertFalse(any(p['id']=='heater-harvia' for p in studio['supplier_spec']['products']))
   with self.assertRaises(ValueError):build(parameters(program_type=2))
   with self.assertRaises(ValueError):build(parameters(program_type=1,custom=True,room_depth_steps=8,sauna_length_steps=8,hall_length_steps=8,storage_length_steps=4))
