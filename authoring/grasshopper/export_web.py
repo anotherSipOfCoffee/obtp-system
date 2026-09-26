@@ -5,7 +5,8 @@ import argparse,copy,hashlib,itertools,json,sys,zipfile,shutil,gzip
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT))
-from obtp.model import build,parameters,VERSION
+from obtp.model import build,parameters,legacy_parameters,VERSION
+from compare_cells import summarize
 from obtp.export import browser_scene,COLORS,file3dm
 from obtp.drawings import svg
 from obtp.suppliers import catalogue as supplier_catalogue
@@ -46,6 +47,10 @@ def compile_catalogue(destination,revision,generate_pdfs=False):
         web['drawings']={'schema':scene['drawings']['schema'],'source_geometry_sha256':scene['geometry_sha256']}
         web['optimisation']={k:v for k,v in analyse(scene).items() if k not in ('cutting_plan','excluded_ids')}
         web['foundation_spec']=scene['foundation_spec']
+        web['cell_spec']=scene.get('cell_spec')
+        previous=build(legacy_parameters(i,program_type=program,foundation_type=foundation,studio_winter_closed=winter,roof_type=roof,terrace_steps=terrace,window_width=window,facade_type=0))
+        web['comparison']=dict(previous=summarize(previous),current=summarize(scene),basis='same selected options; changed dimensions; geometric types are not manufacturing certification')
+        (target/(key+'-previous-plan.svg')).write_text(svg(previous['drawings']['views']['concept-plan']),encoding='utf-8')
         web['envelope_spec']=scene['envelope_spec']
         web['window_spec']=scene['window_spec']
         web['seasonal_spec']=scene.get('seasonal_spec')

@@ -8,7 +8,8 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R12'
+VERSION = 'GH-R14-CELLS'
+from . import cells
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
 PRESETS = [dict(id='sauna-'+size+('-storage' if storage else '-open'),
@@ -16,7 +17,7 @@ PRESETS = [dict(id='sauna-'+size+('-storage' if storage else '-open'),
                 sauna_length_steps=4, hall_length_steps=hall)
            for size, hall in [('s', 2), ('m', 3), ('l', 4)]
            for storage in [False, True]]
-DEFAULTS = dict(room_depth_steps=3, sauna_length_steps=4, hall_length_steps=3,
+DEFAULTS = dict(grid_system=1, room_depth_steps=3, sauna_length_steps=4, hall_length_steps=3,
                 storage=False, storage_length_steps=2, wall_height=2100,
                 partition_depth=90, door_width=900, door_height=1900,
                 sauna_door_offset=150, bench_depth=600, bench_height=900,
@@ -36,8 +37,10 @@ def parameters(preset_index=2, custom=False, **overrides):
         raise ValueError('Preset index must be 0–5')
     p = dict(DEFAULTS)
     p.update(PRESETS[preset_index])
-    for k in ['foundation_type','roof_type','terrace_steps','window_width','facade_type','system_type','program_type','studio_winter_closed']:
+    for k in ['grid_system','foundation_type','roof_type','terrace_steps','window_width','facade_type','system_type','program_type','studio_winter_closed']:
         if k in overrides and overrides[k] is not None:p[k]=overrides[k]
+    if p['grid_system']==1 and not custom:
+        p.update(room_depth_steps=3,sauna_length_steps=3,hall_length_steps={'s':2,'m':3,'l':4}[p['size'].lower()],storage_length_steps=1)
     if custom:
         unknown = set(overrides) - set(DEFAULTS)
         if unknown:
@@ -57,9 +60,16 @@ def parameters(preset_index=2, custom=False, **overrides):
         if 'roof_type' not in overrides:p['roof_type']=0
         # Program dimensions remain grid steps; assemblies are shared with Sauna.
         size=p['size'].lower();left,centre,right={'s':(4,3,3),'m':(5,3,3),'l':(6,3,3)}[size]
-        if not custom:p.update(room_depth_steps=4,sauna_length_steps=left,hall_length_steps=centre,storage_length_steps=right)
+        if not custom:
+            if cells.enabled(p):p.update(room_depth_steps=2,sauna_length_steps={'s':3,'m':4,'l':5}[size],hall_length_steps=2,storage_length_steps=2)
+            else:p.update(room_depth_steps=4,sauna_length_steps=left,hall_length_steps=centre,storage_length_steps=right)
         p['id']='studio-'+size+('-storage' if p['storage'] else '-open')
+    if p['grid_system'] not in (0,1):raise ValueError('Grid system must be 0 legacy or 1 cells')
     return p
+
+
+def legacy_parameters(*args, **kwargs):
+    return parameters(*args, **dict(kwargs,grid_system=0))
 
 
 def build(p):
@@ -95,6 +105,12 @@ def build(p):
         right_start=bridge_end+wall;right_clear=p['storage_length_steps']*pitch
         L=right_start+right_clear+wall;annex=0;inside_length=hot+right_clear
         p['studio_zones']=dict(left_end=bridge_start,bridge_start=bridge_start,bridge_end=bridge_end,right_start=right_start,right_clear=right_clear)
+    if cells.enabled(p):
+        W,L,hot,nominal_hall,annex=cells.resolve(p,wall)
+        depth=W-2*wall;inside_length=hot+nominal_hall;pitch=cells.X
+        if studio:
+            bridge_start=p['studio_zones']['bridge_start'];bridge_end=p['studio_zones']['bridge_end'];right_start=p['studio_zones']['right_start'];right_clear=p['studio_zones']['right_clear'];inside_length=hot+right_clear
+        p['sauna_door_offset']=int((depth-p['door_width'])/2)
     H, F = p['wall_height'], SPEC['joist_depth'] + SPEC['floor_skin']
     hall_clear = nominal_hall-p['partition_depth']
     if hall_clear < p['door_width']+180:
@@ -113,6 +129,10 @@ def build(p):
     if W > 6000:
         raise ValueError('Floor/roof bearing-line span exceeds 6000 mm')
     parts, interfaces, opening_voids, wall_regions = [], [], [], []
+    cell_assemblies=[]
+    def aperture(base,axis,length,width,preferred):
+        if not cells.enabled(p):return preferred
+        return cells.opening(base[0 if axis=='x' else 1],base[0 if axis=='x' else 1]+length,cells.X if axis=='x' else cells.Y,width,base[0 if axis=='x' else 1]+preferred)['start']
 
     def add(id, origin, size, material='timber', family='walls', assembly=None):
         if any(not math.isfinite(v) for v in origin+size) or any(v <= 0 for v in size):
@@ -180,9 +200,15 @@ def build(p):
                 put('skin-'+str(index)+'-'+str(j),start,-skin if side_skin<0 else d,z,width,skin,sh,'plywood',group)
             interfaces.append(dict(id=group+'/joint',type='wall-cassette',capacity=None,fasteners=None))
         intervals=[(0,length)]
+        cell_opening=None
         if door:
             start, width=door
             lo,hi=start-90,start+width+90
+            if cells.enabled(p):
+                coord=base[0 if axis=='x' else 1]
+                cell_opening=cells.opening(coord,coord+length,cells.X if axis=='x' else cells.Y,width,coord+start)
+                start=cell_opening['start'];lo=cell_opening['lo'];hi=cell_opening['hi']
+                cell_assemblies.append(dict(id=name+'/opening',axis=axis,kind='opening',bounds_mm=cell_opening['nominal_bounds_mm']))
             if lo<0 or hi>length:
                 raise ValueError('Door jamb/end cassette conflict: '+name)
             if lo<90:lo=0
@@ -207,6 +233,13 @@ def build(p):
             for label,u,v,z,a,b,c in (recipe or door_recipe(width,head,d)):
                 put(label,start+u,v,z,a,b,c,'object',group)
             interfaces.append(dict(id=group,type='opening',capacity=None,fasteners=None))
+        if cells.enabled(p):
+            coord=base[0 if axis=='x' else 1]
+            envelope=cell_opening['nominal_bounds_mm'] if cell_opening else None
+            for n,(begin,end) in enumerate(cells.wall_segments(base,axis,length,envelope)):
+                panel(begin,end,n)
+                cell_assemblies.append(dict(id=name+'/cassette-'+str(n),axis=axis,kind='solid' if end-begin==(cells.X if axis=='x' else cells.Y) else 'terminal',bounds_mm=[coord+begin,coord+end]))
+            return
         n=0
         for begin,end in intervals:
             x=begin
@@ -216,10 +249,10 @@ def build(p):
                 panel(x,x+width,n);x+=width;n+=1
 
     if studio:
-        wall_run('log-niche-front',[-600,0],'x',600,side_skin=-1)
-        wall_run('log-niche-back',[-600,W-wall],'x',600)
-        ww=p['window_width']+20;wx=wall+(hot-ww)//2
-        wall_run('front-window',[wall,0],'x',hot,door=((hot-ww)//2,ww),side_skin=-1)
+        wall_run('log-niche-front',[-600,0],'x',600-(skin if cells.enabled(p) else 0),side_skin=-1)
+        wall_run('log-niche-back',[-600,W-wall],'x',600-(skin if cells.enabled(p) else 0))
+        ww=p['window_width']+20;window_start=aperture([wall,0],'x',hot,ww,(hot-ww)//2);wx=wall+window_start
+        wall_run('front-window',[wall,0],'x',hot,door=(window_start,ww),side_skin=-1)
         wall_run('studio-left-back',[wall,W-wall],'x',hot)
         wall_run('hot-end',[0,0],'y',W,side_skin=-1)
         wall_run('studio-left-entry',[bridge_start-wall,0],'y',W,door=((W-p['door_width'])//2,p['door_width']))
@@ -237,7 +270,8 @@ def build(p):
         # Transfer the open bay roof cassette reactions to perimeter walls via headers.
         # Sizes reuse Cassette member depth; capacity remains an explicit engineering hold.
         for j,y in enumerate([0,W-wall]):
-            add('studio-bridge/header-'+str(j),[bridge_start,y,F+H-220],[nominal_hall,wall,220],'timber','walls')
+            trim=skin if cells.enabled(p) else 0
+            add('studio-bridge/header-'+str(j),[bridge_start+trim,y,F+H-220],[nominal_hall-2*trim,wall,220],'timber','walls')
             interfaces.append(dict(id='studio-bridge/header-'+str(j),type='open-bay header end connection; hanger design required',span_mm=nominal_hall,capacity=None,fasteners=None))
         # Furniture studies; no residential equipment or sauna fixtures.
         def table(name,x,y,a,b):
@@ -250,8 +284,8 @@ def build(p):
         # Keep the covered court clear for front-to-back passage and temporary work.
     else:
         entry=hot+p['partition_depth']+(hall_clear-p['door_width'])//2
-        ww=p['window_width']+20;wx=wall+(hot-ww)//2
-        wall_run('front-window',[wall,0],'x',hot,door=((hot-ww)//2,ww),side_skin=-1)
+        ww=p['window_width']+20;window_start=aperture([wall,0],'x',hot,ww,(hot-ww)//2);wx=wall+window_start
+        wall_run('front-window',[wall,0],'x',hot,door=(window_start,ww),side_skin=-1)
         wall_run('front',[wall+hot,0],'x',inside_length-hot,door=(entry-hot,p['door_width']),side_skin=-1)
         wall_run('back',[wall,W-wall],'x',inside_length)
         wall_run('hot-end',[0,0],'y',W,side_skin=-1)
@@ -269,7 +303,7 @@ def build(p):
         if annex:
             # Exterior access only. Three unequal source zones are retained nominally:
             # front shower, middle storage, rear seat. Parametric depth divides proportionally.
-            split_a=depth*600//1800;split_b=depth*1500//1800
+            split_a=p.get('annex_split_a_mm',depth*600//1800);split_b=p.get('annex_split_b_mm',depth*1500//1800)
             wall_run('annex-end',[L+annex-wall,0],'y',W,door=(wall+split_a+p['partition_depth']+skin,600))
             for j,y in enumerate([wall+split_a,wall+split_b]):
                 wall_run('annex-divider-'+str(j),[L+skin,y],'x',annex-wall-skin,d=p['partition_depth'],family='partitions')
@@ -321,6 +355,15 @@ def build(p):
                 status='review-candidate',website_ready=False,manufacturing_release=False,
                 holds=list(HOLDS),geometry_sha256=geometry_hash)
 
+    if cells.enabled(p):
+        scene['cell_spec']=cells.record(p,L,W,annex,cell_assemblies)
+        scene['system_spec']=dict(SPEC,pitch=cells.X,cell_mm=[cells.X,cells.Y])
+        if not studio:
+            clear_depth=depth-72
+            scene['rooms']=[dict(id='sauna',clear_width_mm=hot-72,clear_depth_mm=clear_depth),dict(id='hall',clear_width_mm=nominal_hall-p['partition_depth']-84,clear_depth_mm=clear_depth)]
+            scene['metrics']['main_clear_floor_less_partition_m2']=sum(r['clear_width_mm']*r['clear_depth_mm']/1e6 for r in scene['rooms'])
+        scene['holds']=[h for h in scene['holds'] if not h.startswith(('Owner-plan fit','Cassette end pieces'))]
+        scene['holds'].append('900 x 1200 cell system; corner terminals and opening envelopes are explicit coordination assemblies, not engineered joints.')
     if studio:
         scene['metrics']['central_room_clear_area_m2']=(nominal_hall-168)*(W-300)/1e6
         scene['metrics']['main_clear_floor_less_partition_m2']+=scene['metrics']['central_room_clear_area_m2']

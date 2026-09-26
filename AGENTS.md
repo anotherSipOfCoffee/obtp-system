@@ -1,3 +1,6 @@
+# Current owner direction — cell-system integration
+The owner selected the simpler seam-based 900 × 1200 planning system, then explicitly requested full integration and comparison with the previous system. Implement in canonical Python/GH first and consume the pinned export in Studio. Read System authoring/grasshopper/RELEASE_R14_CELLS.md. Preserve the previous geometry through the explicit legacy resolver for regression/comparison; do not mistake the earlier standalone research documents for completed integration. Keep PDFs disabled, gable absent from the website, Lithuanian default and engineering holds explicit. Drive/Architecture remain separate.
+
 # R12 release authorised by owner
 Owner explicitly requested all previous R11 fixes plus unified foundation, component optimisation, supplier opening schedules and roof support corrections, including website publication. Preserve previous changes. Shared GH/Python remains canonical; engineering and supplier quote gaps remain explicit.
 

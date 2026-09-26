@@ -30,7 +30,7 @@ def dimension(a,b,offset=300,label=None):
 def derive(scene):
     d=scene['dimensions'];p=scene['config'];L=d['length_mm'];W=d['width_mm'];F=d['floor_top_mm'];end=L+d['annex_length_mm']
     views={};rafters=[a for a in scene['parts'] if '/rafter-' in a['id']]
-    section_x=min((a['origin'][0]+a['size'][0]/2 for a in rafters),key=lambda x:abs(x-(195+p['sauna_length_steps']*600/2)))
+    section_x=min((a['origin'][0]+a['size'][0]/2 for a in rafters),key=lambda x:abs(x-(195+p.get('resolved_hot_mm',p['sauna_length_steps']*600)/2)))
     cuts=[('plan',2,F+1100),('section-a',0,section_x),('section-b',1,W*.35)]
     for name,axis,level in cuts:
         polygons=[]
@@ -56,10 +56,10 @@ def derive(scene):
         # Put black sectioned walls above projected furniture/floor.
         polygons.sort(key=lambda a:(a['cut'],a.get('family')=='furniture'))
         if name=='plan':
-            dims=[dimension([0,0],[end,0],-550),dimension([0,0],[0,W],-500),dimension([195,W],[195+p['sauna_length_steps']*600,W],400),dimension([195+p['sauna_length_steps']*600+p['partition_depth'],W],[L-195,W],400)]
+            dims=[dimension([0,0],[end,0],-550),dimension([0,0],[0,W],-500),dimension([195,W],[195+p.get('resolved_hot_mm',p['sauna_length_steps']*600),W],400),dimension([195+p.get('resolved_hot_mm',p['sauna_length_steps']*600)+p['partition_depth'],W],[L-195,W],400)]
             for v in scene['opening_voids']:
                 x,y,z=v['origin'];a,b,h=v['size'];dims.append(dimension([x,y],[x+a,y] if a>b else [x,y+b],400 if v['id']=='annex-end/opening' else -220))
-            dims.append(dimension([end,-104-p['terrace_steps']*600],[end,-104],450))
+            dims.append(dimension([end,-1200 if p.get('grid_system')==1 else -104-p['terrace_steps']*600],[end,-104],450))
         else:
             width=W if axis==0 else end
             dims=[dimension([0,0],[width,0],-300),dimension([width,F],[width,F+p['wall_height']],400),dimension([0,0],[0,scene['metrics']['height_mm']],-450)]
@@ -68,7 +68,7 @@ def derive(scene):
     if p['roof_type']==2:
         ridge=[v for a in scene['parts'] if a['id'].startswith('ridge-cap/') for v in vertices(a)]
         views['section-b']['guides']=[dict(points=[[min(v[0] for v in ridge),max(v[2] for v in ridge)],[max(v[0] for v in ridge),max(v[2] for v in ridge)]],label='Kraigo projekcija')]
-    views['plan']['labels']=[dict(at=[195+p['sauna_length_steps']*600-600,W*.40],text='Pirtis'),dict(at=[195+p['sauna_length_steps']*600+p['partition_depth']+(p['hall_length_steps']*600-p['partition_depth'])/2,W*.75],text='Prieangis')]
+    views['plan']['labels']=[dict(at=[195+p.get('resolved_hot_mm',p['sauna_length_steps']*600)-600,W*.40],text='Pirtis'),dict(at=[195+p.get('resolved_hot_mm',p['sauna_length_steps']*600)+p['partition_depth']+(p.get('resolved_hall_mm',p['hall_length_steps']*600)-p['partition_depth'])/2,W*.75],text='Prieangis')]
     if p['storage']:views['plan']['labels'].append(dict(at=[L+d['annex_length_mm']/2,195+(W-390)*.58],text='Sandėliukas'))
     if p.get('program_type',0)==1:
         z=p['studio_zones'];bs=z['bridge_start'];be=z['bridge_end'];rs=z['right_start']
@@ -138,7 +138,7 @@ def derive(scene):
     views['concept-plan']=conceptual(scene,views['plan'])
     axes_x=[0,end]
     if p['program_type']==1:axes_x=[0,p['studio_zones']['bridge_start'],p['studio_zones']['bridge_end'],end]
-    else:axes_x=sorted(set([0,195+p['sauna_length_steps']*600,L,end]))
+    else:axes_x=sorted(set([0,195+p.get('resolved_hot_mm',p['sauna_length_steps']*600),L,end]))
     def bubble(view,x,y,label):
         radius=65
         view['polylines'].append([[x+radius*math.cos(t*math.pi/12),y+radius*math.sin(t*math.pi/12)] for t in range(25)])

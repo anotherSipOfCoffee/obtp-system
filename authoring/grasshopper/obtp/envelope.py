@@ -5,7 +5,7 @@ import math
 
 
 def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
-    wall=195; skin=12; end=L+annex; hot=p['sauna_length_steps']*600; px=wall+hot
+    wall=195; skin=12; end=L+annex; hot=p.get('resolved_hot_mm',p['sauna_length_steps']*600); px=wall+hot
     depth=W-390; D=p['terrace_steps']*600; outer=84 # 12 sheathing + 25 + 25 battens + 22 boards
     def add(id,o,s,mat='timber',family='roof',slope=0):
         if min(s)<=0:raise ValueError('Nonpositive envelope part '+id)
@@ -98,12 +98,12 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
         else:
             surface('facade-annex-end','y',end,0,W,1,False)
             # Short return walls are open at shower/seat ends; finish their exterior faces.
-            for j,y in enumerate([wall+depth*600//1800,wall+depth*1500//1800]):
+            for j,y in enumerate([wall+p.get('annex_split_a_mm',depth*600//1800),wall+p.get('annex_split_b_mm',depth*1500//1800)]):
                 for side,base,sgn in [('a',y,-1),('b',y+p['partition_depth']+12,1)]:
                     surface('annex-lining-'+str(j)+side,'x',base,L+12,annex-wall-12,sgn,True)
         if annex:
-            ya=wall+depth*600//1800+p['partition_depth']+48
-            yb=wall+depth*1500//1800-36
+            ya=wall+p.get('annex_split_a_mm',depth*600//1800)+p['partition_depth']+48
+            yb=wall+p.get('annex_split_b_mm',depth*1500//1800)-36
             surface('lining-storage-end','y',end-wall,ya,yb-ya,-1)
             surface('lining-storage-back','y',L+12,ya,yb-ya,1)
     # Independently supported deck: no implied cantilever or unverified ledger attachment.
@@ -138,6 +138,11 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             add('terrace-corner/bearer-'+str(j),[end if p['program_type']==0 else sx,y,F-263],[outer+20+D if p['program_type']==0 else -sx,90,90],'deck-wood','terrace')
             add('terrace-corner/pad-'+str(j),[sx+D-150,y,-200],[150,150,175],'concrete-study','foundation')
         side_area=(D*run+(outer+20+D if p['program_type']==0 else -sx)*D)/1e6
+    cell_terrace_area=None
+    if p.get('grid_system')==1:
+        from .cell_platform import terrace
+        cell_terrace_area=terrace(p,parts,L,W,F,annex)
+        deck_y=-1200
     # Insulated ceiling and weather roof are distinct layers with explicit bearing frames.
     base=F+H+238; cover=D if p['roof_type']!=2 else 0
     overhang=0 if p['roof_type']==2 else 150
@@ -238,4 +243,4 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
     if height>5000:raise ValueError('Actual roof geometry exceeds 5000 mm height')
     if max(W,support_span)>6000:raise ValueError('Generated support spacing exceeds 6000 mm')
     interfaces.append(dict(id='wall-floor/platform',type='bottom plate -> floor skin -> perimeter blocking/bearing',capacity=None,fasteners=None))
-    return dict(area=area,height=height,support_span=support_span,terrace_area=end*D/1e6+side_area,enclosed_area=(L+2*outer)*(W+2*outer)/1e6)
+    return dict(area=area,height=height,support_span=support_span,terrace_area=cell_terrace_area if cell_terrace_area is not None else end*D/1e6+side_area,enclosed_area=(L+2*outer)*(W+2*outer)/1e6)

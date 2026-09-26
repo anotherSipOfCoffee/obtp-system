@@ -95,8 +95,8 @@ def main():
         item=GH_ValueListItem(label,str(i));item.Selected=(i==2);presets.ListItems.Add(item)
     place(presets,40,60)
     controls={'preset_index':presets,'custom':toggle('Use custom parameters',False,40,110)}
-    values=[('room_depth_steps',3,3,8),('sauna_length_steps',4,3,8),('hall_length_steps',3,2,8),
-            ('storage_length_steps',2,2,4),('wall_height',2100,2100,2700),('partition_depth',90,90,120),
+    values=[('room_depth_steps',3,3,8),('sauna_length_steps',3,3,8),('hall_length_steps',3,2,8),
+            ('storage_length_steps',1,1,4),('wall_height',2100,2100,2700),('partition_depth',90,90,120),
             ('door_width',900,600,1200),('door_height',1900,1600,2100),('sauna_door_offset',150,90,900),
             ('bench_depth',600,400,800),('bench_height',900,650,1100),('foot_bench_height',450,250,700)]
     for i,(n,v,lo,hi) in enumerate(values):
@@ -155,7 +155,7 @@ def main():
     export=script('03 · Checked export','export.py',[('scene_json',String),('run_export',Boolean)],[('receipt',GH_ParamAccess.item)],1120,250)
     export.Params.Input[0].AddSource(model.Params.Output[0]);export.Params.Input[1].AddSource(export_toggle)
     receipt=panel('',1400,250);receipt.AddSource(export.Params.Output[0])
-    group('A · Saved presets and custom dimensions / mm / 600 mm steps',list(controls.values()),Color.FromArgb(220,232,221))
+    group('A · Saved presets and custom dimensions / mm / 900 mm X / 1200 mm Y cells',list(controls.values()),Color.FromArgb(220,232,221))
     group('B · Shared Python generator',[model],Color.FromArgb(233,226,207))
     group('C · Inspection only',[preview,panels,cut,explode],Color.FromArgb(218,228,235))
     group('C2 · Part visibility / Show only overrides switches',[only]+part_controls,Color.FromArgb(218,228,235))

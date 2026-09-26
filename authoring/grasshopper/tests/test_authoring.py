@@ -8,6 +8,7 @@ import tempfile
 import unittest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from obtp.model import build,parameters,PRESETS
+from obtp.model import legacy_parameters as parameters  # Historical geometry contract
 from obtp.export import export_one,browser_scene
 from test_r02 import collide
 

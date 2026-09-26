@@ -2,6 +2,7 @@ import sys,unittest,itertools
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from obtp.model import build,parameters
+from obtp.model import legacy_parameters as parameters  # Historical geometry contract
 from obtp.export import vertices
 from obtp.drawings import svg
 class R05(unittest.TestCase):
