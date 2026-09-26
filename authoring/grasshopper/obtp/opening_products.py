@@ -16,7 +16,7 @@ def record(scene,item):
           status='dimensional candidate; exact glazing, size acceptance and price not confirmed')
     if any(id.startswith('studio-slider-') for id in ids):
         return dict(supplier='Doleta',product='Lift-and-slide / custom candidate',manufacturer_code=None,project_id='SD-DOLETA-'+item['id'].split('/')[0],
-          frame_mm=None,price_eur=None,price_basis='Supplier quotation required',source='https://www.doleta.lt/lt/produktai/slankiojancios-sistemos/stumdomos-sistemos-tilt-and-slide/',checked=DATE,
+          frame_mm=None,price_eur=None,price_basis='Supplier quotation required',source='https://www.doleta.lt/lt/produktai/slankiojancios-sistemos/prasilenkiancios-sistemos-lift-and-slide/',checked=DATE,
           status='Supplier candidate only; model remains generic. Triple-track feasibility and profiles unverified.')
     return dict(supplier='Doleta',product='Timber exterior door / custom candidate',manufacturer_code=None,project_id='D-DOLETA-'+item['id'].split('/')[0],
       frame_mm=None,price_eur=None,price_basis='Supplier quotation required',source='https://www.doleta.lt/lt/produktai/lauko-durys/medines-lauko-durys/',checked=DATE,

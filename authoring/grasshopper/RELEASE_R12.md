@@ -25,7 +25,7 @@ Pihla sauna window product SKU24201 identified; current170mm frame geometry foll
 https://www.pihla.fi/product/saunan-ikkuna/
 Studio fixed window remains Pihla candidate. Doleta selected as local supplier candidate for custom exterior and sliding openings; dimensions/profile/three-track applicability and price unconfirmed. These remain generic placement objects, not falsely relabelled supplier CAD. Project schedule IDs are distinguished from manufacturer codes. Missing prices are null/'pagal pasiūlymą', never0EUR; no full opening-cost total.
 https://www.doleta.lt/lt/produktai/lauko-durys/medines-lauko-durys/
-https://www.doleta.lt/lt/produktai/slankiojancios-sistemos/stumdomos-sistemos-tilt-and-slide/
+https://www.doleta.lt/lt/produktai/slankiojancios-sistemos/prasilenkiancios-sistemos-lift-and-slide/
 
 ## Documents/web
 R11 main-first, Lithuanian copy, gallery sizes, white-only model, terrace/niche/floor edge and insulation fixes preserved. All configuration-specific core drawing/opening/component/assembly PDFs generated from shared model recipes. Browser receives checksum-verified compressed precomputed geometry; no browser generator. Native Rhino layout/export path shares recipes; Rhino execution remains pending. Portable PDFs clearly marked non-Rhino proofs and not construction approval. Wind/snow remain paused.
