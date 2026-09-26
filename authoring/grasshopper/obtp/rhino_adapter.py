@@ -2,7 +2,7 @@
 import Rhino
 from .export import brep
 from .preview_filter import visible
-from .cut_view import clipped_part
+from .cut_view import clipped_part, stationary
 
 class Api:
     File3dm=Rhino.FileIO.File3dm
@@ -24,7 +24,7 @@ def preview(scene, panels=True, cut=False, explode=0, visibility=None, only=0):
     geometry=[];ids=[]
     cut_z=scene['dimensions']['floor_top_mm']+1100
     for p in scene['parts']:
-        if not visible(p,visibility,only):continue
+        if not visible(p,visibility,only) or cut and not stationary(p):continue
         if not panels and p['material'] in ['plywood','lining-wood','cladding-wood']:continue
         q=clipped_part(p,cut_z) if cut else dict(p)
         if q is None:continue

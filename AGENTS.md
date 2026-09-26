@@ -1,3 +1,9 @@
+# R12 release authorised by owner
+Owner explicitly requested all previous R11 fixes plus unified foundation, component optimisation, supplier opening schedules and roof support corrections, including website publication. Preserve previous changes. Shared GH/Python remains canonical; engineering and supplier quote gaps remain explicit.
+
+# Current owner review R11 - publication paused
+Read System authoring/grasshopper/REVIEW_R11.md before edits. Shared Python/GH is canonical. Two foundation studies, all three roofs including drainage-only flat, white model only, model-linked schedules/assembly docs. No push/deploy until resumed by owner. Earlier R10 publication authority does not cover R11.
+
 # Latest owner release R10
 Owner requests publication of Main/Pagrindinis with supplied gallery images, Studio default/open sliders, simplified fixed controls, recessed firewood niche and all-solid cut view. Preserve R09 GH package-loader/part-visibility fixes. Read System authoring/grasshopper/RELEASE_R10.md. This supersedes earlier Sauna-default and planning-only instructions for this release.
 

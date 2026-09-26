@@ -70,6 +70,9 @@ def attach(scene):
             part_ids=[p['id'] for p in parts],placement=dict(origin_mm=lo),
             parameters=dict(bounds_mm=[hi[k]-lo[k] for k in range(3)]),status='generic-placeholder'))
     if len({i['id'] for i in instances})!=len(instances):raise ValueError('Duplicate object slot')
+    from .opening_products import record
+    for item in instances:
+        if item['definition']=='obtp.door.study' or any(id.startswith(('window/','studio-slider-')) for id in item['part_ids']):item['product']=record(scene,item)
     symbols=json.loads(Path(__file__).with_name('symbols.json').read_text())
     record=dict(schema='obtp-object-library/1',units='mm',definitions=DEFINITIONS,
                 instances=instances,symbol_source_sha256=symbols['source_sha256'])

@@ -131,6 +131,12 @@ def main():
         item=GH_ValueListItem(label,str(i));item.Selected=(i==0);programs.ListItems.Add(item)
     controls['program_type']=place(programs,40,1075)
     controls['studio_winter_closed']=toggle('Studio sliding doors closed',True,40,1120)
+    foundations=GH_ValueList();foundations.ListMode=GH_ValueListMode.DropDown
+    foundations.CreateAttributes();foundations.Name='Foundation';foundations.NickName='Foundation';foundations.ListItems.Clear()
+    foundations.ListItems.Add(GH_ValueListItem('Timber support frame on piles', '0'))
+    foundations.ListItems.Add(GH_ValueListItem('Concrete pile grillage study', '1'))
+    foundations.ListItems[0].Selected=True
+    controls['foundation_type']=place(foundations,40,1180)
     inputs=[(k,Boolean if k in ['custom','storage','include_foundation','studio_winter_closed'] else Double) for k in controls]
     model=script('01 · Shared module','model.py',inputs,[('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],420,240)
     for i,(key,_) in enumerate(inputs):model.Params.Input[i].AddSource(controls[key])
@@ -145,7 +151,7 @@ def main():
                    [('geometry',GH_ParamAccess.list),('part_ids',GH_ParamAccess.list)],800,250)
     for i,source in enumerate([model.Params.Output[0],panels,cut,explode,only]+part_controls):preview.Params.Input[i].AddSource(source)
     report=panel('',800,80);report.AddSource(model.Params.Output[1])
-    export_toggle=toggle('Export review snapshot',False,800,620)
+    export_toggle=toggle('Export model + SSP layouts/PDF',False,800,620)
     export=script('03 · Checked export','export.py',[('scene_json',String),('run_export',Boolean)],[('receipt',GH_ParamAccess.item)],1120,250)
     export.Params.Input[0].AddSource(model.Params.Output[0]);export.Params.Input[1].AddSource(export_toggle)
     receipt=panel('',1400,250);receipt.AddSource(export.Params.Output[0])
@@ -153,7 +159,7 @@ def main():
     group('B · Shared Python generator',[model],Color.FromArgb(233,226,207))
     group('C · Inspection only',[preview,panels,cut,explode],Color.FromArgb(218,228,235))
     group('C2 · Part visibility / Show only overrides switches',[only]+part_controls,Color.FromArgb(218,228,235))
-    group('D · Manual export / does not publish website',[export,export_toggle,receipt],Color.FromArgb(235,222,218))
+    group('D · Rhino SSP layouts -> PDF / local only',[export,export_toggle,receipt],Color.FromArgb(235,222,218))
     # Analysis preparation shares the detailed scene, not the display/cut geometry.
     analysis_inputs=local_module('analysis').inputs
     settings=panel(json.dumps(analysis_inputs(),indent=2),420,1150)
