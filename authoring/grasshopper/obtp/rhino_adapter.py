@@ -1,6 +1,7 @@
 """RhinoCommon conversion kept separate from the deterministic authoring core."""
 import Rhino
 from .export import brep
+from .preview_filter import visible
 
 class Api:
     File3dm=Rhino.FileIO.File3dm
@@ -17,11 +18,12 @@ class Api:
     Point3d=Rhino.Geometry.Point3d
 
 
-def preview(scene, panels=True, cut=False, explode=0):
+def preview(scene, panels=True, cut=False, explode=0, visibility=None, only=0):
     if not 0<=explode<=100:raise ValueError('Explosion must be 0–100')
     geometry=[];ids=[]
     cut_z=scene['dimensions']['floor_top_mm']+1100
     for p in scene['parts']:
+        if not visible(p,visibility,only):continue
         if not panels and p['material'] in ['plywood','lining-wood','cladding-wood']:continue
         if cut and p['family'] in ['roof','ceiling','canopy']:continue
         q=dict(p);q['origin']=list(p['origin']);q['size']=list(p['size'])
@@ -49,3 +51,4 @@ def audit(scene):
         if abs(value-scene['metrics']['wood_m3'][key])>1e-7:
             raise ValueError('Solid/recipe volume mismatch: '+key)
     return dict(runtime=str(Rhino.RhinoApp.Version),solid_count=solid_count,wood_m3=total,status='Rhino geometry checks passed; engineering holds remain')
+
