@@ -1,6 +1,8 @@
 """RhinoCommon conversion kept separate from the deterministic authoring core."""
 import Rhino
 from .export import brep
+from .preview_filter import visible
+from .cut_view import clipped_part
 
 class Api:
     File3dm=Rhino.FileIO.File3dm
@@ -17,17 +19,15 @@ class Api:
     Point3d=Rhino.Geometry.Point3d
 
 
-def preview(scene, panels=True, cut=False, explode=0):
+def preview(scene, panels=True, cut=False, explode=0, visibility=None, only=0):
     if not 0<=explode<=100:raise ValueError('Explosion must be 0–100')
     geometry=[];ids=[]
     cut_z=scene['dimensions']['floor_top_mm']+1100
     for p in scene['parts']:
+        if not visible(p,visibility,only):continue
         if not panels and p['material'] in ['plywood','lining-wood','cladding-wood']:continue
-        if cut and p['family'] in ['roof','ceiling','canopy']:continue
-        q=dict(p);q['origin']=list(p['origin']);q['size']=list(p['size'])
-        if cut and p['family'] in ['walls','partitions','interior','facade','insulation']:
-            q['size'][2]=min(q['size'][2],cut_z-q['origin'][2])
-            if q['size'][2]<=0:continue
+        q=clipped_part(p,cut_z) if cut else dict(p)
+        if q is None:continue
         g=brep(q,Api)
         family=p['family']
         dx,dy,dz={'insulation':(0,0,0),'interior':(0,0,0),'facade':(0,200,0),'ceiling':(0,0,250),'terrace':(0,0,0),'canopy':(0,0,0),'floor':(0,0,-250),'roof':(0,0,450),'walls':(0,200,0),
@@ -49,3 +49,5 @@ def audit(scene):
         if abs(value-scene['metrics']['wood_m3'][key])>1e-7:
             raise ValueError('Solid/recipe volume mismatch: '+key)
     return dict(runtime=str(Rhino.RhinoApp.Version),solid_count=solid_count,wood_m3=total,status='Rhino geometry checks passed; engineering holds remain')
+
+

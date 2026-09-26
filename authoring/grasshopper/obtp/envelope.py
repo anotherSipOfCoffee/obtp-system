@@ -64,6 +64,13 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
                 add('ceiling-'+name+'/board-'+str(i),[a+wall+36,y,F+H-36],[b-a-2*wall-72,min(93,W-wall-36-y),16],'lining-wood','ceiling')
             for i,x in enumerate(range(a+wall+36,b-wall-36,400)):
                 add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,b-wall-36-x),depth-72,20],'lining-wood','ceiling')
+        for side,y in [('front',0),('back',W)]:
+            surface('log-niche-'+side,'x',y,-600,600,-1 if side=='front' else 1,False)
+        for side,y in [('front',wall),('back',W-wall)]:
+            surface('log-niche-inner-'+side,'x',y,-600,516,1 if side=='front' else -1,False)
+        for j,x in enumerate([-600,-129]):
+            add('firewood-niche/joist-'+str(j),[x,wall,F-173],[45,W-2*wall,145],'timber','floor')
+            add('firewood-niche/pad-'+str(j),[x,wall,-200],[90,W-2*wall,265],'concrete-study','foundation')
         # Heated centre retains continuous structural floor sheathing.
         # Ceiling finish follows the same 16mm lining +20mm service-batten recipe.
         for i,y in enumerate(range(0,W,95)):
@@ -135,6 +142,8 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
     base=F+H+238; cover=D if p['roof_type']!=2 else 0
     overhang=0 if p['roof_type']==2 else 150
     y0=-outer-overhang-cover; y1=W+outer+overhang; x0=-outer-overhang; length=end+2*(outer+overhang)
+    extension=600 if p.get('program_type')==1 else 0
+    x0-=extension;length+=extension
     slope=1/40 if p['roof_type']==0 else math.tan(math.radians(8))
     if p['roof_type']==2:
         # MyCabin S30 overall height reference: 4480 mm from model datum.
@@ -166,10 +175,10 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
     # Close the weather-roof perimeter above the retained level ceiling cassette.
     # The attic/roof build-up remains a ventilated construction-detail study.
     for side,y in [('front',-outer),('back',W+outer-22)]:
-        for i,x in enumerate(range(-outer,int(end+outer),80)):
+        for i,x in enumerate(range(-outer-extension,int(end+outer),80)):
             add('roof-fascia-'+side+'/'+str(i),[x,y,F+H],[min(78,end+outer-x),22,zfun(y)-F-H],'cladding-wood','roof')
             parts[-1]['top_slope_y']=(zfun(y+22)-zfun(y))/22
-    for side,x in [('hot',-outer),('end',end+outer-22)]:
+    for side,x in [('hot',-outer-extension),('end',end+outer-22)]:
         for k,(a,b,m) in enumerate(planes):
             low=max(a,0);high=min(b,W)
             for i,y in enumerate(range(math.ceil(low),math.ceil(high),80)):
@@ -185,12 +194,12 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             h=zfun(yy)-base;m=(zfun(yy+dy)-zfun(yy))/dy
             group='weather-bearing-'+str(j)+'-'+str(k)
             if min(h,h+m*dy)<135:
-                add(group+'/packing-study',[0,yy,base],[end,dy,h],'timber','roof')
+                add(group+'/packing-study',[-extension,yy,base],[end+extension,dy,h],'timber','roof')
                 parts[-1]['top_slope_y']=m
             else:
-                add(group+'/bottom',[0,yy,base],[end,dy,45],'timber','roof')
-                add(group+'/top',[0,yy,base+h-45],[end,dy,45],'timber','roof',m)
-                positions=sorted(set([0,end-45]+[x for x in range(int(x0),int(x0+length),600) if 45<=x<=end-90]))
+                add(group+'/bottom',[-extension,yy,base],[end+extension,dy,45],'timber','roof')
+                add(group+'/top',[-extension,yy,base+h-45],[end+extension,dy,45],'timber','roof',m)
+                positions=sorted(set([-extension,end-45]+[x for x in range(int(x0),int(x0+length),600) if 45-extension<=x<=end-90]))
                 for n,x in enumerate(positions):
                     add(group+'/stud-'+str(n),[x,yy,base+45],[45,dy,h-90],'timber','roof')
                     parts[-1]['top_slope_y']=m

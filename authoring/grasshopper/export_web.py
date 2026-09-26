@@ -24,14 +24,8 @@ def compile_catalogue(destination,revision):
         key=scene['config']['id']+f'-r{roof}-t{terrace}-w{window}-f0'+('-summer' if program==1 and not winter else '')
         web=browser_scene(scene)
         web.update(config=scene['config'],dimensions=scene['dimensions'],checks=scene['checks'],source_revision=revision,authoring_version=VERSION)
-        cut=copy.deepcopy(scene);cut['parts']=[]
-        for part in scene['parts']:
-            if part['family'] in ['roof','ceiling','canopy']:continue
-            p=copy.deepcopy(part)
-            if p['family'] in ['walls','partitions','interior','facade','insulation']:
-                p['size'][2]=min(p['size'][2],scene['dimensions']['floor_top_mm']+1100-p['origin'][2])
-                if p['size'][2]<=0:continue
-            cut['parts'].append(p)
+        from obtp.cut_view import parts_below
+        cut=dict(scene);cut['parts']=parts_below(scene)
         clipped=browser_scene(cut)
         web['cut']=dict(models=clipped['models'],items=clipped['items'])
         for chunk in [web,web['cut']]:
@@ -55,7 +49,7 @@ def compile_catalogue(destination,revision):
     # Offline package contains the same core plus the six default Rhino models/PDFs.
     import tempfile
     with tempfile.TemporaryDirectory() as temp:
-        with zipfile.ZipFile(target/'OBTP_Grasshopper_R08.zip','w',zipfile.ZIP_DEFLATED) as z:
+        with zipfile.ZipFile(target/'OBTP_Grasshopper_R10.zip','w',zipfile.ZIP_DEFLATED) as z:
             with zipfile.ZipFile(target/'OBTP_Grasshopper_Source.zip') as source:
                 for name in source.namelist():z.writestr(name,source.read(name))
             for program,i in itertools.product(range(2),range(6)):

@@ -19,7 +19,7 @@ class Seasonal(unittest.TestCase):
     self.assertEqual(len([p for p in s['parts'] if p['id'].startswith('studio-slider-') and '/glass-' in p['id']]),6)
     self.assertTrue(all(s['checks'].values()))
     self.assertTrue(any(p['id']=='studio-stove/body' for p in s['parts']))
-    self.assertTrue(any(p['id']=='firewood-rack/base' for p in s['parts']))
+    self.assertTrue(any(p['id'].startswith('firewood-niche/board-') for p in s['parts']))
   a=build(parameters(program_type=1,studio_winter_closed=False));b=build(parameters(program_type=1,studio_winter_closed=True))
   self.assertNotEqual(a['geometry_sha256'],b['geometry_sha256'])
   self.assertEqual(a['metrics']['building_area_bound_m2'],b['metrics']['building_area_bound_m2'])

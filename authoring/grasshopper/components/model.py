@@ -12,7 +12,7 @@ name='obtp_'+hashlib.sha1(str(root).encode()).hexdigest()[:12]
 if name not in sys.modules:
     spec=importlib.util.spec_from_file_location(name,root/'obtp'/'__init__.py',submodule_search_locations=[str(root/'obtp')])
     package=importlib.util.module_from_spec(spec);sys.modules[name]=package;spec.loader.exec_module(package)
-for module in ['seasonal','object_library','suppliers','export','plan_styles','drawings','insulation','envelope']:
+for module in ['cut_view','seasonal','object_library','suppliers','export','plan_styles','drawings','insulation','envelope']:
     importlib.reload(importlib.import_module(name+'.'+module))
 core=importlib.reload(importlib.import_module(name+'.model'))
 scene_json=None
@@ -38,7 +38,7 @@ try:
         sauna_door_offset=sauna_door_offset,bench_depth=bench_depth,bench_height=bench_height,
         foot_bench_height=foot_bench_height,include_foundation=bool(include_foundation))
     scene=core.build(p);scene_json=json.dumps(scene)
-    report_objects='Linked library: {} placed objects (coordination placeholders)'.format(len(scene['seasonal','object_library']['instances']))
+    report_objects='Linked library: {} placed objects (coordination placeholders)'.format(len(scene['cut_view','seasonal','object_library']['instances']))
     m=scene['metrics']
     report='{} | {}\nArea bound {:.2f}/50 m² | Height {:.0f} / 5000 mm | Span {:.0f} / 6000 mm\nModeled wood (structure + finishes, excludes furniture) {:.3f} m³\nREVIEW CANDIDATE; not construction documentation\n{}'.format(
         p['id'],'custom controls active' if custom else 'saved preset; custom controls ignored',m['building_area_bound_m2'],m['height_mm'],

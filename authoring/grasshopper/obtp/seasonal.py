@@ -16,11 +16,9 @@ def enrich(p,parts,L,W,F,H,interfaces):
             for edge,zz in [('bottom',F+50),('top',F+H-85)]:add(group+'/'+edge+'-'+str(j),[x+35,yy,zz],[panel-70,40,35])
     # Documented body envelope only; deliberately no fabricated flue installation.
     add('studio-stove/body',[left+400,W-950,F],[388,368,715])
-    # Open-front rack on left short end, separated from cladding by a 100mm gap.
-    for j,y in enumerate([195,W-240]):add('firewood-rack/upright-'+str(j),[-784,y,F],[45,45,1500])
-    add('firewood-rack/base',[-784,195,F],[600,W-390,45])
-    add('firewood-rack/top',[-784,195,F+1500],[600,W-390,45])
-    for j,zz in enumerate([F+300,F+750,F+1200]):add('firewood-rack/back-rail-'+str(j),[-229,195,zz],[45,W-390,45])
+    # Recess framed by extensions of the long walls; no freestanding rack.
+    for i,y in enumerate(range(195,W-195,100)):
+        add('firewood-niche/board-'+str(i),[-600,y,F-28],[516,min(95,W-195-y),28],'deck-wood')
     interfaces.append(dict(id='studio-slider/host',type='sliding enclosure threshold/head coordination',capacity=None,fasteners=None))
     return dict(state='closed' if closed else 'open',thermal_status='heated winter room design intent; U-values and energy use not calculated',
         glazing_requirement=dict(type='thermally broken insulated sliding system',candidate='Schuco ASE60 triple-track',status='candidate only; minimum sash size and threshold installation require supplier confirmation',Uw_W_m2K=None,source='https://www.schueco.com/lt/architektams/gaminiai/slankiosios-sistemos/sliding-and-lift-sliding-systems-/ase60'),
@@ -30,4 +28,4 @@ def enrich(p,parts,L,W,F,H,interfaces):
         heater=dict(manufacturer='Morso',model='1442',body_mm=[388,368,715],status='body-envelope-only; not installation-ready',
           source='https://morsoe.com/other/product/indoor/wood-burning-stove/p1442_int',
           unresolved=['heater sizing','combustible clearances','hearth','combustion air','flue route and roof penetration','door operation and escape route']),
-        firewood=dict(side='left short end',depth_mm=600,status='open rack; no enclosing doors'))
+        firewood=dict(side='left short end',depth_mm=600,status='recess between extended long walls; open short end'))

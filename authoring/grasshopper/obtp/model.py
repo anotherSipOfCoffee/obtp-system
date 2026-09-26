@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R08'
+VERSION = 'GH-R10'
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
 PRESETS = [dict(id='sauna-'+size+('-storage' if storage else '-open'),
@@ -215,6 +215,8 @@ def build(p):
                 panel(x,x+width,n);x+=width;n+=1
 
     if studio:
+        wall_run('log-niche-front',[-600,0],'x',600,side_skin=-1)
+        wall_run('log-niche-back',[-600,W-wall],'x',600)
         ww=p['window_width']+20;wx=wall+(hot-ww)//2
         wall_run('front-window',[wall,0],'x',hot,door=((hot-ww)//2,ww),side_skin=-1)
         wall_run('studio-left-back',[wall,W-wall],'x',hot)
