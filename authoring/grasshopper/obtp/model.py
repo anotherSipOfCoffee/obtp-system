@@ -242,7 +242,7 @@ def build(p):
         table('studio-preparation',right_start+100,W-wall-650,right_clear-200-(500 if p['storage'] else 0),500)
         if p['storage']:
             for j,z in enumerate([150,550,950,1350,1750]):add('studio-storage/shelf-'+str(j),[L-wall-486,wall+100,F+z],[450,depth-200,25],'object','furniture')
-        table('studio-covered-worktable',bridge_start+100,W-wall-650,nominal_hall-200,500)
+        # Keep the covered court clear for front-to-back passage and temporary work.
     else:
         entry=hot+p['partition_depth']+(hall_clear-p['door_width'])//2
         ww=p['window_width']+20;wx=wall+(hot-ww)//2
