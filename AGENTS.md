@@ -1,15 +1,15 @@
-# Current OBTP System guidance — R15, 26 September 2026
+# Current OBTP System guidance — R16, 26 September 2026
 
 Latest explicit user instructions take precedence. This revision is **review only**: continue System PR #20 and Studio PR #37, do not merge or publish. Leave Drive and Architecture unchanged.
 
 ## Authority and architecture
 - `authoring/grasshopper/obtp` is the canonical Python model shared by Grasshopper, drawings, quantities and web exports. Studio owns UI and consumes a pinned System commit; never duplicate geometry in JavaScript.
-- Keep the 900 mm X × 1200 mm Y planning grid (the same 1200 × 900 cell), architectural room relationships, Studio's heated sliding-glass centre and Sauna's external shower/storage/seat arrangement.
+- The user permits grid/layout redesign, with plan preservation preferred. Adopted R16 retains the 900 mm X × 1200 mm Y grid: tested alternative grids increased diversity. Preserve architectural room relationships, Studio’s heated sliding-glass centre and Sauna’s external shower/storage/seat arrangement unless a measured improvement justifies change.
 - Revised Sauna and Studio structural width is 2400 mm. Physical members may span multiple cells. Support rhythm is normally 1800 × 1200, with explicit terminal bays; it is not engineered capacity.
 - Facade remains visible. Only facade finish boards (including raised roof facade) are excluded from primary part counts. Retain their separate schedule. Battens, edge trims, insulation, equipment representations and every other modelled category remain primary.
 - Manufacturing identity includes material, dimensions, shape, machining, handing and connection requirements. Unknowns remain unknown. Report provisional candidate classes and geometric lower bounds, never verified manufacturing savings. Assembly grouping does not reduce constituent diversity.
 - Ordinary wall bays retain two plates, two studs and one panel. Opening side plates match top/bottom; jack studs bear on bottom plates and retain 45 mm lintel bearing. Keep corner/niche terminal exceptions explicit; the local-seam trial increased diversity. See review-r15/OPENINGS.md.
-- Both complete terraces use X-directed boards, max 1800 mm, supported butt joints. Interior lining remains continuous: a 900 mm cut experiment added excessive pieces/joints and was rejected.
+- Both complete terraces use X-directed boards, max 1800 mm, supported butt joints. Interior lining uses selective 900/1800 extensions with recurring terminals; every new butt joint has a full-width batten seat. Do not split every board into 900 mm pieces: that trial added excessive pieces. Facade battens use supported 1800 cuts; roof bearing rails use supported 900 cuts. See review-r15/SHARED_KIT.md.
 
 ## Reproducibility and checks
 - Original baseline: `1ad71826acfcc7d6d5df9a06167c5fcfea20b516`.

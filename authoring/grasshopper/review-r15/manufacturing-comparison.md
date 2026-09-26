@@ -9,13 +9,17 @@ Counts are provisional: manufacturing details are incomplete. The 75% target is 
 | sauna / original | 130 | 935 | 354 | 48 / 76 | 2190 |
 | sauna / cells | 118 | 1023 | 464 | 43 / 67 | 3600 |
 | sauna / pre_opening | 118 | 954 | 404 | 42 / 63 | 2400 |
-| sauna / revised | 117 | 954 | 404 | 42 / 63 | 2400 |
-| sauna / revised_same_footprint | 123 | 1083 | 464 | 43 / 67 | 3600 |
+| sauna / pre_kit | 117 | 954 | 404 | 42 / 63 | 2400 |
+| sauna / pre_kit_corrected | 118 | 954 | 404 | 42 / 63 | 2400 |
+| sauna / revised | 121 | 1063 | 404 | 42 / 63 | 2400 |
+| sauna / revised_same_footprint | 128 | 1211 | 464 | 43 / 67 | 3600 |
 | studio / original | 144 | 1387 | 602 | 70 / 122 | 2790 |
 | studio / cells | 125 | 1156 | 564 | 63 / 88 | 2400 |
 | studio / pre_opening | 128 | 1221 | 564 | 65 / 91 | 2400 |
-| studio / revised | 126 | 1221 | 564 | 65 / 91 | 2400 |
-| studio / revised_same_footprint | 126 | 1221 | 564 | 65 / 91 | 2400 |
+| studio / pre_kit | 126 | 1221 | 564 | 65 / 91 | 2400 |
+| studio / pre_kit_corrected | 133 | 1217 | 558 | 67 / 91 | 2400 |
+| studio / revised | 137 | 1354 | 558 | 67 / 91 | 2400 |
+| studio / revised_same_footprint | 137 | 1354 | 558 | 67 / 91 | 2400 |
 
 ## Catalogue union, not the sum of unique counts
 
@@ -24,16 +28,20 @@ Counts are provisional: manufacturing details are incomplete. The 75% target is 
 | original | 296 | 246 | 459 |
 | cells | 251 | 226 | 381 |
 | pre_opening | 251 | 228 | 361 |
-| revised_same_footprint | 253 | 226 | 377 |
-| revised | 249 | 226 | 358 |
+| pre_kit | 249 | 226 | 358 |
+| pre_kit_corrected | 251 | 233 | 370 |
+| revised_same_footprint | 231 | 216 | 340 |
+| revised | 227 | 216 | 319 |
 
 ## Measured reduction in catalogue diversity
 
 | Reference | Sauna | Studio | Combined |
 |---|---:|---:|---:|
-| original → revised | 15.9% | 8.1% | 22.0% |
-| cells → revised | 0.8% | 0.0% | 6.0% |
-| pre_opening → revised | 0.8% | 0.9% | 0.8% |
+| original → revised | 23.3% | 12.2% | 30.5% |
+| cells → revised | 9.6% | 4.4% | 16.3% |
+| pre_opening → revised | 9.6% | 5.3% | 11.6% |
+| pre_kit → revised | 8.8% | 4.4% | 10.9% |
+| pre_kit_corrected → revised | 9.6% | 7.3% | 13.8% |
 
 Same-footprint isolates revised construction recipes from Sauna narrowing; compare cells → revised_same_footprint, then revised_same_footprint → revised. All JSON rows retain cladding-inclusion effects, material breakdowns, usable area, wood volume and exact geometry hashes. Physical catalogue totals mean building one of every configuration; they are not a typical order quantity.
 

@@ -1,3 +1,5 @@
+> Historical R15 opening study. Current adopted R16 results and tradeoffs: [SHARED_KIT.md](SHARED_KIT.md).
+
 # Opening and terminal optimization
 
 Comparison baseline: System `20e7d87dddab93ef453f0ef2c491078ce9b376c5`. Same footprint, opening positions, heights, sheathing and counting rules; all layers remain. Primary counts exclude facade finish boards only.
