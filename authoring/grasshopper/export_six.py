@@ -24,7 +24,7 @@ def main(output=None):
         scene=build(parameters(i));scenes.append(scene)
         manifest.append(dict(id=preset['id'],parameters=scene['config'],metrics=scene['metrics'],
                              geometry_sha256=scene['geometry_sha256'],files=export_one(scene,directory,api)))
-    file3dm(scenes,directory/'OBTP_Sauna_All_Six_R03.3dm',api)
+    file3dm(scenes,directory/'OBTP_Sauna_All_Six_R04.3dm',api)
     (directory/'manifest.json').write_text(json.dumps(dict(schema='obtp-catalogue/1',runtime=runtime,
         website_ready=False,configurations=manifest),indent=2),encoding='utf-8')
     print('Exported six review configurations to '+str(directory))

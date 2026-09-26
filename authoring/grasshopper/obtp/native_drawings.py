@@ -23,6 +23,8 @@ def bake(scene):
             if p['fill']=='#111111':
                 for hatch in Rhino.Geometry.Hatch.Create(curve,0,0,1,doc.ModelAbsoluteTolerance) or []:doc.Objects.AddHatch(hatch,attr())
         for p in view['polylines']:doc.Objects.AddPolyline([pt(q) for q in p],attr())
+        for label in view.get('labels',[]):
+            text=Rhino.Geometry.TextEntity();text.Plane=Rhino.Geometry.Plane(pt(label['at']),Rhino.Geometry.Vector3d.ZAxis);text.PlainText=label['text'];text.TextHeight=100;doc.Objects.AddText(text,attr())
         for dim in view['dimensions']:
             _,location,_=dimension_lines(dim);a,b=dim['a'],dim['b']
             # Rotate vertical dimension plane; extension-point separation is measured by Rhino.
