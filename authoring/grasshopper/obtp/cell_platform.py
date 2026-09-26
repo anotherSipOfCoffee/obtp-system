@@ -7,7 +7,7 @@ def bounds(p,L,W,annex):
 
 
 def terrace(p,parts,L,W,F,annex):
-    parts[:]=[a for a in parts if a['family']!='terrace' and not a['id'].startswith('firewood-niche/joist-')]
+    parts[:]=[a for a in parts if a['family']!='terrace']
     lo,hi=bounds(p,L,W,annex);end=L+annex
     def add(id,o,s,mat='deck-wood'):
         parts.append(dict(id=id,origin=o,size=s,material=mat,family='terrace',assembly=id.split('/')[0]))
@@ -53,7 +53,7 @@ def foundation(p,parts,interfaces,L,W,F,annex):
             for j,(a,b) in enumerate(zip(ys,ys[1:])):
                 add(f'foundation-tie-{i}/member-{j}',[x-45,a+45,-dz],[90,b-a-90,dz],material)
         # Pack each actual deck joist at each crossed platform bearing row.
-        deck=[a for a in parts if a['family']=='terrace' and a['material']=='timber']
+        deck=[a for a in parts if a['material']=='timber' and (a['family']=='terrace' or a['id'].startswith('firewood-niche/joist-'))]
         for i,a in enumerate(deck):
             x,y,_=a['origin'];dx,dy,_=a['size']
             for j,row in enumerate(ys):

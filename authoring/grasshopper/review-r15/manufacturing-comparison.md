@@ -12,8 +12,8 @@ Counts are provisional: manufacturing details are incomplete. The 75% target is 
 | sauna / revised_same_footprint | 124 | 1085 | 464 | 43 / 67 | 3600 |
 | studio / original | 144 | 1387 | 602 | 70 / 122 | 2790 |
 | studio / cells | 125 | 1156 | 564 | 63 / 88 | 2400 |
-| studio / revised | 128 | 1217 | 564 | 65 / 91 | 2400 |
-| studio / revised_same_footprint | 128 | 1217 | 564 | 65 / 91 | 2400 |
+| studio / revised | 128 | 1225 | 564 | 65 / 91 | 2400 |
+| studio / revised_same_footprint | 128 | 1225 | 564 | 65 / 91 | 2400 |
 
 ## Catalogue union, not the sum of unique counts
 

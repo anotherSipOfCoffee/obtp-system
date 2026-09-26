@@ -36,6 +36,17 @@ class ManufacturingTests(unittest.TestCase):
                 for x in [a['origin'][0]+1,a['origin'][0]+a['size'][0]-1]:
                     self.assertTrue(any(j['origin'][0]<=x<=j['origin'][0]+j['size'][0] and j['origin'][1]<=a['origin'][1]<j['origin'][1]+j['size'][1] for j in joists),a['id'])
 
+    def test_studio_niche_floor_has_supported_joists(self):
+        s=build(parameters(2,program_type=1))
+        joists=[a for a in s['parts'] if a['id'].startswith('firewood-niche/joist-')]
+        self.assertEqual(len(joists),2)
+        for j in joists:
+            self.assertEqual(j['origin'][1],0)
+            self.assertEqual(j['size'][1],s['dimensions']['width_mm'])
+            packs=[a for a in s['parts'] if a['id'].startswith('foundation-deck-') and a['origin'][0]==j['origin'][0]]
+            self.assertEqual(len(packs),3)
+            self.assertTrue(all(a['origin'][2]+a['size'][2]==j['origin'][2] for a in packs))
+
     def test_lean_storage_opening_remains_in_storage_zone(self):
         for i in [1,3,5]:
             s=build(parameters(i,roof_type=0));p=s['config']

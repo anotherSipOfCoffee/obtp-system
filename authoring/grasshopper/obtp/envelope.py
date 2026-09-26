@@ -69,7 +69,7 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
         for side,y in [('front',wall),('back',W-wall)]:
             surface('log-niche-inner-'+side,'x',y,-600,516,1 if side=='front' else -1,False)
         for j,x in enumerate([-600,-129]):
-            add('firewood-niche/joist-'+str(j),[x,wall,F-173],[45,W-2*wall,145],'timber','floor')
+            add('firewood-niche/joist-'+str(j),[x,0 if p.get('grid_system')==1 else wall,F-173],[45,W if p.get('grid_system')==1 else W-2*wall,145],'timber','floor')
 
         # Heated centre retains continuous structural floor sheathing.
         # Ceiling finish follows the same 16mm lining +20mm service-batten recipe.

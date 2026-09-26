@@ -41,3 +41,5 @@ No capacities or fastening quantities were assigned. Review foundations/soil/set
 No Drive/Architecture changes, merge or publication are authorized in this revision.
 
 Finished-area comparison normalizes the original Sauna metric (which was before lining) to the same finish deductions as the cell models. This affects only the reported space comparison, not part counts or geometry.
+
+Final support correction: the inherited cell conversion removed Studio firewood-niche joists. Restore two 2400 mm joists and six bearing packing pieces. Default Studio primary pieces become 1225; unique candidate types remain 128 and the catalogue union remains 361. A support-specific test and all 24 representative structural clash cases pass.
