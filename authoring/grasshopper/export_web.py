@@ -10,7 +10,6 @@ from obtp.manufacturing import analyse as manufacturing
 from obtp.export import browser_scene,COLORS,file3dm
 from obtp.drawings import svg
 from obtp.suppliers import catalogue as supplier_catalogue
-from obtp.optimisation import analyse
 
 def write_pdf_documents(scene, target, key):
     from obtp.ssp_preview import pdf
@@ -49,7 +48,6 @@ def compile_catalogue(destination,revision,generate_pdfs=False):
                 for asset in m['assets']:
                     mat=asset['material'];asset['color']=[v/255 for v in COLORS.get(mat,COLORS['object'])[:3]]
         web['drawings']={'schema':scene['drawings']['schema'],'source_geometry_sha256':scene['geometry_sha256']}
-        web['optimisation']={k:v for k,v in analyse(scene).items() if k not in ('cutting_plan','excluded_ids')}
         web['foundation_spec']=scene['foundation_spec']
         web['cell_spec']=scene.get('cell_spec')
         comparison_key=scene['config']['id']+f'-r{roof}-w{window}-b{foundation}-'+('winter' if winter else 'summer')

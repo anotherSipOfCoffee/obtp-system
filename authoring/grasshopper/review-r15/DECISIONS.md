@@ -39,3 +39,5 @@ No capacities or fastening quantities were assigned. Review foundations/soil/set
 6. Pin that commit in Studio, prepare exports and run its non-deploying browser workflow.
 
 No Drive/Architecture changes, merge or publication are authorized in this revision.
+
+Finished-area comparison normalizes the original Sauna metric (which was before lining) to the same finish deductions as the cell models. This affects only the reported space comparison, not part counts or geometry.

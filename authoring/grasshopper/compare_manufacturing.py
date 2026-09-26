@@ -16,9 +16,18 @@ def module(path,name):
     return __import__(name+'.model',fromlist=['build'])
 
 
+def finished_area(scene):
+    # R13 Sauna's legacy metric was before lining; normalize that historical
+    # measurement to the same 36 mm side finishes / 84 mm hall deductions.
+    if scene['config']['program_type']==0 and not scene.get('cell_spec'):
+        p=scene['config'];depth=scene['dimensions']['width_mm']-2*195
+        return ((p['sauna_length_steps']*600-72)+(p['hall_length_steps']*600-p['partition_depth']-84))*(depth-72)/1e6
+    return scene['metrics']['main_clear_floor_less_partition_m2']
+
+
 def summary(scene):
     a=analyse(scene);a.update(dimensions=scene['dimensions'],geometry_sha256=scene['geometry_sha256'],
-      usable_area_m2=scene['metrics']['main_clear_floor_less_partition_m2'],wood_m3=scene['metrics']['total_wood_m3'])
+      usable_area_m2=finished_area(scene),wood_m3=scene['metrics']['total_wood_m3'])
     return a
 
 
