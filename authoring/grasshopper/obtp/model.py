@@ -156,9 +156,13 @@ def build(p):
             if a < 90:
                 raise ValueError('Residual cassette is too short for two boundary joists')
             group = stage+'-'+str(i)
-            add(group+'/edge-a',[x,0,z],[45,W,220],family=stage,assembly=group)
-            add(group+'/edge-b',[x+a-45,0,z],[45,W,220],family=stage,assembly=group)
-            bands = [(0,45),(W//2-22,W//2+23),(W-45,W)]
+            # Court headers sit in the roof depth, keeping the glazing clear.
+            # Joists meet their inner faces; end hangers remain an engineering hold.
+            court=stage=='roof' and studio and cells.enabled(p) and bridge_start<=x and x+a<=bridge_end
+            inset=wall if court else 0
+            add(group+'/edge-a',[x,inset,z],[45,W-2*inset,220],family=stage,assembly=group)
+            add(group+'/edge-b',[x+a-45,inset,z],[45,W-2*inset,220],family=stage,assembly=group)
+            bands = [(inset,inset+45),(W//2-22,W//2+23),(W-inset-45,W-inset)]
             for j,(y0,y1) in enumerate(bands):
                 add(group+'/blocking-'+str(j),[x+45,y0,z],[a-90,y1-y0,220],family=stage,assembly=group)
             # Add trimmers below parallel partition axes, excluding existing joists/blocking.
@@ -292,8 +296,8 @@ def build(p):
         # Transfer the open bay roof cassette reactions to perimeter walls via headers.
         # Sizes reuse Cassette member depth; capacity remains an explicit engineering hold.
         for j,y in enumerate([0,W-wall]):
-            trim=skin if cells.enabled(p) else 0
-            add('studio-bridge/header-'+str(j),[bridge_start+trim,y,F+H-220],[nominal_hall-2*trim,wall,220],'timber','walls')
+            trim=0
+            add('studio-bridge/header-'+str(j),[bridge_start+trim,y,F+H if cells.enabled(p) else F+H-220],[nominal_hall-2*trim,wall,220],'timber','walls')
             interfaces.append(dict(id='studio-bridge/header-'+str(j),type='open-bay header end connection; hanger design required',span_mm=nominal_hall,capacity=None,fasteners=None))
         # Furniture studies; no residential equipment or sauna fixtures.
         def table(name,x,y,a,b):

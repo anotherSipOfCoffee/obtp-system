@@ -5,6 +5,7 @@ import math
 
 
 def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
+    repeated=p.get('grid_system')==1
     wall=195; skin=12; end=L+annex; hot=p.get('resolved_hot_mm',p['sauna_length_steps']*600); px=wall+hot
     depth=W-390; D=p['terrace_steps']*600; outer=84 # 12 sheathing + 25 + 25 battens + 22 boards
     def add(id,o,s,mat='timber',family='roof',slope=0):
@@ -57,8 +58,8 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             for label,y,sgn in [('front',wall,1),('back',W-wall,-1)]:surface('lining-'+name+'-'+label,'x',y,a+wall+36,b-a-2*wall-72,sgn)
             surface('lining-'+name+'-end-a','y',a+wall,wall,depth,1)
             surface('lining-'+name+'-end-b','y',b-wall,wall,depth,-1)
-            for label,y,sgn in [('front',0,-1),('back',W,1)]:surface('facade-'+name+'-'+label,'x',y,a-outer,b-a+2*outer,sgn,False)
-            surface('facade-'+name+'-end-a','y',a,0,W,-1,False)
+            for label,y,sgn in [('front',0,-1),('back',W,1)]:surface('facade-'+name+'-'+label,'x',y,a if repeated and name=='left' else a-outer,b-a+outer if repeated and name=='left' else b-a+2*outer,sgn,False)
+            surface('facade-'+name+'-end-a','y',a,0,W,-1,False,holes=[(0,F,wall,H),(W-wall,F,wall,H)] if repeated and name=='left' else ())
             surface('facade-'+name+'-end-b','y',b,0,W,1,False)
             for i,y in enumerate(range(wall+36,W-wall-36,95)):
                 add('ceiling-'+name+'/board-'+str(i),[a+wall+36,y,F+H-36],[b-a-2*wall-72,min(93,W-wall-36-y),16],'lining-wood','ceiling')
@@ -73,10 +74,16 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
 
         # Heated centre retains continuous structural floor sheathing.
         # Ceiling finish follows the same 16mm lining +20mm service-batten recipe.
-        for i,y in enumerate(range(0,W,95)):
-            add('ceiling-centre/board-'+str(i),[bs,y,F+H-36],[be-bs,min(93,W-y),16],'lining-wood','ceiling')
-        for i,x in enumerate(range(bs,be,400)):
-            add('ceiling-centre/batten-'+str(i),[x,0,F+H-20],[min(45,be-x),W,20],'lining-wood','ceiling')
+        if repeated:
+            for i,y in enumerate(range(150,W-150,95)):
+                add('ceiling-centre/board-'+str(i),[bs+outer,y,F+H-36],[be-bs-2*outer,min(93,W-150-y),16],'lining-wood','ceiling')
+            for i,x in enumerate(range(bs+outer,be-outer,400)):
+                add('ceiling-centre/batten-'+str(i),[x,150,F+H-20],[min(45,be-outer-x),W-300,20],'lining-wood','ceiling')
+        else:
+            for i,y in enumerate(range(0,W,95)):
+                add('ceiling-centre/board-'+str(i),[bs,y,F+H-36],[be-bs,min(93,W-y),16],'lining-wood','ceiling')
+            for i,x in enumerate(range(bs,be,400)):
+                add('ceiling-centre/batten-'+str(i),[x,0,F+H-20],[min(45,be-x),W,20],'lining-wood','ceiling')
     else:
         # Interior lining stays within each room, preserving framing geometry.
         partition_hole=[(px-36,F,p['partition_depth']+84,H)]

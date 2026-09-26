@@ -27,7 +27,8 @@ def terrace(p,parts,L,W,F,annex):
             if name=='terrace-side':
                 parts[:]=[a for a in parts if not (a['id'].startswith('terrace/joist-') and abs(a['origin'][0]-x)<0.01)]
             frame_start=-Y if name=='terrace-side' else y0
-            add(name+'/joist-'+str(i),[x,frame_start,F-173],[45,(0 if y1==-104 else y1)-frame_start,145],'timber')
+            frame_end=(-22 if x<end and x+45>0 else 0) if y1==-104 else y1
+            add(name+'/joist-'+str(i),[x,frame_start,F-173],[45,frame_end-frame_start,145],'timber')
         for i,y in enumerate(range(y0,y1,100)):
             for j,(a,b) in enumerate(zip(cuts,cuts[1:])):
                 add(name+'/board-'+str(i)+'-'+str(j),[a,y,F-28],[b-a,min(95,y1-y),28])
@@ -39,6 +40,7 @@ def terrace(p,parts,L,W,F,annex):
 
 def foundation(p,parts,interfaces,L,W,F,annex):
     lo,hi=bounds(p,L,W,annex)
+    bearing_width=145 # shared study rail; clears floor trim with a >=45 mm deck seat
     parts[:]=[a for a in parts if a['family']!='foundation']
     xs=sorted(set(list(range(lo,hi+1,2*X))+[hi]));ys=list(range(-Y,W+1,Y));nodes=[]
     def add(id,o,s,mat):
@@ -53,20 +55,20 @@ def foundation(p,parts,interfaces,L,W,F,annex):
             # remains 900; supports normally span two cells, with a terminal bay.
             cuts=[lo-45]+xs[1:-1]+[hi+45]
             for i,(a,b) in enumerate(zip(cuts,cuts[1:])):
-                add(f'foundation-grid-{j}/beam-{i}',[a,y-45,-dz],[b-a,90,dz],material)
+                add(f'foundation-grid-{j}/beam-{i}',[a,y-bearing_width/2,-dz],[b-a,bearing_width,dz],material)
         for i,x in enumerate(xs):
             for j,(a,b) in enumerate(zip(ys,ys[1:])):
-                add(f'foundation-tie-{i}/member-{j}',[x-45,a+45,-dz],[90,b-a-90,dz],material)
+                add(f'foundation-tie-{i}/member-{j}',[x-45,a+bearing_width/2,-dz],[90,b-a-bearing_width,dz],material)
         # Pack each actual deck joist at each crossed platform bearing row.
         deck=[a for a in parts if a['material']=='timber' and (a['family']=='terrace' or a['id'].startswith('firewood-niche/joist-'))]
         for i,a in enumerate(deck):
             x,y,_=a['origin'];dx,dy,_=a['size']
             for j,row in enumerate(ys):
-                low=max(y,row-45);high=min(y+dy,row+45)
+                low=max(y,row-bearing_width/2);high=min(y+dy,row+bearing_width/2)
                 if high>low:add(f'foundation-deck-{i}/packing-{j}',[x,low,0],[dx,high-low,F-173],'timber')
         interfaces.append(dict(id='cell-platform/bearings',type='1800 x 1200 support rhythm with explicit terminal bays',capacity=None,fasteners=None,status='soil, member spans, anchors and joint stiffness require engineering'))
     for label,y in [('front',-22),('back',W)]:
         parts.append(dict(id='floor-edge-'+label+'/board',origin=[0,y,0],size=[L+annex,22,220],material='cladding-wood',family='floor',assembly='floor-edge-'+label))
     for label,x in [('left',-22),('right',L+annex)]:
         parts.append(dict(id='floor-edge-'+label+'/board',origin=[x,0,0],size=[22,W,220],material='cladding-wood',family='floor',assembly='floor-edge-'+label))
-    return dict(type=p['foundation_type'],label='Poliai ir medinės sijos' if not concrete else 'Poliai ir gelžbetoninis rostverkas',assembly_id='foundation-platform',connected_platform=True,status='geometry-study-not-engineered',grid_origin_mm=[0,0],coordination_pitch_mm=[X,Y],support_pitch_mm=[2*X,Y],support_nodes_mm=nodes,rows_mm=ys,provisional_dimensions=True,holds=['Repeated positions do not establish pile capacity, embedment, settlement or connection adequacy.'])
+    return dict(type=p['foundation_type'],label='Poliai ir medinės sijos' if not concrete else 'Poliai ir gelžbetoninis rostverkas',assembly_id='foundation-platform',connected_platform=True,status='geometry-study-not-engineered',grid_origin_mm=[0,0],coordination_pitch_mm=[X,Y],support_pitch_mm=[2*X,Y],support_nodes_mm=nodes,rows_mm=ys,provisional_dimensions=True,bearing_width_mm=bearing_width,holds=['Repeated positions do not establish pile capacity, embedment, settlement or connection adequacy.'])
