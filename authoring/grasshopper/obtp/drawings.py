@@ -39,7 +39,7 @@ def derive(scene):
             cut=bool(poly)
             if name=='plan' and not cut and part['family'] in ['floor','terrace','furniture'] and max(v[2] for v in vertices(part))<level:
                 poly=hull([v[:2] for v in vertices(part)])
-            if name!='plan' and not cut and (part['family']=='furniture' or name=='section-b' and part['id'].startswith('ridge-cap/')):
+            if name!='plan' and not cut and part['family']=='furniture':
                 axes=[k for k in range(3) if k!=axis];poly=hull([[v[k] for k in axes] for v in vertices(part)])
             if not poly:continue
             wall=part['family'] in ['walls','partitions','interior','facade'] or part['id'].startswith('insulation-') and not part['id'].startswith(('insulation-ceiling','insulation-floor'))
@@ -56,6 +56,9 @@ def derive(scene):
             width=W if axis==0 else end
             dims=[dimension([0,0],[width,0],-300),dimension([width,F],[width,F+p['wall_height']],400),dimension([0,0],[0,scene['metrics']['height_mm']],-450)]
         views[name]=dict(axis=axis,level_mm=level,polygons=polygons,dimensions=dims,polylines=[])
+    if p['roof_type']==2:
+        ridge=[v for a in scene['parts'] if a['id'].startswith('ridge-cap/') for v in vertices(a)]
+        views['section-b']['guides']=[dict(points=[[min(v[0] for v in ridge),max(v[2] for v in ridge)],[max(v[0] for v in ridge),max(v[2] for v in ridge)]],label='Kraigo projekcija')]
     views['plan']['labels']=[dict(at=[195+p['sauna_length_steps']*600-600,W*.40],text='Pirtis'),dict(at=[195+p['sauna_length_steps']*600+p['partition_depth']+(p['hall_length_steps']*600-p['partition_depth'])/2,W*.75],text='Prieangis')]
     if p['storage']:views['plan']['labels'].append(dict(at=[L+d['annex_length_mm']/2,195+(W-390)*.58],text='Sandėliukas'))
     # Window schedule is projected from actual joinery parts, never guessed from UI width.

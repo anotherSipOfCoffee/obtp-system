@@ -66,6 +66,7 @@ def pdf(scene,path):
                 else:pp.moveTo(*q)
             c.drawPath(pp)
         elif material=='concrete-study':
+            c.setFillColor('#777777')
             for i in range(math.floor(x0/2),math.ceil(x1/2)+1):
                 for j in range(math.floor(y0/2),math.ceil(y1/2)+1):c.circle(i*2+(j%2)*.7,j*2,.13,fill=1,stroke=0)
         else:
@@ -90,6 +91,8 @@ def pdf(scene,path):
         c.setFillColor('#000000');c.setStrokeColor('#333333');c.setLineWidth(.18)
         for a in v['polylines']:
             for p,q in zip(a,a[1:]):line(point(p),point(q))
+        for a in v.get('guides',[]):
+            c.setDash([3,1]);c.setStrokeColor('#777777');c.setLineWidth(.13);line(point(a['points'][0]),point(a['points'][1]));c.setDash();x,y=point(a['points'][0]);text(x+2,y+2,a['label'],2.3)
         for a in v.get('labels',[]):
             x,y=point(a['at']);c.setFont('OBTP',3);c.drawCentredString(x,y,a['text'])
         for d in v['dimensions']:
