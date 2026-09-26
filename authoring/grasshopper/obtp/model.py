@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R03'
+VERSION = 'GH-R04'
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
 PRESETS = [dict(id='sauna-'+size+('-storage' if storage else '-open'),
@@ -234,13 +234,15 @@ def build(p):
         for j,y in enumerate([-100,W-200]):add('foundation/strip-'+str(j),[0,y,-200],[L+annex,300,200],'concrete-study','foundation')
     from .envelope import enrich
     extra=enrich(p,parts,opening_voids,interfaces,L,W,F,H,annex)
+    from .insulation import enrich as insulate
+    envelope_spec=insulate(parts,opening_voids,L,W,F,H,annex,partition_x,p)
     area=extra['area'];height=extra['height']
     ids=[a['id'] for a in parts]
     if len(ids)!=len(set(ids)):raise ValueError('Duplicate part identity')
     wood={mat:sum(a['size'][0]*a['size'][1]*(a['size'][2]+a.get('top_slope_y',0)*a['size'][1]/2)/1e9 for a in parts if a['material']==mat) for mat in ['timber','plywood','lining-wood','cladding-wood','deck-wood']}
     geometry_hash=hashlib.sha256(json.dumps(parts,sort_keys=True,separators=(',',':')).encode()).hexdigest()
-    return dict(schema='obtp-parametric-release/1',version=VERSION,units='mm',config=p,
-                system_spec=SPEC,parts=parts,interfaces=interfaces,opening_voids=opening_voids,
+    scene=dict(schema='obtp-parametric-release/1',version=VERSION,units='mm',config=p,
+                system_spec=SPEC,envelope_spec=envelope_spec,parts=parts,interfaces=interfaces,opening_voids=opening_voids,
                 metrics=dict(building_area_bound_m2=area,internal_clear_rectangle_m2=inside_length*depth/1e6,
                              main_clear_floor_less_partition_m2=(inside_length-p['partition_depth'])*depth/1e6,
                              height_mm=height,max_bearing_line_span_mm=max(W,extra['support_span']),
@@ -250,3 +252,7 @@ def build(p):
                 checks=dict(area=area<=50,height=height<=5000,span=max(W,extra['support_span'])<=6000),
                 status='review-candidate',website_ready=False,manufacturing_release=False,
                 holds=list(HOLDS),geometry_sha256=geometry_hash)
+
+    from .drawings import derive
+    scene['drawings']=derive(scene)
+    return scene

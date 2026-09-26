@@ -10,3 +10,5 @@ Owner decision: 25 September 2026.
 6. Update source, exports, documentation and tests together. Native GH script and web meshes must identify their authoring revision.
 
 R03: terrace depth 600/1200 mm (default1200); window width600/900/1200 (default1200); entrance-side sauna window centred within the hot room, door-aligned top/bottom; facade0 vertical timber only. Roof flat/single/gable retained. Extra GH controls remain custom studies. All models remain engineering review candidates, not manufacturing releases.
+
+R04: model-derived plan/two sections/window schedule, dimension recipes and A3 PDFs. Native GH export adds Rhino dimensions/layout; native acceptance is still required. Insulation is cavity-fit geometry with a separate envelope specification. Gable top targets 4480 mm from model datum. See RESEARCH_R04.md. Website controls and PDF select the same export key.

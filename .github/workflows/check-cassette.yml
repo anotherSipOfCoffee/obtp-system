@@ -33,6 +33,7 @@ jobs:
           repository: anotherSipOfCoffee/obtp-studio
           ref: ed485885e5c6649dc3e35d2dd2b20aa22955c456
           path: qa-studio
+      - run: python -m pip install reportlab rhino3dm==8.35.0
       - name: Test Studio against this System without changing its saved pin
         run: |
           ln -s "$GITHUB_WORKSPACE" qa-studio/_system

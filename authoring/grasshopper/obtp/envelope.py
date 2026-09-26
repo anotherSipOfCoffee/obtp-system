@@ -86,7 +86,12 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex):
     # Retain main horizontal ceiling cassette. Weather roof is a separate supported study.
     base=F+H+238; cover=D if p['roof_type']!=2 else 0
     y0=-outer-150-cover; y1=W+outer+150; x0=-outer-150; length=end+2*(outer+150)
-    slope=1/40 if p['roof_type']==0 else math.tan(math.radians(8 if p['roof_type']==1 else 25))
+    slope=1/40 if p['roof_type']==0 else math.tan(math.radians(8))
+    if p['roof_type']==2:
+        # MyCabin S30 overall height reference: 4480 mm from model datum.
+        # Retain System walls and solve rise from actual cover/seam top.
+        slope=(4480-base-100-197)/((y1-y0)/2)
+        if slope<=0:raise ValueError('Gable height target is below the roof build-up')
     # Metal roof: minimum 7° per Ruukki LT; choose 8° study. Flat: membrane at design 1:40.
     if p['roof_type']==2:
         mid=W/2; planes=[(y0,mid,slope),(mid,y1,-slope)]
@@ -106,6 +111,9 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex):
         if p['roof_type']!=0:
             for i,x in enumerate(range(int(x0),int(x0+length),475)):
                 add('weather-roof-'+str(k)+'/seam-'+str(i),[x,a,zfun(a)+165],[3,b-a,32],'roof-metal','roof',m)
+    if p['roof_type']==2:
+        for label,a,m in [('front',W/2-100,slope),('back',W/2,-slope)]:
+            add('ridge-cap/'+label,[x0,a,zfun(a)+195],[length,100,2],'roof-metal','roof',m)
     # Close the weather-roof perimeter above the retained level ceiling cassette.
     # The attic/roof build-up remains a ventilated construction-detail study.
     for side,y in [('front',-outer),('back',W+outer-22)]:

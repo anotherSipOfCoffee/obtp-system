@@ -25,12 +25,12 @@ def preview(scene, panels=True, cut=False, explode=0):
         if not panels and p['material'] in ['plywood','lining-wood','cladding-wood']:continue
         if cut and p['family'] in ['roof','ceiling','canopy']:continue
         q=dict(p);q['origin']=list(p['origin']);q['size']=list(p['size'])
-        if cut and p['family'] in ['walls','partitions','interior','facade']:
+        if cut and p['family'] in ['walls','partitions','interior','facade','insulation']:
             q['size'][2]=min(q['size'][2],cut_z-q['origin'][2])
             if q['size'][2]<=0:continue
         g=brep(q,Api)
         family=p['family']
-        dx,dy,dz={'interior':(0,0,0),'facade':(0,200,0),'ceiling':(0,0,250),'terrace':(0,0,0),'canopy':(0,0,0),'floor':(0,0,-250),'roof':(0,0,450),'walls':(0,200,0),
+        dx,dy,dz={'insulation':(0,0,0),'interior':(0,0,0),'facade':(0,200,0),'ceiling':(0,0,250),'terrace':(0,0,0),'canopy':(0,0,0),'floor':(0,0,-250),'roof':(0,0,450),'walls':(0,200,0),
                   'partitions':(200,0,0),'furniture':(0,0,0),'foundation':(0,0,-450)}[family]
         g.Transform(Rhino.Geometry.Transform.Translation(dx*explode/100,dy*explode/100,dz*explode/100))
         geometry.append(g);ids.append(p['id'])
