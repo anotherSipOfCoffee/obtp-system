@@ -176,9 +176,8 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
         if p['roof_type']!=0:
             for i,x in enumerate(range(int(x0),int(x0+length),600)):
                 add('weather-roof-'+str(k)+'/counter-'+str(i),[x,a,zfun(a)+163],[min(50,x0+length-x),b-a,32],'timber','roof',m)
-            ys=[a+j*250 for j in range(math.floor((b-a-100)/250)+1)]
-            if b-100-ys[-1]>100:ys.append(b-100)
-            else:ys[-1]=b-100
+            count=max(1,math.ceil((b-a-100)/250))
+            ys=[a+round(j*(b-a-100)/count,6) for j in range(count+1)]
             for j,y in enumerate(ys):
                 add('weather-roof-'+str(k)+'/batten-'+str(j),[x0,y,zfun(y)+195],[length,100,32],'timber','roof',m)
         offset=163 if p['roof_type']==0 else 227

@@ -34,6 +34,9 @@ class R12(unittest.TestCase):
    s=build(parameters(roof_type=roof));ids=[a['id'] for a in s['parts']]
    if roof!=2:self.assertTrue(any('/sheet-block-' in id for id in ids))
    if roof:self.assertTrue(any('/counter-' in id and id.startswith('weather-roof-') for id in ids));self.assertTrue(any('/batten-' in id and id.startswith('weather-roof-') for id in ids))
+   if roof:
+    ys=sorted(a['origin'][1] for a in s['parts'] if a['id'].startswith('weather-roof-0/batten-'))
+    self.assertTrue(all(100<=b-a<=250.001 for a,b in zip(ys,ys[1:])))
    if roof==2:self.assertAlmostEqual(s['metrics']['height_mm'],4480)
    self.assertTrue(all(s['checks'].values()))
 if __name__=='__main__':unittest.main()

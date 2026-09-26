@@ -86,14 +86,15 @@ def openings(scene):
     p=page('Langų ir durų tiekėjai / kainos','LD-P');sheets.append(p)
     for j,row in enumerate(groups.values()):
         data=row['product'];y=246-j*28
-        text(p,25,y,data.get('project_id','Neparinkta'),2.5)
+        code=('L' if row['type']=='Langas' else 'D')+'-'+hashlib.sha256(str((row['type'],row['width'],row['height'],row['instances'][0])).encode()).hexdigest()[:5].upper()
+        text(p,25,y,code+' / '+data.get('project_id','Neparinkta'),2.5)
         text(p,25,y-7,data.get('supplier','')+' / '+data.get('product',''),2.5)
         text(p,25,y-14,'Gamintojo kodas: '+str(data.get('manufacturer_code') or 'pagal individualų užsakymą'),2.2)
         price=data.get('price_eur');text(p,270,y,(f'{price:.2f} EUR / vnt.' if price is not None else 'Kaina: pagal pasiūlymą'),2.7)
         text(p,270,y-8,'Vnt.: '+str(len(row['instances'])),2.5)
         text(p,25,y-22,'Patikra: '+data.get('checked','')+' · '+('gaminio gabaritas' if data.get('frame_mm') else 'projektinis gabaritas; tiekėjas tikslina'),2)
         line(p,25,y-25,395,y-25)
-    text(p,25,63,'344 EUR: SaunaBee / D91902M. PVM bazę ir pristatymą Lietuvoje patikslinti.',2.5)
+    if any(r['product'].get('price_eur') is not None for r in groups.values()):text(p,25,63,'344 EUR: SaunaBee / D91902M. PVM bazę ir pristatymą Lietuvoje patikslinti.',2.5)
     text(p,25,55,'Trūkstamos kainos nėra 0 EUR. Pilna angų užpildų suma neskaičiuojama be pasiūlymų.',2.5)
     return finish(scene,sheets,'openings')
 
