@@ -16,6 +16,10 @@ def enrich(parts,voids,L,W,F,H,annex,px,p):
     wall=195;end=L+annex
     zones=[('front',[wall,0,F],[L-2*wall,wall,H]),('back',[wall,W-wall,F],[L-2*wall,wall,H]),('hot',[0,0,F],[wall,W,H]),('hall',[L-wall,0,F],[wall,W,H]),('partition',[px,wall,F],[p['partition_depth'],W-2*wall,H]),('ceiling',[0,0,F+H],[end,W,220]),('floor',[0,0,0],[end,W,220])]
     if annex:zones.append(('storage',[end-wall,0,F],[wall,W,H]))
+    if p.get('program_type',0)==1:
+        z=p['studio_zones'];zones=[]
+        for name,a,b in [('left',0,z['bridge_start']),('right',z['bridge_end'],L)]:
+            zones += [(name+'-front',[a+wall,0,F],[b-a-2*wall,wall,H]),(name+'-back',[a+wall,W-wall,F],[b-a-2*wall,wall,H]),(name+'-end-a',[a,0,F],[wall,W,H]),(name+'-end-b',[b-wall,0,F],[wall,W,H]),('ceiling-'+name,[a,0,F+H],[b-a,W,220]),('floor-'+name,[a,0,0],[b-a,W,220])]
     original=list(parts)
     for name,o,s in zones:
         boxes=[(o,s)]
@@ -26,8 +30,14 @@ def enrich(parts,voids,L,W,F,H,annex,px,p):
         for v in voids:boxes=[q for b in boxes for q in subtract(b,(v['origin'],v['size']))]
         for i,(origin,size) in enumerate(boxes):
             parts.append(dict(id='insulation-'+name+'/'+str(i),origin=origin,size=size,material='mineral-wool',family='insulation',assembly='insulation-'+name))
-    return dict(status='assembly-study',use='intermittently heated year-round sauna',
+    result=dict(status='assembly-study',use='intermittently heated year-round sauna',
       wall_cavity_mm=195,ceiling_cavity_mm=220,floor_cavity_mm=220,
       inside_to_outside=['16 mm timber lining','20 mm ventilated batten cavity','sealed sauna-rated aluminium vapour control layer; tape laps and penetrations','195 mm framed mineral-wool cavity','12 mm structural sheathing; drying assessment required','vapour-open wind barrier','25 mm vertical drainage cavity + 25 mm cross battens','22 mm vertical timber cladding'],
       membrane_geometry='zero-thickness specification; not included in wood quantities',
       holds=['Hygrothermal assessment of exterior sheathing and intermittently heated hall remains required.','Heater model, ventilation, fire distances, drying cycle and frost-drainable outdoor shower remain to be specified.','No U-value or energy class is claimed.'])
+
+    if p.get('program_type',0)==1:
+        result['use']='non-residential creative/hobby studio; heating and ventilation unselected'
+        result['inside_to_outside'][2]='vapour-control product and hygrothermal design required; no sauna foil selected'
+        result['holds']=['Occupied studio ventilation, heating, material products and moisture design remain unresolved.','No U-value or energy class is claimed.']
+    return result

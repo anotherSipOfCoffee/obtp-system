@@ -51,34 +51,59 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
                 put('batten-'+str(i),u0,z,length,min(45,F+H-z),37,25,'cladding-wood')
             for i,u in enumerate(range(int(u0),int(u0+length),80)):
                 put('board-'+str(i),u,F,min(78,u0+length-u),H,62,22,'cladding-wood')
-    # Interior lining stays within each room, preserving framing geometry.
-    partition_hole=[(px-36,F,p['partition_depth']+84,H)]
-    for label,y,sgn in [('front',wall,1),('back',W-wall,-1)]:
-        surface('lining-'+label,'x',y,wall+36,L-2*wall-72,sgn,holes=partition_hole)
-    surface('lining-hot-end','y',wall,wall,depth,1)
-    surface('lining-hall-end','y',L-wall,wall,depth,-1)
-    surface('lining-partition-hot','y',px,wall+36,depth-72,-1)
-    surface('lining-partition-hall','y',px+p['partition_depth']+12,wall+36,depth-72,1)
-    # Ceiling lining and battens, independent from floor/roof structural skin.
-    for name,x0,x1 in [('hot',wall+36,px-36),('hall',px+p['partition_depth']+48,L-wall-36)]:
-        for i,x in enumerate(range(int(x0),int(x1),400)):
-            add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,x1-x),depth-72,20],'lining-wood','ceiling')
-        for i,y in enumerate(range(wall+36,W-wall-36,95)):
-            add('ceiling-'+name+'/board-'+str(i),[x0,y,F+H-36],[x1-x0,min(93,W-wall-36-y),16],'lining-wood','ceiling')
-    for label,y,sgn in [('front',0,-1),('back',W,1)]:surface('facade-'+label,'x',y,-outer,L+2*outer,sgn,False)
-    surface('facade-hot-end','y',0,0,W,-1,False)
-    if not annex:surface('facade-hall-end','y',L,0,W,1,False)
+    if p.get('program_type',0)==1:
+        z=p['studio_zones'];bs=z['bridge_start'];be=z['bridge_end'];rs=z['right_start']
+        for name,a,b in [('left',0,bs),('right',be,L)]:
+            for label,y,sgn in [('front',wall,1),('back',W-wall,-1)]:surface('lining-'+name+'-'+label,'x',y,a+wall+36,b-a-2*wall-72,sgn)
+            surface('lining-'+name+'-end-a','y',a+wall,wall,depth,1)
+            surface('lining-'+name+'-end-b','y',b-wall,wall,depth,-1)
+            for label,y,sgn in [('front',0,-1),('back',W,1)]:surface('facade-'+name+'-'+label,'x',y,a-outer,b-a+2*outer,sgn,False)
+            surface('facade-'+name+'-end-a','y',a,0,W,-1,False)
+            surface('facade-'+name+'-end-b','y',b,0,W,1,False)
+            for i,y in enumerate(range(wall+36,W-wall-36,95)):
+                add('ceiling-'+name+'/board-'+str(i),[a+wall+36,y,F+H-36],[b-a-2*wall-72,min(93,W-wall-36-y),16],'lining-wood','ceiling')
+            for i,x in enumerate(range(a+wall+36,b-wall-36,400)):
+                add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,b-wall-36-x),depth-72,20],'lining-wood','ceiling')
+        # Open centre stays open; remove exposed floor sheathing there and replace
+        # with deck boards at the same level. Full framing remains shared.
+        from .insulation import subtract
+        original=list(parts);parts[:]=[]
+        for item in original:
+            if item['family']=='floor' and item['material']=='plywood':
+                boxes=subtract((item['origin'],item['size']),([bs,0,0],[be-bs,W,F+1]))
+                for j,(o,size) in enumerate(boxes):parts.append(dict(item,id=item['id']+'/piece-'+str(j),origin=o,size=size))
+            else:parts.append(item)
+        for i,y in enumerate(range(0,W,100)):
+            add('studio-covered-deck/board-'+str(i),[bs,y,F-18],[be-bs,min(95,W-y),18],'deck-wood','floor')
     else:
-        surface('facade-annex-end','y',end,0,W,1,False)
-        # Short return walls are open at shower/seat ends; finish their exterior faces.
-        for j,y in enumerate([wall+depth*600//1800,wall+depth*1500//1800]):
-            for side,base,sgn in [('a',y,-1),('b',y+p['partition_depth']+12,1)]:
-                surface('annex-lining-'+str(j)+side,'x',base,L+12,annex-wall-12,sgn,True)
-    if annex:
-        ya=wall+depth*600//1800+p['partition_depth']+48
-        yb=wall+depth*1500//1800-36
-        surface('lining-storage-end','y',end-wall,ya,yb-ya,-1)
-        surface('lining-storage-back','y',L+12,ya,yb-ya,1)
+        # Interior lining stays within each room, preserving framing geometry.
+        partition_hole=[(px-36,F,p['partition_depth']+84,H)]
+        for label,y,sgn in [('front',wall,1),('back',W-wall,-1)]:
+            surface('lining-'+label,'x',y,wall+36,L-2*wall-72,sgn,holes=partition_hole)
+        surface('lining-hot-end','y',wall,wall,depth,1)
+        surface('lining-hall-end','y',L-wall,wall,depth,-1)
+        surface('lining-partition-hot','y',px,wall+36,depth-72,-1)
+        surface('lining-partition-hall','y',px+p['partition_depth']+12,wall+36,depth-72,1)
+        # Ceiling lining and battens, independent from floor/roof structural skin.
+        for name,x0,x1 in [('hot',wall+36,px-36),('hall',px+p['partition_depth']+48,L-wall-36)]:
+            for i,x in enumerate(range(int(x0),int(x1),400)):
+                add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,x1-x),depth-72,20],'lining-wood','ceiling')
+            for i,y in enumerate(range(wall+36,W-wall-36,95)):
+                add('ceiling-'+name+'/board-'+str(i),[x0,y,F+H-36],[x1-x0,min(93,W-wall-36-y),16],'lining-wood','ceiling')
+        for label,y,sgn in [('front',0,-1),('back',W,1)]:surface('facade-'+label,'x',y,-outer,L+2*outer,sgn,False)
+        surface('facade-hot-end','y',0,0,W,-1,False)
+        if not annex:surface('facade-hall-end','y',L,0,W,1,False)
+        else:
+            surface('facade-annex-end','y',end,0,W,1,False)
+            # Short return walls are open at shower/seat ends; finish their exterior faces.
+            for j,y in enumerate([wall+depth*600//1800,wall+depth*1500//1800]):
+                for side,base,sgn in [('a',y,-1),('b',y+p['partition_depth']+12,1)]:
+                    surface('annex-lining-'+str(j)+side,'x',base,L+12,annex-wall-12,sgn,True)
+        if annex:
+            ya=wall+depth*600//1800+p['partition_depth']+48
+            yb=wall+depth*1500//1800-36
+            surface('lining-storage-end','y',end-wall,ya,yb-ya,-1)
+            surface('lining-storage-back','y',L+12,ya,yb-ya,1)
     # Independently supported deck: no implied cantilever or unverified ledger attachment.
     deck_y=-outer-20-D; deck_end=-outer-20
     if D:

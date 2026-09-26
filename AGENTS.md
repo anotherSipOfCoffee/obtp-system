@@ -1,5 +1,8 @@
 # System working rules
 
+## Latest scoped authorization — Studio preset R07
+On 2026-09-26 the owner authorized implementing and publishing the Studio preset after research and validation, using the same Cassette/Python/GH pipeline as Sauna. Adapt the supplied two-block/open-centre reference for genuine creative workspace and preparation/storage, with no bedrooms or residential program. This supersedes the infrastructure-planning pause only for this release. Keep Sauna as default, Workshop unavailable, and all supplier/compatibility and engineering holds. System first, then pinned Studio; wind/snow remain paused. Read System authoring/grasshopper/RESEARCH_R07_STUDIO.md.
+
 ## Current owner direction — 2026-09-26: supplier-based autonomous pipeline
 
 Read this section before historical instructions below. It supersedes older conflicting implementation direction; later explicit owner instructions take precedence. Goal: autonomous regeneration with interchangeable, documented supplier parts and compatible systems.

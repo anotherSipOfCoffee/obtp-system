@@ -36,6 +36,9 @@ def inputs():
 
 def prepare(scene,settings=None):
     cfg=copy.deepcopy(inputs() if settings is None else settings)
+    if scene['config'].get('program_type',0)==1 and settings is None:
+        cfg['heater']=None;cfg['stages']=[]
+        cfg['thermal']['usage']='studio occupied/unoccupied schedules required; no sauna cycle'
     parts=scene['parts']; ids=[p['id'] for p in parts]
     if len(set(ids))!=len(ids):raise ValueError('Duplicate source part IDs')
     if scene['units']!='mm':raise ValueError('Expected canonical millimetre model')

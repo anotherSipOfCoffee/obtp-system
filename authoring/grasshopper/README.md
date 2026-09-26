@@ -74,3 +74,7 @@ The narrower shell adaptation and small source-plan offsets remain subject to ow
 The website includes model-derived plan, A-A and B-B sections, a window schedule and blank detail frames. PDF sheets are A3 landscape with fixed drawing scales and a 180 x 45 mm title block based on the VIKO LST 1516 teaching example. Professional project completeness is not certified. GH export additionally creates measured Rhino LinearDimension objects and a plan layout in the active document; save the Rhino document separately. Native acceptance remains pending.
 
 `obtp/drawings.py` owns intersections, dimensions and DXF symbol placement. `obtp/sheets.py` formats PDFs; install reportlab to run the offline PDF compiler. `obtp/insulation.py` fills cavities around framing and openings, with membrane layers specified separately. No energy class is claimed. The browser white display retains original material data; its ground shadow is an approximation.
+
+
+## R07 Studio preset
+Program selector: 0 Sauna (default), 1 Studio. Studio reuses the same generator and assemblies with two enclosed non-residential blocks and an open covered centre. Saved S/M/L sizes extend the creative room; storage toggles preparation-room shelves. See RESEARCH_R07_STUDIO.md. Web exports include both programs; native GH execution remains unverified.

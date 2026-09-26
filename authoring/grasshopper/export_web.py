@@ -16,8 +16,8 @@ def compile_catalogue(destination,revision):
     shutil.copytree(ROOT/"suppliers"/"assets",target/"supplier-assets",dirs_exist_ok=True)
     (target/"suppliers.json").write_text(json.dumps(supplier_catalogue(),ensure_ascii=False,indent=2))
     entries=[]
-    for i,roof,terrace,window in itertools.product(range(6),range(3),[2],[580,880,1180]):
-        scene=build(parameters(i,roof_type=roof,terrace_steps=terrace,window_width=window,facade_type=0))
+    for program,i,roof,terrace,window in itertools.product(range(2),range(6),range(3),[2],[580,880,1180]):
+        scene=build(parameters(i,program_type=program,roof_type=roof,terrace_steps=terrace,window_width=window,facade_type=0))
         if not all(scene['checks'].values()):raise ValueError('Invalid catalogue member')
         key=scene['config']['id']+f'-r{roof}-t{terrace}-w{window}-f0'
         web=browser_scene(scene)
@@ -51,11 +51,11 @@ def compile_catalogue(destination,revision):
     # Offline package contains the same core plus the six default Rhino models/PDFs.
     import tempfile
     with tempfile.TemporaryDirectory() as temp:
-        with zipfile.ZipFile(target/'OBTP_Grasshopper_R06.zip','w',zipfile.ZIP_DEFLATED) as z:
+        with zipfile.ZipFile(target/'OBTP_Grasshopper_R07.zip','w',zipfile.ZIP_DEFLATED) as z:
             with zipfile.ZipFile(target/'OBTP_Grasshopper_Source.zip') as source:
                 for name in source.namelist():z.writestr(name,source.read(name))
-            for i in range(6):
-                scene=build(parameters(i));stem=scene['config']['id'];path=Path(temp)/(stem+'.3dm');file3dm([scene],path);z.write(path,'exports/'+path.name)
+            for program,i in itertools.product(range(2),range(6)):
+                scene=build(parameters(i,program_type=program));stem=scene['config']['id'];path=Path(temp)/(stem+'.3dm');file3dm([scene],path);z.write(path,'exports/'+path.name)
                 key=stem+'-r1-t2-w1180-f0';z.write(target/(key+'.pdf'),'exports/'+stem+'.pdf')
     print('Compiled',len(entries),'script-authored website configurations')
 if __name__=='__main__':
