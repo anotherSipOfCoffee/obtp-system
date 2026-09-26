@@ -26,3 +26,16 @@ A temporary trial started repeated bays at each wall-run origin and favoured com
 
 ## Validation and limits
 45 Python tests pass, including the complete 216-selection catalogue, structural clashes, opening clearance and direct bearing at every tested jack. Ordinary and terminal solid bays retain five pieces and three candidate types. All supported variants were recounted against the pinned prior revision. The diagram opening-detail.svg shows actual before/after framing with sheathing omitted for inspection. Native Rhino/GH, joint fastening, plate compression, header capacity and bracing remain engineering holds.
+
+## Door-coordinated wall-grid screening
+The follow-up tested fixed 90 mm side frames (two 45 mm members) with the existing wall pitches, and uniform 900, 1080 and 1200 mm wall assembly pitches. The 1080 option matches a 900 mm rough opening plus 180 mm framing. Building footprints, all 12 base presets and the 1180 mm window setting were held fixed; opening positions were preserved. These are screening counts, not a full-catalogue or structural approval.
+
+| Trial | Shared types | Physical pieces across 12 presets |
+|---|---:|---:|
+| Current adopted geometry | 271 | 13806 |
+| Fixed 90 mm jambs, existing pitches | 279 | 14220 |
+| Fixed 90 mm jambs, 900 mm wall pitch | 279 | 14364 |
+| Fixed 90 mm jambs, 1080 mm wall pitch | 311 | 14244 |
+| Fixed 90 mm jambs, 1200 mm wall pitch | 301 | 14076 |
+
+Fixed 150/195 mm jamb trials left some residual wall fragments below 90 mm and were rejected as invalid geometry. No grid trial was adopted. A prior trial allowing opening relocation and full-span preference also increased Sauna diversity (see above). These trials do not prove every possible coordinated grid is worse; they provide no evidence for implementing a significant reduction now. A nominal door leaf, its frame, installation clearance and rough structural opening must remain distinct dimensions. Double doors also need their frame/jamb allowance; a 1800 mm clear opening is not an 1800 mm outside-framing bay.
