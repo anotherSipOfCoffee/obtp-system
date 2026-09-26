@@ -17,6 +17,7 @@ def compile_catalogue(destination,revision):
     (target/"suppliers.json").write_text(json.dumps(supplier_catalogue(),ensure_ascii=False,indent=2))
     entries=[]
     for program,i,roof,terrace,window in itertools.product(range(2),range(6),range(3),[2],[580,880,1180]):
+        if program==1 and roof!=0:continue
         scene=build(parameters(i,program_type=program,roof_type=roof,terrace_steps=terrace,window_width=window,facade_type=0))
         if not all(scene['checks'].values()):raise ValueError('Invalid catalogue member')
         key=scene['config']['id']+f'-r{roof}-t{terrace}-w{window}-f0'

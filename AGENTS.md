@@ -1,3 +1,6 @@
+# R08 owner changes
+Continue linked-library GH implementation with Studio flat roof only, seasonal sliding court enclosure, open short-end log rack and heater body placeholder; Sauna shower-side terrace return; post-free roof studies. Read authoring/grasshopper/RESEARCH_R08_SEASONAL.md. Do not claim cantilever design or winter thermal performance solved.
+
 # Linked object library — latest scoped work
 Owner authorized research and implementation on 2026-09-26, door first. Read authoring/grasshopper/OBJECT_LIBRARY_R01.md. Keep shared 3D/2D parameters and stable instance IDs in the canonical Python library; detailed sections remain model-derived. All current objects are coordination placeholders until supported product adapters are verified. Native GH acceptance remains pending. This scoped work does not authorize unrelated deployment.
 

@@ -37,7 +37,7 @@ To replace a placeholder: create a pinned definition/adapter with evidence; reso
 
 - Existing 20 portable tests passed, including 102 accepted custom candidates and 6 rejected combinations.
 - Three library tests passed: all twelve base configurations' slot coverage/identity, drawing links and deterministic regeneration; changed door dimensions and unknown/stale definition/source rejection; actual 3DM roundtrip metadata.
-- All twelve base geometry hashes identical before/after refactor.
+- All twelve base geometry hashes identical before/after the initial library refactor. R08 intentionally changes geometry per subsequent owner instructions; see RESEARCH_R08_SEASONAL.md.
 - Native Rhino 8/GH execution not available here; native acceptance remains pending. This release adds no solver results or engineering claims. Wind/snow remain paused.
 
 Files: object_library.py, model.py, drawings.py, export.py, components/model.py, tests/test_object_library.py. Website source pin and live deployment are not changed by this library development branch.

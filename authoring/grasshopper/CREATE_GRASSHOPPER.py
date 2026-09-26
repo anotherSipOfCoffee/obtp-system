@@ -108,7 +108,8 @@ def main():
     for i,label in enumerate(['Sauna','Studio']):
         item=GH_ValueListItem(label,str(i));item.Selected=(i==0);programs.ListItems.Add(item)
     controls['program_type']=place(programs,40,1075)
-    inputs=[(k,Boolean if k in ['custom','storage','include_foundation'] else Double) for k in controls]
+    controls['studio_winter_closed']=toggle('Studio sliding doors closed',True,40,1120)
+    inputs=[(k,Boolean if k in ['custom','storage','include_foundation','studio_winter_closed'] else Double) for k in controls]
     model=script('01 · Shared module','model.py',inputs,[('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],420,240)
     for i,(key,_) in enumerate(inputs):model.Params.Input[i].AddSource(controls[key])
     panels=toggle('Show panels',True,420,620);cut=toggle('Cut view',True,420,665);explode=slider('Explode display',0,0,100,420,710)

@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R07'
+VERSION = 'GH-R08'
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
 PRESETS = [dict(id='sauna-'+size+('-storage' if storage else '-open'),
@@ -21,7 +21,7 @@ DEFAULTS = dict(room_depth_steps=3, sauna_length_steps=4, hall_length_steps=3,
                 partition_depth=90, door_width=900, door_height=1900,
                 sauna_door_offset=150, bench_depth=600, bench_height=900,
                 foot_bench_height=450, include_foundation=True,
-                roof_type=1, terrace_steps=2, window_width=1180, facade_type=0, system_type=0, program_type=0)
+                roof_type=1, terrace_steps=2, window_width=1180, facade_type=0, system_type=0, program_type=0, studio_winter_closed=True)
 HOLDS = [
  'Owner-plan fit not accepted: 1800 mm structural inside-face depth is a proposal.',
  'Source door offsets are retained in reference drawings; generated doors use explicit candidate parameters.',
@@ -36,7 +36,7 @@ def parameters(preset_index=2, custom=False, **overrides):
         raise ValueError('Preset index must be 0–5')
     p = dict(DEFAULTS)
     p.update(PRESETS[preset_index])
-    for k in ['roof_type','terrace_steps','window_width','facade_type','system_type','program_type']:
+    for k in ['roof_type','terrace_steps','window_width','facade_type','system_type','program_type','studio_winter_closed']:
         if k in overrides and overrides[k] is not None:p[k]=overrides[k]
     if custom:
         unknown = set(overrides) - set(DEFAULTS)
@@ -54,6 +54,7 @@ def parameters(preset_index=2, custom=False, **overrides):
             p[k] = int(p[k])
     if p['program_type'] not in (0,1):raise ValueError('Program: 0 Sauna, 1 Studio')
     if p['program_type']==1:
+        p['roof_type']=0 # Studio roof options locked by owner; GH selector applies to Sauna.
         # Program dimensions remain grid steps; assemblies are shared with Sauna.
         size=p['size'].lower();left,centre,right={'s':(4,3,3),'m':(5,3,3),'l':(6,3,3)}[size]
         if not custom:p.update(room_depth_steps=4,sauna_length_steps=left,hall_length_steps=centre,storage_length_steps=right)
@@ -62,6 +63,8 @@ def parameters(preset_index=2, custom=False, **overrides):
 
 
 def build(p):
+    if p["program_type"]==1 and p["roof_type"]!=0:
+        raise ValueError("Studio supports flat roof only")
     p = dict(p)
     from .suppliers import require_system
     require_system(p.get("system_type",0))
@@ -286,6 +289,8 @@ def build(p):
         add('shower/head',[shower_x+300,shower_y-40,F+2030],[80,110,40],'object','furniture')
     if p['include_foundation']:
         for j,y in enumerate([-100,W-200]):add('foundation/strip-'+str(j),[0,y,-200],[L+annex,300,200],'concrete-study','foundation')
+    from .seasonal import enrich as seasonal_enrich
+    seasonal_spec=seasonal_enrich(p,parts,L,W,F,H,interfaces)
     from .envelope import enrich
     extra=enrich(p,parts,opening_voids,interfaces,L,W,F,H,annex,wall_regions)
     from .insulation import enrich as insulate
@@ -317,6 +322,10 @@ def build(p):
           'Open-bay headers, foundations, connections, weatherproofing and roof bracing require engineering review.',
           'Window/door products, vapour control, heating and ventilation require project-specific selection.',
           'Native Rhino/GH execution acceptance remains pending.']
+    scene['seasonal_spec']=seasonal_spec
+    scene['holds'].append('Post-free canopy is an unverified cantilever study: member sizes, backspan anchorage and uplift/load path require engineering; capacities remain unknown.')
+    if studio:
+        scene['holds'].extend(['Seasonal sliding enclosure retains open decking: no insulated winter-room or energy-saving claim.', 'Stove is a manufacturer body-envelope placeholder only; hearth, clearances, flue and combustion air are unresolved.'])
     from .suppliers import attach
     scene['supplier_spec']=attach(scene)
     from .object_library import attach as attach_objects

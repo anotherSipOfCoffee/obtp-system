@@ -12,7 +12,7 @@ class Studio(unittest.TestCase):
    self.assertEqual(s['system_spec']['wall_depth'],195);self.assertEqual(s['system_spec']['pitch'],600)
    self.assertFalse(any(a['id'].startswith(('heater/','bench-','shower/','sauna-partition/')) for a in s['parts']))
    self.assertFalse(any(a['family'] in ('walls','interior','facade','insulation') and section(a,0,(bs+be)/2) and a['origin'][2]<F+1100<a['origin'][2]+a['size'][2] for a in s['parts']))
-   self.assertFalse(any(a['family']=='furniture' and a['origin'][0]<be and a['origin'][0]+a['size'][0]>bs for a in s['parts']))
+   self.assertFalse(any(a['family']=='furniture' and not a['id'].startswith(('studio-slider-','studio-stove/')) and a['origin'][0]<be and a['origin'][0]+a['size'][0]>bs for a in s['parts']))
    self.assertEqual(len([v for v in s['opening_voids'] if 'entry' in v['id']]),2)
    self.assertEqual(len([a for a in s['parts'] if a['id'].startswith('studio-storage/')]),5 if p['storage'] else 0)
    for a in s['parts']:

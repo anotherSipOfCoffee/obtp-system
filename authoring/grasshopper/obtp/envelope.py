@@ -115,6 +115,27 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             add('terrace/bearer-'+str(j),[0,y,F-28-145-90],[end,90,90],'deck-wood','terrace')
             for i,x in enumerate(range(0,end,1800)):
                 add('terrace/pad-'+str(j)+'-'+str(i),[x,y-60,-200],[150,150,175],'concrete-study','foundation')
+    side_area=0
+    if p['program_type']==0:
+        # Full shower-side return, in 600mm coordination steps; starts at facade edge.
+        sx=end+outer+20; sy=deck_end; run=W+outer+20-sy
+        for i,x in enumerate(range(sx,sx+D,100)):
+            add('terrace-side/board-'+str(i),[x,sy,F-28],[min(95,sx+D-x),run,28],'deck-wood','terrace')
+        for i,y in enumerate(range(sy,sy+run,600)):
+            add('terrace-side/joist-'+str(i),[sx,y,F-173],[D,45,145],'deck-wood','terrace')
+        for j,x in enumerate([sx,sx+D-90]):
+            add('terrace-side/bearer-'+str(j),[x,sy,F-263],[90,run,90],'deck-wood','terrace')
+            for i,y in enumerate(range(sy,sy+run,1800)):
+                add('terrace-side/pad-'+str(j)+'-'+str(i),[x-30,y,-200],[150,150,175],'concrete-study','foundation')
+        # Fill corner connecting front deck and side return, outside both existing strips.
+        for i,y in enumerate(range(deck_y,deck_end,100)):
+            add('terrace-corner/board-'+str(i),[end,y,F-28],[outer+20+D,min(95,deck_end-y),28],'deck-wood','terrace')
+        for i,x in enumerate(range(end,sx+D,600)):
+            add('terrace-corner/joist-'+str(i),[x,deck_y,F-173],[45,D,145],'deck-wood','terrace')
+        for j,y in enumerate([deck_y,deck_end-90]):
+            add('terrace-corner/bearer-'+str(j),[end,y,F-263],[outer+20+D,90,90],'deck-wood','terrace')
+            add('terrace-corner/pad-'+str(j),[sx+D-150,y,-200],[150,150,175],'concrete-study','foundation')
+        side_area=(D*run+(outer+20+D)*D)/1e6
     # Retain main horizontal ceiling cassette. Weather roof is a separate supported study.
     base=F+H+238; cover=D if p['roof_type']!=2 else 0
     overhang=0 if p['roof_type']==2 else 150
@@ -180,29 +201,15 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
                     parts[-1]['top_slope_y']=m
     post_spacing=0
     if cover:
-        # Independent outer beam/posts support canopy; never stretch a cassette cantilever.
-        yy=deck_y+60;n=max(1,math.ceil((end-120)/3000));post_spacing=(end-120)/n
-        beamtop=zfun(yy)
-        add('canopy/beam',[0,yy,beamtop-195],[end,90,195],'timber','canopy')
-        parts[-1]['top_slope_y']=-slope
-        door=next(v for v in voids if v['id']=='front/opening')
-        forbidden=(door['origin'][0]-150-120,door['origin'][0]+door['size'][0]+150)
-        positions=[]
-        for i in range(n+1):
-            x=round(i*post_spacing)
-            if forbidden[0]<x<forbidden[1]:x=round(min(forbidden,key=lambda edge:abs(edge-x)))
-            positions.append(x)
-        positions=sorted(set(positions))
-        post_spacing=max(b-a for a,b in zip(positions,positions[1:]))
-        if post_spacing>3000:raise ValueError('Canopy supports cannot keep door approach clear within 3000 mm post spacing')
-        for i,x in enumerate(positions):
-            add('canopy/post-'+str(i),[x,yy,F],[120,90,beamtop-195-F],'timber','canopy')
+        interfaces.append(dict(id='canopy/cantilever',type='post-free roof extension study',projection_mm=cover+outer+overhang,capacity=None,fasteners=None,status='unresolved structural design'))
     # Conservative envelope includes cladding, terrace and all roof projection; no exemption inference.
-    area=length*(y1-min(y0,deck_y if D else y0))/1e6
+    minx=min(x0,min(a['origin'][0] for a in parts));maxx=max(x0+length,max(a['origin'][0]+a['size'][0] for a in parts))
+    miny=min(y0,deck_y if D else y0);maxy=max(y1,max(a['origin'][1]+a['size'][1] for a in parts))
+    area=(maxx-minx)*(maxy-miny)/1e6
     height=max(a['origin'][2]+a['size'][2]+max(0,(a.get('slope_y',0)+a.get('top_slope_y',0))*a['size'][1]) for a in parts)
     support_span=max(post_spacing,D)
     if area>50:raise ValueError('Finished roof/terrace projection bound exceeds 50.00 m²')
     if height>5000:raise ValueError('Actual roof geometry exceeds 5000 mm height')
     if max(W,support_span)>6000:raise ValueError('Generated support spacing exceeds 6000 mm')
     interfaces.append(dict(id='wall-floor/platform',type='bottom plate -> floor skin -> perimeter blocking/bearing',capacity=None,fasteners=None))
-    return dict(area=area,height=height,support_span=support_span,terrace_area=end*D/1e6,enclosed_area=(L+2*outer)*(W+2*outer)/1e6)
+    return dict(area=area,height=height,support_span=support_span,terrace_area=end*D/1e6+side_area,enclosed_area=(L+2*outer)*(W+2*outer)/1e6)
