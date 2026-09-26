@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R05'
+VERSION = 'GH-R06'
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
 PRESETS = [dict(id='sauna-'+size+('-storage' if storage else '-open'),
@@ -21,7 +21,7 @@ DEFAULTS = dict(room_depth_steps=3, sauna_length_steps=4, hall_length_steps=3,
                 partition_depth=90, door_width=900, door_height=1900,
                 sauna_door_offset=150, bench_depth=600, bench_height=900,
                 foot_bench_height=450, include_foundation=True,
-                roof_type=1, terrace_steps=2, window_width=1180, facade_type=0)
+                roof_type=1, terrace_steps=2, window_width=1180, facade_type=0, system_type=0)
 HOLDS = [
  'Owner-plan fit not accepted: 1800 mm structural inside-face depth is a proposal.',
  'Source door offsets are retained in reference drawings; generated doors use explicit candidate parameters.',
@@ -36,7 +36,7 @@ def parameters(preset_index=2, custom=False, **overrides):
         raise ValueError('Preset index must be 0–5')
     p = dict(DEFAULTS)
     p.update(PRESETS[preset_index])
-    for k in ['roof_type','terrace_steps','window_width','facade_type']:
+    for k in ['roof_type','terrace_steps','window_width','facade_type','system_type']:
         if k in overrides and overrides[k] is not None:p[k]=overrides[k]
     if custom:
         unknown = set(overrides) - set(DEFAULTS)
@@ -57,6 +57,8 @@ def parameters(preset_index=2, custom=False, **overrides):
 
 def build(p):
     p = dict(p)
+    from .suppliers import require_system
+    require_system(p.get("system_type",0))
     for k in ['room_depth_steps', 'sauna_length_steps', 'hall_length_steps', 'storage_length_steps']:
         if not 1 <= p[k] <= 18:
             raise ValueError(k + ' must be 1–18 steps')
@@ -262,6 +264,8 @@ def build(p):
                 status='review-candidate',website_ready=False,manufacturing_release=False,
                 holds=list(HOLDS),geometry_sha256=geometry_hash)
 
+    from .suppliers import attach
+    scene['supplier_spec']=attach(scene)
     from .drawings import derive
     scene['drawings']=derive(scene)
     return scene

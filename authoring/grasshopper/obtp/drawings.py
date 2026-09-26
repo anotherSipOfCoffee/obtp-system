@@ -68,7 +68,40 @@ def derive(scene):
     for a in window:
         polys.append(dict(id=a['id'],points=hull([[v[0]-x0,v[2]-z0] for v in vertices(a)]),fill='#eeeeee' if a['material']=='glass' else '#ffffff',cut=False,material=a['material']))
     views['window']=dict(axis=1,level_mm=98,polygons=polys,polylines=[],dimensions=[dimension([0,0],[p['window_width'],0],-180),dimension([p['window_width'],0],[p['window_width'],p['door_height']-20],180)])
-    views['window-plan']=dict(axis=2,level_mm=F+1100,polygons=[dict(id=a['id'],points=[[v[0]-x0,v[1]] for v in section(a,2,F+1100)],fill='#eeeeee',cut=True,material=a['material']) for a in window],polylines=[],dimensions=[])
+    # Vertical section through window centre. Coordinates are wall depth / elevation.
+    # The frame/glazing remain explicitly labelled coordination envelopes.
+    window_x=x0+p['window_width']/2
+    vertical=[]
+    for part in scene['parts']:
+        if part['family'] not in ['walls','floor','insulation','interior','facade']:continue
+        pts=section(part,0,window_x)
+        if not pts:continue
+        vertical.append(dict(id=part['id'],points=pts,fill='#ffffff',cut=True,
+                             material=part['material'],family=part['family']))
+    def clipped(rect):
+        # Orthogonal clip preserves exact source intersections, including sloped edges.
+        result=[]
+        for item in vertical:
+            pts=item['points']
+            for axis,bound,greater in [(0,rect[0],True),(0,rect[2],False),(1,rect[1],True),(1,rect[3],False)]:
+                out=[]
+                for j,q in enumerate(pts):
+                    prev=pts[j-1];inside=q[axis]>=bound if greater else q[axis]<=bound
+                    was=prev[axis]>=bound if greater else prev[axis]<=bound
+                    if inside!=was:
+                        t=(bound-prev[axis])/(q[axis]-prev[axis]);out.append([prev[k]+t*(q[k]-prev[k]) for k in range(2)])
+                    if inside:out.append(list(q))
+                pts=out
+                if not pts:break
+            if len(pts)>=3:result.append(dict(item,points=pts))
+        return result
+    top=z0+p['door_height']-20
+    views['window-section']=dict(axis=0,level_mm=window_x,polygons=[dict(a,points=[[y,z-z0] for y,z in section(a,0,window_x)]) for a in window if section(a,0,window_x)],polylines=[],dimensions=[dimension([182.5,0],[182.5,p['door_height']-20],180)],labels=[])
+    for item in views['window-section']['polygons']:item.update(cut=True,fill='#ffffff')
+    for name,rect in [('window-head',[-95,top-90,235,top+85]),('window-sill',[-95,F-70,235,F+100])]:
+        dims=[dimension([12.5,top-51],[182.5,top-51],80)] if name=='window-head' else [dimension([182.5,F],[182.5,F+10],30)]
+        views[name]=dict(axis=0,level_mm=window_x,polygons=clipped(rect),polylines=[],dimensions=dims,crop=rect,
+                        source_geometry_sha256=scene['geometry_sha256'],status='model-coordination-section')
     # Source DXF blocks provide optional plan symbols. Interior benches remain true 3D projections:
     # source file contains Outdoor Bench, not a vetted interior sauna-bench symbol.
     source=Path(__file__).with_name('symbols.json')
@@ -88,12 +121,6 @@ def derive(scene):
         views['plan']['symbol_source_sha256']=symbols['source_sha256']
     from .plan_styles import conceptual
     views['concept-plan']=conceptual(scene,views['plan'])
-    # Jamb detail at the same cut as plan, cropped around the actual window edge.
-    wx=min(a['origin'][0] for a in window);detail=[]
-    for a in views['plan']['polygons']:
-        pts=a['points']
-        if pts and min(q[0] for q in pts)<wx+140 and max(q[0] for q in pts)>wx-300 and min(q[1] for q in pts)<270 and max(q[1] for q in pts)>-90:detail.append(a)
-    views['window-jamb']=dict(axis=2,level_mm=F+1100,polygons=detail,polylines=[],dimensions=[dimension([wx,12.5],[wx,182.5],-180),dimension([wx,12.5],[wx+51,12.5],-70)],crop=[wx-260,-110,wx+140,250])
     return dict(schema='obtp-drawings/2',source_geometry_sha256=scene['geometry_sha256'],units='mm',views=views,
       cut_markers=[dict(name='A-A',axis=0,position=cuts[1][2]),dict(name='B-B',axis=1,position=cuts[2][2])])
 

@@ -15,7 +15,7 @@ def bake(scene):
     hatch_index=found.Index if found else doc.HatchPatterns.Add(hp)
     offsets={}
     for i,(name,view) in enumerate(scene['drawings']['views'].items()):
-        if name in ['concept-plan','window-jamb']:continue
+        if name in ['concept-plan']:continue
         ox=15000;oy=-i*8500;offsets[name]=(ox,oy)
         layer=Rhino.DocObjects.Layer();layer.Name=root+' / '+name;layer.Color=Color.Black;li=doc.Layers.Add(layer)
         def attr():
