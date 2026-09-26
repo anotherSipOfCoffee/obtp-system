@@ -52,12 +52,12 @@ def compile_catalogue(destination,revision):
     # Offline package contains the same core plus the six default Rhino models/PDFs.
     import tempfile
     with tempfile.TemporaryDirectory() as temp:
-        with zipfile.ZipFile(target/'OBTP_Grasshopper_R07.zip','w',zipfile.ZIP_DEFLATED) as z:
+        with zipfile.ZipFile(target/'OBTP_Grasshopper_R08.zip','w',zipfile.ZIP_DEFLATED) as z:
             with zipfile.ZipFile(target/'OBTP_Grasshopper_Source.zip') as source:
                 for name in source.namelist():z.writestr(name,source.read(name))
             for program,i in itertools.product(range(2),range(6)):
                 scene=build(parameters(i,program_type=program));stem=scene['config']['id'];path=Path(temp)/(stem+'.3dm');file3dm([scene],path);z.write(path,'exports/'+path.name)
-                key=stem+'-r1-t2-w1180-f0';z.write(target/(key+'.pdf'),'exports/'+stem+'.pdf')
+                key=stem+'-r'+str(scene['config']['roof_type'])+'-t2-w1180-f0';z.write(target/(key+'.pdf'),'exports/'+stem+'.pdf')
     print('Compiled',len(entries),'script-authored website configurations')
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('destination');ap.add_argument('--revision',required=True);args=ap.parse_args();compile_catalogue(args.destination,args.revision)
