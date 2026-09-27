@@ -10,7 +10,7 @@ def pdf(recipe,path):
     from reportlab.lib.units import mm
     font=next(p for p in [Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),Path('C:/Windows/Fonts/arial.ttf')] if p.exists())
     if 'OBTP' not in pdfmetrics.getRegisteredFontNames():pdfmetrics.registerFont(TTFont('OBTP',str(font)))
-    c=canvas.Canvas(str(path),pagesize=(420*mm,297*mm));c.setTitle('OBTP R12 - offline layout proof');c.setAuthor('OBTP')
+    c=canvas.Canvas(str(path),pagesize=(420*mm,297*mm));c.setTitle('studio 9120 - '+recipe.get('kind','layout')+' review');c.setAuthor('studio 9120')
     def text(x,y,t,size):c.setFillColor('#111111');c.setFont('OBTP',size);c.drawString(x,y,str(t))
     for sheet in recipe['sheets']:
         c.scale(mm,mm);c.setStrokeColor('#222222');c.setLineWidth(.2)

@@ -1,6 +1,6 @@
 # Current OBTP System guidance — R16, 26 September 2026
 
-Latest explicit user instructions take precedence. This revision is **review only**: continue System PR #20 and Studio PR #37, do not merge or publish. Leave Drive and Architecture unchanged.
+Latest explicit user instructions take precedence. R16 was approved and published. Schedule and assembly PDF downloads are authorized only for the default Studio M (open sliders); drawing/opening PDFs stay disabled. Leave Drive and Architecture unchanged.
 
 ## Authority and architecture
 - `authoring/grasshopper/obtp` is the canonical Python model shared by Grasshopper, drawings, quantities and web exports. Studio owns UI and consumes a pinned System commit; never duplicate geometry in JavaScript.
@@ -16,9 +16,9 @@ Latest explicit user instructions take precedence. This revision is **review onl
 - First integrated cell baseline: `a11e613ac923fd5de6a3d3f1368e6c6eebc57745`.
 - `compare_manufacturing.py` reads these immutable Git snapshots into temporary folders. Do not maintain copies as parallel production pipelines.
 - After geometry changes: `python authoring/grasshopper/compare_manufacturing.py authoring/grasshopper/review-r15 --full-catalogue`; run the Python suite; then `export_web.py DEST --revision COMMIT`. Export refuses stale comparisons.
-- PDF generation stays disabled. Gable is absent from website and new GH controls. GH offers a complete normal preview, without object-type switches. Lithuanian flat-roof label: `Plokščias`.
+- Only part-schedule and assembly PDFs are enabled. Gable is absent from website and new GH controls. GH offers a complete normal preview, without object-type switches. Lithuanian flat-roof label: `Plokščias`.
 - Retain geometry/solid/clash, source-hash, export-cache, native acceptance and important browser behaviour checks. Native Rhino/GH acceptance is separate from portable rhino3dm checks.
-- Customer-facing brand is `studio 9120`; preserve existing UI and Lithuanian default. Main opens first; PDFs remain disabled.
+- Customer-facing brand is `studio 9120`; preserve existing UI and Lithuanian default. Main opens first; Drawing/opening PDFs remain disabled.
 
 ## Engineering, sources and scope
 - No invented capacities, fastening schedules, supplier compatibility, prices or permit exemption. All connections remain unverified; material grades, machining, wet-area detailing, glazing, heater clearances, roof uplift, soil and bracing require engineering.
