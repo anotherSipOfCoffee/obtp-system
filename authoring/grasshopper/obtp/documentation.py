@@ -220,21 +220,28 @@ def stage_parts(scene, phase):
     selected=[a for a in scene['parts'] if stage(a)<=target]
     return posed(selected,phase,stage)
 
-def parts_layout(scene):
+def parts_layout(scene, include_cladding=True):
     """Retain the detached cassette arrangement as its own schedule companion."""
     sheets=[]
     for phase,label in [(1,'Floor / terrace frames'),(3,'Wall cassettes and openings'),(5,'Roof cassettes'),(7,'Window and door units')]:
         target=PREPARE[phase]
-        current=[p for p in stage_parts(scene,phase) if stage(p)==target]
+        from .manufacturing import cladding
+        current=[p for p in stage_parts(scene,phase) if stage(p)==target and (include_cladding or not cladding(p))]
         p=page('Elementų išdėstymas / '+label,'L-'+str(len(sheets)+1));sheets.append(p)
         slot(p,'Detached assembly layout',axon(current),[25,72,400,250],(50,75,100,150,200,250,300,400))
         text(p,25,61,'Detached cassette layout for identification; not an erection sequence.',2.8)
         text(p,25,50,'Constituent quantities and unique-part axonometrics remain in the separate part schedule.',2.5)
     return finish(scene,sheets,'parts-layout')
 
-def assembly(scene):
+def assembly(scene, include_cladding=True):
     from .wall_erection import sequence
-    steps=sequence(scene,stage,stage_parts);sheets=[]
+    steps=sequence(scene,stage,stage_parts)
+    if not include_cladding:
+        from .manufacturing import cladding
+        excluded={p['id'] for p in scene['parts'] if cladding(p)}
+        steps=[dict(s,parts=[p for p in s['parts'] if p['id'] not in excluded],active=[pid for pid in s['active'] if pid not in excluded],label=('Remaining finishes' if s['label']=='Cladding last' else s['label'])) for s in steps]
+        steps=[s for s in steps if s['active']]
+    sheets=[]
     p=page('Connected wall erection / review','M-00');sheets.append(p)
     for j,note in enumerate(['Connected wall runs retain all cassettes and opening frames.',
        'One wall at a time: lay flat beside its wall line, rotate 45 degrees, then upright.',
@@ -242,7 +249,7 @@ def assembly(scene):
        'Whole walls may require lifting equipment. Crew handling, bracing and joints are unverified.',
        'Display grouping does not change constituent parts, quantities or manufacturing identities.',
        'Detached cassette layouts are in the additional Parts Layout PDF.',
-       'Cladding is installed last.']):text(p,25,240-j*19,note,3)
+       'Cladding is installed last.' if include_cladding else 'Facade cladding is excluded from this document; separate quantities are retained.']):text(p,25,240-j*19,note,3)
     i=0
     while i<len(steps):
         step=steps[i];p=page(step['label'],'M-'+str(len(sheets)).zfill(2));sheets.append(p)

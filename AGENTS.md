@@ -50,3 +50,6 @@ The user paused site updates. Do not change Studio pins, site files or publish w
 - `window_width` is modelled frame outside width. Installation gap/profile/clear passage fields are not supplier-approved unless supported explicitly. Unknowns remain null. Do not narrow or replace entrances based only on host width; height, thresholds and structural bearing matter.
 - Use `modularity_study.py` for this comparison, starting with its 24-case screen. `--full` validates only the finalist against immutable R20. Do not run the older multi-history website export pipeline for GH-only metadata changes. Existing 68-test suite and portable/native distinction remain applicable.
 - See `GH_R21.md` and `review-r21/OBTP_Modularity_R21.html`; historical guidance above does not override these measured decisions or later explicit user instructions.
+
+## Latest public Studio document scope
+The later user instruction authorizes Studio publication for the two locked M-with-storage presets. Canonical PDF recipes accept `include_cladding=False` for public assembly, loose layout and schedule exports; this omits facade boards using the existing manufacturing predicate, without changing full-scene geometry, IDs, audit counts or GH default exports. Studio retains separate cladding quantities and visible 3D cladding.

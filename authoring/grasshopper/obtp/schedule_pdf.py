@@ -8,7 +8,7 @@ def included(part):
     return part['material'] in ('timber','plywood','mineral-wool','concrete-study') and not cladding(part)
 
 
-def write(scene, path, revision):
+def write(scene, path, revision, include_cladding=True):
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, LongTable, TableStyle, PageBreak
     from reportlab.lib.styles import getSampleStyleSheet
     from reportlab.lib import colors
@@ -37,7 +37,9 @@ def write(scene, path, revision):
             xy=[c for v in face['points'] for c in ((v[0]-lo[0])*scale+mm,(v[1]-lo[1])*scale+mm)]
             drawing.add(Polygon(xy,fillColor=colors.HexColor(['#ded6c5','#c6bda9','#efe9dd'][i%3]),strokeColor=colors.HexColor('#555555'),strokeWidth=.35))
         return drawing
-    for field,title in [('primary_schedule','Elementų žiniaraštis / Part schedule'),('cladding_schedule','Fasado apdaila / Separate facade cladding schedule')]:
+    sections=[('primary_schedule','Elementų žiniaraštis / Part schedule')]
+    if include_cladding:sections.append(('cladding_schedule','Fasado apdaila / Separate facade cladding schedule'))
+    for field,title in sections:
         if flow:flow.append(PageBreak())
         flow.extend([Paragraph('studio 9120',styles['Title']),Paragraph(title,styles['Heading2']),p(scene['config']['id']+' | '+scene['geometry_sha256'][:16]),Spacer(1,4*mm)])
         flow.append(p('PERŽIŪRA / REVIEW ONLY. Matmenys mm / Dimensions mm. Gamybinės jungtys, apdirbimas ir medžiagų klasės nepatvirtinti / Manufacturing details remain unverified.'))
