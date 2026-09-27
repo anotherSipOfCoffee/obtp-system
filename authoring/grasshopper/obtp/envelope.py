@@ -19,11 +19,12 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
         x0=max(u,v);x1=min(u+a,v+b);z0=max(z,w);z1=min(z+h,w+k)
         if x1<=x0 or z1<=z0:return [rect]
         return [q for q in [(u,z,x0-u,h),(x1,z,u+a-x1,h),(x0,z,x1-x0,z0-z),(x0,z1,x1-x0,z+h-z1)] if q[2]>0 and q[3]>0]
-    def surface(name,axis,base,u0,length,inward,interior=True,holes=()):
+    def surface(name,axis,base,u0,length,inward,interior=True,holes=(),height=None,auto_openings=True,support_holes=()):
+        H=height if height is not None else p['wall_height']
         # base is the structural face. u is longitudinal, v is perpendicular.
         # Continuous cavity; boards shown with a small joint reveal, not a certified profile.
         cuts=list(holes)
-        for v in voids:
+        for v in (voids if auto_openings else []):
             k=0 if axis=='x' else 1;other=1-k
             if v['origin'][other]-1 <= base <= v['origin'][other]+v['size'][other]+1:
                 cuts.append((v['origin'][k],F,v['size'][k],p['door_height']))
@@ -36,7 +37,8 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
                 wall_regions.append(dict(id=name,axis=axis,base=[u,v] if axis=='x' else [v,u],length=a,depth=thick))
         finish_joints=set()
         def put(label,u,z,a,h,offset,thick,material,group=None):
-            for j,(uu,zz,aa,hh) in enumerate(__import__('functools').reduce(lambda rs,c:[t for r in rs for t in subtract(r,c)],cuts,[(u,z,a,h)])):
+            partcuts=cuts+list(support_holes) if not label.startswith('board-') else cuts
+            for j,(uu,zz,aa,hh) in enumerate(__import__('functools').reduce(lambda rs,c:[t for r in rs for t in subtract(r,c)],partcuts,[(u,z,a,h)])):
                 spans=finish_spans(uu,uu+aa,wall,p['partition_depth']) if repeated and interior and label.startswith('board-') else [(uu,uu+aa)]
                 finish_joints.update(x for x,y in spans[1:])
                 for q,(x,y) in enumerate(spans):
@@ -127,26 +129,49 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
                     add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,x1-x),depth-72,20],'lining-wood','ceiling')
                 for i,y in enumerate(range(wall+36,W-wall-36,95)):
                     add('ceiling-'+name+'/board-'+str(i),[x0,y,F+H-36],[x1-x0,min(93,W-wall-36-y),16],'lining-wood','ceiling')
-        for label,y,sgn in [('front',0,-1),('back',W,1)]:surface('facade-'+label,'x',y,-outer,L+2*outer,sgn,False)
+        for label,y,sgn in [('front',0,-1),('back',W,1)]:
+            holes=[(L+outer,F,annex-wall-2*outer,p['door_height'])] if annex else []
+            surface('facade-'+label,'x',y,-outer,end+2*outer,sgn,False,holes=holes,support_holes=[(L+62,F,annex-wall-124,p['door_height']+59)] if annex else ())
         surface('facade-hot-end','y',0,0,W,-1,False)
         if not annex:surface('facade-hall-end','y',L,0,W,1,False)
         else:
             surface('facade-annex-end','y',end,0,W,1,False)
-            # Short return walls are open at shower/seat ends; finish their exterior faces.
-            for j,y in enumerate([wall+p.get('annex_split_a_mm',depth*600//1800),wall+p.get('annex_split_b_mm',depth*1500//1800)]):
-                for side,base,sgn in [('a',y,-1),('b',y+p['partition_depth']+12,1)]:
-                    surface('annex-lining-'+str(j)+side,'x',base,L+12,annex-wall-12,sgn,True)
-        if annex:
-            # Finish exposed niche heads at the same door-height datum. The
-            # underside is at the opening datum; the timber head is raised 22 mm.
-            for label,y,face in [('shower',0,-22),('seat',W-wall,W)]:
-                x0=L+outer; x1=end-wall
-                for i,z in enumerate(range(F+p['door_height'],F+H,100)):
-                    add('facade-niche-'+label+'/board-head-'+str(i),[x0,face,z],[x1-x0,22,min(95,F+H-z)],'cladding-wood','facade')
-                for i,yy in enumerate(range(y,y+wall,100)):
-                    add('facade-niche-'+label+'/board-soffit-'+str(i),[L+12,yy,F+p['door_height']],[annex-wall-12,min(95,y+wall-yy),22],'cladding-wood','facade')
-                    for side,xx in [('left',L+12),('right',end-wall-22)]:
-                        add('facade-niche-'+label+'/board-jamb-'+side+'-'+str(i),[xx,yy,F],[22,min(95,y+wall-yy),p['door_height']],'cladding-wood','facade')
+            # Storage sides retain interior lining. Outdoor faces use the same
+            # ventilated cladding recipe as the exterior, returning into the cutout.
+            sa=wall+p.get('annex_split_a_mm',depth*600//1800)
+            sb=wall+p.get('annex_split_b_mm',depth*1500//1800)
+            d=p['partition_depth'];x0=L+outer;x1=end-wall-outer
+            surface('annex-lining-0b','x',sa+d+12,L+12,annex-wall-12,1,True)
+            surface('annex-lining-1a','x',sb,L+12,annex-wall-12,-1,True)
+            for label,front,back,base,sign in [('shower',0,sa-outer,sa,-1),('seat',sb+d+outer,W,sb+d,1)]:
+                height=p['door_height']
+                # Missing opposite sheathing faces are real counted panels.
+                if label=='shower':
+                    for i,(zz,hh) in enumerate([(0,H)] if H<=2440 else [(0,H/2),(H/2,H/2)]):
+                        add('niche-shower/backing-back'+('-'+str(i) if H>2440 else ''),[L+12,sa-12,F+zz],[annex-wall-12,12,hh],'plywood','partitions')
+                from .cells import boundaries
+                panel_axes=boundaries(front,back,1200 if repeated else 600) if back-front>1220 else [front,back]
+                for j,(aa,bb) in enumerate(zip(panel_axes,panel_axes[1:])):
+                    add('niche-'+label+'/backing-right'+('-'+str(j) if len(panel_axes)>2 else ''),[end-wall-12,aa,F],[12,bb-aa,height],'plywood','walls')
+                surface('facade-niche-'+label+'-back','x',base,x0,x1-x0,sign,False,height=height,auto_openings=False)
+                for side,face,direction in [('left',L,1),('right',end-wall,-1)]:
+                    surface('facade-niche-'+label+'-'+side,'y',face,front,back-front,direction,False,height=height,auto_openings=False)
+                # Finish returns meet the back of the outer cladding, while
+                # their backing/battens stop at the structural envelope corners.
+                for item in parts:
+                    if item['id'].startswith('facade-niche-'+label+'-') and '/board-' in item['id'] and item['size'][0]==22:
+                        if label=='shower' and item['origin'][1]==front:
+                            item['origin'][1]-=62;item['size'][1]+=62
+                        elif label=='seat' and abs(item['origin'][1]+item['size'][1]-back)<.01:
+                            item['size'][1]+=62
+                front=front-62 if label=='shower' else front
+                back=back+62 if label=='seat' else back
+                # Continuous rectangular soffit, not a shallow strip at the mouth.
+                for i,yy in enumerate(range(int(front),int(back),80)):
+                    add('facade-niche-'+label+'/board-soffit-'+str(i),[x0,yy,F+height],[x1-x0,min(78,back-yy),22],'cladding-wood','facade')
+                for i,xx in enumerate([x0,x1-45]):
+                    add('facade-niche-'+label+'/soffit-batten-'+str(i),[xx,front,F+height+22],[45,back-front,25],'cladding-wood','facade')
+                add('niche-'+label+'/soffit-panel',[x0,front,F+height+47],[x1-x0,back-front,12],'plywood','walls')
         if annex:
             ya=wall+p.get('annex_split_a_mm',depth*600//1800)+p['partition_depth']+48
             yb=wall+p.get('annex_split_b_mm',depth*1500//1800)-36

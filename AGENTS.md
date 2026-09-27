@@ -29,8 +29,14 @@ Latest explicit user instructions take precedence. R16 was approved and publishe
 Historical release/research documents are evidence, not current competing instructions. Read them only for a relevant detail; this file consolidates current decisions.
 
 ## Current review revision (27 September 2026)
-- Terrace joists keep 45 mm width, use 450 mm axes coordinated with 900 mm floor bays, and extend to the platform rails (210 mm depth with the current floor). No terrace packing cubes. End seats remain explicit. Spans/stock/fasteners require engineering.
-- Terrace perimeter fascia, removable bench front/end covers and clad niche heads/jambs/soffits are real counted parts. Niche clear soffits match door height. The outdoor seat recess is 300 mm deep; its divider gives excess depth to storage.
+- Terrace joists keep 45 mm width and share actual edge faces with 900 mm floor bays, with intermediate deck supports, and extend to the platform rails (210 mm depth with the current floor). No terrace packing cubes. End seats remain explicit. Spans/stock/fasteners require engineering.
+- Terrace perimeter fascia, removable bench front/end covers and continuous clad niche side/back returns and full soffits are real counted parts. Niche clear soffits match door height. The outdoor seat recess is 300 mm deep; its divider gives excess depth to storage.
 - Default Studio M schedule contains structure, plywood panels and insulation with individually scaled part axonometrics. Its scope does not change complete-model audit counting. Facade boards retain their separate schedule; terrace/floor trims remain primary.
 - Assembly ground poses and the bounded Rhino preview cache must never modify canonical part geometry, IDs or quantities. Native handling masses and safe lifting methods remain unverified.
 - Python CI uses test discovery. Legacy JS cassette CI runs for its own files; current integration is tested by Studio against its exact System pin, not an obsolete duplicate consumer checkout.
+
+## R19 review decisions
+- Retain existing door widths and grid. Narrow supplier doors were investigated, but the preliminary bay-aligned trial increased types and reduced passage width; no product substitution is adopted.
+- Keep existing floor cassettes. Terrace edge members use the same mathematical bay faces; intermediate supports are terrace-only. Do not add floor joists solely for visual matching.
+- Outdoor recesses use the exterior cladding build-up with counted backing/supports, 1900 mm clear soffits and a 300 mm finished seat recess. Default finished niche width is only 537 mm: shower usability and wet-area details remain unresolved. This is an explicit review concern, not an approved bathroom design.
+- `previous` in the current audit means R18 commit 2c21ad5d2d30915487f19e72a18f545e575befba. Earlier audit history remains reproducible in Git.

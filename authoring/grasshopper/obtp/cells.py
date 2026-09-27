@@ -28,7 +28,7 @@ def resolve(p, wall=195):
     p['resolved_depth_mm']=W-2*wall
     p['annex_split_a_mm']=(650 if W==2400 else Y-wall)
     # Seat recess is 300 mm deep from its finished back to the rear opening.
-    p['annex_split_b_mm']=W-wall-300-p['partition_depth']-48
+    p['annex_split_b_mm']=W-wall-300-p['partition_depth']-84
     return W,L,hot,hall,annex
 
 
@@ -68,3 +68,14 @@ def record(p,L,W,annex,assemblies):
       wall_joint_policy='cell seams; openings replace whole adjoining bays',wall_assemblies=assemblies,
       engineering_status='coordination-study',holds=['Panel widths are coordination envelopes, not universal cut lengths.',
       'Terminal, opening and node connections require engineering; capacities and fasteners remain unset.'])
+
+
+def transverse_members(start, end, middle=True):
+    """Actual 45 mm member faces, shared by floor bays and terrace bays."""
+    axes=boundaries(start,end,X)
+    result=[]
+    for a,b in zip(axes,axes[1:]):
+        if b-a<90:continue
+        result.extend([a,b-45])
+        if middle and b-a>=180:result.append((a+b-45)/2)
+    return sorted(set(result))

@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R18-ALIGNED-PLATFORM'
+VERSION = 'GH-R19-CONTINUOUS-NICHES'
 from . import cells
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
@@ -160,8 +160,9 @@ def build(p):
             # Joists meet their inner faces; end hangers remain an engineering hold.
             court=stage=='roof' and studio and cells.enabled(p) and bridge_start<=x and x+a<=bridge_end
             inset=wall if court else 0
-            add(group+'/edge-a',[x,inset,z],[45,W-2*inset,220],family=stage,assembly=group)
-            add(group+'/edge-b',[x+a-45,inset,z],[45,W-2*inset,220],family=stage,assembly=group)
+            edge_a,edge_b=cells.transverse_members(x,x+a,middle=False) if cells.enabled(p) else (x,x+a-45)
+            add(group+'/edge-a',[edge_a,inset,z],[45,W-2*inset,220],family=stage,assembly=group)
+            add(group+'/edge-b',[edge_b,inset,z],[45,W-2*inset,220],family=stage,assembly=group)
             bands = [(inset,inset+45),(W//2-22,W//2+23),(W-inset-45,W-inset)]
             for j,(y0,y1) in enumerate(bands):
                 add(group+'/blocking-'+str(j),[x+45,y0,z],[a-90,y1-y0,220],family=stage,assembly=group)
@@ -335,9 +336,9 @@ def build(p):
                 wall_run('annex-divider-'+str(j),[L+skin,y],'x',annex-wall-skin,d=p['partition_depth'],family='partitions')
             # Door-height soffits over the two open exterior niches. Not roof columns.
             for label,y in [('shower',0),('seat',W-wall)]:
-                add('niche-'+label+'/head',[L+12,y,F+p['door_height']+22],[annex-wall-12,wall,H-p['door_height']-22],'timber','walls')
+                add('niche-'+label+'/head',[L+12,y,F+p['door_height']+59],[annex-wall-12,wall,H-p['door_height']-59],'timber','walls')
             # Review side bay has open shower/seat ends; its whole bounding area is counted.
-            add('outside-seat/seat',[L+48,wall+split_b+p['partition_depth']+48,F+420],[annex-wall-84,W-(wall+split_b+p['partition_depth']+48),35],'object','furniture')
+            add('outside-seat/seat',[L+84,wall+split_b+p['partition_depth']+84,F+420],[annex-wall-168,W-(wall+split_b+p['partition_depth']+84),35],'object','furniture')
         # Slatted furniture retains the reference's long upper and shorter lower benches.
         for name,bx,by,bw,bh,level in [('upper',wall+46,wall+depth-p['bench_depth']-46,hot-92,p['bench_depth'],p['bench_height']),
                                      ('lower',wall+46,wall+depth-2*p['bench_depth']-58,min(1200,hot-92),p['bench_depth'],p['foot_bench_height'])]:
@@ -354,10 +355,10 @@ def build(p):
                 add('bench-'+name+'/front-cover-'+str(j),[bx+20,by,F+zz],[bw-40,20,h],'object','furniture')
                 add('bench-'+name+'/other-end-cover-'+str(j),[bx,by,F+zz],[20,bh,h],'object','furniture')
         add('heater/envelope',[wall+hot-500,wall+60,F],[260,430,700],'object','furniture')
-        shower_x=L+25;shower_y=wall+250
-        add('shower/riser',[shower_x,shower_y,F],[30,30,2100],'object','furniture')
-        add('shower/arm',[shower_x,shower_y,F+2070],[350,30,30],'object','furniture')
-        add('shower/head',[shower_x+300,shower_y-40,F+2030],[80,110,40],'object','furniture')
+        shower_x=L+96;shower_y=wall+250
+        add('shower/riser',[shower_x,shower_y,F],[30,30,1800],'object','furniture')
+        add('shower/arm',[shower_x,shower_y,F+1770],[350,30,30],'object','furniture')
+        add('shower/head',[shower_x+300,shower_y-40,F+1730],[80,110,40],'object','furniture')
     from .seasonal import enrich as seasonal_enrich
     seasonal_spec=seasonal_enrich(p,parts,L,W,F,H,interfaces)
     from .envelope import enrich

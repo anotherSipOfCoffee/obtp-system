@@ -5,7 +5,7 @@ import argparse, importlib.util, itertools, json, subprocess, sys, tempfile, gzi
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 REPO=ROOT.parents[1]
-PINS={'original':'1ad71826acfcc7d6d5df9a06167c5fcfea20b516','cells':'a11e613ac923fd5de6a3d3f1368e6c6eebc57745','pre_opening':'20e7d87dddab93ef453f0ef2c491078ce9b376c5','pre_kit':'32a9b696b257e09f9b8d32afba3110e043040b6b','pre_kit_corrected':'8aaab6a67fa85838296d8c6e2077be5c80d98630','previous':'f719830320fb2d6b9eaa2e55b5ddeec41dbe644b'}
+PINS={'original':'1ad71826acfcc7d6d5df9a06167c5fcfea20b516','cells':'a11e613ac923fd5de6a3d3f1368e6c6eebc57745','pre_opening':'20e7d87dddab93ef453f0ef2c491078ce9b376c5','pre_kit':'32a9b696b257e09f9b8d32afba3110e043040b6b','pre_kit_corrected':'8aaab6a67fa85838296d8c6e2077be5c80d98630','previous':'2c21ad5d2d30915487f19e72a18f545e575befba'}
 from obtp.manufacturing import analyse
 from obtp.drawings import svg
 

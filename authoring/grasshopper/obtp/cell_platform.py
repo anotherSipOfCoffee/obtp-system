@@ -1,5 +1,5 @@
 """Repetitive building/terrace platform; member envelopes are not engineered."""
-from .cells import X,Y
+from .cells import X,Y,transverse_members
 
 
 def bounds(p,L,W,annex):
@@ -16,9 +16,9 @@ def terrace(p,parts,L,W,F,annex):
     side0,side1=(lo,-704) if p['program_type']==1 else (end+104,hi)
     def strip(name,x0,x1,y0,y1):
         cuts=[x0]+[x for x in range(lo,hi+1,1800) if x0<x<x1]+[x1]
-        # 450 mm centres share every second axis with the 900 mm floor bays.
-        # Keep 45 mm width; board joints have the same shared seat as before.
-        supports=[x0]+[x-22.5 for x in range(lo,hi+1,X//2) if x0+45<=x-22.5<=x1-90]+[x1-45]
+        # Repeat the exact floor-bay edge and middle faces, including paired
+        # members at cassette seams. Return boundaries remain explicit trims.
+        supports=[x0]+[x for x in transverse_members(lo,hi) if x0+45<=x<=x1-90]+[x1-45]
         supports=sorted(set(supports))
         # Remove a redundant near-end support, retaining every board-joint seat.
         for i,x in enumerate(supports):
