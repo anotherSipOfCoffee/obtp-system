@@ -1,3 +1,15 @@
+# Current GH preview update (R17 controls)
+
+Extract the complete updated package into a fresh folder, then run `CREATE_GRASSHOPPER.py` in Rhino 8 Python 3 with Grasshopper open. This creates a new timestamped `.gh`; existing definitions are not overwritten.
+
+- **Assembly stage** integer slider: 0 empty; 1 foundations; 2 floor/terrace frame; 3 floor insulation/panels; 4 wall frame; 5 wall insulation/sheathing; 6 roof/ceiling; 7 openings/exterior; 8 complete. Stages are cumulative and match the assembly guide.
+- **Core frame** integer slider: 0 complete model in material colours; 1 structural timber and foundation supports only. Sheet panels, cladding, insulation and equipment are hidden in this display mode.
+- In core mode, identical canonical manufacturing candidate types share a preview material. Different types have distinct RGB values; similar-looking colours are possible, so use the type-ID/RGB legend. Colours do not change when moving the stage slider. Identities remain provisional where manufacturing details are unknown.
+- Native Custom Preview is wired automatically. The Python geometry preview is hidden to prevent default GH shading masking the colours. Preview filtering never changes the canonical model, quantities or export.
+- Portable tests cover stage completeness, monotonicity, core filtering, identity/colour reuse and scene immutability. Native Rhino/GH execution remains pending.
+
+The historical notes below describe older releases; current controls and AGENTS.md take precedence.
+
 ## R06 / supplier research and analysis preparation
 
 Cassette remains default. Hunton is a disabled research candidate, not an implemented alternative. See `suppliers/RESEARCH_A02.md`. Window details are vertical head/sill cuts. Wind and snow are paused. Analysis is preparation only; native GH and numerical solver acceptance remain pending. Run `CREATE_GRASSHOPPER.py` again to create the updated canvas.
@@ -22,7 +34,7 @@ Local review package. Owner authorized publishing this R05 update. These are con
 3. Open a millimetre Rhino document and Grasshopper. Place a native Python 3 Script component once to load its plugin.
 4. Run `CREATE_GRASSHOPPER.py` using Rhino Python 3. It creates a timestamped native `.gh` in this folder. Keep the GH definition with the `obtp` and `components` folders.
 5. Choose one of six saved layouts. Roof, terrace and window controls work on saved layouts too. Custom activates the other dimension controls.
-6. Preview with Panels/Cut/Explode. Export false → true creates a new review snapshot, including Rhino volume audit. It never publishes anything.
+6. Preview with Assembly stage and Core frame sliders. Export false → true creates a new review snapshot, including Rhino volume audit. It never publishes anything.
 
 The Rhino/GH host scripts have not been executed here. Portable CPython/rhino3dm geometry checks pass. The earlier TypeHints.Select overload dependency is removed; input conversion failures clear model output.
 
