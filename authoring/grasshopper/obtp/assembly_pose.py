@@ -16,7 +16,7 @@ def posed(parts, phase, classifier):
         vs=[v for p in items for v in vertices(p)]
         lo=[min(v[k] for v in vs) for k in range(3)]
         hi=[max(v[k] for v in vs) for k in range(3)]
-        vertical=target in (4,8)
+        vertical=target in (4,8) and hi[2]-lo[2]>min(hi[0]-lo[0],hi[1]-lo[1])
         axis=0 if hi[0]-lo[0]>=hi[1]-lo[1] else 1
         axes=(axis,2,1-axis) if vertical else (0,1,2)
         sizes=[hi[k]-lo[k] for k in axes]

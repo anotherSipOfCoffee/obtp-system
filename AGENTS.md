@@ -16,7 +16,7 @@ Latest explicit user instructions take precedence. R16 was approved and publishe
 - First integrated cell baseline: `a11e613ac923fd5de6a3d3f1368e6c6eebc57745`.
 - `compare_manufacturing.py` reads these immutable Git snapshots into temporary folders. Do not maintain copies as parallel production pipelines.
 - After geometry changes: `python authoring/grasshopper/compare_manufacturing.py authoring/grasshopper/review-r15 --full-catalogue`; run the Python suite; then `export_web.py DEST --revision COMMIT`. Export refuses stale comparisons.
-- Only part-schedule and assembly PDFs are enabled. Gable is absent from website and new GH controls. GH offers assembly-stage (0-12) and core-frame (0/1) sliders. Core mode colours by canonical provisional manufacturing identity, with a legend. Preparation stages lay out subassemblies flat before placement; exterior cladding is last. These are display-only and never alter quantities or exports; no individual object-type switches. Lithuanian flat-roof label: `Plokščias`.
+- Only part-schedule and assembly PDFs are enabled. Gable is absent from website and new GH controls. GH offers assembly progress (0-100%) and core-frame (0/1) sliders. Core mode colours by canonical provisional manufacturing identity, with a legend. Preparation stages lay out subassemblies flat before placement; exterior cladding is last. These are display-only and never alter quantities or exports; no individual object-type switches. Lithuanian flat-roof label: `Plokščias`.
 - Retain geometry/solid/clash, source-hash, export-cache, native acceptance and important browser behaviour checks. Native Rhino/GH acceptance is separate from portable rhino3dm checks.
 - Customer-facing brand is `studio 9120`; preserve existing UI and Lithuanian default. Main opens first; Drawing/opening PDFs remain disabled.
 
@@ -40,3 +40,6 @@ Historical release/research documents are evidence, not current competing instru
 - Keep existing floor cassettes. Terrace edge members use the same mathematical bay faces; intermediate supports are terrace-only. Do not add floor joists solely for visual matching.
 - Outdoor recesses use the exterior cladding build-up with counted backing/supports, 1900 mm clear soffits and a 300 mm finished seat recess. Default finished niche width is only 537 mm: shower usability and wet-area details remain unresolved. This is an explicit review concern, not an approved bathroom design.
 - `previous` in the current audit means R18 commit 2c21ad5d2d30915487f19e72a18f545e575befba. Earlier audit history remains reproducible in Git.
+
+## Current scope: GH only (27 September 2026)
+The user paused site updates. Do not change Studio pins, site files or publish while this scope is active. GH R20 adds a separate detached Parts Layout PDF for default Studio M and connected wall-run erection poses. The GH progress slider is 0–100%; walls raise one at a time through flat/45-degree/upright states about a fixed bottom edge. Canonical geometry and counts remain R19. Full-wall manual lifting is unverified; see GH_R20.md.

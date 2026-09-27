@@ -47,8 +47,8 @@ def finish(scene,sheets,kind):
         for y in (22,34):line(p,230,y,410,y)
         line(p,365,10,365,34);line(p,390,10,390,34)
         text(p,234,39,'PERŽIŪRA / NE STATYBAI',3)
-        text(p,234,27,p['code']+' / '+scene.get('version','R16'),2.7);text(p,369,27,'Lapas',2);text(p,394,27,'Lapų',2)
-        text(p,234,15,'2026-09-26 / '+scene['geometry_sha256'][:16],2.3);text(p,370,15,i+1);text(p,396,15,len(sheets))
+        text(p,234,27,p['code']+' / '+scene.get('display_revision',scene.get('version','R16')),2.7);text(p,369,27,'Lapas',2);text(p,394,27,'Lapų',2)
+        text(p,234,15,scene.get('document_date','2026-09-26')+' / '+scene['geometry_sha256'][:16],2.3);text(p,370,15,i+1);text(p,396,15,len(sheets))
         text(p,22,20,'Matmenys mm. Kiekiai pagal modelį; gamybinės jungtys nepatvirtintos.',2)
     return dict(schema='obtp-document-layouts/1',kind=kind,geometry_sha256=scene['geometry_sha256'],page_mm=[420,297],sheets=sheets)
 
@@ -220,31 +220,47 @@ def stage_parts(scene, phase):
     selected=[a for a in scene['parts'] if stage(a)<=target]
     return posed(selected,phase,stage)
 
-def assembly(scene):
+def parts_layout(scene):
+    """Retain the detached cassette arrangement as its own schedule companion."""
     sheets=[]
-    p=page('Surinkimo gairės / turinys','M-00');sheets.append(p)
-    text(p,25,244,'Eiga paremta modelio grupėmis. Tai surinkimo studija, ne patvirtinta darbų technologija.',3)
-    rect(p,25,108,370,120)
-    for i,(title,_,note) in enumerate(STAGES):
-        y=218-i*9;text(p,30,y,title,2.4);text(p,365,y,f'M-{i+1:02}');line(p,25,y-5,395,y-5)
-    for j,t in enumerate(['Prieš gamybą: konstruktorius patvirtina jungtis, laikiną stabilumą ir kėlimo planą.',
-                         'Handling weights and lifting methods are unverified; larger units may require equipment.',
-                         'Baltai rodoma nauja stadija, pilkai - jau surinkta dalis. Vaizdai iš to paties modelio.']):text(p,25,91-j*12,t,2.7)
-    for i,(title,_,note) in enumerate(STAGES):
-        p=page(f'{i+1:02} / '+title,f'M-{i+1:02}');sheets.append(p)
-        shown=stage_parts(scene,i)
-        target=PREPARE.get(i,i)
-        current=[a for a in shown if stage(a)==target];previous=[a for a in shown if stage(a)<target]
-        # A clear stage-only exploded overview and context view; geometry remains unchanged.
-        highlight={a['id'] for a in current}
-        slot(p,'Surinkta iki šios stadijos',axon(previous+current,highlight),[25,77,272,250],(50,75,100,150,200,250,300,400))
-        slot(p,'Pridedami elementai',axon(current),[282,130,400,245],(50,75,100,150,200,250,300,400))
-        text(p,282,121,'Pridedamos detalės: '+str(len(current)),2.8)
-        text(p,25,66,note,2.3)
-        from .manufacturing import schedule
-        codes=[g['type_id'] for g in schedule(current)]
-        for j in range(min(4,math.ceil(len(codes)/3))):text(p,282,110-j*8,', '.join(codes[j*3:j*3+3]),1.9)
-        if len(codes)>12:text(p,282,75,'Visi indeksai - kiekių byloje.',2)
+    for phase,label in [(1,'Floor / terrace frames'),(3,'Wall cassettes and openings'),(5,'Roof cassettes'),(7,'Window and door units')]:
+        target=PREPARE[phase]
+        current=[p for p in stage_parts(scene,phase) if stage(p)==target]
+        p=page('Elementų išdėstymas / '+label,'L-'+str(len(sheets)+1));sheets.append(p)
+        slot(p,'Detached assembly layout',axon(current),[25,72,400,250],(50,75,100,150,200,250,300,400))
+        text(p,25,61,'Detached cassette layout for identification; not an erection sequence.',2.8)
+        text(p,25,50,'Constituent quantities and unique-part axonometrics remain in the separate part schedule.',2.5)
+    return finish(scene,sheets,'parts-layout')
+
+def assembly(scene):
+    from .wall_erection import sequence
+    steps=sequence(scene,stage,stage_parts);sheets=[]
+    p=page('Connected wall erection / review','M-00');sheets.append(p)
+    for j,note in enumerate(['Connected wall runs retain all cassettes and opening frames.',
+       'One wall at a time: lay flat beside its wall line, rotate 45 degrees, then upright.',
+       'The pivot remains at the installed bottom edge; temporary supports establish the work height.',
+       'Whole walls may require lifting equipment. Crew handling, bracing and joints are unverified.',
+       'Display grouping does not change constituent parts, quantities or manufacturing identities.',
+       'Detached cassette layouts are in the additional Parts Layout PDF.',
+       'Cladding is installed last.']):text(p,25,240-j*19,note,3)
+    i=0
+    while i<len(steps):
+        step=steps[i];p=page(step['label'],'M-'+str(len(sheets)).zfill(2));sheets.append(p)
+        current=[a for a in step['parts'] if a['id'] in step['active']]
+        wall=step['label'].endswith(' / Lay flat')
+        if wall:
+            slot(p,'Flat beside wall line',axon(step['parts'],set(step['active'])),[25,86,252,249],(50,75,100,150,200,250,300,400))
+            for offset,box,title in [(1,[260,170,400,250],'45 degrees'),(2,[260,86,400,165],'Upright')]:
+                follow=steps[i+offset];active=[a for a in follow['parts'] if a['id'] in follow['active']]
+                slot(p,title,axon(active),box,(25,50,75,100,150,200,250,300,400))
+                text(p,box[0],box[1]-5,title,2.7)
+            i+=3
+        else:
+            slot(p,'Assembly context',axon(step['parts'],set(step['active'])),[25,84,400,250],(50,75,100,150,200,250,300,400));i+=1
+        import textwrap
+        for j,line_text in enumerate(textwrap.wrap(step['note'],110)):
+            text(p,25,68-j*8,line_text,2.5)
+        text(p,25,39,'Current constituent pieces: '+str(len(current)),2.5)
     return finish(scene,sheets,'assembly')
 
 def documents(scene):return {'openings':openings(scene),'components':components(scene),'assembly':assembly(scene)}

@@ -133,7 +133,7 @@ def main():
     preview=script('02 · Rhino preview','preview.py',[('scene_json',String),('assembly_stage',Double),('core_frame',Double)],
                    [(n,GH_ParamAccess.list) for n in ['geometry','part_ids','materials','type_ids','legend']]+[('preview_status',GH_ParamAccess.item)],800,250)
     preview.Params.Input[0].AddSource(model.Params.Output[0])
-    stage_control=slider('Assembly stage / 0 empty - 12 complete',12,0,12,420,520)
+    stage_control=slider('Assembly progress / 0 empty - 100 complete',100,0,100,420,520)
     core_control=slider('Core frame / 0 complete - 1 unique part colours',0,0,1,420,565)
     preview.Params.Input[1].AddSource(stage_control)
     preview.Params.Input[2].AddSource(core_control)
@@ -175,7 +175,7 @@ def main():
     group('E5 · Material section diagrams',[diagrams],Color.FromArgb(218,228,235))
     group('E6 · Report export / local only',[run_analysis,analysis_receipt],Color.FromArgb(220,232,221))
     # Never overwrite a definition the owner may have edited.
-    name='OBTP_Module_R19_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    name='OBTP_Module_R20_'+datetime.now().strftime('%Y%m%d_%H%M%S')
     path=ROOT/(name+'.gh')
     if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
     doc.FilePath=str(path)
