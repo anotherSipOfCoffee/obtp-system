@@ -12,13 +12,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install rhino3dm==8.35.0 reportlab
+      - run: pip install rhino3dm==8.35.0 reportlab numpy pillow
       - run: python -m unittest discover -s authoring/grasshopper/tests
-      - run: python authoring/grasshopper/export_web.py /tmp/sauna-catalogue --revision ${{ github.sha }}
+      - run: python authoring/grasshopper/EXPORT_SYSTEM_COMPARISON.py
+      - run: python authoring/grasshopper/EXPORT_STUDIO_M_PDFS.py
+      - run: python tools/package-gh-r22.py /tmp/OBTP_Grasshopper_R22.zip
       - uses: actions/upload-artifact@v4
         with:
-          name: grasshopper-and-default-studio-documents
-          path: |
-            /tmp/sauna-catalogue/OBTP_Grasshopper_Source.zip
-            /tmp/sauna-catalogue/studio-m-open-r0-t2-w1180-f0-b0-summer-*.pdf
+          name: OBTP-Grasshopper-R22
+          path: /tmp/OBTP_Grasshopper_R22.zip
           retention-days: 30

@@ -11,3 +11,9 @@ __pycache__/
 *.pyc
 qa/
 cassette-validation.json
+
+# Reproducible GH R22 local exports; sources and review images remain tracked.
+authoring/grasshopper/review-r22/*.3dm
+authoring/grasshopper/review-r22/0*.json
+authoring/grasshopper/review-r22/*-schedule.csv
+authoring/grasshopper/gh-documents/

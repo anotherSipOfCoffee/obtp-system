@@ -174,8 +174,41 @@ def main():
     group('E4 · Results status / no invented values',[results],Color.FromArgb(235,222,218))
     group('E5 · Material section diagrams',[diagrams],Color.FromArgb(218,228,235))
     group('E6 · Report export / local only',[run_analysis,analysis_receipt],Color.FromArgb(220,232,221))
+    # Independent System library comparison; does not change the shared building model.
+    def choices(name,labels,default,x,y):
+        obj=GH_ValueList();obj.NickName=name;obj.ListMode=GH_ValueListMode.DropDown;obj.ListItems.Clear()
+        for number,label in labels:
+            entry=GH_ValueListItem(label,str(number));entry.Selected=(number==default);obj.ListItems.Add(entry)
+        return place(obj,x,y)
+    comparison_controls={
+      'enabled':toggle('Show additional System comparison',True,40,1800),
+      'system':choices('System',[(0,'1 / WikiHouse source'),(1,'2 / Studio current cassette'),(2,'3 / B experimental plate ribs')],2,40,1845),
+      'bays':slider('Modules / WikiHouse and B',4,1,8,40,1890),
+      'layer':choices('Assembly layers',[(0,'Floor'),(1,'Floor + walls'),(2,'Floor + walls + roof'),(3,'Complete concept')],3,40,1935),
+      'panels':toggle('Show panels / cassette and B',True,40,1980),
+      'insulation':toggle('Show insulation / cassette and B',False,40,2025),
+      'foundation':toggle('Show foundation / cassette',True,40,2070),
+      'inspection':choices('Inspection',[(0,'Assembly'),(1,'Object / assembly group'),(2,'Connection context')],0,40,2115),
+      'object_index':slider('Object or connection index / see catalogue',0,0,300,40,2160),
+      'explode':slider('Preview separation / not erection',0,0,100,40,2205),
+      'rib_pitch':choices('B rib pitch / mm',[(600,'600'),(900,'900'),(1200,'1200')],900,40,2250),
+      'rib_span':slider('B transverse outside span / mm',3600,2400,4800,40,2295),
+      'rib_height':choices('B clear height / mm',[(2100,'2100'),(2700,'2700')],2100,40,2340),
+      'rib_thickness':choices('B plate thickness / unengineered',[(27,'27'),(45,'45'),(63,'63')],45,40,2385),
+      'rib_depth':choices('B rib depth / unengineered',[(180,'180'),(240,'240'),(360,'360')],240,40,2430),
+      'core_frame':toggle('Comparison core / unique part colours',False,40,2475)}
+    comparison_inputs=[('scene_json',String)]+[(k,Boolean if k in ('enabled','panels','insulation','foundation','core_frame') else Double) for k in comparison_controls]
+    comparison=script('05 · Three System comparison','comparison.py',comparison_inputs,
+      [(n,GH_ParamAccess.list) for n in ['geometry','materials','part_ids','type_ids','catalogue']]+[('report',GH_ParamAccess.item),('comparison_json',GH_ParamAccess.item)],480,1950)
+    comparison.Params.Input[0].AddSource(model.Params.Output[0])
+    for i,obj in enumerate(comparison_controls.values(),1):comparison.Params.Input[i].AddSource(obj)
+    comparison_colour=place(proxies[0].CreateInstance(),850,1900)
+    comparison_colour.Params.Input[0].AddSource(comparison.Params.Output[0]);comparison_colour.Params.Input[1].AddSource(comparison.Params.Output[1]);comparison.Hidden=True
+    comparison_report=panel('',1120,1900);comparison_report.AddSource(comparison.Params.Output[5])
+    comparison_catalogue=panel('',1120,2300);comparison_catalogue.AddSource(comparison.Params.Output[4])
+    group('F / System comparison / placed +18000 mm X / see GH_R22.md',list(comparison_controls.values())+[comparison,comparison_colour,comparison_report,comparison_catalogue],Color.FromArgb(223,231,217))
     # Never overwrite a definition the owner may have edited.
-    name='OBTP_Module_R21_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    name='OBTP_Module_R22_'+datetime.now().strftime('%Y%m%d_%H%M%S')
     path=ROOT/(name+'.gh')
     if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
     doc.FilePath=str(path)

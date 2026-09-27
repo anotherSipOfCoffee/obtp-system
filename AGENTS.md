@@ -53,3 +53,9 @@ The user paused site updates. Do not change Studio pins, site files or publish w
 
 ## Latest public Studio document scope
 The later user instruction authorizes Studio publication for the two locked M-with-storage presets. Canonical PDF recipes accept `include_cladding=False` for public assembly, loose layout and schedule exports; this omits facade boards using the existing manufacturing predicate, without changing full-scene geometry, IDs, audit counts or GH default exports. Studio retains separate cladding quantities and visible 3D cladding.
+
+## R22 current task scope
+- GH only; do not change or deploy either website. Three comparison choices: pinned WikiHouse, latest Studio canonical cassette, new B plate ribs. B is independent research geometry, not a Studio replacement.
+- Keep original building controls, connected-wall erection and document recipes. New inspection controls belong only to the separate comparison component.
+- B is not the older R21 option-B 600/1200 bay trial. Here B means plate ribs with insulation infill. See GH_R22.md and RESEARCH_B_R01.md.
+- Run portable comparison exports and source tests; no full website catalogue regeneration is needed when the canonical building geometry is unchanged. Native Rhino/GH must be reported separately.

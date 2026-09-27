@@ -1,0 +1,82 @@
+[
+  {
+    "name": "01_WikiHouse",
+    "visible_meshes": 474,
+    "source_hash": null,
+    "metrics": null
+  },
+  {
+    "name": "02_Studio_Cassette",
+    "visible_meshes": 1825,
+    "source_hash": "d452562a3af322f49472f6b2c83144b7c4ff9349ccff5f6e0558b40abff4151d",
+    "metrics": {
+      "building_area_bound_m2": 37.653408,
+      "internal_clear_rectangle_m2": 9.2862,
+      "main_clear_floor_less_partition_m2": 12.101688,
+      "height_mm": 2942.7,
+      "max_bearing_line_span_mm": 2400,
+      "terrace_area_m2": 12.604,
+      "enclosed_finished_area_m2": 18.921024,
+      "wood_m3": {
+        "timber": 4.82465703375,
+        "plywood": 1.6429792319999998,
+        "lining-wood": 0.743811336,
+        "cladding-wood": 1.441528968,
+        "deck-wood": 0.36381968
+      },
+      "total_wood_m3": 9.01679624975,
+      "central_room_clear_area_m2": 3.4272
+    }
+  },
+  {
+    "name": "03_B_Ribs",
+    "visible_meshes": 36,
+    "source_hash": "20ef726dcaea784041c31d774bffb529df5d8cbb1257dfb9e9646aa8c96ae1ba",
+    "metrics": {
+      "length_mm": 3600,
+      "span_mm": 3600,
+      "clear_width_mm": 3120,
+      "clear_height_mm": 2100,
+      "lvl_blank_volume_m3": 0.72495,
+      "plywood_volume_m3": 0.852768,
+      "insulation_volume_m3": 9.0748836,
+      "joint_interfaces": 20,
+      "fastener_quantity": null,
+      "cutting_waste": null
+    }
+  },
+  {
+    "name": "04_B_Insulated",
+    "visible_meshes": 168,
+    "source_hash": "20ef726dcaea784041c31d774bffb529df5d8cbb1257dfb9e9646aa8c96ae1ba",
+    "metrics": {
+      "length_mm": 3600,
+      "span_mm": 3600,
+      "clear_width_mm": 3120,
+      "clear_height_mm": 2100,
+      "lvl_blank_volume_m3": 0.72495,
+      "plywood_volume_m3": 0.852768,
+      "insulation_volume_m3": 9.0748836,
+      "joint_interfaces": 20,
+      "fastener_quantity": null,
+      "cutting_waste": null
+    }
+  },
+  {
+    "name": "05_B_Knee",
+    "visible_meshes": 4,
+    "source_hash": "20ef726dcaea784041c31d774bffb529df5d8cbb1257dfb9e9646aa8c96ae1ba",
+    "metrics": {
+      "length_mm": 3600,
+      "span_mm": 3600,
+      "clear_width_mm": 3120,
+      "clear_height_mm": 2100,
+      "lvl_blank_volume_m3": 0.72495,
+      "plywood_volume_m3": 0.852768,
+      "insulation_volume_m3": 9.0748836,
+      "joint_interfaces": 20,
+      "fastener_quantity": null,
+      "cutting_waste": null
+    }
+  }
+]

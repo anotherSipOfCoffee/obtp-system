@@ -1,3 +1,7 @@
+# Current GH release — R22 three-system comparison
+
+Read [GH_R22.md](GH_R22.md) first. It supersedes the release header below; existing R21 building geometry and exports remain unchanged. New comparison group adds WikiHouse, the Studio cassette and B plate ribs.
+
 # Current GH release — R21 modularity audit
 
 Extract the complete updated package into a fresh folder, then run `CREATE_GRASSHOPPER.py` in Rhino 8 Python 3 with Grasshopper open. This creates a new timestamped `.gh`; existing definitions are not overwritten.
