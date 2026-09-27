@@ -1,12 +1,14 @@
-# Current GH preview update (R17 controls)
+# Current GH release — R21 modularity audit
 
 Extract the complete updated package into a fresh folder, then run `CREATE_GRASSHOPPER.py` in Rhino 8 Python 3 with Grasshopper open. This creates a new timestamped `.gh`; existing definitions are not overwritten.
 
-- **Assembly stage** integer slider: 0 empty; 1 foundations; 2 floor laydown; 3 floor placement; 4 wall laydown; 5 wall erection; 6 roof laydown; 7 roof placement; 8 opening-unit laydown; 9 opening insertion; 10 interior; 11 decking; 12 cladding complete. Preparation poses are display-only; dimensions and quantities always describe the final model. Handling and connections remain unverified.
+- **Assembly progress** integer slider: 0 empty, 100 complete. Walls are shown one at a time, connected with their openings, flat near their erection line, then at 45 degrees and upright. Foundation/floor, roof, opening-unit, interior and decking stages remain; cladding is last. Display grouping never changes quantities or certifies lifting.
 - **Core frame** integer slider: 0 complete model in material colours; 1 structural timber and foundation supports only. Sheet panels, cladding, insulation and equipment are hidden in this display mode.
 - In core mode, identical canonical manufacturing candidate types share a preview material. Different types have distinct RGB values; similar-looking colours are possible, so use the type-ID/RGB legend. Colours do not change when moving the stage slider. Identities remain provisional where manufacturing details are unknown.
 - Native Custom Preview is wired automatically. The Python geometry preview is hidden to prevent default GH shading masking the colours. Preview filtering never changes the canonical model, quantities or export.
 - Portable tests cover stage completeness, monotonicity, core filtering, identity/colour reuse and scene immutability. Native Rhino/GH execution remains pending.
+
+Read [GH_R21.md](GH_R21.md) and [the measured comparison](review-r21/OBTP_Modularity_R21.html). R21 retains R20 geometry after the bounded A/B screen; no physical part reduction is claimed. The 300 mm coordination reference is distinct from existing planning and physical bays. Opening contracts and procurement reconciliation are in the canonical scene. Three supplied PDFs cover default Studio M only. Websites remain paused.
 
 The historical notes below describe older releases; current controls and AGENTS.md take precedence.
 

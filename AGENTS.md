@@ -1,4 +1,4 @@
-# Current OBTP System guidance — R16, 26 September 2026
+# Current OBTP System guidance — GH R21, 27 September 2026
 
 Latest explicit user instructions take precedence. R16 was approved and published. Schedule and assembly PDF downloads are authorized only for the default Studio M (open sliders); drawing/opening PDFs stay disabled. Leave Drive and Architecture unchanged.
 
