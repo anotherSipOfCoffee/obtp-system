@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R19-CONTINUOUS-NICHES'
+VERSION = 'GH-R21-MODULARITY-AUDIT'
 from . import cells
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
@@ -412,6 +412,8 @@ def build(p):
     scene['supplier_spec']=attach(scene)
     from .object_library import attach as attach_objects
     scene['object_library']=attach_objects(scene)
+    from .modularity import attach as attach_modularity
+    scene['modularity']=attach_modularity(scene)
     from .drawings import derive
     scene['drawings']=derive(scene)
     return scene

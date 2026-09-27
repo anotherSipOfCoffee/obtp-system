@@ -43,3 +43,10 @@ Historical release/research documents are evidence, not current competing instru
 
 ## Current scope: GH only (27 September 2026)
 The user paused site updates. Do not change Studio pins, site files or publish while this scope is active. GH R20 adds a separate detached Parts Layout PDF for default Studio M and connected wall-run erection poses. The GH progress slider is 0–100%; walls raise one at a time through flat/45-degree/upright states about a fixed bottom edge. Canonical geometry and counts remain R19. Full-wall manual lifting is unverified; see GH_R20.md.
+
+## R21 modularity decision
+- R20 `d02d8322bb1f456e4b005d5f6a023f236eddc220` is the frozen current-geometry baseline. Retain its geometry after the bounded A/B screen: no candidate reduced fabricated diversity without a worse tradeoff or fit failure. Do not describe procurement reclassification as a physical reduction.
+- `scene.modularity` separates the 300 mm coordination reference, existing 900×1200 planning, structural assemblies, manufactured identities, purchased products and connection details. No 300 mm physical bays or new controls are adopted.
+- `window_width` is modelled frame outside width. Installation gap/profile/clear passage fields are not supplier-approved unless supported explicitly. Unknowns remain null. Do not narrow or replace entrances based only on host width; height, thresholds and structural bearing matter.
+- Use `modularity_study.py` for this comparison, starting with its 24-case screen. `--full` validates only the finalist against immutable R20. Do not run the older multi-history website export pipeline for GH-only metadata changes. Existing 68-test suite and portable/native distinction remain applicable.
+- See `GH_R21.md` and `review-r21/OBTP_Modularity_R21.html`; historical guidance above does not override these measured decisions or later explicit user instructions.

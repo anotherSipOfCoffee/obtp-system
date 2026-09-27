@@ -12,10 +12,10 @@ from obtp.ssp_preview import pdf
 def export(destination):
     out=Path(destination);out.mkdir(parents=True,exist_ok=True)
     scene=build(parameters(2,program_type=1,roof_type=0,studio_winter_closed=False))
-    scene['display_revision']='GH-R20-WALL-ERECTION'
+    scene['display_revision']='GH-R21-MODULARITY-AUDIT'
     scene['document_date']='2026-09-27'
-    write(scene,out/'Studio_M_R20_Part_Schedule.pdf','GH R20; unchanged canonical geometry')
-    pdf(parts_layout(scene),out/'Studio_M_R20_Parts_Layout.pdf')
-    pdf(assembly(scene),out/'Studio_M_R20_Assembly.pdf')
+    write(scene,out/'Studio_M_R21_Part_Schedule.pdf','GH R21; retained R20 geometry; audited modularity')
+    pdf(parts_layout(scene),out/'Studio_M_R21_Parts_Layout.pdf')
+    pdf(assembly(scene),out/'Studio_M_R21_Assembly.pdf')
     print('Three default Studio M PDFs:',out)
 if __name__=='__main__':export(sys.argv[1] if len(sys.argv)>1 else Path(__file__).resolve().parent/'gh-documents')

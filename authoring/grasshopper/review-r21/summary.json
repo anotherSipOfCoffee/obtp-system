@@ -1,0 +1,5204 @@
+{
+  "baseline_commit": "d02d8322bb1f456e4b005d5f6a023f236eddc220",
+  "screen": {
+    "baseline": {
+      "catalogue_types": 345,
+      "catalogue_fabricated_types": 280,
+      "catalogue_assembly_types": 268,
+      "pieces": 30622,
+      "valid_configurations": 24,
+      "invalid_configurations": 0,
+      "errors": [],
+      "assemblies": 2080,
+      "modeled_interfaces": 922,
+      "within_run_cassette_seams": 208,
+      "material_m3": {
+        "cladding-wood": 8.88935364,
+        "concrete-study": 24.986556,
+        "deck-wood": 7.37110416,
+        "glass": 1.351867392,
+        "lining-wood": 18.085147968,
+        "mineral-wool": 258.58693800000003,
+        "object": 10.93412112,
+        "plywood": 36.224416008,
+        "roof-membrane": 0.712030176,
+        "timber": 97.04706213099777
+      }
+    },
+    "A-solids": {
+      "catalogue_types": 355,
+      "catalogue_fabricated_types": 290,
+      "catalogue_assembly_types": 272,
+      "pieces": 30514,
+      "valid_configurations": 24,
+      "invalid_configurations": 0,
+      "errors": [],
+      "assemblies": 2064,
+      "modeled_interfaces": 906,
+      "within_run_cassette_seams": 192,
+      "material_m3": {
+        "cladding-wood": 8.88935364,
+        "concrete-study": 24.986556,
+        "deck-wood": 7.37110416,
+        "glass": 1.351867392,
+        "lining-wood": 18.085147968,
+        "mineral-wool": 258.98076000000003,
+        "object": 10.93412112,
+        "plywood": 36.469360007999995,
+        "roof-membrane": 0.712030176,
+        "timber": 96.65324013099777
+      }
+    },
+    "B-solids": {
+      "catalogue_types": 360,
+      "catalogue_fabricated_types": 295,
+      "catalogue_assembly_types": 275,
+      "pieces": 30514,
+      "valid_configurations": 24,
+      "invalid_configurations": 0,
+      "errors": [],
+      "assemblies": 2064,
+      "modeled_interfaces": 906,
+      "within_run_cassette_seams": 192,
+      "material_m3": {
+        "cladding-wood": 8.88935364,
+        "concrete-study": 24.986556,
+        "deck-wood": 7.37110416,
+        "glass": 1.351867392,
+        "lining-wood": 18.085147968,
+        "mineral-wool": 258.98076,
+        "object": 10.93412112,
+        "plywood": 36.469360007999995,
+        "roof-membrane": 0.712030176,
+        "timber": 96.65324013099777
+      }
+    },
+    "A-fixed-1500": {
+      "catalogue_types": 214,
+      "catalogue_fabricated_types": 179,
+      "catalogue_assembly_types": 138,
+      "pieces": 13880,
+      "valid_configurations": 10,
+      "invalid_configurations": 14,
+      "errors": [
+        {
+          "key": "0-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "0-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "1-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "1-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "2-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "2-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "3-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "3-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "4-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "4-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "5-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "5-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        },
+        {
+          "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+          "error": "Host 1200 cannot fit without >0 mm opening relocation"
+        }
+      ],
+      "assemblies": 1007,
+      "modeled_interfaces": 472,
+      "within_run_cassette_seams": 132,
+      "material_m3": {
+        "cladding-wood": 4.0887936,
+        "concrete-study": 9.674451,
+        "deck-wood": 3.6381968,
+        "glass": 0.93495888,
+        "lining-wood": 7.48957316,
+        "mineral-wool": 111.83306400000001,
+        "object": 5.2283793,
+        "plywood": 16.45715232,
+        "roof-membrane": 0.403610688,
+        "timber": 48.53471117667851
+      }
+    },
+    "A-move-1500": {
+      "catalogue_types": 366,
+      "catalogue_fabricated_types": 301,
+      "catalogue_assembly_types": 280,
+      "pieces": 31188,
+      "valid_configurations": 24,
+      "invalid_configurations": 0,
+      "errors": [],
+      "assemblies": 2180,
+      "modeled_interfaces": 1022,
+      "within_run_cassette_seams": 308,
+      "material_m3": {
+        "cladding-wood": 8.88664614,
+        "concrete-study": 24.986556,
+        "deck-wood": 7.37110416,
+        "glass": 1.351867392,
+        "lining-wood": 18.091163968,
+        "mineral-wool": 255.34467,
+        "object": 10.93412112,
+        "plywood": 36.469360007999995,
+        "roof-membrane": 0.712030176,
+        "timber": 100.28933013099777
+      }
+    },
+    "A-move-1800": {
+      "catalogue_types": 363,
+      "catalogue_fabricated_types": 298,
+      "catalogue_assembly_types": 281,
+      "pieces": 31170,
+      "valid_configurations": 24,
+      "invalid_configurations": 0,
+      "errors": [],
+      "assemblies": 2177,
+      "modeled_interfaces": 1019,
+      "within_run_cassette_seams": 305,
+      "material_m3": {
+        "cladding-wood": 8.88664614,
+        "concrete-study": 24.986556,
+        "deck-wood": 7.37110416,
+        "glass": 1.351867392,
+        "lining-wood": 18.091163968,
+        "mineral-wool": 255.4504965,
+        "object": 10.93412112,
+        "plywood": 36.469360007999995,
+        "roof-membrane": 0.712030176,
+        "timber": 100.18350363099776
+      }
+    },
+    "B-move-1500": {
+      "catalogue_types": 363,
+      "catalogue_fabricated_types": 298,
+      "catalogue_assembly_types": 282,
+      "pieces": 31188,
+      "valid_configurations": 24,
+      "invalid_configurations": 0,
+      "errors": [],
+      "assemblies": 2180,
+      "modeled_interfaces": 1022,
+      "within_run_cassette_seams": 308,
+      "material_m3": {
+        "cladding-wood": 8.88664614,
+        "concrete-study": 24.986556,
+        "deck-wood": 7.37110416,
+        "glass": 1.351867392,
+        "lining-wood": 18.091163968,
+        "mineral-wool": 255.34467,
+        "object": 10.93412112,
+        "plywood": 36.469360007999995,
+        "roof-membrane": 0.712030176,
+        "timber": 100.28933013099777
+      }
+    },
+    "B-move-1800": {
+      "catalogue_types": 366,
+      "catalogue_fabricated_types": 301,
+      "catalogue_assembly_types": 283,
+      "pieces": 31170,
+      "valid_configurations": 24,
+      "invalid_configurations": 0,
+      "errors": [],
+      "assemblies": 2177,
+      "modeled_interfaces": 1019,
+      "within_run_cassette_seams": 305,
+      "material_m3": {
+        "cladding-wood": 8.88664614,
+        "concrete-study": 24.986556,
+        "deck-wood": 7.37110416,
+        "glass": 1.351867392,
+        "lining-wood": 18.091163968,
+        "mineral-wool": 255.4504965,
+        "object": 10.93412112,
+        "plywood": 36.469360007999995,
+        "roof-membrane": 0.712030176,
+        "timber": 100.18350363099776
+      }
+    }
+  },
+  "full": {
+    "catalogue_types": 346,
+    "catalogue_fabricated_types": 281,
+    "catalogue_assembly_types": 286,
+    "pieces": 282296,
+    "configurations": 216,
+    "exact_r20_matches": 216
+  },
+  "defaults": {
+    "Sauna": {
+      "types": 131,
+      "pieces": 1063,
+      "fabricated_types": 100,
+      "fabricated_pieces": 990,
+      "purchased_units": 3,
+      "purchased_representation_pieces": 15,
+      "unresolved_object_pieces": 58,
+      "assembly_types": 46,
+      "assemblies": 67,
+      "modeled_interfaces": 32,
+      "within_run_cassette_seams": 9,
+      "actual_fasteners": null,
+      "material_m3": {
+        "cladding-wood": 0.29721336,
+        "concrete-study": 0.10611000000000001,
+        "deck-wood": 0.23727199999999998,
+        "glass": 0.023000208,
+        "lining-wood": 0.702380664,
+        "mineral-wool": 9.4104855,
+        "object": 0.36878528,
+        "plywood": 1.251954432,
+        "roof-membrane": 0.047742048,
+        "timber": 3.33553293
+      },
+      "usable_area_m2": 9.232631999999999,
+      "dimensions": {
+        "length_mm": 5400,
+        "width_mm": 2400,
+        "annex_length_mm": 0,
+        "floor_top_mm": 238
+      },
+      "rooms": [
+        {
+          "id": "sauna",
+          "clear_width_mm": 2433,
+          "clear_depth_mm": 1938
+        },
+        {
+          "id": "hall",
+          "clear_width_mm": 2331,
+          "clear_depth_mm": 1938
+        }
+      ],
+      "geometry_sha256": "87336c9d4e09caa5690e04584539ef8856d9270501bf064ff5106ee3c77b03e9",
+      "cladding": {
+        "physical_pieces": 404,
+        "unique_types": 45,
+        "volume_m3": 0.760156012
+      },
+      "stock_study": {
+        "schema": "obtp-component-rationalisation/1",
+        "physical_wood_parts": 1331,
+        "orientation_specific_types": 149,
+        "normalised_types": 147,
+        "fewer_geometric_types": 2,
+        "stock_length_mm": 6000,
+        "assumed_kerf_mm": 3,
+        "stock_bars": 51,
+        "stock_utilisation_percent": 89.13,
+        "cutting_plan": [
+          {
+            "section_mm": [
+              45,
+              90
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "sauna-partition/stud-right",
+                "length_mm": 2010
+              },
+              {
+                "id": "sauna-partition/stud-left",
+                "length_mm": 2010
+              },
+              {
+                "id": "sauna-partition/jack-right",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              90
+            ],
+            "used_mm": 5470,
+            "cuts": [
+              {
+                "id": "sauna-partition/jack-left",
+                "length_mm": 1855
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-5",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-4",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-3",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-2",
+                "length_mm": 900
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              90
+            ],
+            "used_mm": 4941.0,
+            "cuts": [
+              {
+                "id": "weather-bearing-0-0/bottom-cut-1",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-0",
+                "length_mm": 900
+              },
+              {
+                "id": "sauna-partition/opening/plate-top-0",
+                "length_mm": 900
+              },
+              {
+                "id": "sauna-partition/plate-top-right",
+                "length_mm": 555.0
+              },
+              {
+                "id": "sauna-partition/plate-top-left",
+                "length_mm": 555.0
+              },
+              {
+                "id": "sauna-partition/plate-bottom-right",
+                "length_mm": 555.0
+              },
+              {
+                "id": "sauna-partition/plate-bottom-left",
+                "length_mm": 555.0
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "hot-end/stud-right-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front/jack-right",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "hot-end/stud-left-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front/jack-left",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "hall-end/stud-right-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/jack-right",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "hall-end/stud-left-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/jack-left",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5937,
+            "cuts": [
+              {
+                "id": "front/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front/stud-right",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/plate-top-1",
+                "length_mm": 1200
+              },
+              {
+                "id": "back/plate-top-5",
+                "length_mm": 705
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5937,
+            "cuts": [
+              {
+                "id": "front/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front/stud-left",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/plate-top-0",
+                "length_mm": 1200
+              },
+              {
+                "id": "back/plate-top-0",
+                "length_mm": 705
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5937,
+            "cuts": [
+              {
+                "id": "front-window/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/stud-right",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/plate-bottom-1",
+                "length_mm": 1200
+              },
+              {
+                "id": "back/plate-bottom-5",
+                "length_mm": 705
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5937,
+            "cuts": [
+              {
+                "id": "front-window/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/stud-left",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/plate-bottom-0",
+                "length_mm": 1200
+              },
+              {
+                "id": "back/plate-bottom-0",
+                "length_mm": 705
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5229,
+            "cuts": [
+              {
+                "id": "back/stud-right-5",
+                "length_mm": 2010
+              },
+              {
+                "id": "back/stud-right-4",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/plate-top-1",
+                "length_mm": 1200
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5229,
+            "cuts": [
+              {
+                "id": "back/stud-right-3",
+                "length_mm": 2010
+              },
+              {
+                "id": "back/stud-right-2",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/plate-top-0",
+                "length_mm": 1200
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5229,
+            "cuts": [
+              {
+                "id": "back/stud-right-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "back/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/plate-bottom-1",
+                "length_mm": 1200
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5229,
+            "cuts": [
+              {
+                "id": "back/stud-left-5",
+                "length_mm": 2010
+              },
+              {
+                "id": "back/stud-left-4",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/plate-bottom-0",
+                "length_mm": 1200
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5229,
+            "cuts": [
+              {
+                "id": "back/stud-left-3",
+                "length_mm": 2010
+              },
+              {
+                "id": "back/stud-left-2",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/opening/plate-top-0",
+                "length_mm": 1200
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5832,
+            "cuts": [
+              {
+                "id": "back/stud-left-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "back/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front/plate-top-0",
+                "length_mm": 900
+              },
+              {
+                "id": "front/plate-bottom-0",
+                "length_mm": 900
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5418,
+            "cuts": [
+              {
+                "id": "front/opening/plate-top-0",
+                "length_mm": 900
+              },
+              {
+                "id": "front-window/plate-top-0",
+                "length_mm": 900
+              },
+              {
+                "id": "front-window/plate-bottom-0",
+                "length_mm": 900
+              },
+              {
+                "id": "back/plate-top-4",
+                "length_mm": 900
+              },
+              {
+                "id": "back/plate-top-3",
+                "length_mm": 900
+              },
+              {
+                "id": "back/plate-top-2",
+                "length_mm": 900
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 4515,
+            "cuts": [
+              {
+                "id": "back/plate-top-1",
+                "length_mm": 900
+              },
+              {
+                "id": "back/plate-bottom-4",
+                "length_mm": 900
+              },
+              {
+                "id": "back/plate-bottom-3",
+                "length_mm": 900
+              },
+              {
+                "id": "back/plate-bottom-2",
+                "length_mm": 900
+              },
+              {
+                "id": "back/plate-bottom-1",
+                "length_mm": 900
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5987,
+            "cuts": [
+              {
+                "id": "terrace-side/joist-2",
+                "length_mm": 3600
+              },
+              {
+                "id": "terrace/joist-18",
+                "length_mm": 1200
+              },
+              {
+                "id": "terrace/joist-9",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5965,
+            "cuts": [
+              {
+                "id": "terrace-side/joist-1",
+                "length_mm": 3600
+              },
+              {
+                "id": "terrace/joist-8",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-7",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5965,
+            "cuts": [
+              {
+                "id": "terrace-side/joist-0",
+                "length_mm": 3600
+              },
+              {
+                "id": "terrace/joist-6",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-5",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5905,
+            "cuts": [
+              {
+                "id": "terrace/joist-4",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-3",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-2",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-17",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-16",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5905,
+            "cuts": [
+              {
+                "id": "terrace/joist-15",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-14",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-13",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-12",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-11",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 3543,
+            "cuts": [
+              {
+                "id": "terrace/joist-10",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-1",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-0",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5942,
+            "cuts": [
+              {
+                "id": "roof-5/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-5/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-3/partition-trimmer-0-0",
+                "length_mm": 1133
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5941,
+            "cuts": [
+              {
+                "id": "roof-4/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-4/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-3/partition-trimmer-0-1",
+                "length_mm": 1132
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-3/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-3/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-5/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-2/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-2/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-5/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-1/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-1/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-5/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-0/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-0/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-4/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-5/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-5/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-4/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-4/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-4/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-4/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-3/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-3/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-3/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-2/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-2/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-3/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-1/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-1/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-3/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-0/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-0/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-2/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5691,
+            "cuts": [
+              {
+                "id": "roof-2/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-2/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-1/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-1/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-1/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-0/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-0/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5691,
+            "cuts": [
+              {
+                "id": "roof-0/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-5/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-5/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-5/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-4/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-4/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-4/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5691,
+            "cuts": [
+              {
+                "id": "floor-3/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-3/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-3/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-2/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-2/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-2/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-1/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 4065,
+            "cuts": [
+              {
+                "id": "floor-1/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-1/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-0/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-0/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-0/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              90,
+              145
+            ],
+            "used_mm": 5290,
+            "cuts": [
+              {
+                "id": "foundation-tie-4/member-2",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-4/member-1",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-4/member-0",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-3/member-2",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-3/member-1",
+                "length_mm": 1055
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              90,
+              145
+            ],
+            "used_mm": 5290,
+            "cuts": [
+              {
+                "id": "foundation-tie-3/member-0",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-2/member-2",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-2/member-1",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-2/member-0",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-1/member-2",
+                "length_mm": 1055
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              90,
+              145
+            ],
+            "used_mm": 5290,
+            "cuts": [
+              {
+                "id": "foundation-tie-1/member-1",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-1/member-0",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-0/member-2",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-0/member-1",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-0/member-0",
+                "length_mm": 1055
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              90,
+              155
+            ],
+            "used_mm": 993,
+            "cuts": [
+              {
+                "id": "sauna-partition/lintel",
+                "length_mm": 990
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5544,
+            "cuts": [
+              {
+                "id": "foundation-grid-3/beam-0",
+                "length_mm": 1845
+              },
+              {
+                "id": "foundation-grid-2/beam-0",
+                "length_mm": 1845
+              },
+              {
+                "id": "foundation-grid-1/beam-0",
+                "length_mm": 1845
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5454,
+            "cuts": [
+              {
+                "id": "foundation-grid-0/beam-0",
+                "length_mm": 1845
+              },
+              {
+                "id": "foundation-grid-3/beam-2",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-3/beam-1",
+                "length_mm": 1800
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5409,
+            "cuts": [
+              {
+                "id": "foundation-grid-2/beam-2",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-2/beam-1",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-1/beam-2",
+                "length_mm": 1800
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5409,
+            "cuts": [
+              {
+                "id": "foundation-grid-1/beam-1",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-0/beam-2",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-0/beam-1",
+                "length_mm": 1800
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 3792,
+            "cuts": [
+              {
+                "id": "foundation-grid-3/beam-3",
+                "length_mm": 945
+              },
+              {
+                "id": "foundation-grid-2/beam-3",
+                "length_mm": 945
+              },
+              {
+                "id": "foundation-grid-1/beam-3",
+                "length_mm": 945
+              },
+              {
+                "id": "foundation-grid-0/beam-3",
+                "length_mm": 945
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              155,
+              195
+            ],
+            "used_mm": 2286,
+            "cuts": [
+              {
+                "id": "front-window/lintel",
+                "length_mm": 1290
+              },
+              {
+                "id": "front/lintel",
+                "length_mm": 990
+              }
+            ]
+          }
+        ],
+        "excluded_ids": [
+          "front-window/plate-bottom-left",
+          "front-window/plate-top-left",
+          "front-window/plate-bottom-right",
+          "front-window/plate-top-right",
+          "front/plate-bottom-left",
+          "front/plate-top-left",
+          "front/plate-bottom-right",
+          "front/plate-top-right"
+        ],
+        "method": "orientation-normalised rectangular timber types; first-fit-decreasing 1D cutting-stock heuristic",
+        "scope": "No member deletion, reduced sections or new structural splices. Rotation does not certify grain, grade, machining or connection equivalence.",
+        "holds": [
+          "6000mm stock and 3mm kerf are explicit study inputs; confirm availability and end trim.",
+          "No 2D plywood nesting, defects, grading, toolpaths or assembly-time calculation.",
+          "Fractal hierarchy retained as module > cassette > part; recursive subdivision is not an optimisation objective."
+        ]
+      },
+      "opening_dimensions": [
+        {
+          "id": "front-window/opening",
+          "axis": "x",
+          "host_bounds_mm": [
+            195,
+            1800
+          ],
+          "host_width_mm": 1605,
+          "installation_opening_mm": [
+            1200,
+            1900
+          ],
+          "installation_opening_origin_mm": [
+            397.5,
+            -12,
+            238
+          ],
+          "modeled_frame_outside_mm": [
+            1180.0,
+            1880
+          ],
+          "verified_frame_outside_mm": null,
+          "modeled_leaf_mm": null,
+          "verified_leaf_mm": null,
+          "clear_usable_passage_mm": null,
+          "passage_status": "Not certified; hinges, leaf swing, seals and hardware unresolved",
+          "structural_side_zones_mm": [
+            202.5,
+            202.5
+          ],
+          "king_stud_width_mm": 45,
+          "jack_stud_width_mm": 45,
+          "header_bearing_mm": 45,
+          "supported_infill_beyond_two_studs_mm": [
+            112.5,
+            112.5
+          ],
+          "adapter_detail": "Existing full-width top/bottom plates, king and jack studs, counted side plywood and cavity fill; no loose thin filler assumed",
+          "component_ids": [
+            "front-window/plate-bottom-left",
+            "front-window/plate-top-left",
+            "front-window/stud-left",
+            "front-window/jack-left",
+            "front-window/plate-bottom-right",
+            "front-window/plate-top-right",
+            "front-window/stud-right",
+            "front-window/jack-right",
+            "front-window/opening/plate-top-0",
+            "front-window/lintel",
+            "front-window/opening-skin-left",
+            "front-window/opening-skin-right",
+            "front-window/opening-skin-head"
+          ],
+          "modeled_installation_gaps_left_right_bottom_top_mm": [
+            10.0,
+            10.0,
+            10,
+            10
+          ],
+          "manufacturer_installation_tolerances_mm": null,
+          "levels_mm": {
+            "structural_floor_top": 238,
+            "modeled_finished_floor": 238,
+            "finish_build_up_allowance": null,
+            "rough_sill": 238,
+            "rough_head": 2138,
+            "frame_bottom": 248,
+            "frame_head": 2128,
+            "threshold": null
+          },
+          "source_reference": null,
+          "alternative_product_checks": [],
+          "status": "Project geometry only; exact supplier product not verified"
+        },
+        {
+          "id": "front/opening",
+          "axis": "x",
+          "host_bounds_mm": [
+            3600,
+            5205
+          ],
+          "host_width_mm": 1605,
+          "installation_opening_mm": [
+            900,
+            1900
+          ],
+          "installation_opening_origin_mm": [
+            3952.5,
+            -12,
+            238
+          ],
+          "modeled_frame_outside_mm": [
+            900.0,
+            1900
+          ],
+          "verified_frame_outside_mm": null,
+          "modeled_leaf_mm": [
+            830,
+            1860
+          ],
+          "verified_leaf_mm": null,
+          "clear_usable_passage_mm": null,
+          "passage_status": "Not certified; hinges, leaf swing, seals and hardware unresolved",
+          "structural_side_zones_mm": [
+            352.5,
+            352.5
+          ],
+          "king_stud_width_mm": 45,
+          "jack_stud_width_mm": 45,
+          "header_bearing_mm": 45,
+          "supported_infill_beyond_two_studs_mm": [
+            262.5,
+            262.5
+          ],
+          "adapter_detail": "Existing full-width top/bottom plates, king and jack studs, counted side plywood and cavity fill; no loose thin filler assumed",
+          "component_ids": [
+            "front/plate-bottom-left",
+            "front/plate-top-left",
+            "front/stud-left",
+            "front/jack-left",
+            "front/plate-bottom-right",
+            "front/plate-top-right",
+            "front/stud-right",
+            "front/jack-right",
+            "front/opening/plate-top-0",
+            "front/lintel",
+            "front/opening-skin-left",
+            "front/opening-skin-right",
+            "front/opening-skin-head"
+          ],
+          "modeled_installation_gaps_left_right_bottom_top_mm": [
+            0.0,
+            0.0,
+            0,
+            0
+          ],
+          "manufacturer_installation_tolerances_mm": null,
+          "levels_mm": {
+            "structural_floor_top": 238,
+            "modeled_finished_floor": 238,
+            "finish_build_up_allowance": null,
+            "rough_sill": 238,
+            "rough_head": 2138,
+            "frame_bottom": 238,
+            "frame_head": 2138,
+            "threshold": null
+          },
+          "source_reference": null,
+          "alternative_product_checks": [
+            {
+              "reference": "swedoor-9x19",
+              "required_installation_opening_mm": [
+                910,
+                1900
+              ],
+              "shortfall_mm": [
+                10,
+                0
+              ],
+              "geometric_rough_fit": false,
+              "adopted": false
+            },
+            {
+              "reference": "swedoor-10x21",
+              "required_installation_opening_mm": [
+                1010,
+                2100
+              ],
+              "shortfall_mm": [
+                110,
+                200
+              ],
+              "geometric_rough_fit": false,
+              "adopted": false
+            }
+          ],
+          "status": "Project geometry only; exact supplier product not verified"
+        },
+        {
+          "id": "sauna-partition/opening",
+          "axis": "y",
+          "host_bounds_mm": [
+            195,
+            2205
+          ],
+          "host_width_mm": 2010,
+          "installation_opening_mm": [
+            900,
+            1900
+          ],
+          "installation_opening_origin_mm": [
+            2688,
+            750.0,
+            238
+          ],
+          "modeled_frame_outside_mm": [
+            890.0,
+            1890
+          ],
+          "verified_frame_outside_mm": [
+            890,
+            1890,
+            92
+          ],
+          "modeled_leaf_mm": [
+            830,
+            1850
+          ],
+          "verified_leaf_mm": null,
+          "clear_usable_passage_mm": null,
+          "passage_status": "Not certified; hinges, leaf swing, seals and hardware unresolved",
+          "structural_side_zones_mm": [
+            555.0,
+            555.0
+          ],
+          "king_stud_width_mm": 45,
+          "jack_stud_width_mm": 45,
+          "header_bearing_mm": 45,
+          "supported_infill_beyond_two_studs_mm": [
+            465.0,
+            465.0
+          ],
+          "adapter_detail": "Existing full-width top/bottom plates, king and jack studs, counted side plywood and cavity fill; no loose thin filler assumed",
+          "component_ids": [
+            "sauna-partition/plate-bottom-left",
+            "sauna-partition/plate-top-left",
+            "sauna-partition/stud-left",
+            "sauna-partition/jack-left",
+            "sauna-partition/plate-bottom-right",
+            "sauna-partition/plate-top-right",
+            "sauna-partition/stud-right",
+            "sauna-partition/jack-right",
+            "sauna-partition/opening/plate-top-0",
+            "sauna-partition/lintel",
+            "sauna-partition/opening-skin-left",
+            "sauna-partition/opening-skin-right",
+            "sauna-partition/opening-skin-head"
+          ],
+          "modeled_installation_gaps_left_right_bottom_top_mm": [
+            5.0,
+            5.0,
+            0,
+            10
+          ],
+          "manufacturer_installation_tolerances_mm": null,
+          "levels_mm": {
+            "structural_floor_top": 238,
+            "modeled_finished_floor": 238,
+            "finish_build_up_allowance": null,
+            "rough_sill": 238,
+            "rough_head": 2138,
+            "frame_bottom": 238,
+            "frame_head": 2128,
+            "threshold": null
+          },
+          "source_reference": "harvia-D91902M",
+          "alternative_product_checks": [],
+          "status": "Envelope verified; installation and usable passage unresolved"
+        }
+      ]
+    },
+    "Studio": {
+      "types": 137,
+      "pieces": 1314,
+      "fabricated_types": 107,
+      "fabricated_pieces": 1250,
+      "purchased_units": 6,
+      "purchased_representation_pieces": 53,
+      "unresolved_object_pieces": 11,
+      "assembly_types": 71,
+      "assemblies": 95,
+      "modeled_interfaces": 42,
+      "within_run_cassette_seams": 8,
+      "actual_fasteners": null,
+      "material_m3": {
+        "cladding-wood": 0.40932936,
+        "concrete-study": 0.127332,
+        "deck-wood": 0.36381968,
+        "glass": 0.096056208,
+        "lining-wood": 0.743811336,
+        "mineral-wool": 11.319705,
+        "object": 0.47776248,
+        "plywood": 1.6429792319999998,
+        "roof-membrane": 0.067268448,
+        "timber": 4.82465703375
+      },
+      "usable_area_m2": 12.101688,
+      "dimensions": {
+        "length_mm": 7200,
+        "width_mm": 2400,
+        "annex_length_mm": 0,
+        "floor_top_mm": 238
+      },
+      "rooms": [],
+      "geometry_sha256": "e2066187f6233172bdd842f5f7a78825b62808f7c6432bca479c102d345d9f93",
+      "cladding": {
+        "physical_pieces": 558,
+        "unique_types": 53,
+        "volume_m3": 1.032199608
+      },
+      "stock_study": {
+        "schema": "obtp-component-rationalisation/1",
+        "physical_wood_parts": 1731,
+        "orientation_specific_types": 167,
+        "normalised_types": 162,
+        "fewer_geometric_types": 5,
+        "stock_length_mm": 6000,
+        "assumed_kerf_mm": 3,
+        "stock_bars": 67,
+        "stock_utilisation_percent": 90.89,
+        "cutting_plan": [
+          {
+            "section_mm": [
+              45,
+              90
+            ],
+            "used_mm": 5418,
+            "cuts": [
+              {
+                "id": "weather-bearing-0-0/bottom-cut-7",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-6",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-5",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-4",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-3",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-2",
+                "length_mm": 900
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              90
+            ],
+            "used_mm": 2409,
+            "cuts": [
+              {
+                "id": "weather-bearing-0-0/bottom-cut-1",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-0",
+                "length_mm": 900
+              },
+              {
+                "id": "weather-bearing-0-0/bottom-cut-8",
+                "length_mm": 600
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "studio-right-entry/stud-right",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-right-entry/stud-left",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-right-entry/jack-right",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "studio-right-back/stud-right-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-right-back/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-right-entry/jack-left",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "studio-right-back/stud-left-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-right-back/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-left-entry/jack-right",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "studio-left-entry/stud-right",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-left-entry/stud-left",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-left-entry/jack-left",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "studio-left-back/stud-right-3",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-left-back/stud-right-2",
+                "length_mm": 2010
+              },
+              {
+                "id": "front/jack-right",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "studio-left-back/stud-right-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-left-back/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front/jack-left",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "studio-left-back/stud-left-3",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-left-back/stud-left-2",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/jack-right",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5884,
+            "cuts": [
+              {
+                "id": "studio-left-back/stud-left-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-left-back/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/jack-left",
+                "length_mm": 1855
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5982.0,
+            "cuts": [
+              {
+                "id": "log-niche-front/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "log-niche-front/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/plate-top-1",
+                "length_mm": 1200
+              },
+              {
+                "id": "studio-right-entry/plate-top-right",
+                "length_mm": 750.0
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5982.0,
+            "cuts": [
+              {
+                "id": "log-niche-back/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "log-niche-back/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/plate-top-0",
+                "length_mm": 1200
+              },
+              {
+                "id": "studio-right-entry/plate-top-left",
+                "length_mm": 750.0
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5982.0,
+            "cuts": [
+              {
+                "id": "hot-end/stud-right-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/plate-bottom-1",
+                "length_mm": 1200
+              },
+              {
+                "id": "studio-right-entry/plate-bottom-right",
+                "length_mm": 750.0
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5982.0,
+            "cuts": [
+              {
+                "id": "hot-end/stud-left-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "hot-end/plate-bottom-0",
+                "length_mm": 1200
+              },
+              {
+                "id": "studio-right-entry/plate-bottom-left",
+                "length_mm": 750.0
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5982.0,
+            "cuts": [
+              {
+                "id": "hall-end/stud-right-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/plate-top-1",
+                "length_mm": 1200
+              },
+              {
+                "id": "studio-left-entry/plate-top-right",
+                "length_mm": 750.0
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5982.0,
+            "cuts": [
+              {
+                "id": "hall-end/stud-left-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/plate-top-0",
+                "length_mm": 1200
+              },
+              {
+                "id": "studio-left-entry/plate-top-left",
+                "length_mm": 750.0
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5982.0,
+            "cuts": [
+              {
+                "id": "front/stud-right",
+                "length_mm": 2010
+              },
+              {
+                "id": "front/stud-left",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/plate-bottom-1",
+                "length_mm": 1200
+              },
+              {
+                "id": "studio-left-entry/plate-bottom-right",
+                "length_mm": 750.0
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5982.0,
+            "cuts": [
+              {
+                "id": "front-window/stud-right-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/stud-right-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "hall-end/plate-bottom-0",
+                "length_mm": 1200
+              },
+              {
+                "id": "studio-left-entry/plate-bottom-left",
+                "length_mm": 750.0
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5937,
+            "cuts": [
+              {
+                "id": "front-window/stud-right",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/stud-left-1",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/opening/plate-top-0",
+                "length_mm": 1200
+              },
+              {
+                "id": "studio-right-back/plate-top-1",
+                "length_mm": 705
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5832,
+            "cuts": [
+              {
+                "id": "front-window/stud-left-0",
+                "length_mm": 2010
+              },
+              {
+                "id": "front-window/stud-left",
+                "length_mm": 2010
+              },
+              {
+                "id": "studio-right-entry/opening/plate-top-0",
+                "length_mm": 900
+              },
+              {
+                "id": "studio-left-entry/opening/plate-top-0",
+                "length_mm": 900
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5418,
+            "cuts": [
+              {
+                "id": "studio-left-back/plate-top-2",
+                "length_mm": 900
+              },
+              {
+                "id": "studio-left-back/plate-top-1",
+                "length_mm": 900
+              },
+              {
+                "id": "studio-left-back/plate-bottom-2",
+                "length_mm": 900
+              },
+              {
+                "id": "studio-left-back/plate-bottom-1",
+                "length_mm": 900
+              },
+              {
+                "id": "front/opening/plate-top-0",
+                "length_mm": 900
+              },
+              {
+                "id": "front-window/plate-top-0",
+                "length_mm": 900
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 5859,
+            "cuts": [
+              {
+                "id": "front-window/plate-bottom-0",
+                "length_mm": 900
+              },
+              {
+                "id": "studio-right-back/plate-top-0",
+                "length_mm": 705
+              },
+              {
+                "id": "studio-right-back/plate-bottom-1",
+                "length_mm": 705
+              },
+              {
+                "id": "studio-right-back/plate-bottom-0",
+                "length_mm": 705
+              },
+              {
+                "id": "studio-left-back/plate-top-3",
+                "length_mm": 705
+              },
+              {
+                "id": "studio-left-back/plate-top-0",
+                "length_mm": 705
+              },
+              {
+                "id": "studio-left-back/plate-bottom-3",
+                "length_mm": 705
+              },
+              {
+                "id": "studio-left-back/plate-bottom-0",
+                "length_mm": 705
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              195
+            ],
+            "used_mm": 3780,
+            "cuts": [
+              {
+                "id": "front-window/plate-top-1",
+                "length_mm": 705
+              },
+              {
+                "id": "front-window/plate-bottom-1",
+                "length_mm": 705
+              },
+              {
+                "id": "log-niche-front/plate-top-0",
+                "length_mm": 588
+              },
+              {
+                "id": "log-niche-front/plate-bottom-0",
+                "length_mm": 588
+              },
+              {
+                "id": "log-niche-back/plate-top-0",
+                "length_mm": 588
+              },
+              {
+                "id": "log-niche-back/plate-bottom-0",
+                "length_mm": 588
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5987,
+            "cuts": [
+              {
+                "id": "terrace-side/joist-4",
+                "length_mm": 3600
+              },
+              {
+                "id": "terrace/joist-5",
+                "length_mm": 1200
+              },
+              {
+                "id": "terrace/joist-9",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5987,
+            "cuts": [
+              {
+                "id": "terrace-side/joist-3",
+                "length_mm": 3600
+              },
+              {
+                "id": "terrace/joist-4",
+                "length_mm": 1200
+              },
+              {
+                "id": "terrace/joist-8",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5965,
+            "cuts": [
+              {
+                "id": "terrace-side/joist-2",
+                "length_mm": 3600
+              },
+              {
+                "id": "terrace/joist-7",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-6",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5965,
+            "cuts": [
+              {
+                "id": "terrace-side/joist-1",
+                "length_mm": 3600
+              },
+              {
+                "id": "terrace/joist-29",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-28",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5965,
+            "cuts": [
+              {
+                "id": "terrace-side/joist-0",
+                "length_mm": 3600
+              },
+              {
+                "id": "terrace/joist-27",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-26",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5987,
+            "cuts": [
+              {
+                "id": "firewood-niche/joist-1",
+                "length_mm": 2400
+              },
+              {
+                "id": "firewood-niche/joist-0",
+                "length_mm": 2400
+              },
+              {
+                "id": "terrace/joist-25",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5905,
+            "cuts": [
+              {
+                "id": "terrace/joist-24",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-23",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-22",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-21",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-20",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5905,
+            "cuts": [
+              {
+                "id": "terrace/joist-19",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-18",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-17",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-16",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-15",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              210
+            ],
+            "used_mm": 5905,
+            "cuts": [
+              {
+                "id": "terrace/joist-14",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-13",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-12",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-11",
+                "length_mm": 1178
+              },
+              {
+                "id": "terrace/joist-10",
+                "length_mm": 1178
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-7/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-7/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-7/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-6/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-6/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-7/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-3/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-3/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-7/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-2/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-2/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-6/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-1/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-1/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-6/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "roof-0/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-0/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-6/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-7/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-7/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-5/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-6/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-6/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-5/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-5/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-5/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-5/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-4/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-4/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-4/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-3/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-3/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-4/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-2/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-2/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-4/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-1/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-1/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-3/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5619,
+            "cuts": [
+              {
+                "id": "floor-0/edge-b",
+                "length_mm": 2400
+              },
+              {
+                "id": "floor-0/edge-a",
+                "length_mm": 2400
+              },
+              {
+                "id": "roof-3/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5652,
+            "cuts": [
+              {
+                "id": "roof-5/edge-b",
+                "length_mm": 2010
+              },
+              {
+                "id": "roof-5/edge-a",
+                "length_mm": 2010
+              },
+              {
+                "id": "roof-3/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-2/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5652,
+            "cuts": [
+              {
+                "id": "roof-4/edge-b",
+                "length_mm": 2010
+              },
+              {
+                "id": "roof-4/edge-a",
+                "length_mm": 2010
+              },
+              {
+                "id": "roof-2/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-2/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5691,
+            "cuts": [
+              {
+                "id": "roof-1/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-1/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-1/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-0/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-0/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "roof-0/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-7/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5691,
+            "cuts": [
+              {
+                "id": "floor-7/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-7/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-6/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-6/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-6/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-5/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-5/blocking-1",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5691,
+            "cuts": [
+              {
+                "id": "floor-5/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-4/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-4/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-4/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-3/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-3/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-3/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 5691,
+            "cuts": [
+              {
+                "id": "floor-2/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-2/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-2/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-1/blocking-2",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-1/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-1/blocking-0",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-0/blocking-2",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              45,
+              220
+            ],
+            "used_mm": 1626,
+            "cuts": [
+              {
+                "id": "floor-0/blocking-1",
+                "length_mm": 810
+              },
+              {
+                "id": "floor-0/blocking-0",
+                "length_mm": 810
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              90,
+              145
+            ],
+            "used_mm": 5290,
+            "cuts": [
+              {
+                "id": "foundation-tie-5/member-2",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-5/member-1",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-5/member-0",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-4/member-2",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-4/member-1",
+                "length_mm": 1055
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              90,
+              145
+            ],
+            "used_mm": 5290,
+            "cuts": [
+              {
+                "id": "foundation-tie-4/member-0",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-3/member-2",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-3/member-1",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-3/member-0",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-2/member-2",
+                "length_mm": 1055
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              90,
+              145
+            ],
+            "used_mm": 5290,
+            "cuts": [
+              {
+                "id": "foundation-tie-2/member-1",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-2/member-0",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-1/member-2",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-1/member-1",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-1/member-0",
+                "length_mm": 1055
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              90,
+              145
+            ],
+            "used_mm": 3174,
+            "cuts": [
+              {
+                "id": "foundation-tie-0/member-2",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-0/member-1",
+                "length_mm": 1055
+              },
+              {
+                "id": "foundation-tie-0/member-0",
+                "length_mm": 1055
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5544,
+            "cuts": [
+              {
+                "id": "foundation-grid-3/beam-4",
+                "length_mm": 1845
+              },
+              {
+                "id": "foundation-grid-3/beam-0",
+                "length_mm": 1845
+              },
+              {
+                "id": "foundation-grid-2/beam-4",
+                "length_mm": 1845
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5544,
+            "cuts": [
+              {
+                "id": "foundation-grid-2/beam-0",
+                "length_mm": 1845
+              },
+              {
+                "id": "foundation-grid-1/beam-4",
+                "length_mm": 1845
+              },
+              {
+                "id": "foundation-grid-1/beam-0",
+                "length_mm": 1845
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5499,
+            "cuts": [
+              {
+                "id": "foundation-grid-0/beam-4",
+                "length_mm": 1845
+              },
+              {
+                "id": "foundation-grid-0/beam-0",
+                "length_mm": 1845
+              },
+              {
+                "id": "foundation-grid-3/beam-3",
+                "length_mm": 1800
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5409,
+            "cuts": [
+              {
+                "id": "foundation-grid-3/beam-2",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-3/beam-1",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-2/beam-3",
+                "length_mm": 1800
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5409,
+            "cuts": [
+              {
+                "id": "foundation-grid-2/beam-2",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-2/beam-1",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-1/beam-3",
+                "length_mm": 1800
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 5409,
+            "cuts": [
+              {
+                "id": "foundation-grid-1/beam-2",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-1/beam-1",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-0/beam-3",
+                "length_mm": 1800
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              145,
+              145
+            ],
+            "used_mm": 3606,
+            "cuts": [
+              {
+                "id": "foundation-grid-0/beam-2",
+                "length_mm": 1800
+              },
+              {
+                "id": "foundation-grid-0/beam-1",
+                "length_mm": 1800
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              150,
+              220
+            ],
+            "used_mm": 4542,
+            "cuts": [
+              {
+                "id": "floor-6/partition-trimmer-1-0",
+                "length_mm": 1133
+              },
+              {
+                "id": "floor-3/partition-trimmer-0-0",
+                "length_mm": 1133
+              },
+              {
+                "id": "floor-6/partition-trimmer-1-1",
+                "length_mm": 1132
+              },
+              {
+                "id": "floor-3/partition-trimmer-0-1",
+                "length_mm": 1132
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              155,
+              195
+            ],
+            "used_mm": 4272,
+            "cuts": [
+              {
+                "id": "front-window/lintel",
+                "length_mm": 1290
+              },
+              {
+                "id": "studio-right-entry/lintel",
+                "length_mm": 990
+              },
+              {
+                "id": "studio-left-entry/lintel",
+                "length_mm": 990
+              },
+              {
+                "id": "front/lintel",
+                "length_mm": 990
+              }
+            ]
+          },
+          {
+            "section_mm": [
+              195,
+              220
+            ],
+            "used_mm": 3606,
+            "cuts": [
+              {
+                "id": "studio-bridge/header-1",
+                "length_mm": 1800
+              },
+              {
+                "id": "studio-bridge/header-0",
+                "length_mm": 1800
+              }
+            ]
+          }
+        ],
+        "excluded_ids": [
+          "front-window/plate-bottom-left",
+          "front-window/plate-top-left",
+          "front-window/plate-bottom-right",
+          "front-window/plate-top-right",
+          "front/plate-bottom-left",
+          "front/plate-top-left",
+          "front/plate-bottom-right",
+          "front/plate-top-right"
+        ],
+        "method": "orientation-normalised rectangular timber types; first-fit-decreasing 1D cutting-stock heuristic",
+        "scope": "No member deletion, reduced sections or new structural splices. Rotation does not certify grain, grade, machining or connection equivalence.",
+        "holds": [
+          "6000mm stock and 3mm kerf are explicit study inputs; confirm availability and end trim.",
+          "No 2D plywood nesting, defects, grading, toolpaths or assembly-time calculation.",
+          "Fractal hierarchy retained as module > cassette > part; recursive subdivision is not an optimisation objective."
+        ]
+      },
+      "opening_dimensions": [
+        {
+          "id": "front-window/opening",
+          "axis": "x",
+          "host_bounds_mm": [
+            195,
+            1800
+          ],
+          "host_width_mm": 1605,
+          "installation_opening_mm": [
+            1200,
+            1900
+          ],
+          "installation_opening_origin_mm": [
+            397.5,
+            -12,
+            238
+          ],
+          "modeled_frame_outside_mm": [
+            1180.0,
+            1880
+          ],
+          "verified_frame_outside_mm": null,
+          "modeled_leaf_mm": null,
+          "verified_leaf_mm": null,
+          "clear_usable_passage_mm": null,
+          "passage_status": "Not certified; hinges, leaf swing, seals and hardware unresolved",
+          "structural_side_zones_mm": [
+            202.5,
+            202.5
+          ],
+          "king_stud_width_mm": 45,
+          "jack_stud_width_mm": 45,
+          "header_bearing_mm": 45,
+          "supported_infill_beyond_two_studs_mm": [
+            112.5,
+            112.5
+          ],
+          "adapter_detail": "Existing full-width top/bottom plates, king and jack studs, counted side plywood and cavity fill; no loose thin filler assumed",
+          "component_ids": [
+            "front-window/plate-bottom-left",
+            "front-window/plate-top-left",
+            "front-window/stud-left",
+            "front-window/jack-left",
+            "front-window/plate-bottom-right",
+            "front-window/plate-top-right",
+            "front-window/stud-right",
+            "front-window/jack-right",
+            "front-window/opening/plate-top-0",
+            "front-window/lintel",
+            "front-window/opening-skin-left",
+            "front-window/opening-skin-right",
+            "front-window/opening-skin-head"
+          ],
+          "modeled_installation_gaps_left_right_bottom_top_mm": [
+            10.0,
+            10.0,
+            10,
+            10
+          ],
+          "manufacturer_installation_tolerances_mm": null,
+          "levels_mm": {
+            "structural_floor_top": 238,
+            "modeled_finished_floor": 238,
+            "finish_build_up_allowance": null,
+            "rough_sill": 238,
+            "rough_head": 2138,
+            "frame_bottom": 248,
+            "frame_head": 2128,
+            "threshold": null
+          },
+          "source_reference": null,
+          "alternative_product_checks": [],
+          "status": "Project geometry only; exact supplier product not verified"
+        },
+        {
+          "id": "studio-left-entry/opening",
+          "axis": "y",
+          "host_bounds_mm": [
+            0,
+            2400
+          ],
+          "host_width_mm": 2400,
+          "installation_opening_mm": [
+            900,
+            1900
+          ],
+          "installation_opening_origin_mm": [
+            3393,
+            750.0,
+            238
+          ],
+          "modeled_frame_outside_mm": [
+            900.0,
+            1900
+          ],
+          "verified_frame_outside_mm": null,
+          "modeled_leaf_mm": [
+            830,
+            1860
+          ],
+          "verified_leaf_mm": null,
+          "clear_usable_passage_mm": null,
+          "passage_status": "Not certified; hinges, leaf swing, seals and hardware unresolved",
+          "structural_side_zones_mm": [
+            750.0,
+            750.0
+          ],
+          "king_stud_width_mm": 45,
+          "jack_stud_width_mm": 45,
+          "header_bearing_mm": 45,
+          "supported_infill_beyond_two_studs_mm": [
+            660.0,
+            660.0
+          ],
+          "adapter_detail": "Existing full-width top/bottom plates, king and jack studs, counted side plywood and cavity fill; no loose thin filler assumed",
+          "component_ids": [
+            "studio-left-entry/plate-bottom-left",
+            "studio-left-entry/plate-top-left",
+            "studio-left-entry/stud-left",
+            "studio-left-entry/jack-left",
+            "studio-left-entry/plate-bottom-right",
+            "studio-left-entry/plate-top-right",
+            "studio-left-entry/stud-right",
+            "studio-left-entry/jack-right",
+            "studio-left-entry/opening/plate-top-0",
+            "studio-left-entry/lintel",
+            "studio-left-entry/opening-skin-left",
+            "studio-left-entry/opening-skin-right",
+            "studio-left-entry/opening-skin-head"
+          ],
+          "modeled_installation_gaps_left_right_bottom_top_mm": [
+            0.0,
+            0.0,
+            0,
+            0
+          ],
+          "manufacturer_installation_tolerances_mm": null,
+          "levels_mm": {
+            "structural_floor_top": 238,
+            "modeled_finished_floor": 238,
+            "finish_build_up_allowance": null,
+            "rough_sill": 238,
+            "rough_head": 2138,
+            "frame_bottom": 238,
+            "frame_head": 2138,
+            "threshold": null
+          },
+          "source_reference": null,
+          "alternative_product_checks": [
+            {
+              "reference": "swedoor-9x19",
+              "required_installation_opening_mm": [
+                910,
+                1900
+              ],
+              "shortfall_mm": [
+                10,
+                0
+              ],
+              "geometric_rough_fit": false,
+              "adopted": false
+            },
+            {
+              "reference": "swedoor-10x21",
+              "required_installation_opening_mm": [
+                1010,
+                2100
+              ],
+              "shortfall_mm": [
+                110,
+                200
+              ],
+              "geometric_rough_fit": false,
+              "adopted": false
+            }
+          ],
+          "status": "Project geometry only; exact supplier product not verified"
+        },
+        {
+          "id": "studio-right-entry/opening",
+          "axis": "y",
+          "host_bounds_mm": [
+            0,
+            2400
+          ],
+          "host_width_mm": 2400,
+          "installation_opening_mm": [
+            900,
+            1900
+          ],
+          "installation_opening_origin_mm": [
+            5388,
+            750.0,
+            238
+          ],
+          "modeled_frame_outside_mm": [
+            900.0,
+            1900
+          ],
+          "verified_frame_outside_mm": null,
+          "modeled_leaf_mm": [
+            830,
+            1860
+          ],
+          "verified_leaf_mm": null,
+          "clear_usable_passage_mm": null,
+          "passage_status": "Not certified; hinges, leaf swing, seals and hardware unresolved",
+          "structural_side_zones_mm": [
+            750.0,
+            750.0
+          ],
+          "king_stud_width_mm": 45,
+          "jack_stud_width_mm": 45,
+          "header_bearing_mm": 45,
+          "supported_infill_beyond_two_studs_mm": [
+            660.0,
+            660.0
+          ],
+          "adapter_detail": "Existing full-width top/bottom plates, king and jack studs, counted side plywood and cavity fill; no loose thin filler assumed",
+          "component_ids": [
+            "studio-right-entry/plate-bottom-left",
+            "studio-right-entry/plate-top-left",
+            "studio-right-entry/stud-left",
+            "studio-right-entry/jack-left",
+            "studio-right-entry/plate-bottom-right",
+            "studio-right-entry/plate-top-right",
+            "studio-right-entry/stud-right",
+            "studio-right-entry/jack-right",
+            "studio-right-entry/opening/plate-top-0",
+            "studio-right-entry/lintel",
+            "studio-right-entry/opening-skin-left",
+            "studio-right-entry/opening-skin-right",
+            "studio-right-entry/opening-skin-head"
+          ],
+          "modeled_installation_gaps_left_right_bottom_top_mm": [
+            0.0,
+            0.0,
+            0,
+            0
+          ],
+          "manufacturer_installation_tolerances_mm": null,
+          "levels_mm": {
+            "structural_floor_top": 238,
+            "modeled_finished_floor": 238,
+            "finish_build_up_allowance": null,
+            "rough_sill": 238,
+            "rough_head": 2138,
+            "frame_bottom": 238,
+            "frame_head": 2138,
+            "threshold": null
+          },
+          "source_reference": null,
+          "alternative_product_checks": [
+            {
+              "reference": "swedoor-9x19",
+              "required_installation_opening_mm": [
+                910,
+                1900
+              ],
+              "shortfall_mm": [
+                10,
+                0
+              ],
+              "geometric_rough_fit": false,
+              "adopted": false
+            },
+            {
+              "reference": "swedoor-10x21",
+              "required_installation_opening_mm": [
+                1010,
+                2100
+              ],
+              "shortfall_mm": [
+                110,
+                200
+              ],
+              "geometric_rough_fit": false,
+              "adopted": false
+            }
+          ],
+          "status": "Project geometry only; exact supplier product not verified"
+        },
+        {
+          "id": "front/opening",
+          "axis": "x",
+          "host_bounds_mm": [
+            5595,
+            7005
+          ],
+          "host_width_mm": 1410,
+          "installation_opening_mm": [
+            900,
+            1900
+          ],
+          "installation_opening_origin_mm": [
+            5850.0,
+            -12,
+            238
+          ],
+          "modeled_frame_outside_mm": [
+            900.0,
+            1900
+          ],
+          "verified_frame_outside_mm": null,
+          "modeled_leaf_mm": [
+            830,
+            1860
+          ],
+          "verified_leaf_mm": null,
+          "clear_usable_passage_mm": null,
+          "passage_status": "Not certified; hinges, leaf swing, seals and hardware unresolved",
+          "structural_side_zones_mm": [
+            255.0,
+            255.0
+          ],
+          "king_stud_width_mm": 45,
+          "jack_stud_width_mm": 45,
+          "header_bearing_mm": 45,
+          "supported_infill_beyond_two_studs_mm": [
+            165.0,
+            165.0
+          ],
+          "adapter_detail": "Existing full-width top/bottom plates, king and jack studs, counted side plywood and cavity fill; no loose thin filler assumed",
+          "component_ids": [
+            "front/plate-bottom-left",
+            "front/plate-top-left",
+            "front/stud-left",
+            "front/jack-left",
+            "front/plate-bottom-right",
+            "front/plate-top-right",
+            "front/stud-right",
+            "front/jack-right",
+            "front/opening/plate-top-0",
+            "front/lintel",
+            "front/opening-skin-left",
+            "front/opening-skin-right",
+            "front/opening-skin-head"
+          ],
+          "modeled_installation_gaps_left_right_bottom_top_mm": [
+            0.0,
+            0.0,
+            0,
+            0
+          ],
+          "manufacturer_installation_tolerances_mm": null,
+          "levels_mm": {
+            "structural_floor_top": 238,
+            "modeled_finished_floor": 238,
+            "finish_build_up_allowance": null,
+            "rough_sill": 238,
+            "rough_head": 2138,
+            "frame_bottom": 238,
+            "frame_head": 2138,
+            "threshold": null
+          },
+          "source_reference": null,
+          "alternative_product_checks": [
+            {
+              "reference": "swedoor-9x19",
+              "required_installation_opening_mm": [
+                910,
+                1900
+              ],
+              "shortfall_mm": [
+                10,
+                0
+              ],
+              "geometric_rough_fit": false,
+              "adopted": false
+            },
+            {
+              "reference": "swedoor-10x21",
+              "required_installation_opening_mm": [
+                1010,
+                2100
+              ],
+              "shortfall_mm": [
+                110,
+                200
+              ],
+              "geometric_rough_fit": false,
+              "adopted": false
+            }
+          ],
+          "status": "Project geometry only; exact supplier product not verified"
+        }
+      ]
+    }
+  },
+  "geometry_manifest": [
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "eb32b7350b9d58d512145525749ba014d46bbbbbd9c6fa281eb4f6f9e78c1971",
+      "types": 130,
+      "pieces": 931
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "9db36ada056bc064e46b367db96b7dcf2880a76a196df6338bed1a778a45b701",
+      "types": 130,
+      "pieces": 931
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "5b852a93b7c32a95ecdcdb84f425df798328f78d6026c24e9e1dd36cea8287b8",
+      "types": 121,
+      "pieces": 925
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "2eb6baecc4c52d2bd304cbb4d9ea53379dd145a0db8be45d6be0c8d37593e71b",
+      "types": 121,
+      "pieces": 925
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "7c01a9beeda8b637ab19abe1299a1992702b41333657260ad20e18aba506fed1",
+      "types": 127,
+      "pieces": 924
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "1a98061ac0021baadb2f3a28bae4d67f853d2b30bd54d8c461134a5b6faa38eb",
+      "types": 127,
+      "pieces": 924
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "e6e22fd1a551c5bcc8469d1f017c43976920b67938a29d6076e34aeff71c2186",
+      "types": 133,
+      "pieces": 968
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "1fbc3f42a8bf77b792366a8f02e1a7b2dd15f55fe923a48796d81d8d77f2230f",
+      "types": 133,
+      "pieces": 968
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "28fda0c42df9103540d53aec0847e945e569237ef4ea6da4b036ae206d875814",
+      "types": 124,
+      "pieces": 962
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "764c43e61497ba9802214a4c9145cbb5ad69b6ab82885b2d18fd5a7a761b79c2",
+      "types": 124,
+      "pieces": 962
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "3401fce7c7c14a21dcf7461874668fdf51f47bc12f7fc6036ee76d2340d00f45",
+      "types": 130,
+      "pieces": 961
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "f513519cc0eff4fb5be3ae6f7963718fa84df73062f58c1d96aa4bb5a654982e",
+      "types": 130,
+      "pieces": 961
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "149201b304a16a6553628d7d3ab1a39522df01965b316a7e155cb4ea9c8e6a48",
+      "types": 175,
+      "pieces": 1199
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "a43595a10d011807011f95a009e50e93b6275e1d543e9f20ac90f6361e64842b",
+      "types": 175,
+      "pieces": 1199
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "54725bee2ae81c6457dc2f8388aa47dfba1a8c708ce40e686b98fafe3dd2799e",
+      "types": 170,
+      "pieces": 1193
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "89c175ccfbe03c5a97d8b657e0e0c57d833501cd6fc8927eba141e1fc4f969df",
+      "types": 170,
+      "pieces": 1193
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "bf7f6333ba0e61bf7b5cfe4555559a1df2ba59b2049942fc40fa5bab93910c02",
+      "types": 175,
+      "pieces": 1192
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "4d639510d415fda98f26ad6785dab909a8bb347cc2d6ac07b68ec1a066673694",
+      "types": 175,
+      "pieces": 1192
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "5930925e4e5a0ba67e94337ece49806e3e0ecaef6fb69876fd648a4e0119cc29",
+      "types": 178,
+      "pieces": 1239
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "6aab7fddcc81997c357c6d9d4fc0e307daf7b0d317bd5ccdaefb0dd7f6491994",
+      "types": 178,
+      "pieces": 1239
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "681d5924af6aec7412ed93c4771621ae432feafbf73045463298e41abe205bdb",
+      "types": 173,
+      "pieces": 1233
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "9de03589a34d5ec4080fee4cd6a71beee82b7899c1ce2029e6f494e689fef57a",
+      "types": 173,
+      "pieces": 1233
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "d0168409eabfd724db9dc4eed2fb75cb5b880818b772c8190e3ac19f2609d1f3",
+      "types": 178,
+      "pieces": 1232
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "e3ddaee525e51f46d123ec5eb0a5144abd65ee285d26991a1e8580fd2a231178",
+      "types": 178,
+      "pieces": 1232
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "fddd5bf4c179e433e64824d5aef1add80c8771dc711423d4f3ac1e850a2c4e16",
+      "types": 134,
+      "pieces": 1070
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "5138b38f064227b0c5d1c1dd1683aa5fa4f491c3be82fc0ff0f534f2a66516ec",
+      "types": 134,
+      "pieces": 1070
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "e2150128ded4419308c326a0e596cb5a47c39bb00a007bc1696a09b276c3dde0",
+      "types": 126,
+      "pieces": 1064
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "9d4fa7991627329d7289aec19b3ef4fe4e09caf1f34c16e70227203337acb6b7",
+      "types": 126,
+      "pieces": 1064
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "87336c9d4e09caa5690e04584539ef8856d9270501bf064ff5106ee3c77b03e9",
+      "types": 131,
+      "pieces": 1063
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "9028c0f555df504c03a484d6691c1f36a24db7675a733d1684ef7e2ce03b59c1",
+      "types": 131,
+      "pieces": 1063
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "4b26fd55416735769f575d41865931a11b175d8124b38f08df8aa86d03451ebb",
+      "types": 137,
+      "pieces": 1110
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "2f1bebcc1ea222a9bd0491cd83b05675287e75d7c7ae194d5e9c9ab496641188",
+      "types": 137,
+      "pieces": 1110
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "d0714f4c6309eda8fc5e74675ca82b3f2387ef1677aaa70c49e109a5e4aff16b",
+      "types": 129,
+      "pieces": 1104
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "0699b3774506e7491f499207a60809d429ba8189db5c3b43dbb270855e1bda89",
+      "types": 129,
+      "pieces": 1104
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "20908090d2c619230c52772db4e71ca7a82295c9ebb9ba481e3c222f57d8f3d0",
+      "types": 134,
+      "pieces": 1103
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "e78249d1904d59e9eb843f0b9a25e6b43e17e2525f6108af2f90b01ddd3b1213",
+      "types": 134,
+      "pieces": 1103
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "ff015456a11e8fb90b1694ba3fb69b35b4ba4e88680050eb16a67917be662e5d",
+      "types": 172,
+      "pieces": 1312
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "b8a6855b33531273a7bc70065c7a0b8b2386b20c0a35ff3c5e803e6931b182c1",
+      "types": 172,
+      "pieces": 1312
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "86336e456c0ac99ab943dbb897dd27070dc581cc4aef07be42d8c40527dd3d55",
+      "types": 167,
+      "pieces": 1306
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "fc526289ce3cd3487c495a3b57d6e7341b28fe2903a381fcc692a974faeea455",
+      "types": 167,
+      "pieces": 1306
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "c59fec1f982aa635a577b885048d9639ebf64f666ff800e4e776298829b9e9c3",
+      "types": 172,
+      "pieces": 1305
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "63e5bc45b8f9852d7300d1569c33bc1199b87fb486dcb393bc99688a16878234",
+      "types": 172,
+      "pieces": 1305
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "dc09b0454f31fbabeed1d3a05b956d9a0f6a579a5cbed5c242c3bf2cb20d92b8",
+      "types": 175,
+      "pieces": 1356
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "5cd363a73b59c6cc84ea45df5db0116f427587631cb7a73fb66887825d0b7b5a",
+      "types": 175,
+      "pieces": 1356
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "7ef6a071fe8330fd3b652e0afb5c7a78dd4e98bf2d0cb0f7e264550b54eab6e8",
+      "types": 170,
+      "pieces": 1350
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "c11dc2905d45b3c885660a49b6def892b61ba9eab41c063a1b47ea8ae047888f",
+      "types": 170,
+      "pieces": 1350
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "f44d9043c48858ef882b14dcb16cccfd345ee5b040f6df7322972876bcd436c4",
+      "types": 175,
+      "pieces": 1349
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "2d5ebafc592269613e4e33f60510789ef6b338b000b59e5f36782c01fd560438",
+      "types": 175,
+      "pieces": 1349
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "068485896d2091102c460ee061362629c048f795701d7aff1ee2509c57fe1052",
+      "types": 131,
+      "pieces": 1124
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "7f6967426bb6ef90a496a6f57104d289956e8619701f9969717d816c5d838ba8",
+      "types": 131,
+      "pieces": 1124
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "84f6f2f1b5470d5a6869d4d35df25e6326cb266d5888aa56d652f0e949af19f0",
+      "types": 122,
+      "pieces": 1118
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "2efa6b2d31e695ffd97727320c6437b399586cf1966e05458d5e1dc8ea51fa81",
+      "types": 122,
+      "pieces": 1118
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "156276a0e8b1868835c1faf63f040b0159907b04c27d5a436b8b120834f1c600",
+      "types": 128,
+      "pieces": 1117
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "2c483aeb9f4d3a7cd20bffd29ee035522af5cb20ebdace033d8439f84d2bd3b0",
+      "types": 128,
+      "pieces": 1117
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "896b366edea0ecd99d0ef8f0fd9c69544ffa4592bf974d8288ee2d2e7a9a3e41",
+      "types": 134,
+      "pieces": 1168
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "c7bc5110f40356febd45843a2c444c7b49b2bda40c3be830021bd82c5a0c9cef",
+      "types": 134,
+      "pieces": 1168
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "e08834e49ccded99c5783f88445aafa0ccb753f047505281e1ed5e6781ccfeec",
+      "types": 125,
+      "pieces": 1162
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "9a55b3ba457d3aeb434c50cbee493c3eefc37d6f94ee61e0980b874640f6332d",
+      "types": 125,
+      "pieces": 1162
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "70f6a2e0c5bb355410df572bf28e86817f29805e098871300c3a1d99ce0a7e10",
+      "types": 131,
+      "pieces": 1161
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "6f53936dbfa47f6c8f224a81b5bc09589c67fd5227bf8a4e5187d5182b23be1a",
+      "types": 131,
+      "pieces": 1161
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "e0cc14d46908fa7d7f017b5c27b3f5387c213cf5e823819032d3539e53dbe1c9",
+      "types": 176,
+      "pieces": 1392
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "8d8f56c6d1dfd3094edb4d555abe188188076110e05cac92bdee8788dcd38a5f",
+      "types": 176,
+      "pieces": 1392
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "a63139b339bcec485b46a61761c4f1af4ec963fcecf65a1ea33ec094a7a240f0",
+      "types": 171,
+      "pieces": 1386
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "9e92c79d5cd74299227be49ba50cbe642d495ba571cd75f70f64b0db91401943",
+      "types": 171,
+      "pieces": 1386
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "d4171d01b258247ac22ccbec29cb8d138f428bb019dfab828131389aea229917",
+      "types": 176,
+      "pieces": 1385
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "51056b10697a004ef31db770609f1cb04a359ddf8c08d5fcae0f0a80b6938ff8",
+      "types": 176,
+      "pieces": 1385
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "44583e2a5b0986139bd7240ee17f3a919bc4c071b53f238f7d322bebdb076a82",
+      "types": 179,
+      "pieces": 1439
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "bb161d686b14321e4053354184ba85c74420c2a3e2ad94afa5135735b0960c88",
+      "types": 179,
+      "pieces": 1439
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "378c954c4602d23b83d1f1bf75ff43d1cc1b1008306ebcaec4f278b455c3e6cc",
+      "types": 174,
+      "pieces": 1433
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "ff1cdbec08cb1220056a82a1ace796f10c29cd38001a4e5cec46413cf3be3e3f",
+      "types": 174,
+      "pieces": 1433
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "5bfca4fb8ae286dbb17f7bd9dd99cd5adc38ee401667ed2c000d3e7cfe98fc53",
+      "types": 179,
+      "pieces": 1432
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 0, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "1359263025e6529bcb55e81dd97873c15233e6cd58d8e9713474a859f8b1dab4",
+      "types": 179,
+      "pieces": 1432
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "677014dbed4393f19ec6f8bfdbed7cb10c36143db08f974a2b8c07f4383dd081",
+      "types": 141,
+      "pieces": 1258
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "d8c583c16257c564b11fb4ad41d27d7bf53d7350c7a0e600645d64f7125eacab",
+      "types": 141,
+      "pieces": 1258
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "17ed356e99499cdd182b949c1e62fcd43f258b5d716f253864be0f8d313e7d54",
+      "types": 141,
+      "pieces": 1258
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "76d4603658c759a5497a77db3fc8293196c9f22e8b488139fb8910f97becc691",
+      "types": 141,
+      "pieces": 1258
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "d21b56833986ebae8738ee422056ebb93752911e7265d1710235e6e6fb344119",
+      "types": 139,
+      "pieces": 1252
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "ca4e58e06318cfade86c664bd433559de24b7bfb261a5dd378434898ca94dd45",
+      "types": 139,
+      "pieces": 1252
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "6b569bcfa005105a0fec3e1b449d18eeb1b810221e51608ad877c33263c1c362",
+      "types": 139,
+      "pieces": 1252
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "4bc72b354ce1d0d1ea5841ddf52652ce33d2b5764a64460710f6f88bb0ee8c39",
+      "types": 139,
+      "pieces": 1252
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "279619ccfc7b0c3c2d7cb10f9b34d6d8cc31399dc2f849e6ddb8335575ef5344",
+      "types": 140,
+      "pieces": 1251
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "b1a08e3ff6c514614469f1263e2a78cf2bc8d4550a9b9e0e786f1c9001311b83",
+      "types": 140,
+      "pieces": 1251
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "f4e1b2a78da8ba6d97ec04a185442608e0c410309253036857f2be5084397d85",
+      "types": 140,
+      "pieces": 1251
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "892b416805b709a5099558c2278c12928ce9b2b39579ce455cb0665d30018492",
+      "types": 140,
+      "pieces": 1251
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "a8abbeb68be1b45783731372f5317aea4e6760002056d7038877eba2d72ce6ec",
+      "types": 144,
+      "pieces": 1304
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "01ad1e43ecd367e65aeead89eb7fd1fd2c7522a5b210dffe9c1cc220c6ef1d54",
+      "types": 144,
+      "pieces": 1304
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "ab1d2b7687cbeaa7f39d1292fd699a36c84345dad3dc05581ff42477be783586",
+      "types": 144,
+      "pieces": 1304
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "612124f2daf698bbef7ae35863fc6c87e448d58f69a5d6762028e78c174538ec",
+      "types": 144,
+      "pieces": 1304
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "45084af046a47a4dc7a10b7f2fa784a47ae500f7c2f5bbe89b1783f8cbf94ae1",
+      "types": 142,
+      "pieces": 1298
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "d34ad2402f5f8aeeb083ee7b8dec72e934469bde22e9a068926779defdf0ef5a",
+      "types": 142,
+      "pieces": 1298
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "2336a28523244eccd4014f3ab1608f44c35d29bd82724f12de83e838b22cb72d",
+      "types": 142,
+      "pieces": 1298
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "ce445c279b4770831af58598ca7fa7bd65bc40905db0b60e11417c3c791056a3",
+      "types": 142,
+      "pieces": 1298
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "9f8f9ed10daa5d85e34bd65def44a9c56f8329a9e096acea7ba595ec0b94dbbc",
+      "types": 143,
+      "pieces": 1297
+    },
+    {
+      "key": "0-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "1cf8607e043debb227e13ae753941da53eb1a7dfece0d9dac00ab64ff88f5f59",
+      "types": 143,
+      "pieces": 1297
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "784d0314cd88bce0221ca3fb79ed5b249bebb0cec7b764b61551551064ab29a5",
+      "types": 143,
+      "pieces": 1297
+    },
+    {
+      "key": "0-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "6fd57bd1bf3661c60816bd4bf350d5c47bc2da6bdfda1c4487a2c02cb66f61c8",
+      "types": 143,
+      "pieces": 1297
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "c2905a16bdfb417e5f7bf2ef313db190efa8711b572d0292e8c3dc6863c1a1b9",
+      "types": 142,
+      "pieces": 1263
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "c6fcb621a96535371df16be4fb889d451cf9177a2405d719a36193dc1219a544",
+      "types": 142,
+      "pieces": 1263
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "8700c736eb5ca9c7abc3bab63851ac44d447957249e04da250f69615aefe7a65",
+      "types": 142,
+      "pieces": 1263
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "86eb1e165670fd0fde3c9fcb8df1bf18a7f20f8702aaf6c54995475d62223cfb",
+      "types": 142,
+      "pieces": 1263
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "f635c50a9e6d9227e6bad103e2d402ce3f3de35ba4d7777254b89483a3a1de0d",
+      "types": 140,
+      "pieces": 1257
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "5c080a0d4f391a6831d0415335fd24b8a96142d7baa8c367aa63c7e22d7b4e2c",
+      "types": 140,
+      "pieces": 1257
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "408cb1cc6205fe07ac3edbe612b74f91dd0ab3befde401f2d9090a10722e042e",
+      "types": 140,
+      "pieces": 1257
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "0782faa0fef768533b0f71bcb6fbc972ba2558c92ebf4142d4ea25b2147f5e82",
+      "types": 140,
+      "pieces": 1257
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "b5975b51687d84ea580627da48c830e68250b52a0c5951692e3aa26cbcf5d863",
+      "types": 141,
+      "pieces": 1256
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "625ebe0a5ad2759b1e70d4320ec2587618e0069096acd924ac1a8cee74a41da7",
+      "types": 141,
+      "pieces": 1256
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "6fd0c3199095df63d9eabd19ab75addee631332b59449c230a68b8c7a0fddad4",
+      "types": 141,
+      "pieces": 1256
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "9336c17dbcea58cfc9d619ae601a0870062a0ccd300555339b47db588575c4ea",
+      "types": 141,
+      "pieces": 1256
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "633c9f70abf9215eba152d5f1068d0926ab76eb53d90c76175a9a8bc3cb43364",
+      "types": 145,
+      "pieces": 1309
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "50ca34e4682f141365d9393823bb0ea67b6c19dc9eb5f1e4d114431b346d956c",
+      "types": 145,
+      "pieces": 1309
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "576c56ed88f4d290902f6c05cc158d37cf8d9e18829823f1186a5c59674c9f0f",
+      "types": 145,
+      "pieces": 1309
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "0dd14cf2bf1917f9ebdf7b39a73f0cac6b2bc61dc94b0117eae7778c0e59e5a5",
+      "types": 145,
+      "pieces": 1309
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "620227d16011ad7c5c9095d74577ee95bfb247a6d13f697b467434d6bee250c4",
+      "types": 143,
+      "pieces": 1303
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "cd07c76c5b039ed2a728bf464101af0c63a678c0a071ec4c35ef657275a4388b",
+      "types": 143,
+      "pieces": 1303
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "277e226bb16cafeb88165929b7159555a48db364783747a1e4c1c6e63b2894ac",
+      "types": 143,
+      "pieces": 1303
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "666866fd361440a097985a37610f6dc2b507fa530e8ab524593bc2cd6d1252eb",
+      "types": 143,
+      "pieces": 1303
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "2cc1263371992b7a31543a983739adf66773b4abbe3bfcbd0f46d696f8d5c7fe",
+      "types": 144,
+      "pieces": 1302
+    },
+    {
+      "key": "1-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "b11e45ab599c385020701297d6bf2a3beaea7348951fec069875b7d9845e49d6",
+      "types": 144,
+      "pieces": 1302
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "8d574d5c83d2b6798b998e06516c29510f3acc1f95843f452667d530d1a35f77",
+      "types": 144,
+      "pieces": 1302
+    },
+    {
+      "key": "1-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "8bf4b0d2cc5e5741e3495d8f61542291610e3ec9871efd947ba8e695e54c55a4",
+      "types": 144,
+      "pieces": 1302
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "4baf96f9558893dcda12d6c148f48c5a3971e6e6fa114a01250d8f752d43dde4",
+      "types": 139,
+      "pieces": 1321
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "d2227170e01093374a3bbf36bef9dc0ba62e27d8c74edb37b3bca6fcd230bcd8",
+      "types": 139,
+      "pieces": 1321
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "933dabd63765bb7e682241e8cf5bafadea4bfeeddd1df410e013a1067e89effd",
+      "types": 139,
+      "pieces": 1321
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "bc89a710b94f134d9ee61d70645b2e8fa4285bc9b0304636c97c551b12884ce8",
+      "types": 139,
+      "pieces": 1321
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "055f1543d8802881f481eea65b032a38d2a9ba2568157faf1b55a694c0e50e77",
+      "types": 136,
+      "pieces": 1315
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "9dc9cf18784ff8a518d888afb06132dbd1eabd640c410942ca69996dbb4206c0",
+      "types": 136,
+      "pieces": 1315
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "e7646c39c3d6ad02e1557cb1d9abe1c5d074f2d5dd46b94e34e7e805bd9b24e9",
+      "types": 136,
+      "pieces": 1315
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "e674bc2bd4ff495f39ba5ec989f24f2117aac7146756898b5e406df440760924",
+      "types": 136,
+      "pieces": 1315
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "e9ddd6811cd963b52f280a43cc215a500e7fc66830cd8f1aa87d8a6f6d63a007",
+      "types": 137,
+      "pieces": 1314
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "e2066187f6233172bdd842f5f7a78825b62808f7c6432bca479c102d345d9f93",
+      "types": 137,
+      "pieces": 1314
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "bd997403009780ec63b676b47624d47f36b7f1f33a54b887bf4e6b803fb9b3be",
+      "types": 137,
+      "pieces": 1314
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "6163e40b0a61e528bee3418b87308fdd0868ea02452d7215465fb17e9ad1cf41",
+      "types": 137,
+      "pieces": 1314
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "6c4e3e1c23d60ae758bb29044a1af5b2a37e89cce9686bba59a802b872741673",
+      "types": 142,
+      "pieces": 1370
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "e08ba9d2315d0405060e59a345c6b932e6c14ac26bb55e73fdf777b3ce31476e",
+      "types": 142,
+      "pieces": 1370
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "2b4096bdf50dbfdf76835e5769767d69f535f304ff64d600020d57c76c15f94c",
+      "types": 142,
+      "pieces": 1370
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "a4720d3c8202e41a3d26c3556296e142f75e8c1ac889fb1a1fbcc95cff0bcc39",
+      "types": 142,
+      "pieces": 1370
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "f681c279fb601a3be811941ba01c55f6cf2b9f3b1ee615ee059a5c77d2d8d841",
+      "types": 139,
+      "pieces": 1364
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "448a339e098a54e2af5e66c3168a0c166f4e16ce4600c5b911ae7ad9235c8f79",
+      "types": 139,
+      "pieces": 1364
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "6a818993ca8f7e37c4a27f9d7a5f65b93c642cfd2df5ca4c75deb5562c0582ef",
+      "types": 139,
+      "pieces": 1364
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "c9cc68df3cbfb3a9ca76343fb994e13bfec148e9f6a11c82ad000bef929db390",
+      "types": 139,
+      "pieces": 1364
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "19b5d6f904c935cad4c57f980abcdb2446b74af0bb28f410873297d89d606184",
+      "types": 140,
+      "pieces": 1363
+    },
+    {
+      "key": "2-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "8f2b6fd83300f940186d6812470ff6523d01065b23295d0adcdc531bca9c6ca4",
+      "types": 140,
+      "pieces": 1363
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "f8be5862fab0bb9fa271d491c4b2dd221e081ff726aa21c9f9f046408d88b269",
+      "types": 140,
+      "pieces": 1363
+    },
+    {
+      "key": "2-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "9fa3b410bc962c59766424ab67444278be4c20e04ac87ef0de42278144e0c8f7",
+      "types": 140,
+      "pieces": 1363
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "d54dab49e1c8a98a10fb5b184aee07610f76efdad5efa84ad0a04afdc1031cf4",
+      "types": 140,
+      "pieces": 1326
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "ac93bda6cc7d2f97c1a09ffcb8d9d952195857edb8b3d0706461b2ea3db6c5bd",
+      "types": 140,
+      "pieces": 1326
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "34214364e2e184cbf1b59e7f0aa8547cf1c52d40ba27e3b6473c93b2e3ca6c4e",
+      "types": 140,
+      "pieces": 1326
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "ecb87254fa51c8d85e6af4e5e8b2a497f6529d7ffff062535a3e233446b4681c",
+      "types": 140,
+      "pieces": 1326
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "82d258091b094dc5eb96540244bd5d3ee83bc5bea9e5eb22f4206ea0f1eafabd",
+      "types": 137,
+      "pieces": 1320
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "b2e401134a3bb544a549be715e5d2f4ab325cc4b565ee7adbd2aad6ddb394750",
+      "types": 137,
+      "pieces": 1320
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "aee65b2eedb44df6cab002acbf078c6c6c99550df7e49bf1a84a554d78fd2cf5",
+      "types": 137,
+      "pieces": 1320
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "ac3f2f477ae75ff8c3fca07de850726658808b19f3c9299e5b12e2d5581f418a",
+      "types": 137,
+      "pieces": 1320
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "6fd3e36c0c2992349c8fb2264f76bda3b4d4487964287fbcb47204a741eeba62",
+      "types": 138,
+      "pieces": 1319
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "d452562a3af322f49472f6b2c83144b7c4ff9349ccff5f6e0558b40abff4151d",
+      "types": 138,
+      "pieces": 1319
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "7b63e6745f4a07be832b3719a6f16dac92526133c806356a13b523dab30caf3b",
+      "types": 138,
+      "pieces": 1319
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "6f4825067c92e5b2f712bad555093e2e514e3550dafc4892fbe51e67afe5da0d",
+      "types": 138,
+      "pieces": 1319
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "0c775fafdd11b2a53773a8d09760c67163fff08f4676f49a372981df973011f5",
+      "types": 143,
+      "pieces": 1375
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "cb19610699f9aea57ff79f8f1f67fa3370afddffbcd803755dc405146b67e52b",
+      "types": 143,
+      "pieces": 1375
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "020c45226fb1004618d2dd6869941f10d721ed8a921f5ddd3c4a43c950550ac4",
+      "types": 143,
+      "pieces": 1375
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "5bb7b8a3394161ce615a8e9165946a9bbdfdb702945c55b55d952f7a42dd8802",
+      "types": 143,
+      "pieces": 1375
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "8df09b8ce0612febd0afb6f923757ea76154f77aa4c8fab8298ab6e11fab4489",
+      "types": 140,
+      "pieces": 1369
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "335c40831c7b8346783beee65de63a1544f1b68e281d46f01eb4ce0c672fd991",
+      "types": 140,
+      "pieces": 1369
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "7416440f1fdcba0f8d64f78f38d028b9212615fc0258f435c41422450045994d",
+      "types": 140,
+      "pieces": 1369
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "e130f73872c3d8b8b8c7b3512a5f9b1f8ce0712f7690d54114c5d0565f37812f",
+      "types": 140,
+      "pieces": 1369
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "ad64f9700b6816f469d3d63e53ceeca19e1d8017c0b81333111e877f810724e4",
+      "types": 141,
+      "pieces": 1368
+    },
+    {
+      "key": "3-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "1c2f6e25bc38aa17c4ec64f9e2ba271c99f0330eae73ea3b6ee55705e956d788",
+      "types": 141,
+      "pieces": 1368
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "b3af833376c11fb920f295f9493ea3383fb7828c94b3988324b2e831ca4fe473",
+      "types": 141,
+      "pieces": 1368
+    },
+    {
+      "key": "3-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "e8c075a57d9c32f8f5aaa9bf1b305b5e296885560594723719c52e3ad9b1f551",
+      "types": 141,
+      "pieces": 1368
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "fd0fad3464b1a407268f038ccc2e50d9ab2115ad92c353d3e3dad54fc1f2c67d",
+      "types": 142,
+      "pieces": 1451
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "00c8ea5128b0ba2e707ff133c43c95de3f1cf4a7454b12cd21f6b1e7ed2e4235",
+      "types": 142,
+      "pieces": 1451
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "3d6841d965a2ef24a657b7c8791f64ee99365ef912575bd27de2086f03d886a7",
+      "types": 142,
+      "pieces": 1451
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "7f72fc9af4b329915574eecd57621be990909751b597ebdaa159f5608e7e7735",
+      "types": 142,
+      "pieces": 1451
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "65871191be4bbff06d00ae0dba906e6547504f9b9d1de348089b7fdceccddb2d",
+      "types": 142,
+      "pieces": 1446
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "1543c6f5441bcdb7bdad57da6b44d389eb428db398da9ff13c991052113bbfc8",
+      "types": 142,
+      "pieces": 1446
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "b62b15b10343de079e7e5361003e4ea4cb8a9a5054f08183e9ad0774dcb8a4ff",
+      "types": 142,
+      "pieces": 1446
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "fb20dec29b7d310b5a3820a7e5338aafac45b2094a42992d797e78af94858521",
+      "types": 142,
+      "pieces": 1446
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "527d47eb12099992b0606edaa540519bad06919795ece8728b757ff522a66f92",
+      "types": 143,
+      "pieces": 1445
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "805b1ba5bf9aac374fd65e1a38e3b72ab955ac04f2130b6972682f252c7ed8aa",
+      "types": 143,
+      "pieces": 1445
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "76b5effef0aee08f585bdcf92204c87e84ca17669175a18f8974ef0b72fa461d",
+      "types": 143,
+      "pieces": 1445
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "08d22268874f9ff330759bc69dbd448b617d6029157a8cab5b33be64890fcedc",
+      "types": 143,
+      "pieces": 1445
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "dfc7d0b0057b0381baa56041ef159ac214586071bbaf7e54f3a7d7ea9b6c0d5e",
+      "types": 145,
+      "pieces": 1504
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "42884966ab5b14b7f53d109a83b17b9fa86c081e2fd86a93ec3f887ec080223d",
+      "types": 145,
+      "pieces": 1504
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "82d18245ed224cd09bdafe2abaa878cf466417fd6d75f64acf864693de830ccf",
+      "types": 145,
+      "pieces": 1504
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "3743605878920a505efa67e458c832387cc51014549580c2092e7c12b507424b",
+      "types": 145,
+      "pieces": 1504
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "e799877cf905552ef3c76a00d00fe04c433626a1064c1dae3b3acea78e55c80d",
+      "types": 145,
+      "pieces": 1499
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "f3c1f89da9904244a990d31a58efa1500a222a2a5ed9f69ca9c6ced3d808a02b",
+      "types": 145,
+      "pieces": 1499
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "cac94bccc499d35d7c0e166aa4eae268700f4bbd56b06858d4807ba05daf77bb",
+      "types": 145,
+      "pieces": 1499
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "6550185b26d5a6b54033cffe60910d70c7490ab20e157bbdaed10d9f98bd09aa",
+      "types": 145,
+      "pieces": 1499
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "c8dfaeeb56c0f40d180c694bf3f02cf28a65dd5a54c6a5754a945b476e638bad",
+      "types": 146,
+      "pieces": 1498
+    },
+    {
+      "key": "4-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "9f01a55027a99005e5bd61ffd73e372d695ac2deb57ec8e3a56d0416f57cb3e0",
+      "types": 146,
+      "pieces": 1498
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "97096054a46ac1b4e132fef2916f73f75d9977ad0b9fa72aa30e9efbfbad6df1",
+      "types": 146,
+      "pieces": 1498
+    },
+    {
+      "key": "4-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "dcbf51d75fd5908e3b1e93fd36ea3f240ebcbea857efe1d5864ed92b986abb94",
+      "types": 146,
+      "pieces": 1498
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "1f2f5a540a5af7d0f4f9027ae082023c72f147c78f9a25f8d7740b4611a76776",
+      "types": 143,
+      "pieces": 1456
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "4fc29c669fece123912d02c8697e731f6d12e6d0118e3bd7c68d7f0a6f5ae2d8",
+      "types": 143,
+      "pieces": 1456
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "4275b979f114724aea325de7ec413da8900806416ead172ee9b0dbf8489edee3",
+      "types": 143,
+      "pieces": 1456
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "276705cd92de75469d275c84a7ed780bcd269dfacdf5eb067e0b9f06744ffbda",
+      "types": 143,
+      "pieces": 1456
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "e9346b43a231f78913d7f7973cfeb0320b2b2413d17449df43938d75b49c837c",
+      "types": 143,
+      "pieces": 1451
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "9c2fa23e1b2d30153c53a0e8e4d9c92d3b3b66c846dcfa254258efcc9195f436",
+      "types": 143,
+      "pieces": 1451
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "6e09a8a872b6cd8fa14e3314f290b97b7ccfcf39eb67085fcc66ca75614a36ca",
+      "types": 143,
+      "pieces": 1451
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "a027631362181cfa0f3d28ffe301b1462745cfd9ee53bcc110647cd48286c314",
+      "types": 143,
+      "pieces": 1451
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "24c643c77dfbf5f85785ba633607d1e881961ead098998f4604102471e7a448b",
+      "types": 144,
+      "pieces": 1450
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "d8fa1f3d8dcf870494d1ae4408e7d46d0fb7a40ff0f8e62b851f218b3d6a7853",
+      "types": 144,
+      "pieces": 1450
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "a411ce08b80a39c7442dbd961da8ae10506eef5f9d8c4d482e6b755539d08453",
+      "types": 144,
+      "pieces": 1450
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 0, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "e603ab7e214ce360b3d249eebcc092ed998074184cd18add56c083dd51dd7b84",
+      "types": 144,
+      "pieces": 1450
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "357fb7ed20f36fb3ee384c57270625ca26d3f11ac1419d4a9648b780e00f057f",
+      "types": 146,
+      "pieces": 1509
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "d09a49d3de8233a8d6f0fe252295869a0f8fc1e274f2a87cd60d24ebf5218dcd",
+      "types": 146,
+      "pieces": 1509
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 580}",
+      "geometry_sha256": "9bd3945973f28a43000e99072b0f3643f1e578b3fe272734fe151ebc3617be9e",
+      "types": 146,
+      "pieces": 1509
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 580}",
+      "geometry_sha256": "3204cf9090b71c8b3c62f4a8864907ee0d25e66a12fec787a53e99d64ba23193",
+      "types": 146,
+      "pieces": 1509
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "a4c1b0f41e63c53e55ea211630b91f6bba554c3e90177079383b6fbfebfc8e57",
+      "types": 146,
+      "pieces": 1504
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "51aad740cc210e79e68b088b9575d5529c42e3b8919b6967614d9bcfaa8bcd2f",
+      "types": 146,
+      "pieces": 1504
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 880}",
+      "geometry_sha256": "c3bc41e72fcc2b077d8145e79aa4274ac53c97307c482fb57b583cbbda96b149",
+      "types": 146,
+      "pieces": 1504
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 880}",
+      "geometry_sha256": "44ca2e732aa7e8246d9d6ff4403d96ff3869d6d6812c7c3766e94d13e8410ae4",
+      "types": 146,
+      "pieces": 1504
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "a6d2de0b87d7887aebae135b850d741ff120368c38d0a461150cc524ec95523d",
+      "types": 147,
+      "pieces": 1503
+    },
+    {
+      "key": "5-{\"foundation_type\": 0, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "3c4d5fc4fe1db9d66b1a0de716806f5c2116032f1472222042c88b5b6f71fec7",
+      "types": 147,
+      "pieces": 1503
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": true, \"window_width\": 1180}",
+      "geometry_sha256": "ae71660331f41b5a3af16c43f80793d3d2b6399be9e915bce552dbca72e49443",
+      "types": 147,
+      "pieces": 1503
+    },
+    {
+      "key": "5-{\"foundation_type\": 1, \"program_type\": 1, \"roof_type\": 1, \"studio_winter_closed\": false, \"window_width\": 1180}",
+      "geometry_sha256": "7e243b47521890560fdf05359ed35dbfcc72a2d6c2998131ef28c3102c102cca",
+      "types": 147,
+      "pieces": 1503
+    }
+  ]
+}

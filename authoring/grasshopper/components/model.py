@@ -12,7 +12,7 @@ name='obtp_'+hashlib.sha1(str(root).encode()).hexdigest()[:12]
 if name not in sys.modules:
     spec=importlib.util.spec_from_file_location(name,root/'obtp'/'__init__.py',submodule_search_locations=[str(root/'obtp')])
     package=importlib.util.module_from_spec(spec);sys.modules[name]=package;spec.loader.exec_module(package)
-for module in ['cells','cell_platform','foundations','cut_view','seasonal','object_library','suppliers','export','plan_styles','drawings','insulation','envelope']:
+for module in ['modularity','opening_products','cells','cell_platform','foundations','cut_view','seasonal','object_library','suppliers','export','plan_styles','drawings','insulation','envelope']:
     importlib.reload(importlib.import_module(name+'.'+module))
 core=importlib.reload(importlib.import_module(name+'.model'))
 scene_json=None
@@ -48,6 +48,7 @@ try:
         p['id'],'custom controls active' if custom else 'saved preset; custom controls ignored',m['building_area_bound_m2'],m['height_mm'],
         m['max_bearing_line_span_mm'],m['total_wood_m3'],'\n'.join(scene['holds']))
     report+='\n'+report_objects
+    report+='\nCoordination: 300 mm reference / retained 900 x 1200 planning. {} opening contracts; supplier installation fit remains unverified.'.format(len(scene['modularity']['openings']))
 except Exception as error:
     report='INVALID: '+str(error)
     import Grasshopper
