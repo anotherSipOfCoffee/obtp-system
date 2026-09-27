@@ -130,9 +130,22 @@ def main():
     inputs=[(k,Boolean if k in ['custom','storage','include_foundation','studio_winter_closed'] else Double) for k in controls]
     model=script('01 · Shared module','model.py',inputs,[('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],420,240)
     for i,(key,_) in enumerate(inputs):model.Params.Input[i].AddSource(controls[key])
-    preview=script('02 · Rhino preview','preview.py',[('scene_json',String)],
-                   [('geometry',GH_ParamAccess.list),('part_ids',GH_ParamAccess.list)],800,250)
+    preview=script('02 · Rhino preview','preview.py',[('scene_json',String),('assembly_stage',Double),('core_frame',Double)],
+                   [(n,GH_ParamAccess.list) for n in ['geometry','part_ids','materials','type_ids','legend']]+[('preview_status',GH_ParamAccess.item)],800,250)
     preview.Params.Input[0].AddSource(model.Params.Output[0])
+    stage_control=slider('Assembly stage / 0 empty - 8 complete',8,0,8,420,520)
+    core_control=slider('Core frame / 0 complete - 1 unique part colours',0,0,1,420,565)
+    preview.Params.Input[1].AddSource(stage_control)
+    preview.Params.Input[2].AddSource(core_control)
+    proxies=[p for p in Grasshopper.Instances.ComponentServer.ObjectProxies
+             if p.Desc.Name=='Custom Preview' and p.Desc.Category=='Display' and not p.Obsolete]
+    if len(proxies)!=1:raise RuntimeError('Expected one native Custom Preview component; found '+str(len(proxies)))
+    coloured=place(proxies[0].CreateInstance(),1120,500)
+    coloured.Params.Input[0].AddSource(preview.Params.Output[0])
+    coloured.Params.Input[1].AddSource(preview.Params.Output[2])
+    preview.Hidden=True # Avoid the default GH preview masking the type materials.
+    preview_note=panel('',1120,620);preview_note.AddSource(preview.Params.Output[5])
+    type_legend=panel('',1520,500);type_legend.AddSource(preview.Params.Output[4])
     report=panel('',800,80);report.AddSource(model.Params.Output[1])
     export_toggle=toggle('Export model + drawings (PDF disabled)',False,800,620)
     export=script('03 · Checked export','export.py',[('scene_json',String),('run_export',Boolean)],[('receipt',GH_ParamAccess.item)],1120,250)
@@ -140,7 +153,7 @@ def main():
     receipt=panel('',1400,250);receipt.AddSource(export.Params.Output[0])
     group('A · Saved presets and custom dimensions / mm / 900 mm X / 1200 mm Y cells',list(controls.values()),Color.FromArgb(220,232,221))
     group('B · Shared Python generator',[model],Color.FromArgb(233,226,207))
-    group('C · Complete model preview',[preview],Color.FromArgb(218,228,235))
+    group('C · Complete model preview',[preview,stage_control,core_control,coloured,preview_note,type_legend],Color.FromArgb(218,228,235))
     group('D · Checked model export / PDF disabled',[export,export_toggle,receipt],Color.FromArgb(235,222,218))
     # Analysis preparation shares the detailed scene, not the display/cut geometry.
     analysis_inputs=local_module('analysis').inputs
@@ -162,7 +175,7 @@ def main():
     group('E5 · Material section diagrams',[diagrams],Color.FromArgb(218,228,235))
     group('E6 · Report export / local only',[run_analysis,analysis_receipt],Color.FromArgb(220,232,221))
     # Never overwrite a definition the owner may have edited.
-    name='OBTP_Module_R15_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    name='OBTP_Module_R17_'+datetime.now().strftime('%Y%m%d_%H%M%S')
     path=ROOT/(name+'.gh')
     if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
     doc.FilePath=str(path)

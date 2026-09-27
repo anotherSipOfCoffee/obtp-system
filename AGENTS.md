@@ -16,7 +16,7 @@ Latest explicit user instructions take precedence. R16 was approved and publishe
 - First integrated cell baseline: `a11e613ac923fd5de6a3d3f1368e6c6eebc57745`.
 - `compare_manufacturing.py` reads these immutable Git snapshots into temporary folders. Do not maintain copies as parallel production pipelines.
 - After geometry changes: `python authoring/grasshopper/compare_manufacturing.py authoring/grasshopper/review-r15 --full-catalogue`; run the Python suite; then `export_web.py DEST --revision COMMIT`. Export refuses stale comparisons.
-- Only part-schedule and assembly PDFs are enabled. Gable is absent from website and new GH controls. GH offers a complete normal preview, without object-type switches. Lithuanian flat-roof label: `Plokščias`.
+- Only part-schedule and assembly PDFs are enabled. Gable is absent from website and new GH controls. GH offers cumulative assembly-stage (0-8) and core-frame (0/1) sliders. Core mode colours by canonical provisional manufacturing identity, with a legend. These are display-only and never alter quantities or exports; no individual object-type switches. Lithuanian flat-roof label: `Plokščias`.
 - Retain geometry/solid/clash, source-hash, export-cache, native acceptance and important browser behaviour checks. Native Rhino/GH acceptance is separate from portable rhino3dm checks.
 - Customer-facing brand is `studio 9120`; preserve existing UI and Lithuanian default. Main opens first; Drawing/opening PDFs remain disabled.
 
