@@ -16,7 +16,7 @@ class PDFDisabledTests(unittest.TestCase):
             target = Path(folder)
             (target / 'previous-revision.pdf').write_bytes(b'old PDF')
             combinations = [[(0, 0, 0, 2, 580, True, 0),
-                             (1, 0, 0, 2, 580, False, 0)], [(0, 0), (1, 0)]]
+                             (1, 2, 0, 2, 1180, False, 0)], [(0, 0), (1, 0)]]
             def model_file(scenes, path):
                 path.write_bytes(b'Rhino export fixture')
             with patch.object(export_web.itertools, 'product', side_effect=combinations), \
@@ -27,9 +27,13 @@ class PDFDisabledTests(unittest.TestCase):
             self.assertFalse(manifest['pdf_enabled'])
             self.assertEqual(len(manifest['entries']), 2)
             self.assertEqual(models.call_count, 2)
-            self.assertEqual(list(target.glob('*.pdf')), [])
+            self.assertEqual(len(list(target.glob('*.pdf'))), 2)
+            self.assertFalse((target/'previous-revision.pdf').exists())
             for entry in manifest['entries']:
                 self.assertFalse(entry['pdf'])
+                self.assertEqual(set(entry['documents']), {'components','assembly'} if entry['key'].startswith('studio-m-open') else set())
+                for name in entry['documents'].values():
+                    self.assertTrue((target/name).read_bytes().startswith(b'%PDF-'))
                 self.assertTrue((target / entry['file']).is_file())
                 self.assertTrue((target / (entry['key'] + '-plan.svg')).is_file())
             with zipfile.ZipFile(target / 'OBTP_Grasshopper_R12.zip') as package:

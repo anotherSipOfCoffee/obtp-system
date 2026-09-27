@@ -61,6 +61,16 @@ def compile_catalogue(destination,revision,generate_pdfs=False):
         (target/schedule_file).write_bytes(gzip.compress(json.dumps(counts,separators=(',',':')).encode(),mtime=0))
         web['manufacturing']={k:v for k,v in counts.items() if not k.endswith('_schedule')}
         web['manufacturing']['schedule_file']=schedule_file
+        web['documents']={}
+        # Only the website's default Studio M: no storage, flat, 1180 window,
+        # timber foundation, open seasonal sliders. No per-variant PDF pipeline.
+        if (program,i,roof,window,winter,foundation)==(1,2,0,1180,False,0):
+            from obtp.schedule_pdf import write as schedule_pdf
+            from obtp.documentation import assembly
+            from obtp.ssp_preview import pdf
+            schedule_pdf(scene,target/(key+'-components.pdf'),revision)
+            pdf(assembly(scene),target/(key+'-assembly.pdf'))
+            web['documents']={kind:key+'-'+kind+'.pdf' for kind in ('components','assembly')}
         web['envelope_spec']=scene['envelope_spec']
         web['window_spec']=scene['window_spec']
         web['seasonal_spec']=scene.get('seasonal_spec')
@@ -70,8 +80,8 @@ def compile_catalogue(destination,revision,generate_pdfs=False):
         if generate_pdfs:
             write_pdf_documents(scene, target, key)
         data=gzip.compress(json.dumps(web,separators=(',',':')).encode(),mtime=0);(target/(key+'.json.gz')).write_bytes(data)
-        entries.append(dict(key=key,file=key+'.json.gz',encoding='gzip',sha256=hashlib.sha256(data).hexdigest(),geometry_sha256=scene['geometry_sha256'],pdf=generate_pdfs))
-    (target/'manifest.json').write_text(json.dumps(dict(version=VERSION,source_revision=revision,pdf_enabled=generate_pdfs,defaults=dict(program='studio',foundation=0,size='m',storage=False,roof=0,terrace=2,window=1180,facade=0),entries=entries),indent=2))
+        entries.append(dict(key=key,file=key+'.json.gz',encoding='gzip',sha256=hashlib.sha256(data).hexdigest(),geometry_sha256=scene['geometry_sha256'],pdf=generate_pdfs,documents=web['documents']))
+    (target/'manifest.json').write_text(json.dumps(dict(version=VERSION,source_revision=revision,pdf_enabled=generate_pdfs,document_kinds=['components','assembly'],defaults=dict(program='studio',foundation=0,size='m',storage=False,roof=0,terrace=2,window=1180,facade=0),entries=entries),indent=2))
     with zipfile.ZipFile(target/'OBTP_Grasshopper_Source.zip','w',zipfile.ZIP_DEFLATED) as z:
         for p in ROOT.rglob('*'):
             if p.is_file() and p.suffix in ['.py','.md','.json','.png','.svg'] and not any(x in p.parts for x in ['exports','roof-studies','references','previews','review-r15','__pycache__']):z.write(p,p.relative_to(ROOT))

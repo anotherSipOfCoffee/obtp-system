@@ -40,13 +40,13 @@ def slot(p,name,v,box,scales=(10,20,25,50,75,100,150,200)):
 def finish(scene,sheets,kind):
     for i,p in enumerate(sheets):
         p.update(number=i+1,total=len(sheets));rect(p,15,10,395,277)
-        text(p,22,277,'obtp. / '+('studija' if scene['config']['program_type'] else 'pirtis')+' '+scene['config']['size'],4.5)
+        text(p,22,277,'studio 9120 / '+('studija' if scene['config']['program_type'] else 'pirtis')+' '+scene['config']['size'],4.5)
         text(p,22,267,p['name'],4)
         rect(p,230,10,180,36)
         for y in (22,34):line(p,230,y,410,y)
         line(p,365,10,365,34);line(p,390,10,390,34)
         text(p,234,39,'PERŽIŪRA / NE STATYBAI',3)
-        text(p,234,27,p['code']+' / GH-R12',2.7);text(p,369,27,'Lapas',2);text(p,394,27,'Lapų',2)
+        text(p,234,27,p['code']+' / '+scene.get('version','R16'),2.7);text(p,369,27,'Lapas',2);text(p,394,27,'Lapų',2)
         text(p,234,15,'2026-09-26 / '+scene['geometry_sha256'][:16],2.3);text(p,370,15,i+1);text(p,396,15,len(sheets))
         text(p,22,20,'Matmenys mm. Kiekiai pagal modelį; gamybinės jungtys nepatvirtintos.',2)
     return dict(schema='obtp-document-layouts/1',kind=kind,geometry_sha256=scene['geometry_sha256'],page_mm=[420,297],sheets=sheets)
@@ -227,10 +227,10 @@ def assembly(scene):
         slot(p,'Pridedami elementai',axon(current),[282,130,400,245],(50,75,100,150,200))
         text(p,282,121,'Pridedamos detalės: '+str(len(current)),2.8)
         text(p,25,66,note,2.3)
-        groups=component_groups(dict(scene,parts=current))
-        codes=[g['code'] for g in groups]
-        for j in range(min(4,math.ceil(len(codes)/5))):text(p,282,110-j*8,', '.join(codes[j*5:j*5+5]),1.9)
-        if len(codes)>20:text(p,282,75,'Visi indeksai - kiekių byloje.',2)
+        from .manufacturing import schedule
+        codes=[g['type_id'] for g in schedule(current)]
+        for j in range(min(4,math.ceil(len(codes)/3))):text(p,282,110-j*8,', '.join(codes[j*3:j*3+3]),1.9)
+        if len(codes)>12:text(p,282,75,'Visi indeksai - kiekių byloje.',2)
     return finish(scene,sheets,'assembly')
 
 def documents(scene):return {'openings':openings(scene),'components':components(scene),'assembly':assembly(scene)}
