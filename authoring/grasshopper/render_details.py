@@ -1,5 +1,5 @@
 """Exact-box orthographic review; depth buffer prevents hidden timber showing through."""
-import io,sys,tarfile,tempfile,subprocess
+import base64,io,sys,tarfile,tempfile,subprocess
 from pathlib import Path
 import numpy as np
 from PIL import Image,ImageDraw
@@ -44,7 +44,7 @@ def render(out):
    for col,label in enumerate(('shower','seat')):
     canvas.paste(view(s,label),(col*580,row*750+30));d.text((col*580+30,row*750+10),('Previous R18' if row==0 else 'Revised R19')+' / '+label,fill='#222222',font_size=20)
   canvas.save(out/'niche-comparison.png')
-  (out/'niche-finish.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 1500"><image href="niche-comparison.png" width="1160" height="1500"/></svg>')
+  (out/'niche-finish.svg').write_text(('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 1500"><image href="data:image/png;base64,PNG_DATA" width="1160" height="1500"/></svg>').replace('PNG_DATA',base64.b64encode((out/'niche-comparison.png').read_bytes()).decode()))
 if __name__=='__main__':render(Path(sys.argv[1]))
 
 # A cropped plan compares actual member faces at two complete bay seams.
