@@ -18,6 +18,9 @@ core=importlib.reload(importlib.import_module(name+'.model'))
 scene_json=None
 report=""
 try:
+    # Fixed construction choices have no canvas controls. Keep their values here.
+    terrace_steps=2
+    facade_type=0
     system_type=globals().get('system_type',0)
     program_type=globals().get('program_type',0)
     foundation_type=globals().get('foundation_type',0)
