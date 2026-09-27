@@ -22,7 +22,7 @@ if scene_json:
     from System.Drawing import Color
     from Grasshopper.Kernel.Types import GH_Material
     scene=json.loads(scene_json)
-    display=styles.prepare(scene,8 if assembly_stage is None else assembly_stage,0 if core_frame is None else core_frame)
+    display=styles.prepare(scene,12 if assembly_stage is None else assembly_stage,0 if core_frame is None else core_frame)
     shown=dict(scene);shown['parts']=display['parts']
     geometry,part_ids=adapter.preview(shown,True,False,0)
     type_ids=display['type_ids'];legend=display['legend'];preview_status=display['status']

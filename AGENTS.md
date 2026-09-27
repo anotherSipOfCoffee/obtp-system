@@ -16,7 +16,7 @@ Latest explicit user instructions take precedence. R16 was approved and publishe
 - First integrated cell baseline: `a11e613ac923fd5de6a3d3f1368e6c6eebc57745`.
 - `compare_manufacturing.py` reads these immutable Git snapshots into temporary folders. Do not maintain copies as parallel production pipelines.
 - After geometry changes: `python authoring/grasshopper/compare_manufacturing.py authoring/grasshopper/review-r15 --full-catalogue`; run the Python suite; then `export_web.py DEST --revision COMMIT`. Export refuses stale comparisons.
-- Only part-schedule and assembly PDFs are enabled. Gable is absent from website and new GH controls. GH offers cumulative assembly-stage (0-8) and core-frame (0/1) sliders. Core mode colours by canonical provisional manufacturing identity, with a legend. These are display-only and never alter quantities or exports; no individual object-type switches. Lithuanian flat-roof label: `Plokščias`.
+- Only part-schedule and assembly PDFs are enabled. Gable is absent from website and new GH controls. GH offers assembly-stage (0-12) and core-frame (0/1) sliders. Core mode colours by canonical provisional manufacturing identity, with a legend. Preparation stages lay out subassemblies flat before placement; exterior cladding is last. These are display-only and never alter quantities or exports; no individual object-type switches. Lithuanian flat-roof label: `Plokščias`.
 - Retain geometry/solid/clash, source-hash, export-cache, native acceptance and important browser behaviour checks. Native Rhino/GH acceptance is separate from portable rhino3dm checks.
 - Customer-facing brand is `studio 9120`; preserve existing UI and Lithuanian default. Main opens first; Drawing/opening PDFs remain disabled.
 
@@ -27,3 +27,10 @@ Latest explicit user instructions take precedence. R16 was approved and publishe
 - No supplier outreach. Preserve ordinary Git history and existing work. GitHub remote writes use the connector. No Drive synchronization.
 
 Historical release/research documents are evidence, not current competing instructions. Read them only for a relevant detail; this file consolidates current decisions.
+
+## Current review revision (27 September 2026)
+- Terrace joists keep 45 mm width, use 450 mm axes coordinated with 900 mm floor bays, and extend to the platform rails (210 mm depth with the current floor). No terrace packing cubes. End seats remain explicit. Spans/stock/fasteners require engineering.
+- Terrace perimeter fascia, removable bench front/end covers and clad niche heads/jambs/soffits are real counted parts. Niche clear soffits match door height. The outdoor seat recess is 300 mm deep; its divider gives excess depth to storage.
+- Default Studio M schedule contains structure, plywood panels and insulation with individually scaled part axonometrics. Its scope does not change complete-model audit counting. Facade boards retain their separate schedule; terrace/floor trims remain primary.
+- Assembly ground poses and the bounded Rhino preview cache must never modify canonical part geometry, IDs or quantities. Native handling masses and safe lifting methods remain unverified.
+- Python CI uses test discovery. Legacy JS cassette CI runs for its own files; current integration is tested by Studio against its exact System pin, not an obsolete duplicate consumer checkout.

@@ -2,7 +2,7 @@
 
 Extract the complete updated package into a fresh folder, then run `CREATE_GRASSHOPPER.py` in Rhino 8 Python 3 with Grasshopper open. This creates a new timestamped `.gh`; existing definitions are not overwritten.
 
-- **Assembly stage** integer slider: 0 empty; 1 foundations; 2 floor/terrace frame; 3 floor insulation/panels; 4 wall frame; 5 wall insulation/sheathing; 6 roof/ceiling; 7 openings/exterior; 8 complete. Stages are cumulative and match the assembly guide.
+- **Assembly stage** integer slider: 0 empty; 1 foundations; 2 floor laydown; 3 floor placement; 4 wall laydown; 5 wall erection; 6 roof laydown; 7 roof placement; 8 opening-unit laydown; 9 opening insertion; 10 interior; 11 decking; 12 cladding complete. Preparation poses are display-only; dimensions and quantities always describe the final model. Handling and connections remain unverified.
 - **Core frame** integer slider: 0 complete model in material colours; 1 structural timber and foundation supports only. Sheet panels, cladding, insulation and equipment are hidden in this display mode.
 - In core mode, identical canonical manufacturing candidate types share a preview material. Different types have distinct RGB values; similar-looking colours are possible, so use the type-ID/RGB legend. Colours do not change when moving the stage slider. Identities remain provisional where manufacturing details are unknown.
 - Native Custom Preview is wired automatically. The Python geometry preview is hidden to prevent default GH shading masking the colours. Preview filtering never changes the canonical model, quantities or export.

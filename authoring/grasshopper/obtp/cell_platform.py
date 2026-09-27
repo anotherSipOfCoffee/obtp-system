@@ -16,10 +16,10 @@ def terrace(p,parts,L,W,F,annex):
     side0,side1=(lo,-704) if p['program_type']==1 else (end+104,hi)
     def strip(name,x0,x1,y0,y1):
         cuts=[x0]+[x for x in range(lo,hi+1,1800) if x0<x<x1]+[x1]
-        supports=sorted(set([x0,x1-45]+[x-22.5 for x in cuts[1:-1]]))
-        for x in range(lo,hi,450):
-            if x0<=x<=x1-45 and all(abs(x-seat)>=45 for seat in supports):supports.append(x)
-        supports.sort()
+        # 450 mm centres share every second axis with the 900 mm floor bays.
+        # Keep 45 mm width; board joints have the same shared seat as before.
+        supports=[x0]+[x-22.5 for x in range(lo,hi+1,X//2) if x0+45<=x-22.5<=x1-90]+[x1-45]
+        supports=sorted(set(supports))
         # Remove a redundant near-end support, retaining every board-joint seat.
         for i,x in enumerate(supports):
             # Return joists continue through the front terrace, closing the
@@ -28,13 +28,24 @@ def terrace(p,parts,L,W,F,annex):
                 parts[:]=[a for a in parts if not (a['id'].startswith('terrace/joist-') and abs(a['origin'][0]-x)<0.01)]
             frame_start=-Y if name=='terrace-side' else y0
             frame_end=(-22 if x<end and x+45>0 else 0) if y1==-104 else y1
-            add(name+'/joist-'+str(i),[x,frame_start,F-173],[45,frame_end-frame_start,145],'timber')
+            add(name+'/joist-'+str(i),[x,frame_start,0],[45,frame_end-frame_start,F-28],'timber')
         for i,y in enumerate(range(y0,y1,100)):
             for j,(a,b) in enumerate(zip(cuts,cuts[1:])):
                 add(name+'/board-'+str(i)+'-'+str(j),[a,y,F-28],[b-a,min(95,y1-y),28])
         return supports
     strip('terrace',lo,hi,-Y,-104)
     strip('terrace-side',side0,side1,-100,W)
+    # Removable perimeter fascia, outside the joists and clear of deck boards.
+    def fascia(name,x,y,length,axis):
+        for i,a in enumerate(range(0,int(length),1800)):
+            n=min(1800,length-a)
+            add('terrace-fascia-'+name+'/trim-'+str(i),
+                [x+a,y,0] if axis==0 else [x,y+a,0],
+                [n,22,F-28] if axis==0 else [22,n,F-28],'cladding-wood')
+    fascia('front',lo,-Y-22,hi-lo,0)
+    fascia('left',lo-22,-Y,(W+Y if side0==lo else Y),1)
+    fascia('right',hi,-Y,(W+Y if side1==hi else Y),1)
+    fascia('return',side0,W,side1-side0,0)
     return ((hi-lo)*(Y-104)+(side1-side0)*(W+100))/1e6
 
 
@@ -59,13 +70,6 @@ def foundation(p,parts,interfaces,L,W,F,annex):
         for i,x in enumerate(xs):
             for j,(a,b) in enumerate(zip(ys,ys[1:])):
                 add(f'foundation-tie-{i}/member-{j}',[x-45,a+bearing_width/2,-dz],[90,b-a-bearing_width,dz],material)
-        # Pack each actual deck joist at each crossed platform bearing row.
-        deck=[a for a in parts if a['material']=='timber' and (a['family']=='terrace' or a['id'].startswith('firewood-niche/joist-'))]
-        for i,a in enumerate(deck):
-            x,y,_=a['origin'];dx,dy,_=a['size']
-            for j,row in enumerate(ys):
-                low=max(y,row-bearing_width/2);high=min(y+dy,row+bearing_width/2)
-                if high>low:add(f'foundation-deck-{i}/packing-{j}',[x,low,0],[dx,high-low,F-173],'timber')
         interfaces.append(dict(id='cell-platform/bearings',type='1800 x 1200 support rhythm with explicit terminal bays',capacity=None,fasteners=None,status='soil, member spans, anchors and joint stiffness require engineering'))
     for label,y in [('front',-22),('back',W)]:
         parts.append(dict(id='floor-edge-'+label+'/board',origin=[0,y,0],size=[L+annex,22,220],material='cladding-wood',family='floor',assembly='floor-edge-'+label))

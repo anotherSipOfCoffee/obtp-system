@@ -8,7 +8,7 @@ import hashlib
 import json
 import math
 
-VERSION = 'GH-R16-SHARED-CUTS'
+VERSION = 'GH-R18-ALIGNED-PLATFORM'
 from . import cells
 SPEC = dict(pitch=600, wall_depth=195, stud=45, joist_depth=220,
             floor_skin=18, wall_skin=12, roof_skin=18, wall_height=2100)
@@ -335,9 +335,9 @@ def build(p):
                 wall_run('annex-divider-'+str(j),[L+skin,y],'x',annex-wall-skin,d=p['partition_depth'],family='partitions')
             # Door-height soffits over the two open exterior niches. Not roof columns.
             for label,y in [('shower',0),('seat',W-wall)]:
-                add('niche-'+label+'/head',[L+12,y,F+p['door_height']],[annex-wall-12,wall,H-p['door_height']],'timber','walls')
+                add('niche-'+label+'/head',[L+12,y,F+p['door_height']+22],[annex-wall-12,wall,H-p['door_height']-22],'timber','walls')
             # Review side bay has open shower/seat ends; its whole bounding area is counted.
-            add('outside-seat/seat',[L+45,wall+split_b+90,F+420],[annex-wall-90,max(150,depth-split_b-90),35],'object','furniture')
+            add('outside-seat/seat',[L+48,wall+split_b+p['partition_depth']+48,F+420],[annex-wall-84,W-(wall+split_b+p['partition_depth']+48),35],'object','furniture')
         # Slatted furniture retains the reference's long upper and shorter lower benches.
         for name,bx,by,bw,bh,level in [('upper',wall+46,wall+depth-p['bench_depth']-46,hot-92,p['bench_depth'],p['bench_height']),
                                      ('lower',wall+46,wall+depth-2*p['bench_depth']-58,min(1200,hot-92),p['bench_depth'],p['foot_bench_height'])]:
@@ -348,6 +348,11 @@ def build(p):
             # Removable slatted end cover on the exposed short end, with cleaning gap.
             for j,zz in enumerate(range(80,level-38,100)):
                 add('bench-'+name+'/end-cover-'+str(j),[bx+bw-20,by,F+zz],[20,bh,min(90,level-38-zz)],'object','furniture')
+            # Removable slatted fronts and the second end, with an 80 mm cleaning gap.
+            for j,zz in enumerate(range(80,level-38,100)):
+                h=min(90,level-38-zz)
+                add('bench-'+name+'/front-cover-'+str(j),[bx+20,by,F+zz],[bw-40,20,h],'object','furniture')
+                add('bench-'+name+'/other-end-cover-'+str(j),[bx,by,F+zz],[20,bh,h],'object','furniture')
         add('heater/envelope',[wall+hot-500,wall+60,F],[260,430,700],'object','furniture')
         shower_x=L+25;shower_y=wall+250
         add('shower/riser',[shower_x,shower_y,F],[30,30,2100],'object','furniture')

@@ -1,6 +1,6 @@
 """Display-only cumulative assembly stages and canonical part-type colours."""
 import hashlib
-from .documentation import stage, STAGES
+from .documentation import stage, STAGES, stage_parts
 from .manufacturing import identity
 from .export import COLORS
 
@@ -10,9 +10,9 @@ def core_part(part):
             and part['material'] in ('timber','concrete-study'))
 
 
-def prepare(scene, assembly_stage=8, core_frame=0):
+def prepare(scene, assembly_stage=12, core_frame=0):
     level=int(assembly_stage);core=int(core_frame)
-    if level!=assembly_stage or not 0<=level<=8:raise ValueError('Assembly stage must be 0-8')
+    if level!=assembly_stage or not 0<=level<=len(STAGES):raise ValueError('Assembly stage must be 0-12')
     if core!=core_frame or core not in (0,1):raise ValueError('Core frame must be 0 or 1')
     # Build the palette before stage filtering so colours never change with stage.
     palette={};used=set()
@@ -24,7 +24,7 @@ def prepare(scene, assembly_stage=8, core_frame=0):
             if rgb not in used:break
             salt+=1
         palette[key]=rgb;used.add(rgb)
-    selected=[p for p in scene['parts'] if stage(p)<level and (not core or core_part(p))]
+    selected=[p for p in (stage_parts(scene,level-1) if level else []) if not core or core_part(p)]
     keys=[identity(p) for p in selected]
     ids=['P-'+hashlib.sha256(k.encode()).hexdigest()[:16] for k in keys]
     rgba=[palette[k]+(255,) if core else COLORS.get(p['material'],COLORS['object']) for p,k in zip(selected,keys)]

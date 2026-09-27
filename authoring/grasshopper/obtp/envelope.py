@@ -100,7 +100,7 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
         for side,y in [('front',wall),('back',W-wall)]:
             surface('log-niche-inner-'+side,'x',y,-600,516,1 if side=='front' else -1,False)
         for j,x in enumerate([-600,-129]):
-            add('firewood-niche/joist-'+str(j),[x,0 if p.get('grid_system')==1 else wall,F-173],[45,W if p.get('grid_system')==1 else W-2*wall,145],'timber','floor')
+            add('firewood-niche/joist-'+str(j),[x,0 if p.get('grid_system')==1 else wall,0 if repeated else F-173],[45,W if repeated else W-2*wall,F-28 if repeated else 145],'timber','floor')
 
         # Heated centre retains continuous structural floor sheathing.
         # Ceiling finish follows the same 16mm lining +20mm service-batten recipe.
@@ -136,6 +136,17 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             for j,y in enumerate([wall+p.get('annex_split_a_mm',depth*600//1800),wall+p.get('annex_split_b_mm',depth*1500//1800)]):
                 for side,base,sgn in [('a',y,-1),('b',y+p['partition_depth']+12,1)]:
                     surface('annex-lining-'+str(j)+side,'x',base,L+12,annex-wall-12,sgn,True)
+        if annex:
+            # Finish exposed niche heads at the same door-height datum. The
+            # underside is at the opening datum; the timber head is raised 22 mm.
+            for label,y,face in [('shower',0,-22),('seat',W-wall,W)]:
+                x0=L+outer; x1=end-wall
+                for i,z in enumerate(range(F+p['door_height'],F+H,100)):
+                    add('facade-niche-'+label+'/board-head-'+str(i),[x0,face,z],[x1-x0,22,min(95,F+H-z)],'cladding-wood','facade')
+                for i,yy in enumerate(range(y,y+wall,100)):
+                    add('facade-niche-'+label+'/board-soffit-'+str(i),[L+12,yy,F+p['door_height']],[annex-wall-12,min(95,y+wall-yy),22],'cladding-wood','facade')
+                    for side,xx in [('left',L+12),('right',end-wall-22)]:
+                        add('facade-niche-'+label+'/board-jamb-'+side+'-'+str(i),[xx,yy,F],[22,min(95,y+wall-yy),p['door_height']],'cladding-wood','facade')
         if annex:
             ya=wall+p.get('annex_split_a_mm',depth*600//1800)+p['partition_depth']+48
             yb=wall+p.get('annex_split_b_mm',depth*1500//1800)-36

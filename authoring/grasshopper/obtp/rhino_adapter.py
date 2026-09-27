@@ -4,6 +4,9 @@ from .export import brep
 from .preview_filter import visible
 from .cut_view import clipped_part, stationary
 
+# Survives component module reloads, bounded to the most recent source model.
+_PREVIEW_CACHE=globals().get('_PREVIEW_CACHE', {'hash':None,'solids':{}})
+
 class Api:
     File3dm=Rhino.FileIO.File3dm
     UnitSystem=Rhino.UnitSystem
@@ -22,13 +25,25 @@ class Api:
 def preview(scene, panels=True, cut=False, explode=0, visibility=None, only=0):
     if not 0<=explode<=100:raise ValueError('Explosion must be 0–100')
     geometry=[];ids=[]
+    cacheable=not cut and not explode and bool(scene.get('geometry_sha256'))
+    if cacheable and _PREVIEW_CACHE['hash']!=scene['geometry_sha256']:
+        _PREVIEW_CACHE.update(hash=scene['geometry_sha256'],solids={})
     cut_z=scene['dimensions']['floor_top_mm']+1100
     for p in scene['parts']:
         if not visible(p,visibility,only) or cut and not stationary(p):continue
         if not panels and p['material'] in ['plywood','lining-wood','cladding-wood']:continue
         q=clipped_part(p,cut_z) if cut else dict(p)
         if q is None:continue
-        g=brep(q,Api)
+        if cacheable:
+            solids=_PREVIEW_CACHE['solids']
+            if p['id'] not in solids:solids[p['id']]=brep(q,Api)
+            g=solids[p['id']].DuplicateBrep()
+        else:g=brep(q,Api)
+        if p.get('display_transform'):
+            transform=Rhino.Geometry.Transform.Identity
+            for i,row in enumerate(p['display_transform']):
+                for j,value in enumerate(row):transform[i,j]=value
+            g.Transform(transform)
         family=p['family']
         dx,dy,dz={'insulation':(0,0,0),'interior':(0,0,0),'facade':(0,200,0),'ceiling':(0,0,250),'terrace':(0,0,0),'canopy':(0,0,0),'floor':(0,0,-250),'roof':(0,0,450),'walls':(0,200,0),
                   'partitions':(200,0,0),'furniture':(0,0,0),'foundation':(0,0,-450)}[family]

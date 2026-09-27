@@ -13,19 +13,12 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install rhino3dm==8.35.0 reportlab
-      - run: python authoring/grasshopper/tests/test_authoring.py
-      - run: python authoring/grasshopper/tests/test_r02.py
-      - run: python authoring/grasshopper/tests/test_r04.py
-      - run: python authoring/grasshopper/tests/test_r05.py
-      - run: python authoring/grasshopper/tests/test_analysis.py
-      - run: python authoring/grasshopper/tests/test_suppliers.py
-      - run: python authoring/grasshopper/tests/test_studio.py
-      - run: python authoring/grasshopper/tests/test_object_library.py
-      - run: python authoring/grasshopper/tests/test_seasonal.py
-      - run: python authoring/grasshopper/tests/test_cut_view.py
-      - run: python authoring/grasshopper/tests/test_r12.py
-      - run: python authoring/grasshopper/tests/test_ssp.py
-      - run: python authoring/grasshopper/tests/test_web_pdf_disabled.py
-      - run: python authoring/grasshopper/tests/test_cells.py
-      - run: python authoring/grasshopper/tests/test_manufacturing.py
+      - run: python -m unittest discover -s authoring/grasshopper/tests
       - run: python authoring/grasshopper/export_web.py /tmp/sauna-catalogue --revision ${{ github.sha }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: grasshopper-and-default-studio-documents
+          path: |
+            /tmp/sauna-catalogue/OBTP_Grasshopper_Source.zip
+            /tmp/sauna-catalogue/studio-m-open-r0-t2-w1180-f0-b0-summer-*.pdf
+          retention-days: 30

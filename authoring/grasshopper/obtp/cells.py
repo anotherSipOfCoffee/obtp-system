@@ -27,7 +27,8 @@ def resolve(p, wall=195):
     p['resolved_partition_x_mm']=wall+hot
     p['resolved_depth_mm']=W-2*wall
     p['annex_split_a_mm']=(650 if W==2400 else Y-wall)
-    p['annex_split_b_mm']=(1650 if W==2400 else 2*Y-wall)
+    # Seat recess is 300 mm deep from its finished back to the rear opening.
+    p['annex_split_b_mm']=W-wall-300-p['partition_depth']-48
     return W,L,hot,hall,annex
 
 
