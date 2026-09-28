@@ -30,7 +30,7 @@ class SaunaWorkflowTests(unittest.TestCase):
   selection=flow.select();selection['arrangement']=1
   with self.assertRaises(ValueError):flow.resolve(selection)
  def test_invalid_settings_rejected(self):
-  for args in (dict(preset_index=7),dict(roof_type=2),dict(window_width=900),dict(wall_height=1900),dict(foundation_type=3)):
+  for args in (dict(preset_index=13),dict(roof_type=2),dict(window_width=900),dict(wall_height=1900),dict(foundation_type=3)):
    with self.assertRaises(ValueError):flow.select(**args)
  def test_no_model_created_before_construction(self):
   from unittest.mock import patch

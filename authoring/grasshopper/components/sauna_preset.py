@@ -18,5 +18,5 @@ try:
     inputs={k:value(k,d) for k,d in [('sauna',True),('entrance',True),('outdoor',True),('sauna_cells',3),('entrance_cells',3),('outdoor_cells',1),('depth_cells',2),('sauna_entrance',2),('entrance_outdoor',3),('sauna_outdoor',0),('arrangement',0),('roof_type',1),('window_width',1180),('wall_height',2100),('foundation_type',0),('include_foundation',True)]}
     selection=core.select(int(value('preset_index',2)),**inputs)
     workflow_json=json.dumps(selection)
-    report=selection['preset_name']+'\n'+('Custom room, edge and dimension controls ACTIVE.' if selection['custom'] else 'Saved layout loaded. Custom room, edge, dimension and arrangement controls ignored.')+'\nSauna programme. Cassette system fixed. Roof/window/height/foundation settings apply to all presets.'
+    report=selection['preset_name']+'\n'+('Custom room, edge and dimension controls ACTIVE.' if selection['custom'] else 'Saved layout loaded. Custom room, edge, dimension and arrangement controls ignored.')+'\nCassette system fixed. Roof/window/height/foundation settings apply to all presets.\nStudio uses saved room layouts; Custom controls apply only to Custom Sauna.'
 except Exception as error:report=str(error);fail(error)

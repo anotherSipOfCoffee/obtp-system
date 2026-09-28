@@ -26,7 +26,7 @@ try:
         graph=json.loads(value('graph_json','null'))
         if graph is None:raise ValueError('Connect a valid relationship graph')
         plan=core.solve(graph,int(value('arrangement',0)));plan_json=json.dumps(plan)
-    palette={'sauna':(203,153,117),'entrance':(137,169,188),'outdoor':(163,184,137)}
+    palette={'sauna':(203,153,117),'entrance':(137,169,188),'outdoor':(163,184,137),'work':(203,153,117),'centre':(137,169,188),'preparation':(163,184,137)}
     def add(g,rgb):geometry.append(g);materials.append(GH_Material(Rhino.Display.DisplayMaterial(Color.FromArgb(*rgb))))
     ox,oy=0,-7500
     for r in plan['rooms']:
@@ -41,7 +41,7 @@ try:
     for o in plan['openings']:
         x,y=o['origin_mm'];w=o['width_mm'];add(Rhino.Geometry.LineCurve(Rhino.Geometry.Point3d(ox+x,oy+y,15),Rhino.Geometry.Point3d(ox+x+(w if o['axis']=='x' else 0),oy+y+(w if o['axis']=='y' else 0),15)),(220,65,50))
     # Explicit graph diagram next to the room plan, independent of room inclusion.
-    positions={r:Rhino.Geometry.Point3d(ox+i*1600,oy-1500,0) for i,r in enumerate(core.ROOM_IDS) if plan['programme']['active'][r]}
+    positions={r:Rhino.Geometry.Point3d(ox+i*1600,oy-1500,0) for i,r in enumerate(plan['programme']['active']) if plan['programme']['active'][r]}
     for r,point in positions.items():
         add(Rhino.Geometry.Circle(point,160).ToNurbsCurve(),palette[r]);labels.append('GRAPH: '+r);label_points.append(point)
     for e in graph['edges']:add(Rhino.Geometry.LineCurve(positions[e['a']],positions[e['b']]),(220,65,50) if e['kind']=='passage' else (65,80,90))

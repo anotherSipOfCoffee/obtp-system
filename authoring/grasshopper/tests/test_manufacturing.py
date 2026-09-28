@@ -87,7 +87,7 @@ class ManufacturingTests(unittest.TestCase):
         setup=(root/'CREATE_GRASSHOPPER.py').read_text()
         for text in ['Show only','part_controls','Gable / metal','controls[\'facade_type\']','controls[\'terrace_steps\']']:
             self.assertNotIn(text,setup)
-        self.assertIn('3D model',setup)
+        self.assertIn('Final 3D preview',setup)
         self.assertNotIn('drawings.bake',(root/'components/export.py').read_text())
 
 if __name__=='__main__':unittest.main()

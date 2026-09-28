@@ -1,10 +1,10 @@
-# Current GH release — R25 Custom cassette construction
+# Current GH release — R26 checkpoints, assembly and Studio
 
-Read [GH_R25.md](GH_R25.md). Extract the whole package into a fresh folder, open Grasshopper and run `CREATE_GRASSHOPPER.py` in Rhino 8 Python 3.
+Read [GH_R26.md](GH_R26.md). Extract the entire ZIP into a fresh folder and run `CREATE_GRASSHOPPER.py` in Rhino 8 Python 3 with Grasshopper open.
 
-Main canvas: **Sauna preset → Layout plan → Cassette construction → 3D model**. Six saved presets plus Custom. Custom now builds supported single-room, reversed and disconnected-room layouts. Outdoor-only and nonrectangular layouts remain unsupported. Historical comparison systems remain in `CREATE_RESEARCH_GRASSHOPPER.py`. No websites changed.
+**Preset → Layout → Cassette → Assembly sequence → Final 3D preview.** Six Sauna presets, Custom Sauna and six Studio presets. Each checkpoint has readable reports; construction has assembly IDs and diagnostic outputs. The assembly slider and three final preview scopes are display-only. No websites changed. Native Rhino/GH acceptance remains outstanding.
 
-R24.1's Rhino component creation fix is retained. Native host acceptance remains outstanding. The sections below are historical; use R25 for current scope.
+Earlier instructions below are historical; R26 takes precedence.
 
 # Historical R21 modularity audit
 

@@ -78,3 +78,9 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - `plan_construction.py` resolves topology using existing canonical wall/envelope/platform recipes. No hidden preset substitute. Outdoor-only and non-strip envelopes remain explicitly unsupported. Preserve stale-plan rejection and fit checks.
 - New topology cases put the fixed window on the back wall; partitions, lining, insulation, furniture, opening symbols and drawing labels must follow the same room boundaries. External-route, supplier, structural and handling acceptance remain unresolved.
 - Native execution remains separate from portable tests. No website/pin changes or deployment. Use GH_R25.md and tools/package-gh.py; do not repeat historical whole-site export pipelines for this GH work.
+
+## R26 current workflow — checkpoints and Studio
+- Supersedes the R24 Sauna-only canvas restriction: expose six saved Sauna presets, Custom Sauna and six saved Studio presets. Studio custom graph solving is not implemented; ignore Sauna custom controls for saved presets.
+- Keep five visible checkpoints: preset, layout, cassette, assembly sequence, final preview. Expose diagnostic rows and exact assembly IDs without filling the canvas with every part.
+- Preview scopes and assembly filtering never modify the canonical scene or export quantities. Connected walls are display groups, not certified lifting units.
+- Retain R24.1 component factory compatibility and R25 Custom construction; use GH_R26.md. Do not change websites.

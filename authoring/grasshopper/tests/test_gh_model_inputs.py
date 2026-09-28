@@ -37,7 +37,7 @@ class HostInputTests(unittest.TestCase):
   class Goo:
    def __init__(self,value):self.Value=value
   gh=types.SimpleNamespace(Kernel=types.SimpleNamespace(GH_RuntimeMessageLevel=types.SimpleNamespace(Error='error')))
-  for index in range(7):
+  for index in range(13):
    messages=[]
    component=types.SimpleNamespace(OnPingDocument=lambda:types.SimpleNamespace(FilePath=str(ROOT/'test-r24.gh')),AddRuntimeMessage=lambda *a:messages.append(a))
    ns={'preset_index':Goo(index),'roof_type':Goo(0.0),'wall_height':Goo(2100.0),'ghenv':types.SimpleNamespace(Component=component)}
@@ -48,4 +48,4 @@ class HostInputTests(unittest.TestCase):
     target={'plan_json':Goo(json.dumps(plan)),'ghenv':ns['ghenv']}
     exec(compile((ROOT/'components/sauna_cassette.py').read_text(),'sauna_cassette.py','exec'),target)
     self.assertEqual(messages,[],target['report']);self.assertIsNotNone(target['scene_json'],target['report'])
-    self.assertEqual(json.loads(target['scene_json'])['config']['program_type'],0)
+    self.assertEqual(json.loads(target['scene_json'])['config']['program_type'],int(index>=7))
