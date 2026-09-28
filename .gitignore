@@ -23,3 +23,8 @@ authoring/grasshopper/review-r27/*.svg
 authoring/grasshopper/review-r27/*.3dm
 authoring/grasshopper/review-r27/*.html
 authoring/grasshopper/review-r27/timings.json
+
+# Reproducible third-workflow review exports; included in the downloadable ZIP.
+authoring/grasshopper/review-r28/*.svg
+authoring/grasshopper/review-r28/*.3dm
+authoring/grasshopper/review-r28/*.html

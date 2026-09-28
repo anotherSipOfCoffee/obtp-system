@@ -92,3 +92,11 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - Functional construction branches share plan_pipeline and canonical model recipes; do not regenerate full buildings inside branch components. Programme-specific topology remains explicit, not an unrestricted plan solver.
 - Intermediate previews must agree with final mirrored coordinates and actual levels; preview toggles do not generate construction. NewInstanceGuid overrides are unnecessary; native GUID allocation retained.
 - Use GH_R27.md, REVIEW_R27.py and package-gh.py. Compare 24 saved geometry/quantity baselines; tests and portable model exports do not establish native Rhino/GH acceptance.
+
+## R28 third creator — room configuration
+- CREATE_LAYOUT_GRASSHOPPER.py is additive: do not replace either existing creator. See GH_R28.md.
+- Approved domain: room controls only, 1–6 repeatable function lists, linear rectangular single row; overall 900 X / 1200 Y grid controls. No arbitrary drawn-plan or multi-row solver.
+- Separate may/must/cannot adjacency from open/opening/closed boundaries. Closed access groups need exterior entries. Derive cassette geometry directly from resolved room bounds using shared member recipes, never hidden preset generation.
+- U terrace = both long sides + one short side, entrance edge included. Studio passage is a central Hall/Entrance with opposing double doors. It feeds planning before framing.
+- Sauna outdoor features currently occupy checked terrace reservations; an integrated storage/shower/bench niche is not implemented. Do not claim equivalence with the old niche. Windows/equipment/service design and SLD eligibility remain unresolved.
+- Native test status stays explicit. User-authorized code/PR updates only; no websites, Drive or merge.

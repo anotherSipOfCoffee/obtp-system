@@ -1,8 +1,10 @@
-# Current GH release — R27 controlled plans and construction stages
+# Current package — R28, three independent GH definitions
 
-Read [GH_R27.md](GH_R27.md) for installation, canvas sequence, limits and troubleshooting. Main: room controls → plan → cassette branches → model → assembly → preview. Research: system specimens only. Extract the whole ZIP into a fresh folder; run the appropriate creator in Rhino 8 Python 3 with a millimetre document. Native host acceptance remains outstanding.
+- **CREATE_LAYOUT_GRASSHOPPER.py** — new repeatable room functions → single-row plan → cassette skeleton → detailing. Read [GH_R28.md](GH_R28.md).
+- **CREATE_GRASSHOPPER.py** — preserved R27 Sauna/Studio preset workflow. Read [GH_R27.md](GH_R27.md).
+- **CREATE_RESEARCH_GRASSHOPPER.py** — preserved construction-system specimen research.
 
-Earlier release notes below are historical.
+Extract the entire ZIP into a fresh folder. Open a millimetre Rhino document and Grasshopper, then run the chosen creator using Rhino 8 Python 3. Each creates its own timestamped native definition. Native acceptance remains outstanding.
 
 # Historical R21 modularity audit
 

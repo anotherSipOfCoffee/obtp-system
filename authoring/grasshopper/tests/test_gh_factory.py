@@ -31,7 +31,7 @@ class Param:
 
 class FactoryTests(unittest.TestCase):
     def test_creators_need_no_source_setter(self):
-        for filename in ('CREATE_GRASSHOPPER.py', 'CREATE_RESEARCH_GRASSHOPPER.py'):
+        for filename in ('CREATE_GRASSHOPPER.py', 'CREATE_RESEARCH_GRASSHOPPER.py', 'CREATE_LAYOUT_GRASSHOPPER.py'):
             with self.subTest(creator=filename):
                 tree = ast.parse((ROOT / filename).read_text())
                 factory = next(n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.name == 'script')
