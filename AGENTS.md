@@ -66,3 +66,9 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - Programme and connections are independent. Outdoor is currently one mixed shower/storage/seating zone; external-access edges are route requirements, not invented doors.
 - Plan owns room sizes and storage when its bridge is enabled; roof/window/foundation/height remain on the original controls. Existing standard door/partition dimensions are fixed in this first adapter.
 - See GH_R23.md. Run layout tests and retain the complete source test suite. Use tools/package-gh.py for the current archive. Native GH acceptance remains separate from portable checks.
+
+## R24 active workflow — Sauna and cassette only
+- Main creator must expose one sequence: seven-choice Sauna preset (six existing S/M/L × storage presets plus Custom) → authoritative layout → fixed cassette → 3D. No Studio/system selector, separate custom toggle, existing-model bypass or background legacy building generator.
+- Saved presets ignore custom-only controls and reproduce existing geometry, including original exterior shower fixtures on no-storage presets. Custom outdoor-off removes those fixtures as an explicit programme change.
+- All geometry consumers use the same cassette scene. Unsupported custom arrangements clear construction output. Do not silently repair or replace the resolved plan.
+- Other systems/Studio remain available in the separate research creator and source history, not on the active Sauna canvas. No website edits or deployment. Read GH_R24.md.

@@ -82,7 +82,7 @@ def solve(graph,arrangement=0):
  result['plan_sha256']=digest(result)
  return result
 
-def build_from_plan(plan,base_config=None):
+def build_from_plan(plan,base_config=None,preserve_legacy_shower=False):
  """Validated bridge; never silently export a stale or unsupported room plan."""
  from .model import build,parameters
  fresh=solve(plan['graph'],plan['arrangement'])
@@ -96,7 +96,7 @@ def build_from_plan(plan,base_config=None):
   for key in ('roof_type','window_width','foundation_type','include_foundation','wall_height'):
    if key in base_config:baseline[key]=base_config[key]
  baseline.update(sauna_length_steps=p['length_cells']['sauna'],hall_length_steps=p['length_cells']['entrance'],storage_length_steps=p['length_cells']['outdoor'],room_depth_steps=p['depth_cells'],storage=p['active']['outdoor'])
- if not p['active']['outdoor']:baseline['include_outdoor_shower']=False
+ if not p['active']['outdoor'] and not preserve_legacy_shower:baseline['include_outdoor_shower']=False
  scene=build(baseline)
  if scene['dimensions']['length_mm']+scene['dimensions']['annex_length_mm']!=fresh['bounds_mm'][2] or scene['dimensions']['width_mm']!=fresh['bounds_mm'][3]:raise ValueError('Plan-to-construction footprint mismatch')
  for r in fresh['finished_room_rectangles']:

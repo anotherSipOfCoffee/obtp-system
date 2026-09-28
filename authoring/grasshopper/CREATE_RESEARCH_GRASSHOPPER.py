@@ -1,0 +1,283 @@
+#! python 3
+"""Run once in Rhino 8 ScriptEditor (Python 3), with Grasshopper open.
+Creates a native editable .gh beside this script, without touching existing documents.
+Requires the modern Python3Component.Create API; unsupported Rhino builds fail explicitly.
+"""
+from datetime import datetime
+from pathlib import Path
+import json
+import traceback
+import clr
+import Rhino
+import Grasshopper
+from Grasshopper.Kernel import GH_Document, GH_DocumentIO, GH_ParamAccess
+from Grasshopper.Kernel.Special import GH_NumberSlider, GH_BooleanToggle, GH_ValueList, GH_ValueListItem, GH_ValueListMode, GH_Panel, GH_Group
+from Grasshopper.GUI.Base import GH_SliderAccuracy
+from System import Decimal, Double, Boolean, String
+from System.Drawing import PointF, Color, SizeF
+
+ROOT=Path(__file__).resolve().parent
+
+
+def local_module(module):
+    """Resolve this download explicitly, even with an older obtp already cached."""
+    import hashlib
+    import importlib
+    import importlib.util
+    import sys
+    package_root=ROOT/'obtp'
+    target=package_root/(module+'.py')
+    if not target.is_file():
+        raise FileNotFoundError('Missing '+str(target)+'. Extract the complete source ZIP before running setup.')
+    name='_obtp_setup_'+hashlib.sha256(str(package_root.resolve()).encode()).hexdigest()[:16]
+    if name not in sys.modules:
+        spec=importlib.util.spec_from_file_location(name,package_root/'__init__.py',submodule_search_locations=[str(package_root)])
+        package=importlib.util.module_from_spec(spec)
+        sys.modules[name]=package
+        try:spec.loader.exec_module(package)
+        except Exception:
+            del sys.modules[name]
+            raise
+    return importlib.import_module(name+'.'+module)
+
+
+def main():
+    if Rhino.RhinoDoc.ActiveDoc is None or Rhino.RhinoDoc.ActiveDoc.ModelUnitSystem != Rhino.UnitSystem.Millimeters:
+        raise ValueError('Open a millimetre Rhino document first; this script never rescales your document.')
+    if Grasshopper.Instances.ActiveCanvas is None:
+        raise RuntimeError('Open Grasshopper first, then run this script again.')
+    # Resolve only the already loaded Rhino script component assembly.
+    from System import AppDomain
+    assemblies=[a for a in AppDomain.CurrentDomain.GetAssemblies() if a.GetName().Name=='RhinoCodePluginGH']
+    if not assemblies:
+        raise RuntimeError('Drop a Python 3 Script component onto a blank GH canvas once to initialize it, then rerun setup.')
+    clr.AddReference(assemblies[0].Location)
+    from RhinoCodePluginGH.Components import Python3Component
+    from RhinoCodePluginGH.Parameters import ScriptVariableParam
+    if not hasattr(Python3Component,'Create'):
+        raise RuntimeError('This Rhino build lacks the script creation API. Install a current Rhino 8 service release. See README fallback.')
+    doc=GH_Document()
+    def place(obj,x,y):
+        obj.CreateAttributes();obj.Attributes.Pivot=PointF(x,y);doc.AddObject(obj,False);return obj
+    def slider(name,value,minimum,maximum,x,y):
+        obj=GH_NumberSlider();obj.CreateAttributes();obj.NickName=name
+        obj.Slider.Type=GH_SliderAccuracy.Integer
+        obj.Slider.Minimum=Decimal(minimum);obj.Slider.Maximum=Decimal(maximum)
+        obj.SetSliderValue(Decimal(value));return place(obj,x,y)
+    def toggle(name,value,x,y):
+        obj=GH_BooleanToggle();obj.NickName=name;obj.Value=value;return place(obj,x,y)
+    def panel(text,x,y,width=350,height=200):
+        obj=GH_Panel();obj.UserText=text;place(obj,x,y)
+        return obj
+    def script(name,file,inputs,outputs,x,y):
+        code=(ROOT/'components'/file).read_text(encoding='utf-8')
+        obj=Python3Component.Create(name,code)
+        obj.UsingStandardOutputParam=False
+        for p in list(obj.Params.Input):obj.Params.UnregisterInputParameter(p)
+        for p in list(obj.Params.Output):obj.Params.UnregisterOutputParameter(p)
+        for n,t in inputs:
+            p=ScriptVariableParam(n);p.PrettyName=n;p.ToolTip=n.replace('_',' ');p.Optional=True;p.Access=GH_ParamAccess.item
+            # Keep the native default hint; components explicitly normalize inputs.
+            # Select(System.Type) is unavailable in some Rhino 8 builds.
+            p.CreateAttributes();obj.Params.RegisterInputParam(p)
+        for n,access in outputs:
+            p=ScriptVariableParam(n);p.Access=access;p.CreateAttributes();obj.Params.RegisterOutputParam(p)
+        obj.VariableParameterMaintenance();obj.SetSource(code)
+        return place(obj,x,y)
+    def group(name,objects,color):
+        g=GH_Group();g.NickName=name;g.Colour=color;doc.AddObject(g,False)
+        for obj in objects:g.AddObject(obj.InstanceGuid)
+        return g
+    presets=GH_ValueList();presets.NickName='Saved size / storage configuration';presets.ListMode=GH_ValueListMode.DropDown
+    presets.ListItems.Clear()
+    labels=['S / no storage','S / storage','M / no storage','M / storage','L / no storage','L / storage']
+    for i,label in enumerate(labels):
+        item=GH_ValueListItem(label,str(i));item.Selected=(i==2);presets.ListItems.Add(item)
+    place(presets,40,60)
+    controls={'preset_index':presets,'custom':toggle('Use custom parameters',False,40,110)}
+    values=[('room_depth_steps',2,2,8),('sauna_length_steps',3,3,8),('hall_length_steps',3,2,8),
+            ('storage_length_steps',1,1,4),('wall_height',2100,2100,2700),('partition_depth',90,90,120),
+            ('door_width',900,600,1200),('door_height',1900,1600,2100),('sauna_door_offset',150,90,900),
+            ('bench_depth',600,400,800),('bench_height',900,650,1100),('foot_bench_height',450,250,700)]
+    for i,(n,v,lo,hi) in enumerate(values):
+        if n in ['wall_height','partition_depth']:
+            obj=GH_ValueList();obj.NickName=n;obj.ListMode=GH_ValueListMode.DropDown;obj.ListItems.Clear()
+            for choice in ([2100,2700] if n=='wall_height' else [90,120]):
+                entry=GH_ValueListItem(str(choice)+' mm',str(choice));entry.Selected=(choice==v);obj.ListItems.Add(entry)
+            controls[n]=place(obj,40,190+i*45)
+        else:controls[n]=slider(n,v,lo,hi,40,190+i*45)
+    controls['storage']=toggle('Custom storage',False,40,750)
+    controls['include_foundation']=toggle('Foundation study',True,40,795)
+    roofs=GH_ValueList();roofs.NickName='Roof';roofs.ListMode=GH_ValueListMode.DropDown;roofs.ListItems.Clear()
+    for i,label in enumerate(['Plokščias / membrane','Single slope / metal']):
+        item=GH_ValueListItem(label,str(i));item.Selected=(i==1);roofs.ListItems.Add(item)
+    controls['roof_type']=place(roofs,40,850)
+    win=GH_ValueList();win.NickName='Window width / mm';win.ListMode=GH_ValueListMode.DropDown;win.ListItems.Clear()
+    for w in [580,880,1180]:
+        item=GH_ValueListItem(str(w),str(w));item.Selected=(w==1180);win.ListItems.Add(item)
+    controls['window_width']=place(win,40,940)
+    programs=GH_ValueList();programs.NickName='Program / Sauna or Studio';programs.ListMode=GH_ValueListMode.DropDown;programs.ListItems.Clear()
+    for i,label in enumerate(['Sauna','Studio']):
+        item=GH_ValueListItem(label,str(i));item.Selected=(i==0);programs.ListItems.Add(item)
+    controls['program_type']=place(programs,40,1075)
+    controls['studio_winter_closed']=toggle('Studio sliding doors closed',True,40,1120)
+    foundations=GH_ValueList();foundations.ListMode=GH_ValueListMode.DropDown
+    foundations.CreateAttributes();foundations.Name='Foundation';foundations.NickName='Foundation';foundations.ListItems.Clear()
+    foundations.ListItems.Add(GH_ValueListItem('Timber support frame on piles', '0'))
+    foundations.ListItems.Add(GH_ValueListItem('Concrete pile grillage study', '1'))
+    foundations.ListItems[0].Selected=True
+    controls['foundation_type']=place(foundations,40,1180)
+    inputs=[(k,Boolean if k in ['custom','storage','include_foundation','studio_winter_closed'] else Double) for k in controls]
+    model=script('01 · Shared module','model.py',inputs,[('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],420,240)
+    for i,(key,_) in enumerate(inputs):model.Params.Input[i].AddSource(controls[key])
+    preview=script('02 · Rhino preview','preview.py',[('scene_json',String),('assembly_stage',Double),('core_frame',Double)],
+                   [(n,GH_ParamAccess.list) for n in ['geometry','part_ids','materials','type_ids','legend']]+[('preview_status',GH_ParamAccess.item)],800,250)
+    preview.Params.Input[0].AddSource(model.Params.Output[0])
+    stage_control=slider('Assembly progress / 0 empty - 100 complete',100,0,100,420,520)
+    core_control=slider('Core frame / 0 complete - 1 unique part colours',0,0,1,420,565)
+    preview.Params.Input[1].AddSource(stage_control)
+    preview.Params.Input[2].AddSource(core_control)
+    proxies=[p for p in Grasshopper.Instances.ComponentServer.ObjectProxies
+             if p.Desc.Name=='Custom Preview' and p.Desc.Category=='Display' and not p.Obsolete]
+    if len(proxies)!=1:raise RuntimeError('Expected one native Custom Preview component; found '+str(len(proxies)))
+    coloured=place(proxies[0].CreateInstance(),1120,500)
+    coloured.Params.Input[0].AddSource(preview.Params.Output[0])
+    coloured.Params.Input[1].AddSource(preview.Params.Output[2])
+    preview.Hidden=True # Avoid the default GH preview masking the type materials.
+    preview_note=panel('',1120,620);preview_note.AddSource(preview.Params.Output[5])
+    type_legend=panel('',1520,500);type_legend.AddSource(preview.Params.Output[4])
+    report=panel('',800,80);report.AddSource(model.Params.Output[1])
+    export_toggle=toggle('Export model + drawings (PDF disabled)',False,800,620)
+    export=script('03 · Checked export','export.py',[('scene_json',String),('run_export',Boolean)],[('receipt',GH_ParamAccess.item)],1120,250)
+    export.Params.Input[0].AddSource(model.Params.Output[0]);export.Params.Input[1].AddSource(export_toggle)
+    receipt=panel('',1400,250);receipt.AddSource(export.Params.Output[0])
+    group('A · Saved presets and custom dimensions / mm / 900 mm X / 1200 mm Y cells',list(controls.values()),Color.FromArgb(220,232,221))
+    group('B · Shared Python generator',[model],Color.FromArgb(233,226,207))
+    group('C · Complete model preview',[preview,stage_control,core_control,coloured,preview_note,type_legend],Color.FromArgb(218,228,235))
+    group('D · Checked model export / PDF disabled',[export,export_toggle,receipt],Color.FromArgb(235,222,218))
+    # Analysis preparation shares the detailed scene, not the display/cut geometry.
+    analysis_inputs=local_module('analysis').inputs
+    settings=panel(json.dumps(analysis_inputs(),indent=2),420,1150)
+    run_analysis=toggle('Export analysis preparation',False,800,1100)
+    analysis=script('04 · Detailed analysis preparation','analysis.py',
+        [('scene_json',String),('inputs_json',String),('run_export',Boolean)],
+        [(n,GH_ParamAccess.item) for n in ['preflight_json','geometry_report','solver_report','results_report','diagrams_report','receipt']],800,1250)
+    for i,source in enumerate([model.Params.Output[0],settings,run_analysis]):analysis.Params.Input[i].AddSource(source)
+    audit=panel('',1120,1100);audit.AddSource(analysis.Params.Output[1])
+    setup=panel('',1520,1100);setup.AddSource(analysis.Params.Output[2])
+    results=panel('',1920,1100);results.AddSource(analysis.Params.Output[3])
+    diagrams=panel('',1120,1500);diagrams.AddSource(analysis.Params.Output[4])
+    analysis_receipt=panel('',1520,1500);analysis_receipt.AddSource(analysis.Params.Output[5])
+    group('E1 · Geometry extraction / detailed model',[analysis,audit],Color.FromArgb(218,228,235))
+    group('E2 · Materials, site and operating inputs / null means required',[settings],Color.FromArgb(233,226,207))
+    group('E3 · Solver setup requirements / not executed',[setup],Color.FromArgb(235,222,218))
+    group('E4 · Results status / no invented values',[results],Color.FromArgb(235,222,218))
+    group('E5 · Material section diagrams',[diagrams],Color.FromArgb(218,228,235))
+    group('E6 · Report export / local only',[run_analysis,analysis_receipt],Color.FromArgb(220,232,221))
+    # Independent System library comparison; does not change the shared building model.
+    def choices(name,labels,default,x,y):
+        obj=GH_ValueList();obj.NickName=name;obj.ListMode=GH_ValueListMode.DropDown;obj.ListItems.Clear()
+        for number,label in labels:
+            entry=GH_ValueListItem(label,str(number));entry.Selected=(number==default);obj.ListItems.Add(entry)
+        return place(obj,x,y)
+    comparison_controls={
+      'enabled':toggle('Show additional System comparison',True,40,1800),
+      'system':choices('System',[(0,'1 / WikiHouse source'),(1,'2 / Studio current cassette'),(2,'3 / B experimental plate ribs')],2,40,1845),
+      'bays':slider('Modules / WikiHouse and B',4,1,8,40,1890),
+      'layer':choices('Assembly layers',[(0,'Floor'),(1,'Floor + walls'),(2,'Floor + walls + roof'),(3,'Complete concept')],3,40,1935),
+      'panels':toggle('Show panels / cassette and B',True,40,1980),
+      'insulation':toggle('Show insulation / cassette and B',False,40,2025),
+      'foundation':toggle('Show foundation / cassette',True,40,2070),
+      'inspection':choices('Inspection',[(0,'Assembly'),(1,'Object / assembly group'),(2,'Connection context')],0,40,2115),
+      'object_index':slider('Object or connection index / see catalogue',0,0,300,40,2160),
+      'explode':slider('Preview separation / not erection',0,0,100,40,2205),
+      'rib_pitch':choices('B rib pitch / mm',[(600,'600'),(900,'900'),(1200,'1200')],900,40,2250),
+      'rib_span':slider('B transverse outside span / mm',3600,2400,4800,40,2295),
+      'rib_height':choices('B clear height / mm',[(2100,'2100'),(2700,'2700')],2100,40,2340),
+      'rib_thickness':choices('B plate thickness / unengineered',[(27,'27'),(45,'45'),(63,'63')],45,40,2385),
+      'rib_depth':choices('B rib depth / unengineered',[(180,'180'),(240,'240'),(360,'360')],240,40,2430),
+      'core_frame':toggle('Comparison core / unique part colours',False,40,2475)}
+    comparison_inputs=[('scene_json',String)]+[(k,Boolean if k in ('enabled','panels','insulation','foundation','core_frame') else Double) for k in comparison_controls]
+    comparison=script('05 · Three System comparison','comparison.py',comparison_inputs,
+      [(n,GH_ParamAccess.list) for n in ['geometry','materials','part_ids','type_ids','catalogue']]+[('report',GH_ParamAccess.item),('comparison_json',GH_ParamAccess.item)],480,1950)
+    comparison.Params.Input[0].AddSource(model.Params.Output[0])
+    for i,obj in enumerate(comparison_controls.values(),1):comparison.Params.Input[i].AddSource(obj)
+    comparison_colour=place(proxies[0].CreateInstance(),850,1900)
+    comparison_colour.Params.Input[0].AddSource(comparison.Params.Output[0]);comparison_colour.Params.Input[1].AddSource(comparison.Params.Output[1]);comparison.Hidden=True
+    comparison_report=panel('',1120,1900);comparison_report.AddSource(comparison.Params.Output[5])
+    comparison_catalogue=panel('',1120,2300);comparison_catalogue.AddSource(comparison.Params.Output[4])
+    group('F / System comparison / placed +18000 mm X / see GH_R22.md',list(comparison_controls.values())+[comparison,comparison_colour,comparison_report,comparison_catalogue],Color.FromArgb(223,231,217))
+    # Visible room-graph pipeline. The final bridge is the only source selector.
+    programme_controls={
+      'sauna':toggle('Include sauna room',True,40,2800),
+      'entrance':toggle('Include entrance room',True,40,2845),
+      'outdoor':toggle('Include shower / storage / seating zone',True,40,2890),
+      'sauna_cells':slider('Sauna length / 900 mm cells',3,3,8,40,2935),
+      'entrance_cells':slider('Entrance length / 900 mm cells',3,2,8,40,2980),
+      'outdoor_cells':slider('Outdoor zone length / 900 mm cells',1,1,4,40,3025),
+      'depth_cells':slider('Depth / 1200 mm cells',2,2,4,40,3070)}
+    programme=script('06 · Room programme','room_programme.py',[(k,Boolean if k in ('sauna','entrance','outdoor') else Double) for k in programme_controls],
+      [('programme_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],480,2800)
+    for i,obj in enumerate(programme_controls.values()):programme.Params.Input[i].AddSource(obj)
+    edge_choices=[(0,'No relationship'),(1,'Adjacent'),(2,'Internal passage'),(3,'External access route')]
+    edge_controls={k:choices(label,edge_choices,default,480,y) for k,label,default,y in [('sauna_entrance','Sauna / entrance',2,3000),('entrance_outdoor','Entrance / outdoor',3,3045),('sauna_outdoor','Sauna / outdoor',0,3090)]}
+    graph=script('07 · Room relationships','room_relationships.py',[('programme_json',String)]+[(k,Double) for k in edge_controls],
+      [('graph_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],850,2800)
+    graph.Params.Input[0].AddSource(programme.Params.Output[0])
+    for i,obj in enumerate(edge_controls.values(),1):graph.Params.Input[i].AddSource(obj)
+    arrangement=slider('Arrangement index / valid range in report',0,0,5,850,3045)
+    layout=script('08 · Constrained floor plan','room_layout.py',[('graph_json',String),('arrangement',Double)],
+      [('plan_json',GH_ParamAccess.item),('geometry',GH_ParamAccess.list),('materials',GH_ParamAccess.list),('labels',GH_ParamAccess.list),('label_points',GH_ParamAccess.list),('report',GH_ParamAccess.item)],1200,2800)
+    layout.Params.Input[0].AddSource(graph.Params.Output[0]);layout.Params.Input[1].AddSource(arrangement)
+    layout_colour=place(proxies[0].CreateInstance(),1580,2800)
+    layout_colour.Params.Input[0].AddSource(layout.Params.Output[1]);layout_colour.Params.Input[1].AddSource(layout.Params.Output[2]);layout.Hidden=True
+    plan_report=panel('',1580,3000);plan_report.AddSource(layout.Params.Output[5])
+    label_report=panel('',1960,2800);label_report.AddSource(layout.Params.Output[3])
+    # Use the installed native text-tag component if its known inputs are available.
+    # Names are inspected at runtime; no guessed component GUID or port ordering.
+    tag_objects=[]
+    tag_proxies=[p for p in Grasshopper.Instances.ComponentServer.ObjectProxies if p.Desc.Name=='Text Tag 3D']
+    if tag_proxies:
+        tag=tag_proxies[0].CreateInstance()
+        ports={p.Name.lower():p for p in tag.Params.Input}
+        location=next((v for k,v in ports.items() if k in ('location','locations')),None)
+        text_port=next((v for k,v in ports.items() if k in ('text','tag')),None)
+        if location is not None and text_port is not None:
+            place(tag,1960,3050);location.AddSource(layout.Params.Output[4]);text_port.AddSource(layout.Params.Output[3]);tag_objects.append(tag)
+            if 'size' in ports:
+                label_size=slider('Plan label size / mm',100,30,200,1960,3160);ports['size'].AddSource(label_size);tag_objects.append(label_size)
+    use_layout=toggle('Use floor plan for construction / otherwise existing model',False,1200,3300)
+    bridge=script('09 · Plan to construction','layout_bridge.py',[('base_scene_json',String),('plan_json',String),('use_layout',Boolean)],
+      [('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],1580,3300)
+    bridge.Params.Input[0].AddSource(model.Params.Output[0]);bridge.Params.Input[1].AddSource(layout.Params.Output[0]);bridge.Params.Input[2].AddSource(use_layout)
+    bridge_report=panel('',1960,3300);bridge_report.AddSource(bridge.Params.Output[1])
+    # Route every existing direct scene consumer through the guarded selector.
+    # No downstream component can accidentally export the previous valid plan.
+    for obj in list(doc.Objects):
+        if obj==bridge or not hasattr(obj,'Params'):continue
+        for param in obj.Params.Input:
+            if any(source==model.Params.Output[0] for source in param.Sources):
+                param.RemoveSource(model.Params.Output[0]);param.AddSource(bridge.Params.Output[0])
+    group('G / Room programme / activation and dimensions',list(programme_controls.values())+[programme],Color.FromArgb(235,227,214))
+    group('H / Relationships / edges do not activate rooms',list(edge_controls.values())+[graph],Color.FromArgb(220,231,237))
+    group('I / Floor plan / preview at Y -7500 mm',[arrangement,layout,layout_colour,plan_report,label_report]+tag_objects,Color.FromArgb(220,235,220))
+    group('J / Guarded construction bridge',[use_layout,bridge,bridge_report],Color.FromArgb(237,223,211))
+    # Never overwrite a definition the owner may have edited.
+    name='OBTP_Module_R23_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    path=ROOT/(name+'.gh')
+    if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
+    doc.FilePath=str(path)
+    Grasshopper.Instances.DocumentServer.AddDocument(doc)
+    Grasshopper.Instances.ActiveCanvas.Document=doc
+    doc.Enabled=True;doc.NewSolution(False)
+    receipt_data=dict(rhino_version=str(Rhino.RhinoApp.Version),definition=path.name,
+                      status='Definition created; inspect GH runtime messages before acceptance')
+    (ROOT/'setup-receipt.json').write_text(json.dumps(receipt_data,indent=2))
+    print('Created and opened '+str(path))
+
+try:main()
+except Exception:
+    error=traceback.format_exc()
+    (ROOT/'setup-error.txt').write_text(error,encoding='utf-8')
+    print(error)
+    raise

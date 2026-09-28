@@ -18,9 +18,14 @@ try:
     import Rhino
     from System.Drawing import Color
     from Grasshopper.Kernel.Types import GH_Material
-    graph=json.loads(value('graph_json','null'))
-    if graph is None:raise ValueError('Connect a valid relationship graph')
-    plan=core.solve(graph,int(value('arrangement',0)));plan_json=json.dumps(plan)
+    selection=value('workflow_json',None)
+    if selection is not None:
+        workflow=importlib.import_module(name+'.sauna_workflow')
+        document=workflow.resolve(json.loads(selection));plan=document['plan'];graph=plan['graph'];plan_json=json.dumps(document)
+    else:
+        graph=json.loads(value('graph_json','null'))
+        if graph is None:raise ValueError('Connect a valid relationship graph')
+        plan=core.solve(graph,int(value('arrangement',0)));plan_json=json.dumps(plan)
     palette={'sauna':(203,153,117),'entrance':(137,169,188),'outdoor':(163,184,137)}
     def add(g,rgb):geometry.append(g);materials.append(GH_Material(Rhino.Display.DisplayMaterial(Color.FromArgb(*rgb))))
     ox,oy=0,-7500
@@ -40,6 +45,6 @@ try:
     for r,point in positions.items():
         add(Rhino.Geometry.Circle(point,160).ToNurbsCurve(),palette[r]);labels.append('GRAPH: '+r);label_points.append(point)
     for e in graph['edges']:add(Rhino.Geometry.LineCurve(positions[e['a']],positions[e['b']]),(220,65,50) if e['kind']=='passage' else (65,80,90))
-    report='Arrangement %d / %d: %s\nConstruction adapter: %s\n%s'%(plan['arrangement'],plan['candidate_count']-1,' -> '.join(r['id'] for r in plan['rooms']),'AVAILABLE' if plan['construction_compatible'] else 'PLAN ONLY','\n'.join(plan['holds']))
+    report=('Preset: '+document['selection']['preset_name']+'\n' if selection is not None else '')+'Arrangement %d / %d: %s\nConstruction adapter: %s\n%s'%(plan['arrangement'],plan['candidate_count']-1,' -> '.join(r['id'] for r in plan['rooms']),'AVAILABLE' if plan['construction_compatible'] else 'PLAN ONLY','\n'.join(plan['holds']))
 except Exception as error:
     plan_json=None;geometry=[];materials=[];labels=[];label_points=[];report=str(error);fail(error)

@@ -1,3 +1,7 @@
+# Current GH release — R24 Sauna cassette sequence
+
+Start with [GH_R24.md](GH_R24.md). Main canvas: **Sauna preset → Layout plan → Cassette construction → 3D model**. Exactly six saved presets plus Custom. Historical research canvas is available separately through `CREATE_RESEARCH_GRASSHOPPER.py`. No websites changed.
+
 # Current GH release — R23 constrained room plans
 
 Read [GH_R23.md](GH_R23.md) first. Room programme → relationships → plan → guarded construction is now visible on the GH canvas. Existing model and R22 comparison remain available.

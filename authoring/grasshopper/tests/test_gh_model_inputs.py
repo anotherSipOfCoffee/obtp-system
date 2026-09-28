@@ -8,7 +8,7 @@ from obtp.model import parameters
 
 class HostInputTests(unittest.TestCase):
  def test_generated_canvas_inputs_execute_model(self):
-  tree=ast.parse((ROOT/'CREATE_GRASSHOPPER.py').read_text())
+  tree=ast.parse((ROOT/'CREATE_RESEARCH_GRASSHOPPER.py').read_text())
   keys=set()
   for node in ast.walk(tree):
    if isinstance(node,ast.Assign):
@@ -31,3 +31,21 @@ class HostInputTests(unittest.TestCase):
      self.assertEqual(messages,[],ns['report']);self.assertIsNotNone(ns['scene_json'],ns['report'])
      scene=json.loads(ns['scene_json']);self.assertEqual(scene['config']['terrace_steps'],2);self.assertEqual(scene['config']['facade_type'],0)
      self.assertTrue(scene['parts']);self.assertTrue(all(scene['checks'].values()))
+
+ def test_sequential_sauna_host_inputs(self):
+  from obtp.sauna_workflow import resolve
+  class Goo:
+   def __init__(self,value):self.Value=value
+  gh=types.SimpleNamespace(Kernel=types.SimpleNamespace(GH_RuntimeMessageLevel=types.SimpleNamespace(Error='error')))
+  for index in range(7):
+   messages=[]
+   component=types.SimpleNamespace(OnPingDocument=lambda:types.SimpleNamespace(FilePath=str(ROOT/'test-r24.gh')),AddRuntimeMessage=lambda *a:messages.append(a))
+   ns={'preset_index':Goo(index),'roof_type':Goo(0.0),'wall_height':Goo(2100.0),'ghenv':types.SimpleNamespace(Component=component)}
+   with patch.dict(sys.modules,{'Grasshopper':gh}):
+    exec(compile((ROOT/'components/sauna_preset.py').read_text(),'sauna_preset.py','exec'),ns)
+    self.assertIsNotNone(ns['workflow_json'],ns['report'])
+    plan=resolve(json.loads(ns['workflow_json']))
+    target={'plan_json':Goo(json.dumps(plan)),'ghenv':ns['ghenv']}
+    exec(compile((ROOT/'components/sauna_cassette.py').read_text(),'sauna_cassette.py','exec'),target)
+    self.assertEqual(messages,[],target['report']);self.assertIsNotNone(target['scene_json'],target['report'])
+    self.assertEqual(json.loads(target['scene_json'])['config']['program_type'],0)

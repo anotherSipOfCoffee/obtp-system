@@ -17,9 +17,10 @@ jobs:
       - run: python authoring/grasshopper/EXPORT_SYSTEM_COMPARISON.py
       - run: python authoring/grasshopper/EXPORT_STUDIO_M_PDFS.py
       - run: python authoring/grasshopper/EXPORT_LAYOUT_REVIEW.py
-      - run: python tools/package-gh.py /tmp/OBTP_Grasshopper_R23.zip
+      - run: python authoring/grasshopper/EXPORT_SAUNA_WORKFLOW.py
+      - run: python tools/package-gh.py /tmp/OBTP_Grasshopper_R24.zip
       - uses: actions/upload-artifact@v4
         with:
-          name: OBTP-Grasshopper-R23
-          path: /tmp/OBTP_Grasshopper_R23.zip
+          name: OBTP-Grasshopper-R24
+          path: /tmp/OBTP_Grasshopper_R24.zip
           retention-days: 30
