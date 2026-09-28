@@ -21,9 +21,9 @@ class SaunaWorkflowTests(unittest.TestCase):
   scene=flow.construct(document);self.assertFalse(any(p['id'].startswith('shower/') for p in scene['parts']))
   self.assertEqual(scene['dimensions']['length_mm'],5400)
  def test_no_fallback_for_unsupported_custom(self):
-  for kw in (dict(entrance=False),dict(arrangement=1),dict(sauna_entrance=0)):
-   doc=flow.resolve(flow.select(6,**kw));self.assertEqual(doc['status'],'plan-only')
-   with self.assertRaises(ValueError):flow.construct(doc)
+  doc=flow.resolve(flow.select(6,sauna=False,entrance=False))
+  self.assertEqual(doc['status'],'plan-only')
+  with self.assertRaisesRegex(ValueError,'Outdoor-only'):flow.construct(doc)
  def test_stale_plan_and_selection_rejected(self):
   doc=flow.resolve(flow.select());doc['plan']['rooms'][0]['bounds_mm'][2]+=900
   with self.assertRaises(ValueError):flow.construct(doc)

@@ -17,10 +17,10 @@ class LayoutTests(unittest.TestCase):
      for b in alternative['rooms'][i+1:]:self.assertFalse(a['bounds_mm'][0]<b['bounds_mm'][0]+b['bounds_mm'][2] and b['bounds_mm'][0]<a['bounds_mm'][0]+a['bounds_mm'][2])
  def test_edges_do_not_delete_rooms(self):
   g=layout.relationships(layout.programme(),0,0,0);p=layout.solve(g)
-  self.assertEqual(len(p['rooms']),3);self.assertFalse(p['construction_compatible'])
+  self.assertEqual(len(p['rooms']),3);self.assertTrue(p['construction_compatible'])
  def test_adjacent_is_not_passage(self):
   p=layout.solve(layout.relationships(layout.programme(outdoor=False),1,0,0))
-  self.assertFalse(p['construction_compatible']);self.assertFalse(any(o['kind']=='passage' for o in p['openings']))
+  self.assertTrue(p['construction_compatible']);self.assertFalse(any(o['kind']=='passage' for o in p['openings']))
  def test_existing_s_m_l_geometry_exact(self):
   for hall,index in ((2,0),(3,2),(4,4)):
    for outdoor in (False,True):
@@ -40,10 +40,8 @@ class LayoutTests(unittest.TestCase):
  def test_reject_stale_and_unsupported(self):
   p=layout.solve(layout.relationships(layout.programme()));p['rooms'][0]['bounds_mm'][2]+=900
   with self.assertRaises(ValueError):layout.build_from_plan(p)
-  for programme in [layout.programme(entrance=False),layout.programme(sauna=False)]:
-   with self.assertRaises(ValueError):layout.build_from_plan(layout.solve(layout.relationships(programme)))
-  p=layout.solve(layout.relationships(layout.programme()),1)
-  with self.assertRaises(ValueError):layout.build_from_plan(p)
+  p=layout.solve(layout.relationships(layout.programme(sauna=False,entrance=False)))
+  with self.assertRaisesRegex(ValueError,'Outdoor-only'):layout.build_from_plan(p)
  def test_conflicting_graph_and_bad_parameters(self):
   with self.assertRaises(ValueError):layout.programme(False,False,False)
   with self.assertRaises(ValueError):layout.programme(sauna_cells=2)

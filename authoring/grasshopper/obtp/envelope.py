@@ -113,22 +113,31 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions):
             for i,x in enumerate(range(bs,be,400)):
                 add('ceiling-centre/batten-'+str(i),[x,0,F+H-20],[min(45,be-x),W,20],'lining-wood','ceiling')
     else:
-        # Interior lining stays within each room, preserving framing geometry.
-        partition_hole=[(px-36,F,p['partition_depth']+84,H)]
-        for label,y,sgn in [('front',wall,1),('back',W-wall,-1)]:
-            surface('lining-'+label,'x',y,wall+36,L-2*wall-72,sgn,holes=partition_hole)
-        surface('lining-hot-end','y',wall,wall,depth,1)
-        surface('lining-hall-end','y',L-wall,wall,depth,-1)
-        surface('lining-partition-hot','y',px,wall+36,depth-72,-1)
-        surface('lining-partition-hall','y',px+p['partition_depth']+12,wall+36,depth-72,1)
-        # Ceiling lining and battens, independent from floor/roof structural skin.
-        for name,x0,x1 in [('hot',wall+36,px-36),('hall',px+p['partition_depth']+48,L-wall-36)]:
-            if repeated:ceiling('ceiling-'+name,x0,x1,wall+36,W-wall-36)
-            else:
-                for i,x in enumerate(range(int(x0),int(x1),400)):
-                    add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,x1-x),depth-72,20],'lining-wood','ceiling')
-                for i,y in enumerate(range(wall+36,W-wall-36,95)):
-                    add('ceiling-'+name+'/board-'+str(i),[x0,y,F+H-36],[x1-x0,min(93,W-wall-36-y),16],'lining-wood','ceiling')
+        if p.get('layout_rooms'):
+            for r in p['layout_rooms']:
+                a,b=r['structural_clear_x_mm'];name=r['id']
+                for label,y,sgn in [('front',wall,1),('back',W-wall,-1)]:
+                    surface('lining-'+name+'-'+label,'x',y,a+36,b-a-72,sgn)
+                surface('lining-'+name+'-left','y',a,wall,depth,1)
+                surface('lining-'+name+'-right','y',b,wall,depth,-1)
+                ceiling('ceiling-'+name,a+36,b-36,wall+36,W-wall-36)
+        else:
+            # Interior lining stays within each room, preserving framing geometry.
+            partition_hole=[(px-36,F,p['partition_depth']+84,H)]
+            for label,y,sgn in [('front',wall,1),('back',W-wall,-1)]:
+                surface('lining-'+label,'x',y,wall+36,L-2*wall-72,sgn,holes=partition_hole)
+            surface('lining-hot-end','y',wall,wall,depth,1)
+            surface('lining-hall-end','y',L-wall,wall,depth,-1)
+            surface('lining-partition-hot','y',px,wall+36,depth-72,-1)
+            surface('lining-partition-hall','y',px+p['partition_depth']+12,wall+36,depth-72,1)
+            # Ceiling lining and battens, independent from floor/roof structural skin.
+            for name,x0,x1 in [('hot',wall+36,px-36),('hall',px+p['partition_depth']+48,L-wall-36)]:
+                if repeated:ceiling('ceiling-'+name,x0,x1,wall+36,W-wall-36)
+                else:
+                    for i,x in enumerate(range(int(x0),int(x1),400)):
+                        add('ceiling-'+name+'/batten-'+str(i),[x,wall+36,F+H-20],[min(45,x1-x),depth-72,20],'lining-wood','ceiling')
+                    for i,y in enumerate(range(wall+36,W-wall-36,95)):
+                        add('ceiling-'+name+'/board-'+str(i),[x0,y,F+H-36],[x1-x0,min(93,W-wall-36-y),16],'lining-wood','ceiling')
         for label,y,sgn in [('front',0,-1),('back',W,1)]:
             holes=[(L+outer,F,annex-wall-2*outer,p['door_height'])] if annex else []
             surface('facade-'+label,'x',y,-outer,end+2*outer,sgn,False,holes=holes,support_holes=[(L+62,F,annex-wall-124,p['door_height']+59)] if annex else ())

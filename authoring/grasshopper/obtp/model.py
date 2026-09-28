@@ -111,13 +111,17 @@ def build(p):
         if studio:
             bridge_start=p['studio_zones']['bridge_start'];bridge_end=p['studio_zones']['bridge_end'];right_start=p['studio_zones']['right_start'];right_clear=p['studio_zones']['right_clear'];inside_length=hot+right_clear
         p['sauna_door_offset']=int((depth-p['door_width'])/2)
+    plan_rooms=p.get('layout_rooms')
+    if plan_rooms:
+        L=p['layout_main_length_mm'];annex=p['storage_length_steps']*cells.X if p['storage'] else 0
+        inside_length=L-2*wall
     H, F = p['wall_height'], SPEC['joist_depth'] + SPEC['floor_skin']
     hall_clear = nominal_hall-p['partition_depth']
-    if hall_clear < p['door_width']+180:
+    if not plan_rooms and hall_clear < p['door_width']+180:
         raise ValueError('Hall does not accommodate the entrance opening and jamb zones')
     if p['sauna_door_offset'] < 90 or p['sauna_door_offset']+p['door_width']+90 > depth:
         raise ValueError('Sauna door and its jamb zones do not fit the partition')
-    if depth < 2*p['bench_depth']+600 or hot < 1800:
+    if not plan_rooms and (depth < 2*p['bench_depth']+600 or hot < 1800):
         raise ValueError('Bench and circulation reservation does not fit this study')
     # Conservative bound includes sheathing and the entire optional side bay.
     area = (L+annex+2*skin)*(W+2*skin)/1e6
@@ -150,6 +154,7 @@ def build(p):
     # Main and optional side bay share continuous transverse floor joist logic.
     # Last, shorter bay is explicitly retained as an end cassette, not stretched.
     partition_x = wall+hot
+    partition_axes=([room['bounds_mm'][0] for room in plan_rooms[1:]] if plan_rooms else [partition_x])
     for stage, z, thickness in [('floor', 0, SPEC['floor_skin']), ('roof', F+H, SPEC['roof_skin'])]:
         for i, x in enumerate(range(0, L+annex, pitch)):
             a = min(pitch, L+annex-x)
@@ -168,7 +173,7 @@ def build(p):
                 add(group+'/blocking-'+str(j),[x+45,y0,z],[a-90,y1-y0,220],family=stage,assembly=group)
             # Add trimmers below parallel partition axes, excluding existing joists/blocking.
             if stage == 'floor':
-                for k, ax in enumerate(([bridge_start-wall,bridge_end] if studio else [partition_x] + ([L-wall] if annex else []))):
+                for k, ax in enumerate(([bridge_start-wall,bridge_end] if studio else partition_axes + ([L-wall] if annex else []))):
                     lo, hi = max(x+45,ax), min(x+a-45,ax+(wall if studio else p['partition_depth']))
                     if hi > lo:
                         for j, (y0,y1) in enumerate([(45,bands[1][0]),(bands[1][1],W-45)]):
@@ -309,6 +314,9 @@ def build(p):
         if p['storage']:
             for j,z in enumerate([150,550,950,1350,1750]):add('studio-storage/shelf-'+str(j),[L-wall-486,wall+100,F+z],[450,depth-200,25],'object','furniture')
         # Keep the covered court clear for front-to-back passage and temporary work.
+    elif plan_rooms:
+        from .plan_construction import walls_and_objects
+        walls_and_objects(p,parts,wall_run,add,W,F,H)
     else:
         entry=hot+p['partition_depth']+(hall_clear-p['door_width'])//2
         ww=p['window_width']+20;window_start=aperture([wall,0],'x',hot,ww,(hot-ww)//2);wx=wall+window_start
@@ -327,40 +335,10 @@ def build(p):
         wall_run('hall-end',[L-wall,0],'y',W)
         wall_run('sauna-partition',[partition_x,wall],'y',depth,d=p['partition_depth'],
                  door=(p['sauna_door_offset'],p['door_width']),family='partitions')
-        if annex:
-            # Exterior access only. Three unequal source zones are retained nominally:
-            # front shower, middle storage, rear seat. Parametric depth divides proportionally.
-            split_a=p.get('annex_split_a_mm',depth*600//1800);split_b=p.get('annex_split_b_mm',depth*1500//1800)
-            wall_run('annex-end',[L+annex-wall,0],'y',W,door=(wall+split_a+p['partition_depth']+skin,600))
-            for j,y in enumerate([wall+split_a,wall+split_b]):
-                wall_run('annex-divider-'+str(j),[L+skin,y],'x',annex-wall-skin,d=p['partition_depth'],family='partitions')
-            # Door-height soffits over the two open exterior niches. Not roof columns.
-            for label,y in [('shower',0),('seat',W-wall)]:
-                add('niche-'+label+'/head',[L+12,y,F+p['door_height']+59],[annex-wall-12,wall,H-p['door_height']-59],'timber','walls')
-            # Review side bay has open shower/seat ends; its whole bounding area is counted.
-            add('outside-seat/seat',[L+84,wall+split_b+p['partition_depth']+84,F+420],[annex-wall-168,W-(wall+split_b+p['partition_depth']+84),35],'object','furniture')
-        # Slatted furniture retains the reference's long upper and shorter lower benches.
-        for name,bx,by,bw,bh,level in [('upper',wall+46,wall+depth-p['bench_depth']-46,hot-92,p['bench_depth'],p['bench_height']),
-                                     ('lower',wall+46,wall+depth-2*p['bench_depth']-58,min(1200,hot-92),p['bench_depth'],p['foot_bench_height'])]:
-            slats=5;slat=(bh-4*10)//5
-            for j in range(slats):add('bench-'+name+'/slat-'+str(j),[bx,by+j*(slat+10),F+level-38],[bw,slat,38],'object','furniture')
-            for j,(xx,yy) in enumerate([(bx+45,by+45),(bx+bw-90,by+45),(bx+45,by+bh-90),(bx+bw-90,by+bh-90)]):
-                add('bench-'+name+'/leg-'+str(j),[xx,yy,F],[45,45,level-38],'object','furniture')
-            # Removable slatted end cover on the exposed short end, with cleaning gap.
-            for j,zz in enumerate(range(80,level-38,100)):
-                add('bench-'+name+'/end-cover-'+str(j),[bx+bw-20,by,F+zz],[20,bh,min(90,level-38-zz)],'object','furniture')
-            # Removable slatted fronts and the second end, with an 80 mm cleaning gap.
-            for j,zz in enumerate(range(80,level-38,100)):
-                h=min(90,level-38-zz)
-                add('bench-'+name+'/front-cover-'+str(j),[bx+20,by,F+zz],[bw-40,20,h],'object','furniture')
-                add('bench-'+name+'/other-end-cover-'+str(j),[bx,by,F+zz],[20,bh,h],'object','furniture')
-        add('heater/envelope',[wall+hot-500,wall+60,F],[260,430,700],'object','furniture')
-        # Room-graph programme may omit the whole outdoor function, not just storage.
-        if p.get('include_outdoor_shower',True):
-            shower_x=L+96;shower_y=wall+250
-            add('shower/riser',[shower_x,shower_y,F],[30,30,1800],'object','furniture')
-            add('shower/arm',[shower_x,shower_y,F+1770],[350,30,30],'object','furniture')
-            add('shower/head',[shower_x+300,shower_y-40,F+1730],[80,110,40],'object','furniture')
+        from .plan_construction import annex_objects, sauna_furniture, shower_objects
+        annex_objects(p,wall_run,add,L,W,F,H,annex)
+        sauna_furniture(p,add,wall,hot,depth,F)
+        shower_objects(p,add,L,wall,F)
     from .seasonal import enrich as seasonal_enrich
     seasonal_spec=seasonal_enrich(p,parts,L,W,F,H,interfaces)
     from .envelope import enrich
@@ -392,7 +370,10 @@ def build(p):
     if cells.enabled(p):
         scene['cell_spec']=cells.record(p,L,W,annex,cell_assemblies)
         scene['system_spec']=dict(SPEC,pitch=cells.X,cell_mm=[cells.X,cells.Y])
-        if not studio:
+        if plan_rooms:
+            scene['rooms']=[dict(id=r['id'],clear_width_mm=r['clear_bounds_mm'][2],clear_depth_mm=r['clear_bounds_mm'][3],bounds_mm=r['clear_bounds_mm']) for r in plan_rooms]
+            scene['metrics']['main_clear_floor_less_partition_m2']=sum(r['clear_width_mm']*r['clear_depth_mm']/1e6 for r in scene['rooms'])
+        elif not studio:
             clear_depth=depth-72
             scene['rooms']=[dict(id='sauna',clear_width_mm=hot-72,clear_depth_mm=clear_depth),dict(id='hall',clear_width_mm=nominal_hall-p['partition_depth']-84,clear_depth_mm=clear_depth)]
             scene['metrics']['main_clear_floor_less_partition_m2']=sum(r['clear_width_mm']*r['clear_depth_mm']/1e6 for r in scene['rooms'])
@@ -410,6 +391,9 @@ def build(p):
     scene['holds'].append('Post-free canopy is an unverified cantilever study: member sizes, backspan anchorage and uplift/load path require engineering; capacities remain unknown.')
     if studio:
         scene['holds'].extend(['Heated central room: insulated floor/ceiling geometry; glazing, airtightness, sill supports and thermal performance remain unverified.', 'Stove is a manufacturer body-envelope placeholder only; hearth, clearances, flue and combustion air are unresolved.'])
+    if plan_rooms and p.get('layout_mirror'):
+        from .plan_construction import reflect_scene
+        reflect_scene(scene)
     from .suppliers import attach
     scene['supplier_spec']=attach(scene)
     from .object_library import attach as attach_objects

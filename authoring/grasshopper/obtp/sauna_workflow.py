@@ -36,6 +36,6 @@ def construct(document):
  if document!=resolve(document['selection']):raise ValueError('Layout changed or is stale; resolve it before construction')
  selection=document['selection'];plan=document['plan']
  scene=layout.build_from_plan(plan,selection['cassette_settings'],preserve_legacy_shower=selection['preserve_legacy_shower'])
- scene['display_revision']='GH-R24-SAUNA-CASSETTE-WORKFLOW'
+ scene['display_revision']='GH-R25-ROOM-BOUNDARY-CASSETTE'
  scene['layout_contract'].update(workflow='preset -> layout -> cassette -> 3D',preset_index=selection['preset_index'],preset_name=selection['preset_name'],selection_sha256=selection['selection_sha256'])
  return scene

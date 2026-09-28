@@ -73,9 +73,19 @@ def solve(graph,arrangement=0):
   for e in graph['edges']:
    if e['kind']=='passage':
     a=next(r for r in rooms if r['id']==e['a']);b=next(r for r in rooms if r['id']==e['b']);x=max(a['bounds_mm'][0],b['bounds_mm'][0]);openings.append(dict(id=e['a']+'-'+e['b'],kind='passage',origin_mm=[x,(width-900)/2],axis='y',width_mm=900,status='planning reservation only; host framing unresolved'))
- if not compatible:warnings.append('PLAN ONLY: construction adapter currently accepts sauna + entrance, optional terminal outdoor zone, original order and internal passage. No fabricated scene or exports are generated for this alternative.')
+ if not compatible:
+  from .plan_construction import specification
+  try:
+   spec=specification(dict(rooms=rooms,bounds_mm=[0,0,total,width],graph=graph))
+   clear=[dict(id=r['id'],bounds_mm=list(r['clear_bounds_mm'])) for r in spec['rooms']]
+   openings=copy.deepcopy(spec['openings'])
+   if spec['mirror']:
+    for r in clear:r['bounds_mm'][0]=total-r['bounds_mm'][0]-r['bounds_mm'][2]
+    for o in openings:o['origin_mm'][0]=total-o['origin_mm'][0]-(o['width_mm'] if o['axis']=='x' else 90)
+   compatible=True
+  except ValueError as error:warnings.append('PLAN ONLY: '+str(error))
  if 'outdoor' in active:warnings.append('Retained default shower niche is narrow; useful clearances, waterproofing and separate outdoor function resizing remain unresolved.')
- if 'sauna' in active and 'entrance' not in active:warnings.append('Standalone sauna requires a separate exterior door, glazing and heater/circulation study; this plan is not construction-ready.')
+ if 'sauna' in active and 'entrance' not in active:warnings.append('Standalone sauna receives an exterior entrance; weather-rated door, heater clearances and ventilation require verification.')
  # An external edge is an outdoor route requirement, not proof of a door or shared wall.
  warnings.append('External access edges reserve relationships only; site paths, thresholds and clear passage remain unresolved.')
  result=dict(schema='obtp-resolved-plan/1',programme=p,graph=copy.deepcopy(graph),arrangement=arrangement,candidate_count=len(candidates),candidate_orders=[[r['id'] for r in rs] for rs in candidates],rooms=rooms,finished_room_rectangles=clear,openings=openings,bounds_mm=[0,0,total,width],construction_compatible=compatible,holds=warnings)
@@ -87,7 +97,7 @@ def build_from_plan(plan,base_config=None,preserve_legacy_shower=False):
  from .model import build,parameters
  fresh=solve(plan['graph'],plan['arrangement'])
  if digest(plan)!=digest(fresh):raise ValueError('Resolved plan was edited or is stale; regenerate from programme/graph')
- if not fresh['construction_compatible']:raise ValueError('Plan-only arrangement: construction bridge is unavailable')
+ if not fresh['construction_compatible']:raise ValueError('; '.join(h for h in fresh['holds'] if h.startswith('PLAN ONLY:')))
  p=fresh['programme'];standard=p['length_cells']['sauna']==3 and p['depth_cells']==2 and p['length_cells']['outdoor']==1 and p['length_cells']['entrance'] in (2,3,4)
  preset={2:0,3:2,4:4}.get(p['length_cells']['entrance'],2)+int(p['active']['outdoor'])
  baseline=parameters(preset,program_type=0)
@@ -97,10 +107,15 @@ def build_from_plan(plan,base_config=None,preserve_legacy_shower=False):
    if key in base_config:baseline[key]=base_config[key]
  baseline.update(sauna_length_steps=p['length_cells']['sauna'],hall_length_steps=p['length_cells']['entrance'],storage_length_steps=p['length_cells']['outdoor'],room_depth_steps=p['depth_cells'],storage=p['active']['outdoor'])
  if not p['active']['outdoor'] and not preserve_legacy_shower:baseline['include_outdoor_shower']=False
+ normal=[r['id'] for r in fresh['rooms']] in (['sauna','entrance'],['sauna','entrance','outdoor']) and any(e['kind']=='passage' for e in fresh['graph']['edges'])
+ if not normal:
+  from .plan_construction import specification
+  spec=specification(fresh)
+  baseline.update(layout_rooms=spec['rooms'],layout_main_length_mm=spec['main'],layout_openings=spec['openings'],layout_mirror=spec['mirror'],id='sauna-plan-'+fresh['plan_sha256'][:10],size='CUSTOM')
  scene=build(baseline)
  if scene['dimensions']['length_mm']+scene['dimensions']['annex_length_mm']!=fresh['bounds_mm'][2] or scene['dimensions']['width_mm']!=fresh['bounds_mm'][3]:raise ValueError('Plan-to-construction footprint mismatch')
  for r in fresh['finished_room_rectangles']:
-  actual=next(x for x in scene['rooms'] if x['id']==('hall' if r['id']=='entrance' else r['id']))
+  actual=next(x for x in scene['rooms'] if x['id']==('hall' if normal and r['id']=='entrance' else r['id']))
   if actual['clear_width_mm']!=r['bounds_mm'][2] or actual['clear_depth_mm']!=r['bounds_mm'][3]:raise ValueError('Finished room mismatch')
  for opening in fresh['openings']:
   actual=next(x for x in scene['opening_voids'] if x['id']==opening['id'])

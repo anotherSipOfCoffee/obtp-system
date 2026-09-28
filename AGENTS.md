@@ -72,3 +72,9 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - Saved presets ignore custom-only controls and reproduce existing geometry, including original exterior shower fixtures on no-storage presets. Custom outdoor-off removes those fixtures as an explicit programme change.
 - All geometry consumers use the same cassette scene. Unsupported custom arrangements clear construction output. Do not silently repair or replace the resolved plan.
 - Other systems/Studio remain available in the separate research creator and source history, not on the active Sauna canvas. No website edits or deployment. Read GH_R24.md.
+
+## R25 active Custom construction
+- The main Sauna/cassette sequence now supports single indoor rooms, reversed indoor order, terminal outdoor at either end, and disconnected indoor rooms with separate external entrances. Keep six saved presets exactly reproducible against R24.1 frozen hashes.
+- `plan_construction.py` resolves topology using existing canonical wall/envelope/platform recipes. No hidden preset substitute. Outdoor-only and non-strip envelopes remain explicitly unsupported. Preserve stale-plan rejection and fit checks.
+- New topology cases put the fixed window on the back wall; partitions, lining, insulation, furniture, opening symbols and drawing labels must follow the same room boundaries. External-route, supplier, structural and handling acceptance remain unresolved.
+- Native execution remains separate from portable tests. No website/pin changes or deployment. Use GH_R25.md and tools/package-gh.py; do not repeat historical whole-site export pipelines for this GH work.

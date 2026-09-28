@@ -1,16 +1,12 @@
-# Current GH release — R24 Sauna cassette sequence
+# Current GH release — R25 Custom cassette construction
 
-Start with [GH_R24.md](GH_R24.md). Main canvas: **Sauna preset → Layout plan → Cassette construction → 3D model**. Exactly six saved presets plus Custom. Historical research canvas is available separately through `CREATE_RESEARCH_GRASSHOPPER.py`. No websites changed.
+Read [GH_R25.md](GH_R25.md). Extract the whole package into a fresh folder, open Grasshopper and run `CREATE_GRASSHOPPER.py` in Rhino 8 Python 3.
 
-# Current GH release — R23 constrained room plans
+Main canvas: **Sauna preset → Layout plan → Cassette construction → 3D model**. Six saved presets plus Custom. Custom now builds supported single-room, reversed and disconnected-room layouts. Outdoor-only and nonrectangular layouts remain unsupported. Historical comparison systems remain in `CREATE_RESEARCH_GRASSHOPPER.py`. No websites changed.
 
-Read [GH_R23.md](GH_R23.md) first. Room programme → relationships → plan → guarded construction is now visible on the GH canvas. Existing model and R22 comparison remain available.
+R24.1's Rhino component creation fix is retained. Native host acceptance remains outstanding. The sections below are historical; use R25 for current scope.
 
-# Current GH release — R22 three-system comparison
-
-Read [GH_R22.md](GH_R22.md) first. It supersedes the release header below; existing R21 building geometry and exports remain unchanged. New comparison group adds WikiHouse, the Studio cassette and B plate ribs.
-
-# Current GH release — R21 modularity audit
+# Historical R21 modularity audit
 
 Extract the complete updated package into a fresh folder, then run `CREATE_GRASSHOPPER.py` in Rhino 8 Python 3 with Grasshopper open. This creates a new timestamped `.gh`; existing definitions are not overwritten.
 

@@ -166,7 +166,7 @@ def main():
         item=panel('',1280+(i-1)%3*400,1200+(i-1)//3*400);item.AddSource(analysis.Params.Output[i]);analysis_panels.append(item)
     group('F / Analysis preparation / capacities and solvers remain unresolved',[settings,run_analysis,analysis]+analysis_panels,Color.FromArgb(220,232,221))
     # Never overwrite a definition the owner may have edited.
-    name='OBTP_Sauna_Cassette_R24_1_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    name='OBTP_Sauna_Cassette_R25_'+datetime.now().strftime('%Y%m%d_%H%M%S')
     path=ROOT/(name+'.gh')
     if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
     doc.FilePath=str(path)
