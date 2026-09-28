@@ -4,7 +4,7 @@
 
 ## Start
 
-Extract the complete package into a new writable folder. In Rhino 8 Python 3, with Grasshopper open, run `CREATE_GRASSHOPPER.py`. This creates a new `OBTP_Sauna_Cassette_R24_*.gh`. Keep the generated definition beside the bundled folders. Native Rhino/GH is unavailable here: the package contains the generator, not a pre-generated or host-tested binary definition.
+Extract the complete package into a new writable folder. In Rhino 8 Python 3, with Grasshopper open, run `CREATE_GRASSHOPPER.py`. This creates a new `OBTP_Sauna_Cassette_R24_1_*.gh`. Keep the generated definition beside the bundled folders. Native Rhino/GH is unavailable here: the package contains the generator, not a pre-generated or host-tested binary definition.
 
 The canvas runs left to right:
 
@@ -42,3 +42,7 @@ Existing 3D preview, assembly progress, unique-type colours, part IDs, drawing/m
 Focused tests verify exact saved-preset geometry/drawings over twelve preset/roof cases; ignored custom inputs on saved presets; active custom dimensions; no construction before the layout stage; no fallback on unsupported custom layouts; stale-document rejection; invalid settings; and absence of obsolete generators/selectors on the main canvas. The complete portable suite remains enabled.
 
 Native GH canvas creation, text tags, slider interaction and native preview/export execution still require testing in Rhino. Structural capacities, fastening, handling, wet-area details and supplier compatibility remain unresolved as before.
+
+## R24.1 — Rhino component creation compatibility
+
+Removed a redundant `SetSource` call from both canvas creators. Source is supplied to `Python3Component.Create(name, code)` before configuring ports. This fixes the reported missing-method exception without changing geometry, parameters or the sequential workflow. A regression executes both actual component factories against an API double with no `SetSource`, checking source, ports, access and maintenance. Native Rhino execution remains outstanding. Extract R24.1 into a fresh folder and run its creator.

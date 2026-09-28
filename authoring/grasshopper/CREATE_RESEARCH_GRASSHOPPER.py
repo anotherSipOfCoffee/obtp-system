@@ -82,7 +82,9 @@ def main():
             p.CreateAttributes();obj.Params.RegisterInputParam(p)
         for n,access in outputs:
             p=ScriptVariableParam(n);p.Access=access;p.CreateAttributes();obj.Params.RegisterOutputParam(p)
-        obj.VariableParameterMaintenance();obj.SetSource(code)
+        # Source is already assigned by Create(name, code). Some Rhino 8 builds
+        # do not expose SetSource; changing ports only needs maintenance.
+        obj.VariableParameterMaintenance()
         return place(obj,x,y)
     def group(name,objects,color):
         g=GH_Group();g.NickName=name;g.Colour=color;doc.AddObject(g,False)

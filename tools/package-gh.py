@@ -2,7 +2,7 @@
 import hashlib,json,sys,zipfile
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]/'authoring/grasshopper'
-out=Path(sys.argv[1] if len(sys.argv)>1 else 'OBTP_Grasshopper_R24.zip').resolve()
+out=Path(sys.argv[1] if len(sys.argv)>1 else 'OBTP_Grasshopper_R24_1.zip').resolve()
 files=[]
 for folder in ['obtp','components','analysis','comparison_data','tests']:
  files += [p for p in (root/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix in ('.py','.json','.md','.gz')]
