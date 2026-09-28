@@ -105,3 +105,9 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - Layout, structure and detailing now each have a creator; CREATE_ROOM_CONFIGURATOR retains the connected workflow. Share room_canvas.py and canonical modules rather than duplicate geometry code.
 - Every creator must add a fresh document with independent setup globals and unique filenames while preserving other open definitions. Native execution acceptance remains outstanding.
 - Handoffs are versioned, stage-checked JSON with integrity hashes. Live input wins; invalid live input never falls back to stale files. See GH_R29.md.
+
+## R30 presets and independent downstream stages
+- Current split Layout exposes only Sauna/Studio/Living-study presets, size, extension and bay-coordinated window choices. Preserve callable custom room plans; downstream stages must never require preset identity or call the preset generator.
+- Studio extension is an actual optional second block. Without it, keep central room with two fixed windows and west-end entrance. Sauna extension uses canonical integrated niche details. Living is explicitly provisional.
+- Façade and sliding enclosure defaults are fixed; terrace is Yes/No at 1200 mm. Native document exports live in Detailing; primary parts/assembly exclude only canonical façade cladding.
+- See GH_R30.md for stage contracts, document scope, price proxies and native acceptance limits. Use `OBTP / ` group prefix for tidy ownership. No website/Drive writes or merge.

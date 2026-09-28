@@ -1,3 +1,7 @@
+# R30: preset layouts and independent stages
+
+Start with [GH_R30.md](GH_R30.md). Use CREATE_LAYOUT_GRASSHOPPER, CREATE_STRUCTURE_GRASSHOPPER and CREATE_DETAILING_GRASSHOPPER; CREATE_ROOM_CONFIGURATOR connects them. Complete extraction required.
+
 # R29: separate Layout, Structure and Detailing
 
 Start with [GH_R29.md](GH_R29.md). Each stage now has its own creator and file handoffs. The connected workflow is `CREATE_ROOM_CONFIGURATOR.py`. Keep all extracted files together.

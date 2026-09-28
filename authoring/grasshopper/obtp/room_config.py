@@ -122,7 +122,9 @@ def plan_view(plan):
 
 def wall_runs(plan):
  from . import cells
- p=require(plan,'plan');L,W=p['bounds_mm'][2:];runs=[]
+ p=require(plan,'plan')
+ if 'wall_runs' in p:return __import__('copy').deepcopy(p['wall_runs'])
+ L,W=p['bounds_mm'][2:];runs=[]
  for r in p['rooms']:
   x,_,w,_=r['bounds_mm'];a=max(195,x);b=min(L-195,x+w)
   for side,y in [('front',0),('back',W-195)]:runs.append(dict(id=r['id']+'-'+side,room=r['id'],side=side,base=[a,y],axis='x',length=b-a,depth=195,external=True))

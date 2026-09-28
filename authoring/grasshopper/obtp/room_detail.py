@@ -104,6 +104,9 @@ def features(parts,plan,rects,F,shower,bench):
  return features
 
 def build(skeleton,terrace=1,return_end=0,outdoor_shower=False,outdoor_bench=False,paneling=1,facade=True):
+ if isinstance(skeleton,dict) and 'blueprint_state' in skeleton:
+  from .room_blueprint import detail
+  return detail(skeleton,terrace,paneling)
  s=rc.require(skeleton,'skeleton');paneling=rc.integer(paneling,0,2,'Panel build-up')
  for name,v in [('Facade',facade),('Outdoor shower',outdoor_shower),('Outdoor bench',outdoor_bench)]:
   if type(v) is not bool:raise ValueError(name+' must be Boolean')
@@ -136,6 +139,13 @@ def build(skeleton,terrace=1,return_end=0,outdoor_shower=False,outdoor_bench=Fal
  for r in s['runs']:
   if not r.get('door_width'):continue
   width=r['door_width'];k=0 if r['axis']=='x' else 1;n=1-k;o=r['opening_origin']+[F+10];o[k]+=10;o[n]+=r['depth']/2-22
+  if r.get('kind')=='window':
+   w=width-20
+   for label,u,z,a,h in [('left',0,0,51,1880),('right',w-51,0,51,1880),('bottom',51,0,w-102,51),('top',51,1829,w-102,51),('glass',51,51,w-102,1778)]:
+    pos=o[:];pos[k]+=u;pos[2]+=z;size=[0,0,h];size[k]=a;size[n]=4 if label=='glass' else 44
+    rs.add(parts,'window-'+r['id']+'/'+label,pos,size,'glass' if label=='glass' else 'object','walls','window-'+r['id'])
+   products.append(dict(id='window-'+r['id'],rough_opening_mm=[width,1900],frame_outside_mm=[w,1880],status='geometric placeholder; supplier compatibility unverified'))
+   continue
   double=r.get('kind')=='double-door';leaf=(width-20-(10 if double else 0))/(2 if double else 1)
   for i in range(2 if double else 1):
    a=o[:];a[k]+=i*(leaf+10);size=[0,0,1880];size[k]=leaf;size[n]=44

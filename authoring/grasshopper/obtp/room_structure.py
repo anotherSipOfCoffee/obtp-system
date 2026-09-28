@@ -16,6 +16,9 @@ def foundation(parts,rect,kind):
  return [[x,y] for y in ys for x in xs]
 
 def skeleton(plan,system=0,roof_type=0,foundation_type=0):
+ if isinstance(plan,dict) and 'construction' in plan:
+  from .room_blueprint import skeleton as generate
+  return generate(plan,system,roof_type,foundation_type)
  p=rc.require(plan,'plan');rc.integer(system,0,0,'Cassette system');roof_type=rc.integer(roof_type,0,1,'Roof');foundation_type=rc.integer(foundation_type,0,1,'Foundation');L,W=p['bounds_mm'][2:]
  runs=rc.wall_runs(p)
  # Only reusable section/dimension preparation and member generators are called.
@@ -53,7 +56,7 @@ def scene(skeleton,parts,detail):
  ids=[v['id'] for v in parts]
  if len(set(ids))!=len(ids):raise ValueError('Duplicate generated part ID')
  from .documentation import axon,volume
- result=dict(schema='obtp-room-scene/1',version='GH-R28-ROOM-CONFIG',display_revision='GH-R28',status='geometry-study-not-engineered',config=dict(id='rooms-'+p['sha256'][:10],program_type=p['building_type'],size='CUSTOM'),plan=p,dimensions=s['dimensions'],wall_regions=s['wall_regions'],opening_voids=s['opening_voids'],interfaces=s['interfaces'],parts=parts,detail=detail,holds=rc.HOLDS+['No automatically selected windows, equipment or services. This is a layout/construction study, not a habitable building specification.','Weather-cover attachment and ventilation, waterproofing and vapour layers require design; sheet/lining choices are geometry studies.'],checks=dict(unique_ids=True,positive_dimensions=all(min(v['size'])>0 for v in parts)),geometry_sha256=h)
+ result=dict(schema='obtp-room-scene/1',version='GH-R30-ROOM-CONFIG',display_revision='GH-R30',status='geometry-study-not-engineered',document_date='2026-09-28',config=dict(id='rooms-'+p['sha256'][:10],program_type=p['building_type'],size='CUSTOM'),plan=p,dimensions=s['dimensions'],wall_regions=s['wall_regions'],opening_voids=s['opening_voids'],interfaces=s['interfaces'],parts=parts,detail=detail,holds=rc.HOLDS+['No automatically selected windows, equipment or services. This is a layout/construction study, not a habitable building specification.','Weather-cover attachment and ventilation, waterproofing and vapour layers require design; sheet/lining choices are geometry studies.'],checks=dict(unique_ids=True,positive_dimensions=all(min(v['size'])>0 for v in parts)),geometry_sha256=h)
  result['manufacturing']=analyse(result,True)
  wood={m:sum(volume(v) for v in parts if v['material']==m) for m in ('timber','plywood','cladding-wood','lining-wood','deck-wood')};result['metrics']=dict(wood_m3=wood,total_wood_m3=sum(wood.values()))
  result['drawings']=dict(source_geometry_sha256=h,views={'room-plan':rc.plan_view(p),'axon':axon(parts)})

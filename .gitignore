@@ -28,3 +28,8 @@ authoring/grasshopper/review-r27/timings.json
 authoring/grasshopper/review-r28/*.svg
 authoring/grasshopper/review-r28/*.3dm
 authoring/grasshopper/review-r28/*.html
+
+# Reproducible R30 package previews
+authoring/grasshopper/review-r30/OBTP-*/
+authoring/grasshopper/review-r30/*.svg
+authoring/grasshopper/review-r30/index.html
