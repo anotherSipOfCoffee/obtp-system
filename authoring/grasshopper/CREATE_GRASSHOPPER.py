@@ -207,8 +207,63 @@ def main():
     comparison_report=panel('',1120,1900);comparison_report.AddSource(comparison.Params.Output[5])
     comparison_catalogue=panel('',1120,2300);comparison_catalogue.AddSource(comparison.Params.Output[4])
     group('F / System comparison / placed +18000 mm X / see GH_R22.md',list(comparison_controls.values())+[comparison,comparison_colour,comparison_report,comparison_catalogue],Color.FromArgb(223,231,217))
+    # Visible room-graph pipeline. The final bridge is the only source selector.
+    programme_controls={
+      'sauna':toggle('Include sauna room',True,40,2800),
+      'entrance':toggle('Include entrance room',True,40,2845),
+      'outdoor':toggle('Include shower / storage / seating zone',True,40,2890),
+      'sauna_cells':slider('Sauna length / 900 mm cells',3,3,8,40,2935),
+      'entrance_cells':slider('Entrance length / 900 mm cells',3,2,8,40,2980),
+      'outdoor_cells':slider('Outdoor zone length / 900 mm cells',1,1,4,40,3025),
+      'depth_cells':slider('Depth / 1200 mm cells',2,2,4,40,3070)}
+    programme=script('06 · Room programme','room_programme.py',[(k,Boolean if k in ('sauna','entrance','outdoor') else Double) for k in programme_controls],
+      [('programme_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],480,2800)
+    for i,obj in enumerate(programme_controls.values()):programme.Params.Input[i].AddSource(obj)
+    edge_choices=[(0,'No relationship'),(1,'Adjacent'),(2,'Internal passage'),(3,'External access route')]
+    edge_controls={k:choices(label,edge_choices,default,480,y) for k,label,default,y in [('sauna_entrance','Sauna / entrance',2,3000),('entrance_outdoor','Entrance / outdoor',3,3045),('sauna_outdoor','Sauna / outdoor',0,3090)]}
+    graph=script('07 · Room relationships','room_relationships.py',[('programme_json',String)]+[(k,Double) for k in edge_controls],
+      [('graph_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],850,2800)
+    graph.Params.Input[0].AddSource(programme.Params.Output[0])
+    for i,obj in enumerate(edge_controls.values(),1):graph.Params.Input[i].AddSource(obj)
+    arrangement=slider('Arrangement index / valid range in report',0,0,5,850,3045)
+    layout=script('08 · Constrained floor plan','room_layout.py',[('graph_json',String),('arrangement',Double)],
+      [('plan_json',GH_ParamAccess.item),('geometry',GH_ParamAccess.list),('materials',GH_ParamAccess.list),('labels',GH_ParamAccess.list),('label_points',GH_ParamAccess.list),('report',GH_ParamAccess.item)],1200,2800)
+    layout.Params.Input[0].AddSource(graph.Params.Output[0]);layout.Params.Input[1].AddSource(arrangement)
+    layout_colour=place(proxies[0].CreateInstance(),1580,2800)
+    layout_colour.Params.Input[0].AddSource(layout.Params.Output[1]);layout_colour.Params.Input[1].AddSource(layout.Params.Output[2]);layout.Hidden=True
+    plan_report=panel('',1580,3000);plan_report.AddSource(layout.Params.Output[5])
+    label_report=panel('',1960,2800);label_report.AddSource(layout.Params.Output[3])
+    # Use the installed native text-tag component if its known inputs are available.
+    # Names are inspected at runtime; no guessed component GUID or port ordering.
+    tag_objects=[]
+    tag_proxies=[p for p in Grasshopper.Instances.ComponentServer.ObjectProxies if p.Desc.Name=='Text Tag 3D']
+    if tag_proxies:
+        tag=tag_proxies[0].CreateInstance()
+        ports={p.Name.lower():p for p in tag.Params.Input}
+        location=next((v for k,v in ports.items() if k in ('location','locations')),None)
+        text_port=next((v for k,v in ports.items() if k in ('text','tag')),None)
+        if location is not None and text_port is not None:
+            place(tag,1960,3050);location.AddSource(layout.Params.Output[4]);text_port.AddSource(layout.Params.Output[3]);tag_objects.append(tag)
+            if 'size' in ports:
+                label_size=slider('Plan label size / mm',100,30,200,1960,3160);ports['size'].AddSource(label_size);tag_objects.append(label_size)
+    use_layout=toggle('Use floor plan for construction / otherwise existing model',False,1200,3300)
+    bridge=script('09 · Plan to construction','layout_bridge.py',[('base_scene_json',String),('plan_json',String),('use_layout',Boolean)],
+      [('scene_json',GH_ParamAccess.item),('report',GH_ParamAccess.item)],1580,3300)
+    bridge.Params.Input[0].AddSource(model.Params.Output[0]);bridge.Params.Input[1].AddSource(layout.Params.Output[0]);bridge.Params.Input[2].AddSource(use_layout)
+    bridge_report=panel('',1960,3300);bridge_report.AddSource(bridge.Params.Output[1])
+    # Route every existing direct scene consumer through the guarded selector.
+    # No downstream component can accidentally export the previous valid plan.
+    for obj in list(doc.Objects):
+        if obj==bridge or not hasattr(obj,'Params'):continue
+        for param in obj.Params.Input:
+            if any(source==model.Params.Output[0] for source in param.Sources):
+                param.RemoveSource(model.Params.Output[0]);param.AddSource(bridge.Params.Output[0])
+    group('G / Room programme / activation and dimensions',list(programme_controls.values())+[programme],Color.FromArgb(235,227,214))
+    group('H / Relationships / edges do not activate rooms',list(edge_controls.values())+[graph],Color.FromArgb(220,231,237))
+    group('I / Floor plan / preview at Y -7500 mm',[arrangement,layout,layout_colour,plan_report,label_report]+tag_objects,Color.FromArgb(220,235,220))
+    group('J / Guarded construction bridge',[use_layout,bridge,bridge_report],Color.FromArgb(237,223,211))
     # Never overwrite a definition the owner may have edited.
-    name='OBTP_Module_R22_'+datetime.now().strftime('%Y%m%d_%H%M%S')
+    name='OBTP_Module_R23_'+datetime.now().strftime('%Y%m%d_%H%M%S')
     path=ROOT/(name+'.gh')
     if not GH_DocumentIO(doc).SaveQuiet(str(path)):raise IOError('Could not write native GH definition')
     doc.FilePath=str(path)

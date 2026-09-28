@@ -2,19 +2,19 @@
 import hashlib,json,sys,zipfile
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]/'authoring/grasshopper'
-out=Path(sys.argv[1] if len(sys.argv)>1 else 'OBTP_Grasshopper_R22.zip').resolve()
+out=Path(sys.argv[1] if len(sys.argv)>1 else 'OBTP_Grasshopper_R23.zip').resolve()
 files=[]
 for folder in ['obtp','components','analysis','comparison_data','tests']:
  files += [p for p in (root/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix in ('.py','.json','.md','.gz')]
 files += [p for p in root.iterdir() if p.is_file() and p.suffix in ('.py','.md')]
-for folder in ['review-r22','gh-documents']:
- files += [p for p in (root/folder).glob('*') if p.is_file() and p.suffix in ('.html','.svg','.png','.3dm','.csv','.pdf','.md')]
+for folder in ['review-r22','review-r23','gh-documents']:
+ files += [p for p in (root/folder).glob('*') if p.is_file() and (p.suffix in ('.html','.svg','.png','.3dm','.csv','.pdf','.md') or (folder=='review-r23' and p.suffix=='.json'))]
 manifest={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(files))}
 with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
  for p in sorted(set(files)):z.write(p,p.relative_to(root))
  z.writestr('PACKAGE_MANIFEST.json',json.dumps(manifest,indent=2))
 with zipfile.ZipFile(out) as z:
  assert z.testzip() is None
- for required in ['CREATE_GRASSHOPPER.py','components/comparison.py','obtp/plate_ribs.py','comparison_data/wikihouse.json.gz','GH_R22.md']:
+ for required in ['CREATE_GRASSHOPPER.py','components/comparison.py','obtp/plate_ribs.py','comparison_data/wikihouse.json.gz','GH_R23.md','obtp/layout.py','components/room_programme.py','components/room_relationships.py','components/room_layout.py','components/layout_bridge.py']:
   assert required in z.namelist(),required
 print(str(out),out.stat().st_size,'bytes;',len(files),'files')

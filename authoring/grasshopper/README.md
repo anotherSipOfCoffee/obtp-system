@@ -1,3 +1,7 @@
+# Current GH release — R23 constrained room plans
+
+Read [GH_R23.md](GH_R23.md) first. Room programme → relationships → plan → guarded construction is now visible on the GH canvas. Existing model and R22 comparison remain available.
+
 # Current GH release — R22 three-system comparison
 
 Read [GH_R22.md](GH_R22.md) first. It supersedes the release header below; existing R21 building geometry and exports remain unchanged. New comparison group adds WikiHouse, the Studio cassette and B plate ribs.

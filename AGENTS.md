@@ -59,3 +59,10 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - Keep original building controls, connected-wall erection and document recipes. New inspection controls belong only to the separate comparison component.
 - B is not the older R21 option-B 600/1200 bay trial. Here B means plate ribs with insulation infill. See GH_R22.md and RESEARCH_B_R01.md.
 - Run portable comparison exports and source tests; no full website catalogue regeneration is needed when the canonical building geometry is unchanged. Native Rhino/GH must be reported separately.
+
+## R23 room graph / current scope
+- Additive GH-only planning pipeline: explicit activation, typed relationships, bounded strip arrangements, guarded construction adapter. No website writes or deployment.
+- Retain existing Sauna S/M/L part recipes. With outdoor inactive, omit its three shower fixture pieces during generation; all other parts match the old no-storage model. Treat this as a programme change, not standardization. A plan-only alternative must clear fabrication output when selected, never fall back to stale geometry.
+- Programme and connections are independent. Outdoor is currently one mixed shower/storage/seating zone; external-access edges are route requirements, not invented doors.
+- Plan owns room sizes and storage when its bridge is enabled; roof/window/foundation/height remain on the original controls. Existing standard door/partition dimensions are fixed in this first adapter.
+- See GH_R23.md. Run layout tests and retain the complete source test suite. Use tools/package-gh.py for the current archive. Native GH acceptance remains separate from portable checks.

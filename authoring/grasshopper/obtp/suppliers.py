@@ -72,4 +72,6 @@ def attach(scene):
     data['unassigned_types']=['structural timber and plywood','mineral wool product/thickness schedule',
        'external cladding profile','doors','decking','waterproof floor finish','foundations and anchors',
        'joint fastener schedules','ventilation','outdoor shower']+(['flat roof membrane'] if scene['config']['roof_type']==0 else [])
+    if scene['config'].get('include_outdoor_shower') is False:
+        data['unassigned_types']=[item for item in data['unassigned_types'] if item!='outdoor shower']
     return data

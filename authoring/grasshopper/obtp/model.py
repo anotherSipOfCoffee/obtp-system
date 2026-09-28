@@ -355,10 +355,12 @@ def build(p):
                 add('bench-'+name+'/front-cover-'+str(j),[bx+20,by,F+zz],[bw-40,20,h],'object','furniture')
                 add('bench-'+name+'/other-end-cover-'+str(j),[bx,by,F+zz],[20,bh,h],'object','furniture')
         add('heater/envelope',[wall+hot-500,wall+60,F],[260,430,700],'object','furniture')
-        shower_x=L+96;shower_y=wall+250
-        add('shower/riser',[shower_x,shower_y,F],[30,30,1800],'object','furniture')
-        add('shower/arm',[shower_x,shower_y,F+1770],[350,30,30],'object','furniture')
-        add('shower/head',[shower_x+300,shower_y-40,F+1730],[80,110,40],'object','furniture')
+        # Room-graph programme may omit the whole outdoor function, not just storage.
+        if p.get('include_outdoor_shower',True):
+            shower_x=L+96;shower_y=wall+250
+            add('shower/riser',[shower_x,shower_y,F],[30,30,1800],'object','furniture')
+            add('shower/arm',[shower_x,shower_y,F+1770],[350,30,30],'object','furniture')
+            add('shower/head',[shower_x+300,shower_y-40,F+1730],[80,110,40],'object','furniture')
     from .seasonal import enrich as seasonal_enrich
     seasonal_spec=seasonal_enrich(p,parts,L,W,F,H,interfaces)
     from .envelope import enrich
