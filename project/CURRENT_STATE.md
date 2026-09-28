@@ -1,23 +1,21 @@
-# OBTP current state — 24 September 2026
+# OBTP state observed 28 September 2026
 
-System v2 is the independent Cassette 01 research prototype; System v1 retains the pinned WikiHouse catalogue. System v2 is published through the validated GitHub Pages workflow. Drive v76 remains the authoritative saved baseline and intentionally trails GitHub; no automatic synchronization is implied.
+This is a dated inventory, not a moving latest-version declaration. Recheck branch heads before development.
 
-## Current inspection work
+| Source | Observed commit / status |
+|---|---|
+| System main | `f719830320fb2d6b9eaa2e55b5ddeec41dbe644b` |
+| System GH R25 review | `c988f622c63d5d4601c04f754ecdd0ca263c9cdf`, PR #24, unmerged |
+| Studio main | `74c36395adedbe0eaa666c56de4d28fb0d05b2f8` |
+| Studio System pin | `724c70c4165bbed23f0ce0dc811466bff15c9987` — intentionally distinct from System main and R25 |
+| Architecture main | `8a22fd870f571737153c8bc202376b49dbe56802` |
 
-The catalogue follows Types → Objects → Connections → Assemblies. See [INSPECTION.md](../docs/cassette/INSPECTION.md) for constituent timber/panel parts, explosion/isolation, geometry-based object grouping, Connectors, actual internal contacts and unified connection inspection. Version remains the first parameter; no cut-preview option is exposed. R90 is selected explicitly in System; the generator API default remains baseline for compatibility.
+R25: Sauna preset → layout → cassette → 3D; six saved presets plus Custom. Bounded strip custom arrangements are implemented. Outdoor-only/nonrectangular layouts remain unsupported. Portable checks and export solids are recorded in its review; native Rhino/GH and engineering acceptance remain outstanding.
 
-R90 passes the recorded conditional distance screen only. Materials, member sizing, connection capacity, fastening schedules, uplift/foundations, openings, roof/envelope and physical testing remain unresolved. Concept envelopes, dimensioned candidates and undesigned requirements have distinct statuses. No construction release follows from software checks.
+Studio's public source offers the two M-with-storage presets, fixed design options, read-only hatched alternatives, model/drawing views and three cladding-free review PDFs. Its System pin is not changed by R25.
 
-## Project boundaries
+Architecture's 24 R04 plan studies include dressing pockets. The existing 3D/cuts remain separate. Supplier-based future integration is a proposal governed by its AGENTS.md, not an implemented dependency.
 
-System owns geometry and connection records. Studio consumes a pinned System revision and retains its own configuration controls; System's catalogue is not embedded as the Studio UI. Check Studio's actual system.lock.json for its current pin. Architecture remains outside this change. Preserve WikiHouse source geometry, licences and Studio v1.
+The old v76/2026-09-23 Drive packages and R22 are historical. [Storage policy](STORAGE_POLICY.md) replaces the old Drive-master workflow. Cleanup changes documentation only; branch/runtime/workflow/lock bytes and deployment state are preserved.
 
-## Baseline and history
-
-Drive baseline v76 / 2026-09-23 and historical validation receipts are documented in PROJECT_MAP.md, FINAL_VALIDATION.md and docs/cassette/VALIDATION.md. Statements in those historical receipts about unpublished work describe that earlier checkpoint, not the current live release. Recovery and cleanup records remain in CLEANUP.md and RECOVERY_RECEIPT.json.
-
-The earlier 166-part nominal box export round-tripped as valid closed Breps in Rhino 8 file format. Windows Rhino/Grasshopper was not executed; no automatic bidirectional workflow is claimed.
-
-## Next engineering work
-
-Develop concrete product/material and support alternatives; coordinate internal and inter-cassette fastening; obtain project engineering and a defined physical prototype/test programme. Purchases and third-party outreach remain separate owner decisions. Routine authorized UI/research work and release validation should continue without repeated permission requests.
+System #8 and Studio #41 remain open review work; no potentially unique branch is deleted or force-merged. No engineering, product compatibility, permit, thermal or safe-lifting approval is implied.

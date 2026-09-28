@@ -1,13 +1,11 @@
-# OBTP — start here
+# Start here — OBTP system
 
-Current policy: **Drive is the authoritative master baseline; GitHub is downstream development and may be ahead.** Never overwrite a newer branch merely because Drive is master.
+GitHub is the authoritative editable technical source. Drive is the document/reference workspace; v76 and older GH packages are historical.
 
-Master: https://drive.google.com/drive/folders/1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C
+1. Read this repository's AGENTS.md and inspect the current branch/PR.
+2. Read the [shared storage policy](https://github.com/anotherSipOfCoffee/obtp-system/blob/docs/storage-cleanup-20260928/project/STORAGE_POLICY.md) and [project map](https://github.com/anotherSipOfCoffee/obtp-system/blob/docs/storage-cleanup-20260928/project/PROJECT_MAP.md). These documentation updates are under review until merged.
+3. Work from the relevant source revision. Never restore old Drive packages over newer code.
 
-Read the target project's AGENTS.md, then System's project/PROJECT_MAP.md and project/AGENT_GUIDE.md on the development branch. Record the baseline ID, repository SHA and differences before editing.
+[Project documents](https://drive.google.com/drive/folders/1w4ZBlEJSDoW2iE9MoSV8V_f9AOT2Ja-C) · [Historical packages](https://drive.google.com/drive/folders/1tq53hIARArOe9MXtV--TtAxcPB50fCHU)
 
-Current baseline work: v76, 2026-09-23; development branch dev/obtp-independent-v1-20260923. The branch contains the independent cassette prototype and consolidation; main/live websites remain at the pre-task commits. No deployment was authorized.
-
-Studio v1 stays inside Studio. Studio v2 consumes WikiHouse from pinned System. Studio v3 consumes the independent Cassette 01 from the same pinned System distribution. Architecture remains a separate application with its existing behaviour.
-
-Historical recovery is outside active projects: https://drive.google.com/drive/folders/19h05GdvjJpEeyf7nPka4Y91avA1I3W5b . Do not load old instructions as current context unless recovery is requested.
+System R25 is [PR #24](https://github.com/anotherSipOfCoffee/obtp-system/pull/24), not main. Studio retains its exact System pin. Architecture remains independent. This cleanup does not merge or deploy.
