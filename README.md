@@ -1,11 +1,15 @@
 # OBTP System
 
-System owns two separately accessible construction variations: WikiHouse source geometry at dist/index.html, and original OBTP Cassette 01 at dist/cassette/index.html. Both feed Studio through its explicit System commit pin.
+Canonical construction-system code, Grasshopper authoring, part identities, drawings and quantities. Studio consumes pinned generated outputs; Architecture remains independent.
 
-Cassette 01 is a timber/plywood geometric research prototype. [Research](docs/cassette/RESEARCH.md), [module specification](docs/cassette/SPECIFICATION.md), [validation](docs/cassette/VALIDATION.md). It is not a habitable or fabrication-ready kit. WikiHouse remains an open chassis study with its documented end-wall and opening holds.
+## Grasshopper
+The latest GH work is **R25, unmerged review**: [source folder](https://github.com/anotherSipOfCoffee/obtp-system/tree/feat/aligned-platform-assembly/authoring/grasshopper), [instructions](https://github.com/anotherSipOfCoffee/obtp-system/blob/feat/aligned-platform-assembly/authoring/grasshopper/GH_R25.md), [PR #24](https://github.com/anotherSipOfCoffee/obtp-system/pull/24). Run its `CREATE_GRASSHOPPER.py` in Rhino 8 with the full package. Do not assume this repository's main branch already contains R25. Native GH acceptance remains outstanding.
 
-Read [Start here](00_START_HERE.md), [project map](project/PROJECT_MAP.md) and [agent guide](project/AGENT_GUIDE.md). Drive is the master baseline; this GitHub development branch may contain newer work. No automatic synchronization.
+## Repository guide
+- [Start here](00_START_HERE.md), [project map](project/PROJECT_MAP.md), [storage policy](project/STORAGE_POLICY.md), [dated state](project/CURRENT_STATE.md).
+- `authoring/grasshopper/obtp`: canonical Python construction code; previews/exports use the same scene.
+- `dist/`: existing System inspection applications; pinned WikiHouse and independent cassette studies remain separate.
+- `sources/skylark150`: permanent source CAD with provenance and CC BY-SA 4.0 obligations. Do not archive/remove it as a duplicate backup.
+- `docs/cassette/`: researched cassette references, specifications and historical validation.
 
-Validation: node tests/catalogue.cjs; node tests/ws.cjs; node tests/cassette.cjs. Browser checks use the read-only Check System catalogue and Check independent cassette workflows. Existing Pages workflows are unchanged and must not be run for this task.
-
-Original WikiHouse source CAD bundles stay under sources/skylark150 with provenance and CC BY-SA 4.0 notices. They are source dependencies, not historical backup ZIPs. The direct W-S inspection viewer and earlier Rhino offline pilot are intentional reference tools. Generic historical archive packages have moved out of the active tree into dated Drive recovery; Git history remains intact.
+GitHub is authoritative for editable technical source. Drive is for project documents and historical records. No automatic synchronization. Tests validate their stated scope, not structural capacity or manufacturing approval. Deployment is a separate authorized action.
