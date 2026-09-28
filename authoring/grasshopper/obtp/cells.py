@@ -79,3 +79,20 @@ def transverse_members(start, end, middle=True):
         result.extend([a,b-45])
         if middle and b-a>=180:result.append((a+b-45)/2)
     return sorted(set(result))
+
+
+def shifted_opening(start,end,step,width,preferred,shift=0):
+    """Adjacent whole-bay positions, never a silent clamped offset."""
+    if isinstance(shift,bool) or shift not in (-1,0,1):raise ValueError('Window bay shift must be -1, 0 or 1')
+    current=opening(start,end,step,width,preferred)
+    if shift==0:return current
+    axes=boundaries(start,end,step);choices={}
+    for a in axes:
+        for b in axes:
+            u=(a+b-width)/2
+            if b-a<width+180 or u-start<195 or end-u-width<195:continue
+            candidate=opening(start,end,step,width,u)
+            choices[candidate['start']]=candidate
+    positions=sorted(choices);i=positions.index(current['start'])+int(shift)
+    if not 0<=i<len(positions):raise ValueError('Openings: no adjacent window bay in this host; use shift 0 or enlarge the window room')
+    return choices[positions[i]]

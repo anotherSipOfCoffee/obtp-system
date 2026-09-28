@@ -17,3 +17,9 @@ authoring/grasshopper/review-r22/*.3dm
 authoring/grasshopper/review-r22/0*.json
 authoring/grasshopper/review-r22/*-schedule.csv
 authoring/grasshopper/gh-documents/
+
+# Reproducible R27 review exports; the ZIP includes these generated assets.
+authoring/grasshopper/review-r27/*.svg
+authoring/grasshopper/review-r27/*.3dm
+authoring/grasshopper/review-r27/*.html
+authoring/grasshopper/review-r27/timings.json

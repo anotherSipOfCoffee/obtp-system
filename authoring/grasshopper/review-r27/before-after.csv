@@ -1,0 +1,25 @@
+preset,roof,before_pieces,after_pieces,before_types,after_types,before_cladding,after_cladding,geometry_unchanged
+Sauna S / no storage,0,924,924,127,127,360,360,True
+Sauna S / no storage,1,961,961,130,130,360,360,True
+Sauna S / storage,0,1192,1192,175,175,468,468,True
+Sauna S / storage,1,1232,1232,178,178,468,468,True
+Sauna M / no storage,0,1063,1063,131,131,404,404,True
+Sauna M / no storage,1,1103,1103,134,134,404,404,True
+Sauna M / storage,0,1305,1305,172,172,512,512,True
+Sauna M / storage,1,1349,1349,175,175,512,512,True
+Sauna L / no storage,0,1117,1117,128,128,448,448,True
+Sauna L / no storage,1,1161,1161,131,131,448,448,True
+Sauna L / storage,0,1385,1385,176,176,560,560,True
+Sauna L / storage,1,1432,1432,179,179,560,560,True
+Studio S / no storage,0,1251,1251,140,140,512,512,True
+Studio S / no storage,1,1297,1297,143,143,512,512,True
+Studio S / storage,0,1256,1256,141,141,512,512,True
+Studio S / storage,1,1302,1302,144,144,512,512,True
+Studio M / no storage,0,1314,1314,137,137,558,558,True
+Studio M / no storage,1,1363,1363,140,140,558,558,True
+Studio M / storage,0,1319,1319,138,138,558,558,True
+Studio M / storage,1,1368,1368,141,141,558,558,True
+Studio L / no storage,0,1445,1445,143,143,602,602,True
+Studio L / no storage,1,1498,1498,146,146,602,602,True
+Studio L / storage,0,1450,1450,144,144,602,602,True
+Studio L / storage,1,1503,1503,147,147,602,602,True

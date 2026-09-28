@@ -1,10 +1,8 @@
-# Current GH release — R26 checkpoints, assembly and Studio
+# Current GH release — R27 controlled plans and construction stages
 
-Read [GH_R26.md](GH_R26.md). Extract the entire ZIP into a fresh folder and run `CREATE_GRASSHOPPER.py` in Rhino 8 Python 3 with Grasshopper open.
+Read [GH_R27.md](GH_R27.md) for installation, canvas sequence, limits and troubleshooting. Main: room controls → plan → cassette branches → model → assembly → preview. Research: system specimens only. Extract the whole ZIP into a fresh folder; run the appropriate creator in Rhino 8 Python 3 with a millimetre document. Native host acceptance remains outstanding.
 
-**Preset → Layout → Cassette → Assembly sequence → Final 3D preview.** Six Sauna presets, Custom Sauna and six Studio presets. Each checkpoint has readable reports; construction has assembly IDs and diagnostic outputs. The assembly slider and three final preview scopes are display-only. No websites changed. Native Rhino/GH acceptance remains outstanding.
-
-Earlier instructions below are historical; R26 takes precedence.
+Earlier release notes below are historical.
 
 # Historical R21 modularity audit
 

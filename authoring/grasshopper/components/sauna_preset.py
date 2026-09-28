@@ -15,8 +15,14 @@ def fail(error):
     ghenv.Component.AddRuntimeMessage(Grasshopper.Kernel.GH_RuntimeMessageLevel.Error,str(error))
 workflow_json=None;report=''
 try:
-    inputs={k:value(k,d) for k,d in [('sauna',True),('entrance',True),('outdoor',True),('sauna_cells',3),('entrance_cells',3),('outdoor_cells',1),('depth_cells',2),('sauna_entrance',2),('entrance_outdoor',3),('sauna_outdoor',0),('arrangement',0),('roof_type',1),('window_width',1180),('wall_height',2100),('foundation_type',0),('include_foundation',True)]}
-    selection=core.select(int(value('preset_index',2)),**inputs)
+    inputs={k:value(k,d) for k,d in [('sauna',True),('entrance',True),('outdoor',True),('sauna_entrance',2),('entrance_outdoor',3),('sauna_outdoor',0),('arrangement',0),('roof_type',1),('window_width',1180),('wall_height',2100),('foundation_type',0),('include_foundation',True)]}
+    inputs.update({k:value(k,d) for k,d in [('base_preset',2),('use_overrides',False),('window_shift',0)]})
+    for key in ['sauna_cells','entrance_cells','outdoor_cells','work_cells','centre_cells','preparation_cells']:
+        inputs[key+'_delta']=value(key+'_delta',0)
+    selection=core.select(value('preset_index',2),**inputs)
     workflow_json=json.dumps(selection)
-    report=selection['preset_name']+'\n'+('Custom room, edge and dimension controls ACTIVE.' if selection['custom'] else 'Saved layout loaded. Custom room, edge, dimension and arrangement controls ignored.')+'\nCassette system fixed. Roof/window/height/foundation settings apply to all presets.\nStudio uses saved room layouts; Custom controls apply only to Custom Sauna.'
+    report=selection['preset_name']+'\n'+('Custom inputs active when Use overrides is True. False resets to the selected base preset.' if selection['custom'] else 'Saved dimensions. Custom controls are inactive; select Custom Sauna or Custom Studio to use them.')+'\nMillimetres; grid 900 X / 1200 Y. Geometric candidate only. Roof/window/height/foundation settings apply to all presets.'
+    if selection['custom']:
+        plan=core.resolve(selection)['plan']
+        report+='\nEffective room lengths: '+', '.join(r['id']+' '+str(r['bounds_mm'][2])+' mm' for r in plan['rooms'])+'\nWidth fixed at '+str(plan['bounds_mm'][3])+' mm. Deltas are ignored while overrides are off.'
 except Exception as error:report=str(error);fail(error)

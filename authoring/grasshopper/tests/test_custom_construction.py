@@ -46,7 +46,7 @@ class CustomConstructionTests(unittest.TestCase):
    self.assertFalse(any(v['id']=='sauna-partition/opening' for v in s['opening_voids']))
    self.assertEqual({v['id'] for v in s['opening_voids'] if v['id'].startswith('entry-')},{'entry-sauna/opening','entry-entrance/opening'})
  def test_settings_and_dimension_changes(self):
-  for kw in [dict(entrance=False,sauna_cells=4,depth_cells=3,wall_height=2700,roof_type=0),dict(sauna=False,entrance_cells=2,window_width=580,foundation_type=1),dict(arrangement=1,sauna_cells=4,entrance_cells=4,outdoor_cells=2,include_foundation=False)]:
+  for kw in [dict(entrance=False,sauna_cells=4,depth_cells=2,wall_height=2700,roof_type=0),dict(sauna=False,entrance_cells=2,window_width=580,foundation_type=1),dict(arrangement=1,sauna_cells=4,entrance_cells=4,outdoor_cells=2,include_foundation=False)]:
    self.build(**kw)
  def test_opening_fit_failure_is_explicit(self):
   with self.assertRaisesRegex(ValueError,'Opening and framing'):

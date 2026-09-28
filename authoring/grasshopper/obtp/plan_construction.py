@@ -87,7 +87,7 @@ def walls_and_objects(p,parts,wall_run,add,W,F,H):
     window_room=next((r for r in rooms if r['id']=='sauna'),rooms[0])
     wx0,wx1=window_room['structural_clear_x_mm'];rough=p['window_width']+20
     
-    try:fit=cells.opening(wx0,wx1,cells.X,rough,(wx0+wx1-rough)/2)
+    try:fit=cells.shifted_opening(wx0,wx1,cells.X,rough,(wx0+wx1-rough)/2,p.get('window_shift',0))
     except ValueError as error:raise ValueError(str(error)+': selected window in '+window_room['id']+'; enlarge this room or select a smaller offered window') from error
     wx=wx0+fit['start']
     # Split the back at room boundaries, using corner deductions only at terminals.

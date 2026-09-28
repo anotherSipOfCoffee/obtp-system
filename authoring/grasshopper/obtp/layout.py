@@ -92,9 +92,9 @@ def solve(graph,arrangement=0):
  result['plan_sha256']=digest(result)
  return result
 
-def build_from_plan(plan,base_config=None,preserve_legacy_shower=False):
+def config_from_plan(plan,base_config=None,preserve_legacy_shower=False):
  """Validated bridge; never silently export a stale or unsupported room plan."""
- from .model import build,parameters
+ from .model import parameters
  fresh=solve(plan['graph'],plan['arrangement'])
  if digest(plan)!=digest(fresh):raise ValueError('Resolved plan was edited or is stale; regenerate from programme/graph')
  if not fresh['construction_compatible']:raise ValueError('; '.join(h for h in fresh['holds'] if h.startswith('PLAN ONLY:')))
@@ -103,7 +103,7 @@ def build_from_plan(plan,base_config=None,preserve_legacy_shower=False):
  baseline=parameters(preset,program_type=0)
  if not standard:baseline.update(id='sauna-plan-'+fresh['plan_sha256'][:10],size='CUSTOM')
  if base_config:
-  for key in ('roof_type','window_width','foundation_type','include_foundation','wall_height'):
+  for key in ('roof_type','window_width','foundation_type','include_foundation','wall_height','window_shift'):
    if key in base_config:baseline[key]=base_config[key]
  baseline.update(sauna_length_steps=p['length_cells']['sauna'],hall_length_steps=p['length_cells']['entrance'],storage_length_steps=p['length_cells']['outdoor'],room_depth_steps=p['depth_cells'],storage=p['active']['outdoor'])
  if not p['active']['outdoor'] and not preserve_legacy_shower:baseline['include_outdoor_shower']=False
@@ -112,7 +112,11 @@ def build_from_plan(plan,base_config=None,preserve_legacy_shower=False):
   from .plan_construction import specification
   spec=specification(fresh)
   baseline.update(layout_rooms=spec['rooms'],layout_main_length_mm=spec['main'],layout_openings=spec['openings'],layout_mirror=spec['mirror'],id='sauna-plan-'+fresh['plan_sha256'][:10],size='CUSTOM')
- scene=build(baseline)
+ return baseline
+
+def validate_scene(plan,scene):
+ fresh=plan
+ normal=not scene['config'].get('layout_rooms')
  if scene['dimensions']['length_mm']+scene['dimensions']['annex_length_mm']!=fresh['bounds_mm'][2] or scene['dimensions']['width_mm']!=fresh['bounds_mm'][3]:raise ValueError('Plan-to-construction footprint mismatch')
  for r in fresh['finished_room_rectangles']:
   actual=next(x for x in scene['rooms'] if x['id']==('hall' if normal and r['id']=='entrance' else r['id']))
@@ -121,5 +125,11 @@ def build_from_plan(plan,base_config=None,preserve_legacy_shower=False):
   actual=next(x for x in scene['opening_voids'] if x['id']==opening['id'])
   axis=0 if opening['axis']=='x' else 1
   if abs(actual['origin'][axis]-opening['origin_mm'][axis])>1e-6 or actual['size'][axis]!=opening['width_mm']:raise ValueError('Plan-to-construction opening mismatch')
- scene['layout_contract']=dict(plan_sha256=fresh['plan_sha256'],rooms=fresh['rooms'],source='constrained room graph',engineering_status='unchanged canonical engineering holds')
+ return scene
+
+def build_from_plan(plan,base_config=None,preserve_legacy_shower=False):
+ from .model import build
+ scene=build(config_from_plan(plan,base_config,preserve_legacy_shower))
+ validate_scene(plan,scene)
+ scene['layout_contract']=dict(plan_sha256=plan['plan_sha256'],rooms=plan['rooms'],source='constrained room graph',engineering_status='unchanged canonical engineering holds')
  return scene

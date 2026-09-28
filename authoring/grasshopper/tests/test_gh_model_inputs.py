@@ -7,16 +7,9 @@ sys.path.insert(0,str(ROOT))
 from obtp.model import parameters
 
 class HostInputTests(unittest.TestCase):
- def test_generated_canvas_inputs_execute_model(self):
-  tree=ast.parse((ROOT/'CREATE_RESEARCH_GRASSHOPPER.py').read_text())
-  keys=set()
-  for node in ast.walk(tree):
-   if isinstance(node,ast.Assign):
-    for target in node.targets:
-     if isinstance(target,ast.Name) and target.id=='controls':keys.update(ast.literal_eval(k) for k in node.value.keys)
-     if isinstance(target,ast.Name) and target.id=='values':keys.update(row[0] for row in ast.literal_eval(node.value))
-     if isinstance(target,ast.Subscript) and isinstance(target.value,ast.Name) and target.value.id=='controls' and isinstance(target.slice,ast.Constant):keys.add(target.slice.value)
-  self.assertNotIn('terrace_steps',keys);self.assertNotIn('facade_type',keys)
+ def test_legacy_model_wrapper_retained(self):
+  # R27 research intentionally no longer exposes this building wrapper.
+  keys=set(parameters()) | {'preset_index','custom'}
   class Goo:
    def __init__(self,value):self.Value=value
   for program in (0,1):
@@ -37,7 +30,7 @@ class HostInputTests(unittest.TestCase):
   class Goo:
    def __init__(self,value):self.Value=value
   gh=types.SimpleNamespace(Kernel=types.SimpleNamespace(GH_RuntimeMessageLevel=types.SimpleNamespace(Error='error')))
-  for index in range(13):
+  for index in range(14):
    messages=[]
    component=types.SimpleNamespace(OnPingDocument=lambda:types.SimpleNamespace(FilePath=str(ROOT/'test-r24.gh')),AddRuntimeMessage=lambda *a:messages.append(a))
    ns={'preset_index':Goo(index),'roof_type':Goo(0.0),'wall_height':Goo(2100.0),'ghenv':types.SimpleNamespace(Component=component)}

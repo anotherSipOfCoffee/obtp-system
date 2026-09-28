@@ -21,7 +21,7 @@ class SaunaWorkflowTests(unittest.TestCase):
   scene=flow.construct(document);self.assertFalse(any(p['id'].startswith('shower/') for p in scene['parts']))
   self.assertEqual(scene['dimensions']['length_mm'],5400)
  def test_no_fallback_for_unsupported_custom(self):
-  doc=flow.resolve(flow.select(6,sauna=False,entrance=False))
+  doc=flow.resolve(flow.select(6,sauna=False,entrance=False,outdoor=True))
   self.assertEqual(doc['status'],'plan-only')
   with self.assertRaisesRegex(ValueError,'Outdoor-only'):flow.construct(doc)
  def test_stale_plan_and_selection_rejected(self):
@@ -30,7 +30,7 @@ class SaunaWorkflowTests(unittest.TestCase):
   selection=flow.select();selection['arrangement']=1
   with self.assertRaises(ValueError):flow.resolve(selection)
  def test_invalid_settings_rejected(self):
-  for args in (dict(preset_index=13),dict(roof_type=2),dict(window_width=900),dict(wall_height=1900),dict(foundation_type=3)):
+  for args in (dict(preset_index=14),dict(roof_type=2),dict(window_width=900),dict(wall_height=1900),dict(foundation_type=3)):
    with self.assertRaises(ValueError):flow.select(**args)
  def test_no_model_created_before_construction(self):
   from unittest.mock import patch

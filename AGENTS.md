@@ -84,3 +84,11 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - Keep five visible checkpoints: preset, layout, cassette, assembly sequence, final preview. Expose diagnostic rows and exact assembly IDs without filling the canvas with every part.
 - Preview scopes and assembly filtering never modify the canonical scene or export quantities. Connected walls are display groups, not certified lifting units.
 - Retain R24.1 component factory compatibility and R25 Custom construction; use GH_R26.md. Do not change websites.
+
+## R27 accepted scope — 28 September 2026
+- Supersedes R26 canvas restriction: main has saved Sauna/Studio plus bounded Custom variants; research has specimens only, no building controls. No website/Drive changes or merge.
+- Plan input is room controls only. Custom length is base ±1 existing 900 mm cell, subject to recipe minima; width fixed to selected preset (2400 mm). Preserve valid Sauna room selection/order. Studio remains work-centre-preparation. Do not restore broad R25 GUI bounds.
+- Use offset sliders so preset changes stay legible. Overrides off uses base dimensions/programme; offsets remain visible but inactive. Independent roof/window/height/foundation settings persist.
+- Functional construction branches share plan_pipeline and canonical model recipes; do not regenerate full buildings inside branch components. Programme-specific topology remains explicit, not an unrestricted plan solver.
+- Intermediate previews must agree with final mirrored coordinates and actual levels; preview toggles do not generate construction. NewInstanceGuid overrides are unnecessary; native GUID allocation retained.
+- Use GH_R27.md, REVIEW_R27.py and package-gh.py. Compare 24 saved geometry/quantity baselines; tests and portable model exports do not establish native Rhino/GH acceptance.
