@@ -100,3 +100,8 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - U terrace = both long sides + one short side, entrance edge included. Studio passage is a central Hall/Entrance with opposing double doors. It feeds planning before framing.
 - Sauna outdoor features currently occupy checked terrace reservations; an integrated storage/shower/bench niche is not implemented. Do not claim equivalence with the old niche. Windows/equipment/service design and SLD eligibility remain unresolved.
 - Native test status stays explicit. User-authorized code/PR updates only; no websites, Drive or merge.
+
+## R29 independent room stages
+- Layout, structure and detailing now each have a creator; CREATE_ROOM_CONFIGURATOR retains the connected workflow. Share room_canvas.py and canonical modules rather than duplicate geometry code.
+- Every creator must add a fresh document with independent setup globals and unique filenames while preserving other open definitions. Native execution acceptance remains outstanding.
+- Handoffs are versioned, stage-checked JSON with integrity hashes. Live input wins; invalid live input never falls back to stale files. See GH_R29.md.

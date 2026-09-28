@@ -1,3 +1,7 @@
+# R29: separate Layout, Structure and Detailing
+
+Start with [GH_R29.md](GH_R29.md). Each stage now has its own creator and file handoffs. The connected workflow is `CREATE_ROOM_CONFIGURATOR.py`. Keep all extracted files together.
+
 # Current package — R28, three independent GH definitions
 
 - **CREATE_LAYOUT_GRASSHOPPER.py** — new repeatable room functions → single-row plan → cassette skeleton → detailing. Read [GH_R28.md](GH_R28.md).
