@@ -1,18 +1,8 @@
-# R30: preset layouts and independent stages
+# Current package — R31
 
-Start with [GH_R30.md](GH_R30.md). Use CREATE_LAYOUT_GRASSHOPPER, CREATE_STRUCTURE_GRASSHOPPER and CREATE_DETAILING_GRASSHOPPER; CREATE_ROOM_CONFIGURATOR connects them. Complete extraction required.
+Start with [GH_R31.md](GH_R31.md). Run `CREATE_ROOM_CONFIGURATOR.py` for the connected workflow, or the separate Layout, Structure and Detailing creators. Extract the entire package. The historical `CREATE_GRASSHOPPER.py` retains the earlier workflow.
 
-# R29: separate Layout, Structure and Detailing
-
-Start with [GH_R29.md](GH_R29.md). Each stage now has its own creator and file handoffs. The connected workflow is `CREATE_ROOM_CONFIGURATOR.py`. Keep all extracted files together.
-
-# Current package — R28, three independent GH definitions
-
-- **CREATE_LAYOUT_GRASSHOPPER.py** — new repeatable room functions → single-row plan → cassette skeleton → detailing. Read [GH_R28.md](GH_R28.md).
-- **CREATE_GRASSHOPPER.py** — preserved R27 Sauna/Studio preset workflow. Read [GH_R27.md](GH_R27.md).
-- **CREATE_RESEARCH_GRASSHOPPER.py** — preserved construction-system specimen research.
-
-Extract the entire ZIP into a fresh folder. Open a millimetre Rhino document and Grasshopper, then run the chosen creator using Rhino 8 Python 3. Each creates its own timestamped native definition. Native acceptance remains outstanding.
+B1 Box, B2 Foundation and B3 detailed Roof are separate geometry-driven stages. Native Rhino acceptance remains outstanding.
 
 # Historical R21 modularity audit
 

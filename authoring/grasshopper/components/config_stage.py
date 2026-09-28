@@ -26,10 +26,16 @@ try:
  elif STAGE=='adjacency':data=core.rules(read('upstream'),seq('rules'))
  elif STAGE=='boundaries':data=core.rules(read('upstream'),seq('rules'),kind='boundary')
  elif STAGE=='plan':data=core.solve(read('upstream'),val('length_cells',8),val('width_cells',2),val('arrangement',0),val('entrance_side',0),val('summer_passage',False))
+ elif STAGE in ('box','foundation','roof','compose'):
+  code=importlib.import_module(name+'.room_assemblies')
+  if STAGE=='box':data=code.box(read('upstream'),val('system',0))
+  elif STAGE=='foundation':data=code.foundation(read('upstream'),val('foundation_type',0),val('terrace',True))
+  elif STAGE=='roof':data=code.roof(read('upstream'),val('roof_type',0),val('terrace',True))
+  else:data=code.assemble(read('box_json'),read('foundation_json'),read('roof_json'))
  elif STAGE=='skeleton':
   code=importlib.import_module(name+'.room_structure');data=code.skeleton(read('upstream'),val('system',0),val('roof_type',0),val('foundation_type',0))
  elif STAGE=='detail':
-  code=importlib.import_module(name+'.room_detail');data=code.build(read('upstream'),int(val('terrace',1)),val('return_end',0),val('outdoor_shower',False),val('outdoor_bench',False),val('paneling',1),val('facade',True))
+  code=importlib.import_module(name+'.room_detail');data=code.build(read('upstream'),val('terrace'),val('return_end',0),val('outdoor_shower',False),val('outdoor_bench',False),val('paneling',1),val('facade',True))
  else:raise ValueError('Unknown stage')
  data_json=json.dumps(data)
  rows=[r['id']+' | '+r['label'] for r in data.get('rooms',[]) ]
@@ -38,7 +44,7 @@ try:
  if STAGE in ('plan','preset'):
   report+='\n'+str(data['bounds_mm'][2])+' x '+str(data['bounds_mm'][3])+' mm | '+str(data['area_m2'])+' m². This does not establish SLD exemption.\nArrangement '+str(data['arrangement'])+' / '+str(len(data['candidate_orders'])-1)+'\nOrder: '+' → '.join(r['id'] for r in data['rooms'])
   rows += [r['id']+' | '+str(r['bounds_mm'][2])+' x '+str(r['bounds_mm'][3])+' coordination mm' for r in data['rooms']]
- if STAGE=='skeleton':report+='\n'+str(len(data['parts']))+' frame/support members. Structural panels are reserved for detailing. Capacity unverified.'
+ if STAGE in ('skeleton','compose','box','foundation','roof'):report+='\n'+str(len(data['parts']))+' frame/support members. Structural panels are reserved for detailing. Capacity unverified.'
  if STAGE=='detail':
   q=data['manufacturing'];report+='\n'+str(q['physical_pieces'])+' primary pieces; '+str(q['unique_manufactured_part_candidates'])+' provisional types; '+str(q['cladding']['physical_pieces'])+' separate cladding boards.\nOpenings and room minima are studies; windows/equipment/services are not automatically specified.'
 except Exception as error:

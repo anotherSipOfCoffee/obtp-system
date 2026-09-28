@@ -34,15 +34,19 @@ def assembly(scene,progress=100):
 def structure(p):
  return p['family'] in ('floor','walls','partitions','roof','terrace','foundation') and p['material'] in ('timber','plywood','concrete-study')
 
+def facade_layer(p):
+ # Display grouping only; manufacturing cladding exclusion remains unchanged.
+ return cladding(p) or p['family']=='facade' or p['id'].startswith(('facade-','weather-edge-','roof-fascia-'))
+
 def view(display,scope=2,type_colours=False,assembly_filter=''):
  if display.get('schema')!='obtp-display-checkpoint/1':raise ValueError('Connect the assembly checkpoint')
- if scope not in (0,1,2):raise ValueError('Preview scope: 0 structure, 1 building without facade boards, 2 complete')
+ if scope not in (0,1,2,3):raise ValueError('Preview scope: 0 structure with panels, 1 building without facade system, 2 complete, 3 frame only')
  scope=int(scope)
  assembly_filter=assembly_filter.strip()
  if assembly_filter and assembly_filter not in display['assembly_ids']:raise ValueError('Unknown assembly ID; copy an exact ID from CP3, or clear the filter')
- select=[i for i,p in enumerate(display['parts']) if (scope==2 or scope==1 and not cladding(p) or scope==0 and structure(p)) and (not assembly_filter or p['assembly']==assembly_filter)]
+ select=[i for i,p in enumerate(display['parts']) if (scope==2 or scope==1 and not facade_layer(p) or scope==0 and structure(p) or scope==3 and structure(p) and p['material']!='plywood') and (not assembly_filter or p['assembly']==assembly_filter)]
  result={k:[display[k][i] for i in select] for k in ('parts','type_ids')}
  result['rgba']=[display['type_rgba' if type_colours else 'rgba'][i] for i in select]
  result['legend']=sorted(set(t+' | RGB '+','.join(str(x) for x in c[:3]) for t,c in zip(result['type_ids'],result['rgba']))) if type_colours else []
- result['status']=display['status']+'\nScope: '+('Structure + panels','Building without facade boards','Complete with cladding')[scope]+' | '+str(len(select))+' visible / '+str(display['source_piece_count'])+' canonical pieces.\nDisplay-only; quantities and exports stay complete.'
+ result['status']=display['status']+'\nScope: '+('Structure + panels','Building without facade system','Complete with cladding','Skeleton / no panels')[scope]+' | '+str(len(select))+' visible / '+str(display['source_piece_count'])+' canonical pieces.\nDisplay-only; quantities and exports stay complete.'
  return result

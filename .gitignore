@@ -33,3 +33,8 @@ authoring/grasshopper/review-r28/*.html
 authoring/grasshopper/review-r30/OBTP-*/
 authoring/grasshopper/review-r30/*.svg
 authoring/grasshopper/review-r30/index.html
+
+# Reproducible R31 package previews
+authoring/grasshopper/review-r31/OBTP-*/
+authoring/grasshopper/review-r31/*.svg
+authoring/grasshopper/review-r31/index.html

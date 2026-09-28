@@ -231,7 +231,7 @@ def enrich(p,parts,voids,interfaces,L,W,F,H,annex,wall_regions,phase="all",terra
     base=F+H+238; cover=D if p['roof_type']!=2 else 0
     overhang=0 if p['roof_type']==2 else 150
     y0=-outer-overhang-cover; y1=W+outer+overhang; x0=-outer-overhang; length=end+2*(outer+overhang)
-    extension=600 if p.get('program_type')==1 else 0
+    extension=p.get('roof_west_extension_mm',600 if p.get('program_type')==1 else 0)
     x0-=extension;length+=extension
     slope=1/40 if p['roof_type']==0 else math.tan(math.radians(8))
     if p['roof_type']==2:

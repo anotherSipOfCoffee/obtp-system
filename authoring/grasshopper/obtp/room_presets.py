@@ -65,4 +65,10 @@ def generate(building_type=0,size=1,extension=True,window=1):
   rooms.append(dict(id='R%02d'%(i+1),function=function,label=label,bounds_mm=[x,0,length,ctx['W']],clear_bounds_mm=[x+195,195,max(1,length-390),ctx['W']-390]));x+=length
  edges=[dict(a=rooms[i]['id'],b=rooms[i+1]['id'],boundary='opening') for i in range(len(rooms)-1)]
  runs=runs_from_commands(commands)
- return rc.seal('plan',building_type=t,rooms=rooms,edges=edges,entries=[],bounds_mm=[0,0,x,ctx['W']],area_m2=x*ctx['W']/1e6,entrance_side='front',arrangement=0,candidate_orders=[[r['id'] for r in rooms]],preset_label=TYPES[t]+' '+SIZES[size],extension=extension,window_frame_mm=frame,window_host_mm=host,wall_runs=runs,construction=dict(schema='obtp-cassette-blueprint/1',context=ctx,commands=commands),holds=rc.HOLDS)
+ fixtures=[]
+ for cmd in commands:
+  if cmd['kind']=='part' and (cmd['args'][4]=='furniture' or cmd['args'][3] not in ('timber','plywood')):
+   pid,origin,dimensions,material,family=cmd['args'][:5];fixtures.append(dict(id=pid,origin=origin,size=dimensions,material=material,family=family,assembly=pid.split('/')[0]))
+ from .cell_platform import bounds
+ lo,hi=bounds(ctx['p'],ctx['L'],ctx['W'],ctx['annex'])
+ return rc.seal('plan',building_type=t,rooms=rooms,edges=edges,entries=[],bounds_mm=[0,0,x,ctx['W']],area_m2=x*ctx['W']/1e6,entrance_side='front',arrangement=0,candidate_orders=[[r['id'] for r in rooms]],preset_label=TYPES[t]+' '+SIZES[size],extension=extension,window_frame_mm=frame,window_host_mm=host,wall_runs=runs,detailing_context=ctx,fixtures=fixtures,platform_bounds_mm=[lo,-1200,hi,ctx['W']],floor_bounds_mm=[-600 if t==1 else 0,0,x,ctx['W']],roof_west_extension_mm=600 if t==1 else 0,holds=rc.HOLDS)

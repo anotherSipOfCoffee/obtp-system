@@ -180,7 +180,7 @@ def slabs(context, stages=('floor','roof')):
     # Main and optional side bay share continuous transverse floor joist logic.
     # Last, shorter bay is explicitly retained as an end cassette, not stretched.
     partition_x = wall+hot
-    partition_axes=([room['bounds_mm'][0] for room in plan_rooms[1:]] if plan_rooms else [partition_x])
+    partition_axes=p.get('structural_partition_axes',([room['bounds_mm'][0] for room in plan_rooms[1:]] if plan_rooms else [partition_x]))
     for stage, z, thickness in [(stage, 0 if stage=='floor' else F+H, SPEC[stage+'_skin']) for stage in stages]:
         for i, x in enumerate(range(0, L+annex, pitch)):
             a = min(pitch, L+annex-x)

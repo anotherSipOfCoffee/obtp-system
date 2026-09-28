@@ -7,6 +7,10 @@ from obtp.manufacturing import cladding
 
 class RoomConfigTests(unittest.TestCase):
  def plan(self,t=0,fs=(7,0,2),adj=(),boundary=(),**kw):return r.solve(r.rules(r.rules(r.programme(t,fs),adj),boundary,'boundary'),**kw)
+ def terrace_plan(self,mode):
+  p=self.plan();L,W=p['bounds_mm'][2:];rects=[v for _,v in d.terrace_rects(p,mode,0)]+[[0,0,L,W]]
+  p['platform_bounds_mm']=[min(v[0] for v in rects),min(v[1] for v in rects),max(v[2] for v in rects),max(v[3] for v in rects)]
+  p.pop('sha256');return r.seal('plan',**{k:v for k,v in p.items() if k not in ('schema','stage')})
  def test_duplicates_and_six_limit(self):
   p=self.plan(2,[17,17,0],length_cells=10);self.assertEqual(len({a['id'] for a in p['rooms']}),3)
   self.assertNotEqual(p['rooms'][0]['label'],p['rooms'][1]['label'])
@@ -56,7 +60,7 @@ class RoomConfigTests(unittest.TestCase):
    for i,(_,a) in enumerate(rects):
     for _,b in rects[i+1:]:self.assertFalse(d.overlaps(a,b))
  def test_detail_quantities_and_no_mutation(self):
-  sk=s.skeleton(self.plan());before=copy.deepcopy(sk);a=d.build(sk,terrace=4,outdoor_shower=True,outdoor_bench=True);b=d.build(sk,facade=False)
+  sk=s.skeleton(self.terrace_plan(4));before=copy.deepcopy(sk);a=d.build(sk,terrace=4,outdoor_shower=True,outdoor_bench=True);b=d.build(sk,facade=False)
   self.assertEqual(sk,before);self.assertFalse(any(cladding(x) for x in b['parts']))
   q=a['manufacturing'];self.assertEqual(q['physical_pieces']+q['cladding']['physical_pieces'],len(a['parts']))
   self.assertEqual(len(a['detail']['features']),2)
@@ -68,7 +72,7 @@ class RoomConfigTests(unittest.TestCase):
   with self.assertRaises(ValueError):d.build(sk,terrace=0,outdoor_shower=True)
  def test_remaining_detail_controls(self):
   for mode in range(5):
-   sk=s.skeleton(self.plan(),roof_type=mode%2,foundation_type=mode%2)
+   sk=s.skeleton(self.terrace_plan(mode),roof_type=mode%2,foundation_type=mode%2,terrace=bool(mode))
    scene=d.build(sk,terrace=mode,paneling=mode%3,facade=bool(mode%2))
    self.assertTrue(all(min(v['size'])>0 for v in scene['parts']))
    self.assertTrue(scene['detail']['foundation_nodes'])

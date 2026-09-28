@@ -123,6 +123,9 @@ def main(mode="combined"):
         preview=script('Plan preview','config_preview.py',[('data_json',String),('show',Boolean)],[('geometry',GH_ParamAccess.list),('labels',GH_ParamAccess.list),('label_points',GH_ParamAccess.list),('report',GH_ParamAccess.item)],550,400)
         preview.Params.Input[0].AddSource(plan.Params.Output[0]);preview.Params.Input[1].AddSource(plan_show)
         objects=[typ,size,extension,window,plan,status,plan_show,preview]
+        cp=[p for p in Grasshopper.Instances.ComponentServer.ObjectProxies if p.Desc.Name=='Custom Preview' and p.Desc.Category=='Display' and not p.Obsolete]
+        if len(cp)==1:
+            plan_display=place(cp[0].CreateInstance(),1100,500);plan_display.Params.Input[0].AddSource(preview.Params.Output[0]);preview.Hidden=True;objects.append(plan_display)
         proxies=[p for p in Grasshopper.Instances.ComponentServer.ObjectProxies if p.Desc.Name=='Text Tag 3D']
         if proxies:
             tag=proxies[0].CreateInstance();ports={p.Name.lower():p for p in tag.Params.Input}
@@ -136,20 +139,35 @@ def main(mode="combined"):
     else:
         plan=exchange("plan",None,2000,1950) if mode=="structure" else None
     if mode in ("combined","structure"):
-        controls={'system':choices('B1 / System',[(0,'Cassette')],0,2700,700),'roof_type':choices('B2 / Roof',[(0,'Plokščias / drainage slope'),(1,'Single slope')],0,2700,770),'foundation_type':choices('B2 / Foundation study',[(0,'Timber rails on piles'),(1,'Concrete grillage study')],0,2700,840)}
-        skeleton=script('B / Plan-derived cassette skeleton','config_stage.py',[('upstream',String)]+[(k,Double) for k in controls],[('data_json',GH_ParamAccess.item),('report',GH_ParamAccess.item),('rows',GH_ParamAccess.list)],2750,200,stage='skeleton')
-        skeleton.Params.Input[0].AddSource(plan.Params.Output[0])
-        for i,obj in enumerate(controls.values(),1):skeleton.Params.Input[i].AddSource(obj)
-        skeleton_report=panel('',2700,360,460,240);skeleton_report.AddSource(skeleton.Params.Output[1])
-        skeleton_show=toggle('Preview skeleton only',False,2700,1030)
-        skeleton_preview=script('Skeleton preview','config_preview.py',[('data_json',String),('show',Boolean)],[('geometry',GH_ParamAccess.list),('labels',GH_ParamAccess.list),('label_points',GH_ParamAccess.list),('report',GH_ParamAccess.item)],2700,1150)
-        skeleton_preview.Params.Input[0].AddSource(skeleton.Params.Output[0]);skeleton_preview.Params.Input[1].AddSource(skeleton_show)
-        group('B / STRUCTURE · candidate geometry, capacities unresolved',[skeleton,skeleton_report,skeleton_show,skeleton_preview]+list(controls.values()),Color.FromArgb(237,224,210))
+        terrace=toggle('Terrace / 1200 mm',True,2600,600)
+        system=choices('System',[(0,'Cassette')],0,2600,700)
+        roof_choice=choices('Roof',[(0,'Plokščias / detailed membrane roof'),(1,'Single slope / detailed metal roof')],0,2600,800)
+        foundation_choice=choices('Foundation',[(0,'Timber rails on piles'),(1,'Concrete grillage study')],0,2600,900)
+        branches={}
+        for stage,label,extra,control in [('box','B1 / BOX · floor, walls, ceiling cassettes','system',system),('foundation','B2 / FOUNDATION','foundation_type',foundation_choice),('roof','B3 / ROOF · detailed weather assembly','roof_type',roof_choice)]:
+            inputs=[('upstream',String),(extra,Double)]+([('terrace',Boolean)] if stage!='box' else [])
+            component=script(label,'config_stage.py',inputs,[('data_json',GH_ParamAccess.item),('report',GH_ParamAccess.item),('rows',GH_ParamAccess.list)],2750,200,stage=stage)
+            component.Params.Input[0].AddSource(plan.Params.Output[0]);component.Params.Input[1].AddSource(control)
+            if stage!='box':component.Params.Input[2].AddSource(terrace)
+            report=panel('',3000,200,420,130);report.AddSource(component.Params.Output[1])
+            show=toggle('Preview '+stage,False,2600,1000)
+            preview=script(stage.title()+' preview','config_preview.py',[('data_json',String),('show',Boolean)],[('geometry',GH_ParamAccess.list),('labels',GH_ParamAccess.list),('label_points',GH_ParamAccess.list),('report',GH_ParamAccess.item)],2750,600)
+            preview.Params.Input[0].AddSource(component.Params.Output[0]);preview.Params.Input[1].AddSource(show)
+            objects=[component,control,report,show,preview]
+            native=[p for p in Grasshopper.Instances.ComponentServer.ObjectProxies if p.Desc.Name=='Custom Preview' and p.Desc.Category=='Display' and not p.Obsolete]
+            if len(native)==1:
+                display=place(native[0].CreateInstance(),3200,600);display.Params.Input[0].AddSource(preview.Params.Output[0]);preview.Hidden=True;objects.append(display)
+            if stage=='foundation':objects.append(terrace)
+            group(label,objects,Color.FromArgb(237,224,210));branches[stage]=component
+        skeleton=script('B4 / Merge independent assemblies','config_stage.py',[(k+'_json',String) for k in ('box','foundation','roof')],[('data_json',GH_ParamAccess.item),('report',GH_ParamAccess.item),('rows',GH_ParamAccess.list)],2750,200,stage='compose')
+        for i,k in enumerate(('box','foundation','roof')):skeleton.Params.Input[i].AddSource(branches[k].Params.Output[0])
+        report=panel('',3000,200,420,130);report.AddSource(skeleton.Params.Output[1])
+        group('B4 / VERIFIED ASSEMBLY MERGE',[skeleton,report],Color.FromArgb(237,224,210))
         exchange("skeleton",skeleton,3000,1950)
     elif mode=="detailing":
         skeleton=exchange("skeleton",None,2700,1950)
     if mode in ("combined","detailing"):
-        det={'terrace':toggle('Terrace / 1200 mm',True,3400,700),'paneling':choices('Panel build-up',[(0,'Structural panels'),(1,'Panels + insulation'),(2,'Panels + insulation + lining')],2,3400,800)}
+        det={'paneling':choices('Panel build-up',[(0,'Structural panels'),(1,'Panels + insulation'),(2,'Panels + insulation + lining')],2,3400,800)}
         detail=script('C / Detail the current layout','config_stage.py',[('upstream',String)]+[(k,Boolean if k=='terrace' else Double) for k in det],[('data_json',GH_ParamAccess.item),('report',GH_ParamAccess.item),('rows',GH_ParamAccess.list)],3450,200,stage='detail')
         detail.Params.Input[0].AddSource(skeleton.Params.Output[0])
         for i,obj in enumerate(det.values(),1):detail.Params.Input[i].AddSource(obj)
@@ -158,7 +176,7 @@ def main(mode="combined"):
         group('C / DETAILING',[detail,detail_report,note]+list(det.values()),Color.FromArgb(226,233,222))
         assembly=script('D / Assembly sequence','assembly_checkpoint.py',[('scene_json',String),('assembly_stage',Double)],[('display_json',GH_ParamAccess.item),('report',GH_ParamAccess.item),('steps',GH_ParamAccess.list)],4100,200)
         assembly.Params.Input[0].AddSource(detail.Params.Output[0]);progress=slider('Assembly progress',100,0,100,4050,370);assembly.Params.Input[1].AddSource(progress)
-        scope=choices('Final preview',[(0,'Structure + panels'),(1,'Building without facade'),(2,'Complete with facade')],2,4050,440);colours=toggle('Unique part colours',False,4050,510)
+        scope=choices('Final preview',[(3,'Skeleton only / no panels'),(0,'Structure + panels'),(1,'Building without facade system'),(2,'Complete with facade')],2,4050,440);colours=toggle('Unique part colours',False,4050,510)
         preview=script('Final material preview','final_preview.py',[('display_json',String),('preview_scope',Double),('type_colours',Boolean),('assembly_filter',String)],[(n,GH_ParamAccess.list) for n in ['geometry','part_ids','materials','type_ids','legend']]+[('preview_status',GH_ParamAccess.item)],4100,640)
         preview.Params.Input[0].AddSource(assembly.Params.Output[0]);preview.Params.Input[1].AddSource(scope);preview.Params.Input[2].AddSource(colours)
         proxies=[p for p in Grasshopper.Instances.ComponentServer.ObjectProxies if p.Desc.Name=='Custom Preview' and p.Desc.Category=='Display' and not p.Obsolete]
@@ -177,7 +195,22 @@ def main(mode="combined"):
         for i,source in enumerate([detail.Params.Output[0],destination,rates,generate]):documents.Params.Input[i].AddSource(source)
         receipt=panel('',6000,100,420,220);receipt.AddSource(documents.Params.Output[0])
         group('E / DOCUMENTS',[destination,rates,generate,documents,receipt],Color.FromArgb(228,225,218))
-    name='OBTP_'+mode.title()+'_R30_'+datetime.now().strftime('%Y%m%d_%H%M%S_%f')
+        sheet_set=choices('Drawing set',list(enumerate(['Parts','Assembly','Loose layout','Project drawings','CNC review','Material costs'])),3,5000,450)
+        sheet_show=toggle('Preview drawing sheets in model space',True,5000,550)
+        sheets=script('Model-space drawing sheets','config_sheet_preview.py',[('scene_json',String),('document_set',Double),('show',Boolean)],[(n,GH_ParamAccess.list) for n in ('geometry','labels','label_points','label_sizes')]+[('report',GH_ParamAccess.item)],5500,450)
+        sheets.Params.Input[0].AddSource(detail.Params.Output[0]);sheets.Params.Input[1].AddSource(sheet_set);sheets.Params.Input[2].AddSource(sheet_show)
+        sheet_display=place(proxies[0].CreateInstance(),6000,450);sheet_display.Params.Input[0].AddSource(sheets.Params.Output[0]);sheets.Hidden=True
+        sheet_status=panel('',6000,650,420,140);sheet_status.AddSource(sheets.Params.Output[4])
+        sheet_objects=[sheet_set,sheet_show,sheets,sheet_display,sheet_status]
+        text_proxies=[p for p in Grasshopper.Instances.ComponentServer.ObjectProxies if p.Desc.Name=='Text Tag 3D']
+        if text_proxies:
+            tag=text_proxies[0].CreateInstance();ports={p.Name.lower():p for p in tag.Params.Input}
+            loc=next((v for k,v in ports.items() if k in ('location','locations')),None);txt=next((v for k,v in ports.items() if k in ('text','tag')),None)
+            if loc is not None and txt is not None:
+                place(tag,6000,500);loc.AddSource(sheets.Params.Output[2]);txt.AddSource(sheets.Params.Output[1]);sheet_objects.append(tag)
+                if 'size' in ports:ports['size'].AddSource(sheets.Params.Output[3])
+        group('E / MODEL-SPACE SHEET PREVIEW',sheet_objects,Color.FromArgb(228,225,218))
+    name='OBTP_'+mode.title()+'_R31_'+datetime.now().strftime('%Y%m%d_%H%M%S_%f')
     if mode in ('structure','detailing'):
         offset=1900 if mode=='structure' else 2600
         for obj in doc.Objects:

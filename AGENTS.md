@@ -111,3 +111,12 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - Studio extension is an actual optional second block. Without it, keep central room with two fixed windows and west-end entrance. Sauna extension uses canonical integrated niche details. Living is explicitly provisional.
 - Façade and sliding enclosure defaults are fixed; terrace is Yes/No at 1200 mm. Native document exports live in Detailing; primary parts/assembly exclude only canonical façade cladding.
 - See GH_R30.md for stage contracts, document scope, price proxies and native acceptance limits. Use `OBTP / ` group prefix for tidy ownership. No website/Drive writes or merge.
+
+
+## Current GH R31 decisions (supersede conflicting R30 implementation)
+- Structure consumes geometry-only wall/opening/room data. Never restore preset manufactured-member commands. Layout may use canonical presets; detailing may use validated architectural fixture context.
+- Box, foundation and detailed canonical roof are independent sealed branches, merged only with matching plan hashes and dimensions. Terrace belongs upstream to roof/foundation.
+- Reject legacy R30 construction-bearing handoffs explicitly; regenerate Layout. Preserve separate creators and fresh-document behaviour.
+- All document text I/O is explicit UTF-8. Paper-space and model-space sheets share one recipe. Native acceptance must be distinguished from portable checks.
+- Facade visibility includes battens/attachments. Display grouping must never alter manufacturing exclusion or source quantities.
+- Package current review assets only; historical sources remain reproducible in Git. No website changes for this GH task.

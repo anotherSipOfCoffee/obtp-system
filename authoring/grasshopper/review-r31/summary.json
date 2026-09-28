@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Sauna_M_extension",
+    "dimensions": [
+      6300,
+      2400
+    ],
+    "parts": 1802,
+    "hash": "5bc08c12dc688f3a9d99edddbbddbc15881176a39199ed156384b149f1e22669",
+    "folder": "OBTP-5bc08c12dc68"
+  },
+  {
+    "name": "Studio_M_no_extension",
+    "dimensions": [
+      5400,
+      2400
+    ],
+    "parts": 1450,
+    "hash": "524ed4b664b342468270c98132fca99a828aa3d61d67b1589221f50b3f2630a1",
+    "folder": "OBTP-524ed4b664b3"
+  },
+  {
+    "name": "Studio_M_extension",
+    "dimensions": [
+      7200,
+      2400
+    ],
+    "parts": 1910,
+    "hash": "34ee797729bb8f6eb4bc57f87fbb285ec9aeaf45b7c5509ce1790e19808ace75",
+    "folder": "OBTP-34ee797729bb"
+  },
+  {
+    "name": "Living_M_study",
+    "dimensions": [
+      8100,
+      2400
+    ],
+    "parts": 1370,
+    "hash": "3a949a926a4bfc694658e25983fe86f14a38711f74a89dc8c446b83007182518",
+    "folder": "OBTP-3a949a926a4b"
+  }
+]

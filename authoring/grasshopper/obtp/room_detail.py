@@ -103,17 +103,38 @@ def features(parts,plan,rects,F,shower,bench):
    rs.add(parts,'outdoor-shower/fixture',[x+dx/2,y+45,F+100],[25,25,1700],'object','furniture')
  return features
 
-def build(skeleton,terrace=1,return_end=0,outdoor_shower=False,outdoor_bench=False,paneling=1,facade=True):
- if isinstance(skeleton,dict) and 'blueprint_state' in skeleton:
-  from .room_blueprint import detail
-  return detail(skeleton,terrace,paneling)
+def architectural_detail(skeleton,paneling):
+ from . import model
+ s=rc.require(skeleton,'skeleton');p=s['plan'];c=copy.deepcopy(p.get('detailing_context',p.get('construction',{}).get('context')))
+ if [c['L']+c['annex'],c['W']]!=p['bounds_mm'][2:]:raise ValueError('Architectural finish zones no longer match the plan; supply updated zones or remove detailing_context')
+ parts=s['parts']+s['panel_parts']+s['roof_cover_parts']+s.get('product_parts',[])+copy.deepcopy(p.get('fixtures',[]))
+ state=dict(parts=parts,interfaces=s['interfaces'],opening_voids=s['opening_voids'],wall_regions=s['wall_regions'],cell_assemblies=[])
+ model.enrich_stage(c,state,'surfaces')
+ if s['terrace_enabled']:model.enrich_stage(c,state,'terrace')
+ if paneling>=1:model.enrich_stage(c,state,'insulation')
+ if paneling<2:state['parts']=[v for v in state['parts'] if v['material']!='lining-wood']
+ scene=rs.scene(skeleton,state['parts'],dict(terrace_enabled=s['terrace_enabled'],paneling=paneling,facade=True,foundation_nodes=s['foundation_nodes']))
+ scene['config']['size']=p.get('preset_label','Imported plan').split()[-1]
+ return scene
+
+def build(skeleton,terrace=None,return_end=0,outdoor_shower=False,outdoor_bench=False,paneling=1,facade=True):
+ s=rc.require(skeleton,'skeleton')
+ if terrace is None:terrace=int(s.get('terrace_enabled',True))
+ if 'assembly_sources' in s and bool(terrace)!=s['terrace_enabled']:raise ValueError('Terrace changes belong upstream in Foundation and Roof; regenerate both branches')
+ if s['plan'].get('detailing_context') or s['plan'].get('construction'):
+  return architectural_detail(skeleton,rc.integer(paneling,0,2,'Panel build-up'))
  s=rc.require(skeleton,'skeleton');paneling=rc.integer(paneling,0,2,'Panel build-up')
  for name,v in [('Facade',facade),('Outdoor shower',outdoor_shower),('Outdoor bench',outdoor_bench)]:
   if type(v) is not bool:raise ValueError(name+' must be Boolean')
  p=s['plan'];L,W=p['bounds_mm'][2:];F=s['dimensions']['floor_top_mm'];H=s['dimensions']['wall_height_mm']
- parts=[v for v in s['parts'] if v['family']!='foundation']+copy.deepcopy(s['panel_parts'])+copy.deepcopy(s['roof_cover_parts']);rects=terrace_rects(p,terrace,return_end);deck(parts,rects,F,L,W)
+ parts=copy.deepcopy(s['parts'])+copy.deepcopy(s['panel_parts'])+copy.deepcopy(s['roof_cover_parts']);rects=terrace_rects(p,terrace,return_end);deck(parts,rects,F,L,W)
  limits=[r for _,r in rects]+[[0,0,L,W]];bbox=[min(r[0] for r in limits),min(r[1] for r in limits),max(r[2] for r in limits),max(r[3] for r in limits)]
- nodes=rs.foundation(parts,bbox,s['foundation_type'])
+ if 'assembly_sources' in s:
+  b=s['foundation_bounds_mm']
+  if any(bbox[i]<b[i] for i in (0,1)) or any(bbox[i]>b[i] for i in (2,3)):raise ValueError('Terrace exceeds supplied foundation footprint')
+  nodes=s['foundation_nodes']
+ else:
+  parts[:]=[v for v in parts if v['family']!='foundation'];nodes=rs.foundation(parts,bbox,s['foundation_type'])
  if paneling>=1:
   domains=[]
   for r in s['runs']:
@@ -151,5 +172,8 @@ def build(skeleton,terrace=1,return_end=0,outdoor_shower=False,outdoor_bench=Fal
    a=o[:];a[k]+=i*(leaf+10);size=[0,0,1880];size[k]=leaf;size[n]=44
    rs.add(parts,'door-'+r['id']+'/leaf-'+str(i),a,size,'object','walls','door-'+r['id'])
   products.append(dict(id='door-'+r['id'],rough_opening_mm=[width,1900],frame_outside_mm=None,leaf_count=2 if double else 1,clear_passage_mm=None,status='schematic placeholder; actual product, frame, threshold and tolerances unselected'))
+ if not facade:
+  from .checkpoints import facade_layer
+  parts[:]=[v for v in parts if not facade_layer(v)]
  extras=features(parts,p,rects,F,outdoor_shower,outdoor_bench)
  return rs.scene(s,parts,dict(terraces=[dict(side=n,bounds_mm=r) for n,r in rects],features=extras,foundation_nodes=nodes,paneling=paneling,facade=facade,products=products))

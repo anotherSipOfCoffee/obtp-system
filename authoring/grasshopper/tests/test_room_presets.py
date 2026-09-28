@@ -33,7 +33,7 @@ class PresetTests(unittest.TestCase):
   with patch.object(rp,'generate',side_effect=AssertionError('Preset source called')):
    for plan in (custom,bp):self.assertTrue(rd.build(rs.skeleton(plan))['parts'])
  def test_replacement_skeleton_members_reach_detail(self):
-  sk=rs.skeleton(rp.generate());part=next(p for p in sk['parts'] if p['id'].startswith('weather/rafter-'))
+  sk=rs.skeleton(rp.generate());part=next(p for p in sk['parts'] if '/rafter-' in p['id'])
   part['size'][2]+=5;pid=part['id'];sk.pop('sha256');sk=rc.seal('skeleton',**{k:v for k,v in sk.items() if k not in ('schema','stage')})
   result=rd.build(sk);self.assertEqual(next(p for p in result['parts'] if p['id']==pid)['size'][2],150)
  def test_terrace_roof_foundation_and_panels(self):
@@ -43,7 +43,8 @@ class PresetTests(unittest.TestCase):
     sk=rs.skeleton(plan,roof_type=roof,foundation_type=foundation)
     for terrace in (0,1):
      for panel in (0,1,2):
-      result=rd.build(sk,terrace=terrace,paneling=panel)
+      sk=rs.skeleton(plan,roof_type=roof,foundation_type=foundation,terrace=bool(terrace))
+      result=rd.build(sk,paneling=panel)
       self.assertEqual(any(p['family']=='terrace' for p in result['parts']),bool(terrace))
       self.assertEqual(any(p['material']=='mineral-wool' for p in result['parts']),panel>=1)
  def test_documents_and_dxf_are_reconciled(self):
@@ -60,7 +61,7 @@ class PresetTests(unittest.TestCase):
      entity=list(file.modelspace())[0];self.assertTrue(entity.closed)
      self.assertEqual(len(entity),4)
  def test_bad_contract_and_price_rejected(self):
-  plan=rp.generate();plan['construction']['commands'][0]['args'][3]+=20
+  plan=rp.generate();plan['wall_runs'][0]['length']=-20
   plan=rp.reseal(plan)
   with self.assertRaises(ValueError):rs.skeleton(plan)
   rates=copy.deepcopy(DEFAULT_RATES);rates['rates']['timber']['eur_m3']=-1

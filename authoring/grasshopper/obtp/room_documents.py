@@ -106,9 +106,9 @@ def cutting_files(scene,folder):
    w,h=sizes[-2:];filename=row['type_id']+'.dxf'
    pairs=[(0,'SECTION'),(2,'HEADER'),(9,'$ACADVER'),(1,'AC1015'),(9,'$INSUNITS'),(70,4),(0,'ENDSEC'),(0,'SECTION'),(2,'ENTITIES'),(0,'LWPOLYLINE'),(100,'AcDbEntity'),(8,'REVIEW_OUTLINE'),(100,'AcDbPolyline'),(90,4),(70,1)]
    for x,y in [(0,0),(w,0),(w,h),(0,h)]:pairs.extend([(10,x),(20,y)])
-   pairs.extend([(0,'ENDSEC'),(0,'EOF')]);(folder/filename).write_text(''.join(str(k)+'\n'+str(v)+'\n' for k,v in pairs))
+   pairs.extend([(0,'ENDSEC'),(0,'EOF')]);(folder/filename).write_text(''.join(str(k)+'\n'+str(v)+'\n' for k,v in pairs),encoding='utf-8')
   rows.append(dict(type_id=row['type_id'],pieces=row['pieces'],thickness_mm=sizes[0],dimensions_mm=part['size'],instances=row['instances'],profile=filename,status=status,grain='unresolved',machining='unresolved'))
- (folder/'cutting-register.json').write_text(json.dumps(rows,indent=2))
+ (folder/'cutting-register.json').write_text(json.dumps(rows,indent=2),encoding='utf-8')
  return rows
 
 def recipes(scene,rates):
@@ -118,16 +118,47 @@ def recipes(scene,rates):
 def export(scene,destination,rates_path,native=False):
  if not str(destination).strip():raise ValueError('Select a destination folder')
  folder=Path(destination).expanduser()/('OBTP-'+scene['geometry_sha256'][:12]);folder.mkdir(parents=True,exist_ok=True)
- rates=json.loads(Path(rates_path).read_text())
+ rates=json.loads(Path(rates_path).read_text(encoding='utf-8-sig'))
  docs,cost=recipes(scene,rates);receipts=[]
  for name,recipe in docs.items():
-  (folder/(name+'-layouts.json')).write_text(json.dumps(recipe,ensure_ascii=False))
+  (folder/(name+'-layouts.json')).write_text(json.dumps(recipe,ensure_ascii=False),encoding='utf-8')
   if native:
    from .native_drawings import bake
    receipts.append(bake(scene,folder,recipe))
   else:
    from .ssp_preview import pdf
    pdf(recipe,folder/(name+'.pdf'))
- cutting_files(scene,folder/'cnc-review');(folder/'material-costs.json').write_text(json.dumps(cost,indent=2));(folder/'cladding-schedule.json').write_text(json.dumps(schedule([p for p in scene['parts'] if cladding(p)]),indent=2))
+ cutting_files(scene,folder/'cnc-review');(folder/'material-costs.json').write_text(json.dumps(cost,indent=2),encoding='utf-8');(folder/'cladding-schedule.json').write_text(json.dumps(schedule([p for p in scene['parts'] if cladding(p)]),indent=2),encoding='utf-8')
  receipt=dict(folder=str(folder),geometry_sha256=scene['geometry_sha256'],documents=list(docs),native=native,native_receipts=receipts)
- (folder/'receipt.json').write_text(json.dumps(receipt,indent=2));return receipt
+ (folder/'receipt.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8');return receipt
+
+def selected_recipe(scene,kind=3,rates=None):
+ """Generate only the selected preview set, rather than all document sets."""
+ if kind==0:return part_sheets(scene)
+ if kind==1:return d.assembly(scene,False)
+ if kind==2:return d.parts_layout(scene,False)
+ if kind==3:return project(scene)
+ if kind==4:return part_sheets(scene,True)
+ if kind==5:return cost_sheets(scene,estimate(scene,rates or DEFAULT_RATES))
+ raise ValueError('Document set must be 0..5')
+
+def modelspace(recipe,start=0,scale=10):
+ """Paper-space recipe mapped to readable, tiled model-space sheet geometry."""
+ from .drawings import dimension_lines
+ lines=[];texts=[]
+ for i,sheet in enumerate(recipe['sheets'],start):
+  ox=(i%3)*460*scale;oy=-6500-(i//3+1)*330*scale
+  def paper(q):return [ox+q[0]*scale,oy+q[1]*scale,0]
+  for a,b in sheet['lines']:lines.append([paper(a),paper(b)])
+  for t in sheet['texts']:texts.append(dict(at=paper(t['at']),text=t['text'],height=t['size']*scale))
+  for detail in sheet['details']:
+   v=detail['view'];x,y,X,Y=detail['box'];cx,cy=detail['center'];ratio=detail['scale']
+   def point(q):return paper([(x+X)/2+(q[0]-cx)/ratio,(y+Y)/2+(q[1]-cy)/ratio])
+   for polygon in v['polygons']:lines.append([point(q) for q in polygon['points']+[polygon['points'][0]]])
+   for line in v['polylines']:lines.append([point(q) for q in line])
+   for t in v.get('labels',[]):texts.append(dict(at=point(t['at']),text=t['text'],height=2.5*scale))
+   for dim in v['dimensions']:
+    strokes,at,label=dimension_lines(dim)
+    for a,b in strokes:lines.append([point(a),point(b)])
+    texts.append(dict(at=point(at),text=label,height=2.5*scale))
+ return dict(lines=lines,texts=texts,sheets=len(recipe['sheets']),scale=scale)

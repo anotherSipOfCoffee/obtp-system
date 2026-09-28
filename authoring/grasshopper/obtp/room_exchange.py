@@ -9,7 +9,7 @@ from .layout import digest
 
 
 def validate(data, stage):
-    if stage in ('plan', 'skeleton'):
+    if stage in ('plan', 'skeleton', 'box', 'foundation', 'roof'):
         return require(data, stage)
     if stage != 'scene' or not isinstance(data, dict) or data.get('schema') != 'obtp-room-scene/1':
         raise ValueError('Expected a complete room configuration scene')

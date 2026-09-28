@@ -14,7 +14,7 @@ try:
  if show:
   import Rhino
   if data.get('stage')=='plan':
-   core.require(data,'plan');oy=-6500;positions={}
+   core.require(data,'plan');oy=-data['bounds_mm'][3]-1200;positions={}
    for i,r in enumerate(data['rooms']):
     x,y,w,h=r['bounds_mm'];pts=[Rhino.Geometry.Point3d(a,b+oy,0) for a,b in [(x,y),(x+w,y),(x+w,y+h),(x,y+h),(x,y)]]
     geometry.append(Rhino.Geometry.PolylineCurve(pts));labels.append(r['id']+' / '+str(w)+' x '+str(h));label_points.append(Rhino.Geometry.Point3d(x+w/2,oy+h/2,0))
@@ -32,9 +32,9 @@ try:
      a=r['opening_origin'];b=list(a);b[0 if r['axis']=='x' else 1]+=r['door_width']
      geometry.append(Rhino.Geometry.LineCurve(Rhino.Geometry.Point3d(a[0],a[1]+oy,10),Rhino.Geometry.Point3d(b[0],b[1]+oy,10)))
   else:
-   if data.get('stage')=='skeleton':core.require(data,'skeleton')
+   if data.get('stage') in ('skeleton','box','roof','foundation'):core.require(data,data['stage'])
    adapter=importlib.import_module(name+'.rhino_adapter')
-   payload=dict(parts=data['parts'],dimensions=data['dimensions'],geometry_sha256=data.get('geometry_sha256',data.get('sha256')))
+   payload=dict(parts=data['parts']+(data.get('panel_parts',[]) if data.get('stage')=='box' else []),dimensions=data['dimensions'],geometry_sha256=data.get('geometry_sha256',data.get('sha256')))
    geometry,unused=adapter.preview(payload)
  report='Display only; coordinates follow the current source.'
 except Exception as error:
