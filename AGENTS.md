@@ -120,3 +120,6 @@ The later user instruction authorizes Studio publication for the two locked M-wi
 - All document text I/O is explicit UTF-8. Paper-space and model-space sheets share one recipe. Native acceptance must be distinguished from portable checks.
 - Facade visibility includes battens/attachments. Display grouping must never alter manufacturing exclusion or source quantities.
 - Package current review assets only; historical sources remain reproducible in Git. No website changes for this GH task.
+
+## Pending user task — roof assembly sequence (2026-09-29)
+Read [ROOF_ASSEMBLY_TASK.txt](authoring/grasshopper/ROOF_ASSEMBLY_TASK.txt) before future GH assembly work. R31 restored roof detail but did not satisfy the requested staged assembly motion. This is a recorded pending task: ask whether to implement it unless already authorized in the current session.

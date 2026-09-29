@@ -1,5 +1,7 @@
 # Current package — R31
 
+Pending: [Roof assembly sequence task](ROOF_ASSEMBLY_TASK.txt). Read before future assembly changes; implementation awaits confirmation.
+
 Start with [GH_R31.md](GH_R31.md). Run `CREATE_ROOM_CONFIGURATOR.py` for the connected workflow, or the separate Layout, Structure and Detailing creators. Extract the entire package. The historical `CREATE_GRASSHOPPER.py` retains the earlier workflow.
 
 B1 Box, B2 Foundation and B3 detailed Roof are separate geometry-driven stages. Native Rhino acceptance remains outstanding.
