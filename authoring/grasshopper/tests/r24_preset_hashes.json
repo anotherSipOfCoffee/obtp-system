@@ -1,0 +1,74 @@
+[
+  {
+    "preset": 0,
+    "roof": 0,
+    "geometry": "7c01a9beeda8b637ab19abe1299a1992702b41333657260ad20e18aba506fed1",
+    "drawings": "dfb3b8a2b86d3dd585491cd8a95c431d4bd0250cb50161ed3dc9da8bb56779da"
+  },
+  {
+    "preset": 0,
+    "roof": 1,
+    "geometry": "3401fce7c7c14a21dcf7461874668fdf51f47bc12f7fc6036ee76d2340d00f45",
+    "drawings": "f8482479ee9f1ecd7746b9fb3e4d32c2ad69479a023712a0ba2e3c38c9d96447"
+  },
+  {
+    "preset": 1,
+    "roof": 0,
+    "geometry": "bf7f6333ba0e61bf7b5cfe4555559a1df2ba59b2049942fc40fa5bab93910c02",
+    "drawings": "be435d6bac49ac830ef72c27e962b4c9d96c2ba7b4b081e234ffd2415ef2126a"
+  },
+  {
+    "preset": 1,
+    "roof": 1,
+    "geometry": "d0168409eabfd724db9dc4eed2fb75cb5b880818b772c8190e3ac19f2609d1f3",
+    "drawings": "87ff0710c6e20dac8a410d80c6af0726ef279e753cfbf51982288161de4c0d8c"
+  },
+  {
+    "preset": 2,
+    "roof": 0,
+    "geometry": "87336c9d4e09caa5690e04584539ef8856d9270501bf064ff5106ee3c77b03e9",
+    "drawings": "aa188942c7d1cfdcb460dfb72601d0e78ecad10166a1b73db6740b573a7c3345"
+  },
+  {
+    "preset": 2,
+    "roof": 1,
+    "geometry": "20908090d2c619230c52772db4e71ca7a82295c9ebb9ba481e3c222f57d8f3d0",
+    "drawings": "7afb062dc55f4ba9508e84c62a0611929d4e2657287567f560d47315598d60c6"
+  },
+  {
+    "preset": 3,
+    "roof": 0,
+    "geometry": "c59fec1f982aa635a577b885048d9639ebf64f666ff800e4e776298829b9e9c3",
+    "drawings": "6fa94a7cac993e3eceb9b135de6e611b802593bdeb93a85e8117beb3b8de835b"
+  },
+  {
+    "preset": 3,
+    "roof": 1,
+    "geometry": "f44d9043c48858ef882b14dcb16cccfd345ee5b040f6df7322972876bcd436c4",
+    "drawings": "fc3a0697f62c421e8e38daecfe8979a5a87d8ce289e3efe3a1a405d55ae4e142"
+  },
+  {
+    "preset": 4,
+    "roof": 0,
+    "geometry": "156276a0e8b1868835c1faf63f040b0159907b04c27d5a436b8b120834f1c600",
+    "drawings": "baf0c6822290ce885acbc35eecf732856b356c4d33576f32b0ccd918ff62e7af"
+  },
+  {
+    "preset": 4,
+    "roof": 1,
+    "geometry": "70f6a2e0c5bb355410df572bf28e86817f29805e098871300c3a1d99ce0a7e10",
+    "drawings": "87559759882dbe63ca9a29502badea97260aa52421f36c82461ef4ca05730fe4"
+  },
+  {
+    "preset": 5,
+    "roof": 0,
+    "geometry": "d4171d01b258247ac22ccbec29cb8d138f428bb019dfab828131389aea229917",
+    "drawings": "d2ad1fb71264ca795ee28c54f26e4c027db50e1bc897bddc83b4034b506603a7"
+  },
+  {
+    "preset": 5,
+    "roof": 1,
+    "geometry": "5bfca4fb8ae286dbb17f7bd9dd99cd5adc38ee401667ed2c000d3e7cfe98fc53",
+    "drawings": "05ce2537c73b5fd112a077841fc5f4ff708099ffa46cc2b122444c5e12a82218"
+  }
+]

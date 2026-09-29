@@ -1,0 +1,64 @@
+OBTP GRASSHOPPER — PENDING ROOF ASSEMBLY TASK
+Recorded: 2026-09-29
+Status: RECORDED ONLY — implementation not started by this task.
+Reference: R31, commit d5c68a181790fe258b185de1453ac62e43f8066d.
+
+READ BEFORE FUTURE GH WORK
+Read this task and inspect the latest code before changing anything. If this
+request is still pending, ask the user: "Shall I implement the staged roof
+assembly recorded in ROOF_ASSEMBLY_TASK.txt now?" Do not ask again if the
+current session already explicitly authorizes this task. Do not treat this
+record as authorization to implement it immediately.
+
+CORRECTION TO THE PREVIOUS INTERPRETATION
+The user wants to understand HOW the roof is assembled. Restoring detailed
+roof geometry does not resolve this request. In the user's R31 inspection,
+the roof still appears as one block at one stage. It needs an explanatory
+assembly sequence comparable to the connected-wall sequence, with movements,
+rotation about a defined axis where appropriate, and intermediate states.
+The previous delivery must not be described as having fixed this requirement.
+
+EXPECTED CUSTOMER EXPERIENCE
+- Use the existing assembly-progress slider to step through roof construction.
+- Show how constituent parts form understandable roof subassemblies, including
+  preparation/connection near the building before installation where suitable.
+- Show those subassemblies being oriented, moved and placed in sequence;
+  expose intermediate positions, not a single whole-roof appearance.
+- Include rotation about a clear axis/pivot where the assembly method calls
+  for it, comparable in clarity to wall erection. Do not invent a hinged roof
+  or rotate the entire roof merely to add animation.
+- Explain what is already installed, what is moving and what happens next.
+- Show the roof layers/components being added in their physical construction
+  order, including relevant framing, backing, battens and weather covering.
+  Facade cladding remains the final facade stage, separate from roof weathering.
+
+IMPLEMENTATION BOUNDARIES
+Inspect the latest package and actual assembly transform logic first. Preserve
+layout-driven box generation, independent foundation/roof components, connected
+wall erection, preview scopes and separate loose-part schedules. Coordinate
+GH animation and assembly PDF frames through the same sequence source. Preserve
+part IDs, final installed geometry, quantities and cladding exclusions.
+Do not change websites, Drive or unrelated projects. Keep the work reviewable.
+
+HANDLING AND ENGINEERING
+An animated connected group is not a certified lifting unit. Select sensible
+subassembly boundaries, distinguishing assembly on the ground from work in
+place. State where handling, temporary support, lifting equipment, connections
+or bearing details need engineering. Do not imply that a whole roof can be
+lifted by a small crew. Ask about any unresolved construction-method decision
+that materially changes the intended sequence before committing to it.
+
+ACCEPTANCE BEFORE MARKING COMPLETE
+1. Roof progresses through several distinct, legible assembly operations.
+2. Intermediate movement/rotation states are visible; pivot/axis and final
+   placement agree with the selected operation.
+3. Final stage reconstructs the existing complete roof without lost or
+   duplicated parts, changed quantities or transformed source geometry.
+4. Connected walls and all supported roof options still work.
+5. Assembly PDF explains the same operations as the GH slider; loose-part
+   layout remains a separate document.
+6. Provide before/after staged screenshots or diagrams, including an
+   intermediate movement state. Test natively in Rhino/GH if available;
+   explicitly distinguish native checks from portable tests otherwise.
+7. Update this status with implementation commit, evidence and remaining
+   limitations. Detailed roof geometry alone is not completion.

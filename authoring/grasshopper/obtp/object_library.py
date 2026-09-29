@@ -50,6 +50,9 @@ def attach(scene):
         x,y,z=opening['origin'];a,b,h=opening['size'];axis=0 if a>b else 1
         angle=math.pi if axis==0 else -math.pi/2
         if prefix=='studio-left-entry':angle=math.pi/2
+        if prefix=='sauna-partition' and scene['config'].get('layout_rooms'):
+            sauna=next(r for r in scene['config']['layout_rooms'] if r['id']=='sauna')
+            angle=math.pi/2 if sauna['clear_bounds_mm'][0]>x else -math.pi/2
         instances.append(dict(id=prefix+'/door',definition='obtp.door.study',revision=1,
             host_opening_id=opening['id'],part_ids=ids,
             parameters=dict(rough_width_mm=a if axis==0 else b,height_mm=h,

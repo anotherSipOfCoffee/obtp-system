@@ -55,7 +55,8 @@ class RepeatedCuts(unittest.TestCase):
             for a in scene['parts']:
                 if not a['id'].startswith('terrace/joist-') or not 0<=a['origin'][0]<end:continue
                 self.assertEqual(a['origin'][1]+a['size'][1],-22)
-                self.assertTrue(any(b['id'].startswith('foundation-deck-') and b['origin'][0]==a['origin'][0] and b['origin'][1]+b['size'][1]==-22 and b['size'][1]>=45 for b in scene['parts']))
+                self.assertEqual(a['origin'][2],0)
+                self.assertTrue(any(b['id'].startswith('foundation-grid-') and '/beam-' in b['id'] and b['origin'][2]+b['size'][2]==0 and min(a['origin'][1]+a['size'][1],b['origin'][1]+b['size'][1])-max(a['origin'][1],b['origin'][1])>=45 and min(a['origin'][0]+a['size'][0],b['origin'][0]+b['size'][0])>max(a['origin'][0],b['origin'][0]) for b in scene['parts']))
 
     def test_studio_headers_and_ceiling_clear_glazing(self):
         for closed in (True,False):

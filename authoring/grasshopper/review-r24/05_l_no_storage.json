@@ -1,0 +1,219 @@
+{
+  "schema": "obtp-sauna-layout/1",
+  "selection": {
+    "schema": "obtp-sauna-selection/1",
+    "preset_index": 4,
+    "preset_name": "L / no storage",
+    "custom": false,
+    "graph": {
+      "schema": "obtp-room-graph/1",
+      "programme": {
+        "schema": "obtp-room-programme/1",
+        "active": {
+          "sauna": true,
+          "entrance": true,
+          "outdoor": false
+        },
+        "length_cells": {
+          "sauna": 3,
+          "entrance": 4,
+          "outdoor": 1
+        },
+        "depth_cells": 2,
+        "grid_mm": [
+          900,
+          1200
+        ],
+        "outdoor_functions": [
+          "shower",
+          "storage",
+          "seating"
+        ],
+        "holds": [
+          "Outdoor zone is mixed: open shower/seating and enclosed storage. Functions retained together in this first solver."
+        ]
+      },
+      "edges": [
+        {
+          "a": "sauna",
+          "b": "entrance",
+          "kind": "passage"
+        }
+      ],
+      "notes": [
+        "entrance / outdoor ignored because a room is inactive"
+      ]
+    },
+    "arrangement": 0,
+    "cassette_settings": {
+      "roof_type": 1,
+      "window_width": 1180,
+      "wall_height": 2100,
+      "foundation_type": 0,
+      "include_foundation": true
+    },
+    "preserve_legacy_shower": true,
+    "selection_sha256": "8541575a84a600532a68056c4b52e0758c0ee181e674f8f561301384dd3f79de"
+  },
+  "plan": {
+    "schema": "obtp-resolved-plan/1",
+    "programme": {
+      "schema": "obtp-room-programme/1",
+      "active": {
+        "sauna": true,
+        "entrance": true,
+        "outdoor": false
+      },
+      "length_cells": {
+        "sauna": 3,
+        "entrance": 4,
+        "outdoor": 1
+      },
+      "depth_cells": 2,
+      "grid_mm": [
+        900,
+        1200
+      ],
+      "outdoor_functions": [
+        "shower",
+        "storage",
+        "seating"
+      ],
+      "holds": [
+        "Outdoor zone is mixed: open shower/seating and enclosed storage. Functions retained together in this first solver."
+      ]
+    },
+    "graph": {
+      "schema": "obtp-room-graph/1",
+      "programme": {
+        "schema": "obtp-room-programme/1",
+        "active": {
+          "sauna": true,
+          "entrance": true,
+          "outdoor": false
+        },
+        "length_cells": {
+          "sauna": 3,
+          "entrance": 4,
+          "outdoor": 1
+        },
+        "depth_cells": 2,
+        "grid_mm": [
+          900,
+          1200
+        ],
+        "outdoor_functions": [
+          "shower",
+          "storage",
+          "seating"
+        ],
+        "holds": [
+          "Outdoor zone is mixed: open shower/seating and enclosed storage. Functions retained together in this first solver."
+        ]
+      },
+      "edges": [
+        {
+          "a": "sauna",
+          "b": "entrance",
+          "kind": "passage"
+        }
+      ],
+      "notes": [
+        "entrance / outdoor ignored because a room is inactive"
+      ]
+    },
+    "arrangement": 0,
+    "candidate_count": 2,
+    "candidate_orders": [
+      [
+        "sauna",
+        "entrance"
+      ],
+      [
+        "entrance",
+        "sauna"
+      ]
+    ],
+    "rooms": [
+      {
+        "id": "sauna",
+        "bounds_mm": [
+          0,
+          0,
+          2700,
+          2400
+        ],
+        "zone": "interior"
+      },
+      {
+        "id": "entrance",
+        "bounds_mm": [
+          2700,
+          0,
+          3600,
+          2400
+        ],
+        "zone": "interior"
+      }
+    ],
+    "finished_room_rectangles": [
+      {
+        "id": "sauna",
+        "bounds_mm": [
+          231,
+          231,
+          2433,
+          1938
+        ]
+      },
+      {
+        "id": "entrance",
+        "bounds_mm": [
+          2838,
+          231,
+          3231,
+          1938
+        ]
+      }
+    ],
+    "openings": [
+      {
+        "id": "sauna-partition/opening",
+        "kind": "passage",
+        "origin_mm": [
+          2700,
+          750.0
+        ],
+        "axis": "y",
+        "width_mm": 900,
+        "status": "existing canonical rough opening"
+      },
+      {
+        "id": "front/opening",
+        "kind": "entrance",
+        "origin_mm": [
+          4852.5,
+          0
+        ],
+        "axis": "x",
+        "width_mm": 900,
+        "status": "existing canonical rough opening"
+      }
+    ],
+    "bounds_mm": [
+      0,
+      0,
+      6300,
+      2400
+    ],
+    "construction_compatible": true,
+    "holds": [
+      "Outdoor zone is mixed: open shower/seating and enclosed storage. Functions retained together in this first solver.",
+      "entrance / outdoor ignored because a room is inactive",
+      "External access edges reserve relationships only; site paths, thresholds and clear passage remain unresolved."
+    ],
+    "plan_sha256": "410bafd87c7c4dd77c8de8f815f4afb46bd0e984f1bbe5eaeac4e3e0f500f8d9"
+  },
+  "system": "cassette",
+  "status": "construction-compatible"
+}

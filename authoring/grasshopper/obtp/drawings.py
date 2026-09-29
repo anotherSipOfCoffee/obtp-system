@@ -76,6 +76,17 @@ def derive(scene):
         views['plan']['dimensions']=[dimension([0,0],[end,0],-550),dimension([0,0],[0,W],-500),dimension([195,W],[bs-195,W],400),dimension([bs,W],[be,W],400),dimension([rs,W],[L-195,W],400)]
         for v in scene['opening_voids']:
             x,y,_=v['origin'];a,b,_=v['size'];views['plan']['dimensions'].append(dimension([x,y],[x+a,y] if a>b else [x,y+b],-220))
+    if p.get('layout_rooms'):
+        labels={'sauna':'Pirtis','entrance':'Prieangis'}
+        views['plan']['labels']=[dict(at=[r['bounds_mm'][0]+r['bounds_mm'][2]/2,W*.45],text=labels[r['id']]) for r in p['layout_rooms']]
+        if d['annex_length_mm']:
+            storage_x=d['annex_length_mm']/2 if p.get('layout_mirror') else L+d['annex_length_mm']/2
+            views['plan']['labels'].append(dict(at=[storage_x,195+(W-390)*.58],text='Sandėliukas'))
+        views['plan']['dimensions']=[dimension([0,0],[end,0],-550),dimension([0,0],[0,W],-500)]
+        for r in p['layout_rooms']:
+            x,y,w,h=r['clear_bounds_mm'];views['plan']['dimensions'].append(dimension([x,W],[x+w,W],400))
+        for v in scene['opening_voids']:
+            x,y,_=v['origin'];a,b,_=v['size'];views['plan']['dimensions'].append(dimension([x,y],[x+a,y] if a>b else [x,y+b],-220))
     # Window schedule is projected from actual joinery parts, never guessed from UI width.
     window=[a for a in scene['parts'] if a['id'].startswith('window/')]
     x0=min(a['origin'][0] for a in window);z0=min(a['origin'][2] for a in window)
@@ -110,11 +121,15 @@ def derive(scene):
                 if not pts:break
             if len(pts)>=3:result.append(dict(item,points=pts))
         return result
+    window_y=min(a['origin'][1] for a in window)-12.5
     top=z0+p['door_height']-20
-    views['window-section']=dict(axis=0,level_mm=window_x,polygons=[dict(a,points=[[y,z-z0] for y,z in section(a,0,window_x)]) for a in window if section(a,0,window_x)],polylines=[],dimensions=[dimension([182.5,0],[182.5,p['door_height']-20],180)],labels=[])
+    views['window-section']=dict(axis=0,level_mm=window_x,polygons=[dict(a,points=[[(y-window_y if window_y else y),z-z0] for y,z in section(a,0,window_x)]) for a in window if section(a,0,window_x)],polylines=[],dimensions=[dimension([182.5,0],[182.5,p['door_height']-20],180)],labels=[])
     for item in views['window-section']['polygons']:item.update(cut=True,fill='#ffffff')
     for name,rect in [('window-head',[-95,top-90,235,top+85]),('window-sill',[-95,F-70,235,F+100])]:
         dims=[dimension([12.5,top-51],[182.5,top-51],80)] if name=='window-head' else [dimension([182.5,F],[182.5,F+10],30)]
+        if window_y:
+            rect=[rect[0]+window_y,rect[1],rect[2]+window_y,rect[3]]
+            dims=[dict(d,a=[d['a'][0]+window_y,d['a'][1]],b=[d['b'][0]+window_y,d['b'][1]]) for d in dims]
         views[name]=dict(axis=0,level_mm=window_x,polygons=clipped(rect),polylines=[],dimensions=dims,crop=rect,
                         source_geometry_sha256=scene['geometry_sha256'],status='model-coordination-section')
     # Source DXF blocks provide optional plan symbols. Interior benches remain true 3D projections:
@@ -139,6 +154,7 @@ def derive(scene):
     axes_x=[0,end]
     if p['program_type']==1:axes_x=[0,p['studio_zones']['bridge_start'],p['studio_zones']['bridge_end'],end]
     else:axes_x=sorted(set([0,195+p.get('resolved_hot_mm',p['sauna_length_steps']*600),L,end]))
+    if p.get('layout_rooms'):axes_x=sorted(set([0,end]+[r['bounds_mm'][0] for r in p['layout_rooms']]+[r['bounds_mm'][0]+r['bounds_mm'][2] for r in p['layout_rooms']]))
     def bubble(view,x,y,label):
         radius=65
         view['polylines'].append([[x+radius*math.cos(t*math.pi/12),y+radius*math.sin(t*math.pi/12)] for t in range(25)])

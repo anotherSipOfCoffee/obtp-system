@@ -21,6 +21,9 @@ def enrich(parts,voids,L,W,F,H,annex,px,p):
         for name,a,b in [('left',0,z['bridge_start']),('right',z['bridge_end'],L)]:
             zones += [(name+'-front',[a+wall,0,F],[b-a-2*wall,wall,H]),(name+'-back',[a+wall,W-wall,F],[b-a-2*wall,wall,H]),(name+'-end-a',[a,0,F],[wall,W,H]),(name+'-end-b',[b-wall,0,F],[wall,W,H]),('ceiling-'+name,[a,0,F+H],[b-a,W,220]),('floor-'+name,[a,0,0],[b-a,W,220])]
         zones += [('ceiling-centre',[z['bridge_start'],0,F+H],[z['bridge_end']-z['bridge_start'],W,220]),('floor-centre',[z['bridge_start'],0,0],[z['bridge_end']-z['bridge_start'],W,220])]
+    if p.get('layout_rooms'):
+        zones=[z for z in zones if z[0]!='partition']
+        zones += [('partition-'+r['id'],[r['bounds_mm'][0],wall,F],[p['partition_depth'],W-2*wall,H]) for r in p['layout_rooms'][1:]]
     original=list(parts)
     for name,o,s in zones:
         boxes=[(o,s)]

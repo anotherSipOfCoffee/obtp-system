@@ -12,20 +12,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install rhino3dm==8.35.0 reportlab
-      - run: python authoring/grasshopper/tests/test_authoring.py
-      - run: python authoring/grasshopper/tests/test_r02.py
-      - run: python authoring/grasshopper/tests/test_r04.py
-      - run: python authoring/grasshopper/tests/test_r05.py
-      - run: python authoring/grasshopper/tests/test_analysis.py
-      - run: python authoring/grasshopper/tests/test_suppliers.py
-      - run: python authoring/grasshopper/tests/test_studio.py
-      - run: python authoring/grasshopper/tests/test_object_library.py
-      - run: python authoring/grasshopper/tests/test_seasonal.py
-      - run: python authoring/grasshopper/tests/test_cut_view.py
-      - run: python authoring/grasshopper/tests/test_r12.py
-      - run: python authoring/grasshopper/tests/test_ssp.py
-      - run: python authoring/grasshopper/tests/test_web_pdf_disabled.py
-      - run: python authoring/grasshopper/tests/test_cells.py
-      - run: python authoring/grasshopper/tests/test_manufacturing.py
-      - run: python authoring/grasshopper/export_web.py /tmp/sauna-catalogue --revision ${{ github.sha }}
+      - run: pip install rhino3dm==8.35.0 reportlab numpy pillow ezdxf==1.4.4
+      - run: python -m unittest discover -s authoring/grasshopper/tests
+      - run: python authoring/grasshopper/EXPORT_SYSTEM_COMPARISON.py
+      - run: python authoring/grasshopper/EXPORT_STUDIO_M_PDFS.py
+      - run: python authoring/grasshopper/EXPORT_LAYOUT_REVIEW.py
+      - run: python authoring/grasshopper/EXPORT_SAUNA_WORKFLOW.py
+      - run: python tools/package-gh.py /tmp/OBTP_Grasshopper_R24.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OBTP-Grasshopper-R24
+          path: /tmp/OBTP_Grasshopper_R24.zip
+          retention-days: 30

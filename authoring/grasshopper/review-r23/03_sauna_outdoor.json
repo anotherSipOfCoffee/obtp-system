@@ -1,0 +1,137 @@
+{
+  "schema": "obtp-resolved-plan/1",
+  "programme": {
+    "schema": "obtp-room-programme/1",
+    "active": {
+      "sauna": true,
+      "entrance": false,
+      "outdoor": true
+    },
+    "length_cells": {
+      "sauna": 3,
+      "entrance": 3,
+      "outdoor": 1
+    },
+    "depth_cells": 2,
+    "grid_mm": [
+      900,
+      1200
+    ],
+    "outdoor_functions": [
+      "shower",
+      "storage",
+      "seating"
+    ],
+    "holds": [
+      "Outdoor zone is mixed: open shower/seating and enclosed storage. Functions retained together in this first solver."
+    ]
+  },
+  "graph": {
+    "schema": "obtp-room-graph/1",
+    "programme": {
+      "schema": "obtp-room-programme/1",
+      "active": {
+        "sauna": true,
+        "entrance": false,
+        "outdoor": true
+      },
+      "length_cells": {
+        "sauna": 3,
+        "entrance": 3,
+        "outdoor": 1
+      },
+      "depth_cells": 2,
+      "grid_mm": [
+        900,
+        1200
+      ],
+      "outdoor_functions": [
+        "shower",
+        "storage",
+        "seating"
+      ],
+      "holds": [
+        "Outdoor zone is mixed: open shower/seating and enclosed storage. Functions retained together in this first solver."
+      ]
+    },
+    "edges": [],
+    "notes": [
+      "sauna / entrance ignored because a room is inactive",
+      "entrance / outdoor ignored because a room is inactive"
+    ]
+  },
+  "arrangement": 0,
+  "candidate_count": 2,
+  "candidate_orders": [
+    [
+      "sauna",
+      "outdoor"
+    ],
+    [
+      "outdoor",
+      "sauna"
+    ]
+  ],
+  "rooms": [
+    {
+      "id": "sauna",
+      "bounds_mm": [
+        0,
+        0,
+        2700,
+        2400
+      ],
+      "zone": "interior"
+    },
+    {
+      "id": "outdoor",
+      "bounds_mm": [
+        2700,
+        0,
+        900,
+        2400
+      ],
+      "zone": "mixed outdoor/storage"
+    }
+  ],
+  "finished_room_rectangles": [
+    {
+      "id": "sauna",
+      "bounds_mm": [
+        231,
+        231,
+        2238,
+        1938
+      ],
+      "status": "provisional perimeter deduction; partition build-up unresolved"
+    },
+    {
+      "id": "outdoor",
+      "bounds_mm": [
+        2931,
+        231,
+        438,
+        1938
+      ],
+      "status": "provisional perimeter deduction; partition build-up unresolved"
+    }
+  ],
+  "openings": [],
+  "bounds_mm": [
+    0,
+    0,
+    3600,
+    2400
+  ],
+  "construction_compatible": false,
+  "holds": [
+    "Outdoor zone is mixed: open shower/seating and enclosed storage. Functions retained together in this first solver.",
+    "sauna / entrance ignored because a room is inactive",
+    "entrance / outdoor ignored because a room is inactive",
+    "PLAN ONLY: construction adapter currently accepts sauna + entrance, optional terminal outdoor zone, original order and internal passage. No fabricated scene or exports are generated for this alternative.",
+    "Retained default shower niche is narrow; useful clearances, waterproofing and separate outdoor function resizing remain unresolved.",
+    "Standalone sauna requires a separate exterior door, glazing and heater/circulation study; this plan is not construction-ready.",
+    "External access edges reserve relationships only; site paths, thresholds and clear passage remain unresolved."
+  ],
+  "plan_sha256": "9d5ddf3ae72c409c51124814467b45e4f01d3d7320b1092b641782bb06decd6e"
+}

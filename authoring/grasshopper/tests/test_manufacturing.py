@@ -46,9 +46,10 @@ class ManufacturingTests(unittest.TestCase):
         for j in joists:
             self.assertEqual(j['origin'][1],0)
             self.assertEqual(j['size'][1],s['dimensions']['width_mm'])
-            packs=[a for a in s['parts'] if a['id'].startswith('foundation-deck-') and a['origin'][0]==j['origin'][0]]
-            self.assertEqual(len(packs),3)
-            self.assertTrue(all(a['origin'][2]+a['size'][2]==j['origin'][2] for a in packs))
+            self.assertEqual(j['origin'][2],0)
+            self.assertEqual(j['size'][2],s['dimensions']['floor_top_mm']-28)
+            self.assertFalse(any(a['id'].startswith('foundation-deck-') and '/packing-' in a['id'] for a in s['parts']))
+
 
     def test_opening_jacks_retain_direct_bearing_and_repeat_side_plates(self):
         for program in range(2):
@@ -86,7 +87,7 @@ class ManufacturingTests(unittest.TestCase):
         setup=(root/'CREATE_GRASSHOPPER.py').read_text()
         for text in ['Show only','part_controls','Gable / metal','controls[\'facade_type\']','controls[\'terrace_steps\']']:
             self.assertNotIn(text,setup)
-        self.assertIn('Complete model preview',setup)
+        self.assertIn('Final 3D preview',setup)
         self.assertNotIn('drawings.bake',(root/'components/export.py').read_text())
 
 if __name__=='__main__':unittest.main()

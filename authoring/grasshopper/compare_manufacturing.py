@@ -5,7 +5,7 @@ import argparse, importlib.util, itertools, json, subprocess, sys, tempfile, gzi
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 REPO=ROOT.parents[1]
-PINS={'original':'1ad71826acfcc7d6d5df9a06167c5fcfea20b516','cells':'a11e613ac923fd5de6a3d3f1368e6c6eebc57745','pre_opening':'20e7d87dddab93ef453f0ef2c491078ce9b376c5','pre_kit':'32a9b696b257e09f9b8d32afba3110e043040b6b','pre_kit_corrected':'8aaab6a67fa85838296d8c6e2077be5c80d98630'}
+PINS={'original':'1ad71826acfcc7d6d5df9a06167c5fcfea20b516','cells':'a11e613ac923fd5de6a3d3f1368e6c6eebc57745','pre_opening':'20e7d87dddab93ef453f0ef2c491078ce9b376c5','pre_kit':'32a9b696b257e09f9b8d32afba3110e043040b6b','pre_kit_corrected':'8aaab6a67fa85838296d8c6e2077be5c80d98630','previous':'2c21ad5d2d30915487f19e72a18f545e575befba'}
 from obtp.manufacturing import analyse
 from obtp.drawings import svg
 
@@ -56,12 +56,13 @@ def run(destination,full=False):
             same=models['revised'].build(p);records['revised_same_footprint']=summary(same)
             key=scenes['revised']['config']['id']+f'-r{roof}-w{window}-b{foundation}-'+('winter' if winter else 'summer')
             rows.append(dict(key=key,program='studio' if program else 'sauna',versions=records))
+            if len(rows)%18==0:print(f'Compared {len(rows)} configurations',flush=True)
             if i==2 and roof==0 and window==1180 and foundation==0 and winter:
                 for name,s in list(scenes.items())+[('revised_same_footprint',same)]:
                     (out/(('studio' if program else 'sauna')+'-'+name+'-plan.svg')).write_text(svg(s['drawings']['views']['concept-plan']))
                 (out/(('studio' if program else 'sauna')+'-revised-schedule.json.gz')).write_bytes(gzip.compress(json.dumps(analyse(scenes['revised'],True),separators=(',',':')).encode(),mtime=0))
         catalogue={}
-        for name in ['original','cells','pre_opening','pre_kit','pre_kit_corrected','revised_same_footprint','revised']:
+        for name in [*PINS,'revised_same_footprint','revised']:
             catalogue[name]={}
             for program in ['sauna','studio','combined']:
                 subset=[r['versions'][name] for r in rows if program=='combined' or r['program']==program]
@@ -86,7 +87,7 @@ def run(destination,full=False):
         lines+=['','## Catalogue union, not the sum of unique counts','','| Version | Sauna types | Studio types | Combined types |','|---|---:|---:|---:|']
         for name,a in catalogue.items():lines.append(f"| {name} | {a['sauna']['unique_manufactured_part_candidates']} | {a['studio']['unique_manufactured_part_candidates']} | {a['combined']['unique_manufactured_part_candidates']} |")
         lines+=['','## Measured reduction in catalogue diversity','','| Reference | Sauna | Studio | Combined |','|---|---:|---:|---:|']
-        for name in ['original','cells','pre_opening','pre_kit','pre_kit_corrected']:
+        for name in PINS:
             vals=[100*(1-catalogue['revised'][p]['unique_manufactured_part_candidates']/catalogue[name][p]['unique_manufactured_part_candidates']) for p in ['sauna','studio','combined']]
             lines.append('| '+name+' → revised | '+' | '.join(f'{v:.1f}%' for v in vals)+' |')
         lines+=['','Same-footprint isolates revised construction recipes from Sauna narrowing; compare cells → revised_same_footprint, then revised_same_footprint → revised. All JSON rows retain cladding-inclusion effects, material breakdowns, usable area, wood volume and exact geometry hashes. Physical catalogue totals mean building one of every configuration; they are not a typical order quantity.','',*['- '+s for s in analyse(scenes['revised'])['uncertainty']]]

@@ -4,6 +4,7 @@ Same page recipes feed native Rhino layouts and explicitly labelled offline proo
 import copy,hashlib,json,math
 from collections import defaultdict
 from .export import vertices
+from .assembly_pose import display_vertices, posed, PREPARE
 from .drawings import hull,dimension
 from .ssp_sheets import bounds
 WOOD=('timber','plywood','lining-wood','cladding-wood','deck-wood')
@@ -17,7 +18,7 @@ def axon(parts,highlight=None):
     polys=[]
     def project(v):x,y,z=v;return [.8660254*(x-y),z-.5*(x+y)]
     for a in parts:
-        vs=vertices(a)
+        vs=display_vertices(a)
         for i,face in enumerate(((1,2,6,5),(2,3,7,6),(4,5,6,7))):
             points=[project(vs[k]) for k in face]
             polys.append(dict(id=a['id'],points=points,material=a['material'],cut=False,
@@ -46,8 +47,8 @@ def finish(scene,sheets,kind):
         for y in (22,34):line(p,230,y,410,y)
         line(p,365,10,365,34);line(p,390,10,390,34)
         text(p,234,39,'PERŽIŪRA / NE STATYBAI',3)
-        text(p,234,27,p['code']+' / '+scene.get('version','R16'),2.7);text(p,369,27,'Lapas',2);text(p,394,27,'Lapų',2)
-        text(p,234,15,'2026-09-26 / '+scene['geometry_sha256'][:16],2.3);text(p,370,15,i+1);text(p,396,15,len(sheets))
+        text(p,234,27,p['code']+' / '+scene.get('display_revision',scene.get('version','R16')),2.7);text(p,369,27,'Lapas',2);text(p,394,27,'Lapų',2)
+        text(p,234,15,scene.get('document_date','2026-09-26')+' / '+scene['geometry_sha256'][:16],2.3);text(p,370,15,i+1);text(p,396,15,len(sheets))
         text(p,22,20,'Matmenys mm. Kiekiai pagal modelį; gamybinės jungtys nepatvirtintos.',2)
     return dict(schema='obtp-document-layouts/1',kind=kind,geometry_sha256=scene['geometry_sha256'],page_mm=[420,297],sheets=sheets)
 
@@ -188,49 +189,85 @@ def components(scene):
       'Ilgesnės pamatų sijos išlaiko tarpines atramas; sujungimai palikti ties atramų ašimis.']):text(p,25,116-j*10,t,2.5)
     return finish(scene,sheets,'components')
 
-STAGES=[('Pamatai ir bendra atramų ašių sistema','foundation','Patikrinti gruntą, altitudes, atramų laikomąją galią ir inkarų projektą. Be patvirtinimo nemontuoti.'),
-('Grindų ir terasos karkasas','floor-frame','Tikrinamos įstrižainės, atrėmimai ir aukščiai. Laikinas stabilumas turi būti užtikrintas.'),
-('Grindų šiltinimas ir paklotas','floor-skin','Patikrinti drėgmę ir apatinę apsaugą; prieš uždengiant apžiūrėti jungtis ir komunikacijas.'),
-('Sienų ir pertvarų karkasas','wall-frame','Kelti pagal indeksus. Laikinai įstrižinti. Jungčių tvirtinimo schema dar turi būti suprojektuota.'),
-('Sienų šiltinimas ir apkalos','wall-skin','Vata užpildo karkaso ertmes; angos lieka laisvos. Oro ir garų sluoksniai turi būti tęstiniai.'),
-('Lubų ir stogo konstrukcija','roof','Patikrinti atrėmimus, konsoles ir stogo nuolydį. Neužpildyti numatyto vėdinimo tarpo.'),
-('Langai, durys ir išorės apdaila','outside','Suderinti angų tarpus, sandarinimą ir vandens nuvedimą. Stoglangių šiame modelyje nėra.'),
-('Vidaus apdaila ir patikra','finish','Tik po paslėptų darbų patikros. Krosnies, elektros, vėdinimo ir priešgaisriniai sprendiniai atskiri.')]
+STAGES=[
+('Pamatai / Foundation','foundation','Check bearing levels and the engineered foundation design.'),
+('Grindų kasetės ant žemės / Floor laydown','floor-prepare','Assemble numbered floor and terrace frames in a clear ground work area.'),
+('Grindų kasetės vietoje / Floor placement','floor-place','Place cassettes on the shared support axes. Inspect bearing and joints.'),
+('Sienų kasetės ant žemės / Wall laydown','wall-prepare','Assemble each framed panel flat; insulation shown as its own constituent parts.'),
+('Sienų pakėlimas / Wall erection','wall-place','Lift individual panels into position and provide designed temporary bracing.'),
+('Stogo kasetės ant žemės / Roof laydown','roof-prepare','Prepare individual roof cassettes. Roof finish and service layers remain separate tasks.'),
+('Stogo kasetės vietoje / Roof placement','roof-place','Check the engineered bearing, bracing and lifting sequence.'),
+('Langai ant žemės / Opening-unit laydown','openings-prepare','Window and door units are shown flat before insertion; follow supplier handling instructions.'),
+('Langų montavimas / Opening insertion','openings-place','Install units, then complete seals, drainage and perimeter joints.'),
+('Vidaus darbai / Interior completion','interior','Complete services and removable bench covers; inspect concealed work.'),
+('Terasos lentos / Terrace decking','deck','Lay all deck boards in one direction, including the return.'),
+('Išorės apdaila / Cladding last','cladding','Finish facade, niche reveals and perimeter fascia after inspection.')]
 
 def stage(a):
     f=a['family'];m=a['material'];id=a['id']
     if f=='foundation':return 0
-    if f in ('floor','terrace') and m in ('timber','deck-wood') and '/board-' not in id:return 1
+    if f=='facade' or id.startswith(('roof-fascia-','terrace-fascia-','floor-edge-')):return 11
+    if f=='terrace':return 2 if m=='timber' else 10
     if f=='floor' or id.startswith('insulation-floor'):return 2
-    if f in ('walls','partitions') and m=='timber':return 3
-    if f in ('walls','partitions') and m=='plywood' or (f=='insulation' and not id.startswith(('insulation-floor','insulation-ceiling'))):return 4
-    if f in ('roof','ceiling') or id.startswith('insulation-ceiling'):return 5
-    if f in ('facade','terrace') or m in ('glass','object') and f!='furniture':return 6
-    return 7
+    if f in ('walls','partitions') and m in ('timber','plywood'):return 4
+    if f=='insulation' and not id.startswith('insulation-ceiling'):return 4
+    if f in ('roof','ceiling') or id.startswith('insulation-ceiling'):return 6
+    if m in ('glass','object') and f!='furniture':return 8
+    return 9
 
-def assembly(scene):
+def stage_parts(scene, phase):
+    target=PREPARE.get(phase,phase)
+    selected=[a for a in scene['parts'] if stage(a)<=target]
+    return posed(selected,phase,stage)
+
+def parts_layout(scene, include_cladding=True):
+    """Retain the detached cassette arrangement as its own schedule companion."""
     sheets=[]
-    p=page('Surinkimo gairės / turinys','M-00');sheets.append(p)
-    text(p,25,244,'Eiga paremta modelio grupėmis. Tai surinkimo studija, ne patvirtinta darbų technologija.',3)
-    rect(p,25,108,370,120)
-    for i,(title,_,note) in enumerate(STAGES):
-        y=218-i*14;text(p,30,y,title,3);text(p,365,y,f'M-{i+1:02}');line(p,25,y-5,395,y-5)
-    for j,t in enumerate(['Prieš gamybą: konstruktorius patvirtina jungtis, laikiną stabilumą ir kėlimo planą.',
-                         'Tvirtinimo detalių kiekiai ir suveržimo momentai neišgalvoti - jie dar nepateikti.',
-                         'Baltai rodoma nauja stadija, pilkai - jau surinkta dalis. Vaizdai iš to paties modelio.']):text(p,25,91-j*12,t,2.7)
-    for i,(title,_,note) in enumerate(STAGES):
-        p=page(f'{i+1:02} / '+title,f'M-{i+1:02}');sheets.append(p)
-        current=[a for a in scene['parts'] if stage(a)==i];previous=[a for a in scene['parts'] if stage(a)<i]
-        # A clear stage-only exploded overview and context view; geometry remains unchanged.
-        highlight={a['id'] for a in current}
-        slot(p,'Surinkta iki šios stadijos',axon(previous+current,highlight),[25,77,272,250],(50,75,100,150,200))
-        slot(p,'Pridedami elementai',axon(current),[282,130,400,245],(50,75,100,150,200))
-        text(p,282,121,'Pridedamos detalės: '+str(len(current)),2.8)
-        text(p,25,66,note,2.3)
-        from .manufacturing import schedule
-        codes=[g['type_id'] for g in schedule(current)]
-        for j in range(min(4,math.ceil(len(codes)/3))):text(p,282,110-j*8,', '.join(codes[j*3:j*3+3]),1.9)
-        if len(codes)>12:text(p,282,75,'Visi indeksai - kiekių byloje.',2)
+    for phase,label in [(1,'Floor / terrace frames'),(3,'Wall cassettes and openings'),(5,'Roof cassettes'),(7,'Window and door units')]:
+        target=PREPARE[phase]
+        from .manufacturing import cladding
+        current=[p for p in stage_parts(scene,phase) if stage(p)==target and (include_cladding or not cladding(p))]
+        p=page('Elementų išdėstymas / '+label,'L-'+str(len(sheets)+1));sheets.append(p)
+        slot(p,'Detached assembly layout',axon(current),[25,72,400,250],(50,75,100,150,200,250,300,400))
+        text(p,25,61,'Detached cassette layout for identification; not an erection sequence.',2.8)
+        text(p,25,50,'Constituent quantities and unique-part axonometrics remain in the separate part schedule.',2.5)
+    return finish(scene,sheets,'parts-layout')
+
+def assembly(scene, include_cladding=True):
+    from .wall_erection import sequence
+    steps=sequence(scene,stage,stage_parts)
+    if not include_cladding:
+        from .manufacturing import cladding
+        excluded={p['id'] for p in scene['parts'] if cladding(p)}
+        steps=[dict(s,parts=[p for p in s['parts'] if p['id'] not in excluded],active=[pid for pid in s['active'] if pid not in excluded],label=('Remaining finishes' if s['label']=='Cladding last' else s['label'])) for s in steps]
+        steps=[s for s in steps if s['active']]
+    sheets=[]
+    p=page('Connected wall erection / review','M-00');sheets.append(p)
+    for j,note in enumerate(['Connected wall runs retain all cassettes and opening frames.',
+       'One wall at a time: lay flat beside its wall line, rotate 45 degrees, then upright.',
+       'The pivot remains at the installed bottom edge; temporary supports establish the work height.',
+       'Whole walls may require lifting equipment. Crew handling, bracing and joints are unverified.',
+       'Display grouping does not change constituent parts, quantities or manufacturing identities.',
+       'Detached cassette layouts are in the additional Parts Layout PDF.',
+       'Cladding is installed last.' if include_cladding else 'Facade cladding is excluded from this document; separate quantities are retained.']):text(p,25,240-j*19,note,3)
+    i=0
+    while i<len(steps):
+        step=steps[i];p=page(step['label'],'M-'+str(len(sheets)).zfill(2));sheets.append(p)
+        current=[a for a in step['parts'] if a['id'] in step['active']]
+        wall=step['label'].endswith(' / Lay flat')
+        if wall:
+            slot(p,'Flat beside wall line',axon(step['parts'],set(step['active'])),[25,86,252,249],(50,75,100,150,200,250,300,400))
+            for offset,box,title in [(1,[260,170,400,250],'45 degrees'),(2,[260,86,400,165],'Upright')]:
+                follow=steps[i+offset];active=[a for a in follow['parts'] if a['id'] in follow['active']]
+                slot(p,title,axon(active),box,(25,50,75,100,150,200,250,300,400))
+                text(p,box[0],box[1]-5,title,2.7)
+            i+=3
+        else:
+            slot(p,'Assembly context',axon(step['parts'],set(step['active'])),[25,84,400,250],(50,75,100,150,200,250,300,400));i+=1
+        import textwrap
+        for j,line_text in enumerate(textwrap.wrap(step['note'],110)):
+            text(p,25,68-j*8,line_text,2.5)
+        text(p,25,39,'Current constituent pieces: '+str(len(current)),2.5)
     return finish(scene,sheets,'assembly')
 
 def documents(scene):return {'openings':openings(scene),'components':components(scene),'assembly':assembly(scene)}

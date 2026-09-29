@@ -130,6 +130,20 @@ def bake(scene,destination=None,recipe=None):
             da=detail.Attributes.Duplicate();da.LayerIndex=paper_layer;da.PlotWeightSource=Rhino.DocObjects.ObjectPlotWeightSource.PlotWeightFromObject;da.PlotWeight=-1
             doc.Objects.ModifyAttributes(detail.Id,da,True)
             details.append((detail,li))
+    # The same sheets are also visible as ordinary geometry in model space.
+    # A shared index keeps consecutive document sets and exports from overlapping.
+    from .room_documents import modelspace
+    start=int(doc.Strings.GetValue('OBTP/model-sheets/next') or '0')
+    model_recipe=modelspace(recipe,start)
+    model_layer=layer(root+' MODEL SHEETS')
+    def point3(q):return Rhino.Geometry.Point3d(*q)
+    for stroke in model_recipe['lines']:
+        doc.Objects.AddPolyline([point3(q) for q in stroke],attr(model_layer))
+    for item in model_recipe['texts']:
+        entity=Rhino.Geometry.TextEntity();entity.Plane=Rhino.Geometry.Plane(point3(item['at']),Rhino.Geometry.Vector3d.ZAxis)
+        entity.PlainText=item['text'];entity.TextHeight=item['height']
+        doc.Objects.AddText(entity,attr(model_layer))
+    doc.Strings.SetString('OBTP/model-sheets/next',str(start+model_recipe['sheets']))
     # Isolate every detail after ALL drawing layers exist. Do not hide user objects globally.
     for detail,li in details:
         for l in doc.Layers:
@@ -137,7 +151,7 @@ def bake(scene,destination=None,recipe=None):
             l.SetPerViewportVisible(detail.Viewport.Id,l.Index==li);l.CommitChanges()
     doc.Views.Redraw()
     receipt=dict(status='layouts-created',root=root,geometry_sha256=scene['geometry_sha256'],
-        pages=[p.PageName for p in pages],pdf=None,
+        pages=[p.PageName for p in pages],pdf=None,model_sheet_layer=root+' MODEL SHEETS',
         note='Layouts are in the active Rhino document. Save that document to retain editable layouts; the separate geometry-only 3dm has no layouts.')
     doc.Strings.SetString('OBTP/SSP/latest_pages',json.dumps(receipt['pages']))
     if destination is not None:

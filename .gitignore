@@ -11,3 +11,30 @@ __pycache__/
 *.pyc
 qa/
 cassette-validation.json
+
+# Reproducible GH R22 local exports; sources and review images remain tracked.
+authoring/grasshopper/review-r22/*.3dm
+authoring/grasshopper/review-r22/0*.json
+authoring/grasshopper/review-r22/*-schedule.csv
+authoring/grasshopper/gh-documents/
+
+# Reproducible R27 review exports; the ZIP includes these generated assets.
+authoring/grasshopper/review-r27/*.svg
+authoring/grasshopper/review-r27/*.3dm
+authoring/grasshopper/review-r27/*.html
+authoring/grasshopper/review-r27/timings.json
+
+# Reproducible third-workflow review exports; included in the downloadable ZIP.
+authoring/grasshopper/review-r28/*.svg
+authoring/grasshopper/review-r28/*.3dm
+authoring/grasshopper/review-r28/*.html
+
+# Reproducible R30 package previews
+authoring/grasshopper/review-r30/OBTP-*/
+authoring/grasshopper/review-r30/*.svg
+authoring/grasshopper/review-r30/index.html
+
+# Reproducible R31 package previews
+authoring/grasshopper/review-r31/OBTP-*/
+authoring/grasshopper/review-r31/*.svg
+authoring/grasshopper/review-r31/index.html

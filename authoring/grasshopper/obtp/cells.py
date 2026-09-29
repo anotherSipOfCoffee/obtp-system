@@ -27,7 +27,8 @@ def resolve(p, wall=195):
     p['resolved_partition_x_mm']=wall+hot
     p['resolved_depth_mm']=W-2*wall
     p['annex_split_a_mm']=(650 if W==2400 else Y-wall)
-    p['annex_split_b_mm']=(1650 if W==2400 else 2*Y-wall)
+    # Seat recess is 300 mm deep from its finished back to the rear opening.
+    p['annex_split_b_mm']=W-wall-300-p['partition_depth']-84
     return W,L,hot,hall,annex
 
 
@@ -67,3 +68,31 @@ def record(p,L,W,annex,assemblies):
       wall_joint_policy='cell seams; openings replace whole adjoining bays',wall_assemblies=assemblies,
       engineering_status='coordination-study',holds=['Panel widths are coordination envelopes, not universal cut lengths.',
       'Terminal, opening and node connections require engineering; capacities and fasteners remain unset.'])
+
+
+def transverse_members(start, end, middle=True):
+    """Actual 45 mm member faces, shared by floor bays and terrace bays."""
+    axes=boundaries(start,end,X)
+    result=[]
+    for a,b in zip(axes,axes[1:]):
+        if b-a<90:continue
+        result.extend([a,b-45])
+        if middle and b-a>=180:result.append((a+b-45)/2)
+    return sorted(set(result))
+
+
+def shifted_opening(start,end,step,width,preferred,shift=0):
+    """Adjacent whole-bay positions, never a silent clamped offset."""
+    if isinstance(shift,bool) or shift not in (-1,0,1):raise ValueError('Window bay shift must be -1, 0 or 1')
+    current=opening(start,end,step,width,preferred)
+    if shift==0:return current
+    axes=boundaries(start,end,step);choices={}
+    for a in axes:
+        for b in axes:
+            u=(a+b-width)/2
+            if b-a<width+180 or u-start<195 or end-u-width<195:continue
+            candidate=opening(start,end,step,width,u)
+            choices[candidate['start']]=candidate
+    positions=sorted(choices);i=positions.index(current['start'])+int(shift)
+    if not 0<=i<len(positions):raise ValueError('Openings: no adjacent window bay in this host; use shift 0 or enlarge the window room')
+    return choices[positions[i]]

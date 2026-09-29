@@ -1,0 +1,24 @@
+{
+  "schema": "obtp-material-rates/1",
+  "currency": "EUR",
+  "basis": "Indicative ex-VAT proxies; retail prices divided by assumed 1.21. Not quotations.",
+  "checked": "2026-09-28",
+  "waste_fraction": 0.1,
+  "rates": {
+    "timber": {
+      "eur_m3": 475.14,
+      "source": "https://mtmediena.lt/c24-mediena/",
+      "note": "Impregnated 45x70 C24 benchmark; proxy only for other sections and treatments."
+    },
+    "plywood": {
+      "eur_m3": 1094.94,
+      "source": "https://www.senukai.lt/p/fanera-e-e-244-cm-x-122-cm-x-18-mm/msqd",
+      "note": "Regular retail 70.99 EUR / 2440x1220x18 E/E sheet. VAT division and transfer to other thicknesses are assumptions; structural grade unverified."
+    },
+    "mineral-wool": {
+      "eur_m3": 43.86,
+      "source": "https://www.senukai.lt/p/akmens-vata-rockwool-100-cm-x-61-cm-x-20-cm/100v4",
+      "note": "Regular retail 25.90 EUR / 2.44 m2 x 200 mm. Assumed retail VAT division; applicability unverified."
+    }
+  }
+}

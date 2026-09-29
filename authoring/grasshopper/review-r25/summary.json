@@ -1,0 +1,56 @@
+[
+  {
+    "name": "sauna_only",
+    "settings": {
+      "entrance": false,
+      "outdoor": false
+    },
+    "rooms": [
+      "sauna"
+    ],
+    "pieces": 920,
+    "geometry_sha256": "c3d5983a6ec77c52e34c3be6ce1b1bd77de233a3324310c31fb105786150340f",
+    "plan_sha256": "87978f7d34fe49ea24176bad475125061daea8192b603aa6bc8d6985db880c91"
+  },
+  {
+    "name": "sauna_outdoor",
+    "settings": {
+      "entrance": false
+    },
+    "rooms": [
+      "sauna",
+      "outdoor"
+    ],
+    "pieces": 1306,
+    "geometry_sha256": "34b194eba39829f3f3729383f0d6eb56695d7da031a13749fe7bffa195530e33",
+    "plan_sha256": "b047f26de7950eacbfc50e466ef4db3f3feba8ddd0073132b6cbcd99283e8b75"
+  },
+  {
+    "name": "reversed",
+    "settings": {
+      "arrangement": 1
+    },
+    "rooms": [
+      "entrance",
+      "sauna",
+      "outdoor"
+    ],
+    "pieces": 1862,
+    "geometry_sha256": "0cc1b8acaf9524f64ea1488277d8bd265e515c54a3577bf854e886c4c3898184",
+    "plan_sha256": "1201ac41616c1e45f3d8248972e801a338b45c92acb1c3e7759a56e37a893ae8"
+  },
+  {
+    "name": "separate_entries",
+    "settings": {
+      "sauna_entrance": 0
+    },
+    "rooms": [
+      "sauna",
+      "entrance",
+      "outdoor"
+    ],
+    "pieces": 1848,
+    "geometry_sha256": "a5e6949d6326ee9448f5f36ed2ddcfb9e046095f6143a804e7b39ec6ab3e2457",
+    "plan_sha256": "f2338d7904c8e9ceacccd238fea5138dd3aede7fab6118c317170b41b4706e3c"
+  }
+]

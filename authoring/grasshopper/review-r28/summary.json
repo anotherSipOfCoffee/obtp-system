@@ -1,0 +1,56 @@
+[
+  {
+    "case": "sauna",
+    "order": [
+      "R01 Sauna / steam room 1",
+      "R02 Entrance / vestibule 1",
+      "R03 Storage / cupboard 1"
+    ],
+    "dimensions_mm": [
+      7200,
+      2400
+    ],
+    "skeleton_pieces": 250,
+    "primary_pieces": 734,
+    "primary_types": 76,
+    "cladding_pieces": 190,
+    "complete_pieces": 924,
+    "geometry_sha256": "42a021c254e72e448cbcb67b5e39a7a318ae5c41b9c812ee33a76d4b1244fd4c"
+  },
+  {
+    "case": "studio-passage",
+    "order": [
+      "R01 Workspace / creative studio 1",
+      "R02 Hall / circulation 1",
+      "R03 Preparation / cleanup 1"
+    ],
+    "dimensions_mm": [
+      9000,
+      2400
+    ],
+    "skeleton_pieces": 297,
+    "primary_pieces": 709,
+    "primary_types": 72,
+    "cladding_pieces": 230,
+    "complete_pieces": 939,
+    "geometry_sha256": "05e2af411976fc38e3f2c1906fa95bb5410c8a5304632af53d848f335e64f48f"
+  },
+  {
+    "case": "living-studio",
+    "order": [
+      "R01 Living / sleeping 1",
+      "R03 Kitchenette 1",
+      "R02 Bathroom / shower + WC 1"
+    ],
+    "dimensions_mm": [
+      8100,
+      2400
+    ],
+    "skeleton_pieces": 268,
+    "primary_pieces": 595,
+    "primary_types": 71,
+    "cladding_pieces": 208,
+    "complete_pieces": 803,
+    "geometry_sha256": "2e5d426a06cf577d38a27ce88ba3672abbcdcea1b2fea73c5f255e76c12eaf51"
+  }
+]
